@@ -33,9 +33,10 @@ condition.
 
 ## CPU / development
 
-- [ ] MXfold2 DP with external score tensors; check against Turner-only output on
-      100 sequences; then build decoder A (nearest-neighbour DP with learned
-      corrections).
+- [x] Decoder A core: nearest-neighbour DP with traceback, verified against
+      exhaustive enumeration for n <= 12 (`docs/decoder_a.md`).
+- [ ] Turner parity for decoder A: load `rna_turner2004.par` and match
+      `RNAfold -d0` on 100 sequences. Gate for calling it a physical model.
 - [ ] Withheld label calibration: F1 on the bpRNA vs seed subsets of the same
       withheld clans.
 - [ ] Fold the bpRNA mirror provenance table into the Round 4 report.

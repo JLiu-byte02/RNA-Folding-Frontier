@@ -164,3 +164,35 @@ Append-only. Each entry: date, decision, evidence, alternatives, consequences.
 - **Tooling:** `remote.py doctor` now reports `suspected_local_interception`
   when the handshake completes in <5 ms, so this failure mode is no longer
   misreported as an sshd problem.
+
+## 2026-11-12 — offline work while the tunnel is down: H2.3 and decoder A
+
+Tunnel still closed (`Test-NetConnection 218.18.235.189 -Port 441` = False at
+02:00). No GPU work is possible, so the two remaining pieces of the H2 measurement
+that do not need the server were built and tested locally.
+
+- **H2.3 (`scripts/d2b_block_boundary.py`).** Implements the pre-registered rule
+  unchanged — extra FPs under (c) vs (a) that are not mutually native under the
+  block geometry — and adds what the rule alone cannot say: a distance-stratified
+  view with a distance-matched null. Reason, recorded before any P2-block number
+  exists: `|W(i)| <= block + 2*flank`, so the 60% rule can pass purely because the
+  extra FPs are long-range, which is H2.1's claim. The 60% rule stays the verdict;
+  the stratified ratio is the mechanism check.
+- **Decoder A (`src/rff/decoders/nn_dp.py`).** Exact nearest-neighbour DP with
+  traceback, verified against exhaustive enumeration of all structures for
+  `n <= 12` (value and traceback) under random scores with and without loop
+  penalties. Three real bugs were caught this way: interior offsets with
+  `dk = 0`/`dl = 0` (inner pair not strictly inside) inflated the optimum;
+  `Wtb` defaulted to "paired" and looped in traceback; and skipping the cell when
+  `pair_score` was disallowed also skipped the multiloop/exterior recursions,
+  which made any sparse map decode to the empty structure.
+- **H2.4 (`scripts/h24_decoder_compare.py`).** Compares bare threshold, greedy,
+  and DP at fixed 0.5 with a family-block bootstrap on
+  `drop_lrfp - drop_tp`. Zero loop penalties are the default on purpose: any
+  penalty is a knob that could be tuned until the contrast appears.
+- **Expectation to check, not a claim:** a long-range pair only conflicts with
+  pairs that interleave its endpoints; nested pairs coexist, so DP may keep the
+  FP and recover the local TPs. A null H2.4 result is informative and should be
+  reported as such.
+- Suite: 68 tests pass. Nothing in this entry is a result — no dump, no model
+  output, and no number from id_test/withheld exists for H2.3 or H2.4 yet.

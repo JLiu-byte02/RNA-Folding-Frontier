@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T01:40:00+08:00",
+  "updated": "2026-11-12T02:20:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
   "blocked_on": "aTrust re-login at 01:20 did not restore the tunnel: node group Default now reports \"selectline:no current line\" (controller publishes zero lines). 218.18.235.189:441 still closed (443 open). School-side outage from 23:59; re-check after their service window.",
   "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
@@ -45,6 +45,24 @@
       "depends_on": "q1_dump",
       "why": "D2/H2: are false positives enriched for stackable complementary runs, and do they grow with length?",
       "command": "python scripts/d2_structure_errors.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/d2_withheld_seed17.json"
+    },
+    {
+      "id": "q1_h23",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "block_cache_ac_idtest",
+      "why": "H2.3: do the extra false positives under (c) sit on the block boundary, or is the 60% rule only restating that they are long-range?",
+      "command": "python scripts/e1prime_dump.py --checkpoint runs/p2_seed17/best.pt --out-dir experiments/002_e1prime_runs/dump_block_seed17 --eval c_id_test=<csubset_native.jsonl>:data/cache/block_c_id_test; python scripts/e1prime_dump.py --checkpoint runs/p2_seed17/best.pt --out-dir experiments/002_e1prime_runs/dump_block_seed17 --eval a_id_test=<csubset_native.jsonl>:data/cache/giga_a_id_test; python scripts/d2b_block_boundary.py --a-dump experiments/002_e1prime_runs/dump_block_seed17/a_id_test.jsonl --c-dump experiments/002_e1prime_runs/dump_block_seed17/c_id_test.jsonl --split splits/s1prime_filtered/id_test.jsonl --out experiments/002_e1prime_runs/d2b_block_seed17.json",
+      "notes": "Condition (a) under block geometry rewrites nothing, so its composite equals the native sequence; giga_a_id_test is reused and the difference is only batch numerics. Read by_distance_band, not the 60% rule alone."
+    },
+    {
+      "id": "q1_h24",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "q1_dump",
+      "why": "H2.4: does exact DP remove long-range false positives faster than true pairs at the same 0.5 operating point?",
+      "command": "python scripts/h24_decoder_compare.py --dump experiments/002_e1prime_runs/dump_seed17/a_id_test.jsonl --split splits/s1prime_filtered/id_test.jsonl --out experiments/002_e1prime_runs/h24_a_id_test_seed17.json",
+      "notes": "Decoder A is implemented and unit-verified (docs/decoder_a.md). Run for a_id_test and a_test_withheld, 3 seeds. Zero loop penalties are the recorded default; do not tune them on this contrast."
     },
     {
       "id": "block_donors",

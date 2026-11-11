@@ -55,6 +55,7 @@ def main() -> int:
     ap.add_argument("--archive", default="data/raw/archiveII/data.json")
     ap.add_argument("--out", default="experiments/004_turner_control/archiveii_rnafold.json")
     ap.add_argument("--limit", type=int, default=0, help="0 = all records")
+    ap.add_argument("--save-db", default="", help="optional jsonl of id -> predicted dot-bracket")
     args = ap.parse_args()
 
     import RNA
@@ -68,6 +69,7 @@ def main() -> int:
     per_family: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0])
     per_band: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0])
     rows = []
+    db_rows = []
     n_skipped = 0
     for rid, rec in items:
         seq = rec.get("sequence")
@@ -78,6 +80,8 @@ def main() -> int:
         family = rid.split("_")[0]
         structure, energy = RNA.fold(seq)
         pred = parse_dotbracket(structure)
+        if args.save_db:
+            db_rows.append({"id": rid, "family": family, "length": len(seq), "db": structure})
         tp = len(pred & truth)
         fp = len(pred - truth)
         fn = len(truth - pred)
@@ -158,6 +162,10 @@ def main() -> int:
     out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2) + "\n")
+    if args.save_db:
+        db_path = ROOT / args.save_db
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+        db_path.write_text("".join(json.dumps(r) + "\n" for r in db_rows))
     print(json.dumps(report["summary"], indent=1))
     return 0
 

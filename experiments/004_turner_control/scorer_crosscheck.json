@@ -1,0 +1,32 @@
+{
+  "status": "scorer cross-check, pipeline exercise (not a protocol number)",
+  "n_sequences_compared": 3370,
+  "n_mismatches": 0,
+  "mismatches": [],
+  "agreement": {
+    "pair_sets_exact": true,
+    "family_macro_f1_project": 0.519820191391,
+    "family_macro_f1_independent": "10851937641268538793384295867813115401/20876329586623321456655970729885376050",
+    "family_macro_f1_equal": true,
+    "micro_f1": 0.5407
+  },
+  "sensitivity_pm1": [
+    {
+      "shift": 1,
+      "precision": 0.0052,
+      "recall": 0.0059,
+      "f1": 0.0055
+    },
+    {
+      "shift": -1,
+      "precision": 0.0051,
+      "recall": 0.0058,
+      "f1": 0.0054
+    }
+  ],
+  "pseudoknot_policy": "no removal: true pairs are scored as given, including crossing ones; predictions are always non-crossing, so a pseudoknotted true pair that is predicted in the wrong register counts as FP+FN. No separate pseudoknot document exists; this records the implemented behaviour.",
+  "inputs": {
+    "archive": "data/raw/archiveII/data.json",
+    "predictions": "experiments/004_turner_control/archiveii_rnafold_predictions.jsonl"
+  }
+}

@@ -49,10 +49,30 @@ They did not test an energy-based decode.
    cannot be our finding. "Energetic inference over FM pair evidence changes
    which errors survive, measured at matched recall" can be, if it holds.
 
+### Novelty wording, narrowed (PI Round 4d)
+
+Do **not** claim that "no one tests a learned score plus an exact energy DP".
+That is true only of Flamm et al.'s own follow-ups; it is false for the field.
+MXfold2 combines learned scores with Turner terms inside an exact DP, and BPfold
+places energy inside its model. Both co-train the score and the decoder, so
+neither isolates the decoder's contribution.
+
+The defensible statement, to be used verbatim in the paper:
+
+> H2.4 is a controlled decoder comparison on fixed FM pair scores: does
+> energy-consistent decoding remove the length-scaling false positives reported
+> by Flamm et al., compared with greedy nested matching on the same scores?
+
+Flamm et al. discuss exactly this postprocessing option and leave it untested;
+MXfold2/BPfold cannot answer it because their scores and decoders are trained
+together.
+
 ### Still to check
 
 - Whether Flamm et al.'s follow-ups (or the `rnadeep` codebase) test a
-  learned-score + exact-energy DP. The paper itself does not.
+  learned-score + exact-energy DP. The paper itself does not; MXfold2 and BPfold
+  do, but with a jointly trained score, so the decoder is not isolated
+  (needs a primary citation check before submission).
 - Whether their Figure 3 statistic (matrix > 0.5, all cells) and ours
   (per-sequence long-range FP count) can be related quantitatively; if yes, we
   can reproduce their curve on our splits as a sanity check of the whole

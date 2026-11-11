@@ -254,3 +254,35 @@ that do not need the server were built and tested locally.
   fires on real data (candidate fallbacks: matched pair budget or matched
   precision).
 - Tests: 79 pass, including the new matched-recall and unmatchable cases.
+
+## 2026-11-12 02:55 — Round 4d rulings frozen as Amendment 4
+
+- **Amendment 4** committed before any D1 dump exists: sha256
+  `08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442`.
+  It fixes the H2.4 comparison order (recall-matched primary, pair-budget
+  fallback only when no threshold reaches decoder A's recall, greedy recall
+  ceiling always descriptive, otherwise inconclusive — no fallback may be added
+  after seeing data), defines `A-energy-fixed` with a two-parameter
+  `(s, b)` calibration fitted by 5-fold CV on the frozen train split, defines
+  `A-energy-learned` as the P5 variant only, and records the narrowed novelty
+  wording.
+- **Novelty correction from the PI:** "no one tests a learned score with an
+  exact energy DP" is false for the field (MXfold2, BPfold), true only of
+  Flamm et al.'s follow-ups. `docs/literature.md` now carries the defensible
+  wording: a controlled decoder comparison on *fixed* FM pair scores.
+- **Reproducibility gap recorded, not worked around.** The frozen split
+  membership lists and their manifests exist only on the cluster; no hash is in
+  the repo. Local baseline runs before the split hashes reproduce are therefore
+  labelled pipeline exercises, never protocol numbers.
+- **bpRNA-1m mirror verified locally.** `rouskinlab/bpRNA-1m` at pinned revision
+  `8b973adeba0218113a696dd1c22ada682f26324a`, file `data.json`, 103,163,072
+  bytes, sha256 `d36c62ee92eda8b6db90ac4cd6e9d9804aedbaa8a860dd1fcd9b116d5475dff4`
+  — byte-identical to the recorded pin. This closes half of PI item Q3.2; the
+  other half (rebuilding the splits) still needs `cmscan`.
+- **ArchiveII mirrored** (HuggingFace `rouskinlab/archiveII`, `data.json`, 3,370
+  records, 3,047,984 bytes, sha256
+  `d43276a64beb2d992aa40b060df48ac6dca288c67a1c3ed32a16fc3fce96e28a`).
+  Family counts: 5s 1107, srp 697, tRNA 493, RNaseP 429, tmRNA 404, grp1 93,
+  16s 69, telomerase 37, 23s 30, grp2 11. Note `grp2` is present here, so the
+  "nine families" statement in `research_state.md` needs a check against the
+  clan table before it is quoted again.

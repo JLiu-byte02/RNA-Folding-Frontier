@@ -1,0 +1,17 @@
+{
+  "reference_split": "rnastralign",
+  "splits": {
+    "rnastralign": {
+      "path": "data/raw/bpfold/BPfold_data/RNAStrAlign_bpseq",
+      "family_from": "none"
+    },
+    "archiveII": {
+      "path": "data/raw/bpfold/BPfold_data/archiveII/archiveII",
+      "family_from": "prefix"
+    },
+    "test_ts0": {
+      "path": "data/raw/bpfold/BPfold_data/bpRNA/TS0",
+      "family_from": "bprna"
+    }
+  }
+}

@@ -102,6 +102,85 @@ cross-clan. Any S2 fold must therefore drop the whole clan from training, not
 just the named family, and the tRNA/tmRNA pair is the specific case where a naive
 implementation leaks.
 
+## E0d — The other trainer: ArchiveII vs RNAStrAlign
+
+Verified from the BPfold paper text: trainable models there are trained on
+**RNAStrAlign (19,313 sequences, <= 600 nt) *and* bpRNA-1m** (TR0, 12,114;
+released as TR0 10,814 + VL0 1,300). Auditing only bpRNA therefore audits half
+the training pool.
+
+| test set | n | exact duplicates vs RNAStrAlign | near-duplicates (k=15, containment >= 0.5) |
+|---|---:|---:|---:|
+| ArchiveII | 3,966 | **2,005 (50.55%)** | **3,246 (81.85%)** |
+| bpRNA TS0 | 1,305 | 66 (5.06%) | 149 (11.42%) |
+
+Read together with E0's bpRNA numbers, ArchiveII is more than 50% exact-overlap
+in-distribution under BPfold's own protocol, and 81.85% near-duplicate to the
+RNAStrAlign trainer alone.
+
+That does **not** contradict BPfold: the paper explicitly calls ArchiveII and
+TS0 "sequence-wise" datasets, reserves "cross-family" for Rfam 12.3-14.10
+(10,791 RNAs), and never calls ArchiveII out-of-distribution. The correct claim
+is about the *field*: ArchiveII is routinely reported as a generalisation
+benchmark while being in-distribution for any model trained on the standard
+RNAStrAlign + bpRNA pool.
+
+Caveat: this is measured against the released RNAStrAlign directory (37,052
+files), not against BPfold's filtered 19,313-sequence training subset, so the
+training-subset overlap is <= these numbers. Recomputation against the exact
+filtered subset belongs to T4.
+
+## E0e — Headline: ArchiveII against the union of both trainers
+
+| quantity | value |
+|---|---:|
+| ArchiveII sequences | 3,966 |
+| exact duplicates of bpRNA TR0 | 812 (20.47%) |
+| exact duplicates of RNAStrAlign | 2,005 (50.55%) |
+| **exact duplicates of the union** | **2,427 (61.20%)** |
+| **near-duplicates of the union** (k=15, containment >= 0.5) | **3,506 (88.40%)** |
+| duplicate sequences *inside* ArchiveII | 313 sequences, 515 extra copies |
+
+Per-family, the contamination is concentrated in the short families and absent
+in the long ones, because the standard trainers cap length at 600 nt:
+
+| family | n | exact TR0 | exact RNAStrAlign | exact union | near union |
+|---|---:|---:|---:|---:|---:|
+| tmRNA | 462 | 173 | 432 | 444 (96.1%) | 455 |
+| 5s | 1,283 | 85 | 852 | 867 (67.6%) | 1,197 |
+| srp | 928 | 201 | 601 | 673 (72.5%) | 804 |
+| tRNA | 557 | 175 | 97 | 250 (44.9%) | 461 |
+| RNaseP | 454 | 134 | 22 | 148 (32.6%) | 449 |
+| grp1 | 98 | 34 | 1 | 35 (35.7%) | 91 |
+| telomerase | 37 | 10 | 0 | 10 (27.0%) | 37 |
+| 16s | 106 | 0 | 0 | 0 | 12 |
+| 23s | 30 | 0 | 0 | 0 | 0 |
+| grp2 | 11 | 0 | 0 | 0 | 0 |
+
+The 313 within-ArchiveII duplicates matter for reporting: per-sequence means
+count those sequences up to eight times, so sequence-micro F1 over-weights a few
+structures while family-macro F1 does not.
+
+## E0f — Why overlap translates into F1: the labels are nearly identical
+
+Same procedure as E0b, but comparing ArchiveII against **RNAStrAlign**:
+
+| comparison | duplicates | identical annotations | mean pair F1 | median | p10 |
+|---|---:|---:|---:|---:|---:|
+| ArchiveII vs bpRNA TR0 | 812 | 378 (46.6%) | 0.9191 | 0.982 | 0.710 |
+| ArchiveII vs RNAStrAlign | 1,828 | 1,667 (91.2%) | 0.9946 | 1.000 | 1.000 |
+
+Per family (ArchiveII vs RNAStrAlign): srp 0.999, tmRNA 0.9999, 5s 0.991, tRNA
+0.985, RNaseP 0.959, grp1 0.875; only 5 of 1,828 sequences fall below 0.8.
+
+This is the mechanism that turns overlap into accuracy. RNAStrAlign and
+ArchiveII share a curation source, so their labels agree at 0.995, whereas bpRNA
+— a separately derived consensus annotation — agrees with ArchiveII at only
+0.919. A model trained on RNAStrAlign can therefore reproduce ArchiveII's own
+labels almost verbatim on the 50.55% of the test set it has memorised, and no
+amount of held-out *sequence* identity prevents that. Held-out *clan* is the only
+fix, which is now the S1′ design.
+
 ## Reproduce
 
 ```bash

@@ -1,0 +1,126 @@
+{
+  "n_tr0": 10814,
+  "n_rnastralign": 37052,
+  "n_archiveii": 3966,
+  "exact_tr0": 812,
+  "exact_rnastralign": 2005,
+  "exact_union": 2427,
+  "exact_union_rate": 0.612,
+  "near_union_k": 15,
+  "near_union_min_containment": 0.5,
+  "near_union_pairs": 11497,
+  "near_union": 3506,
+  "near_union_rate": 0.884,
+  "within_archiveii_duplicate_sequences": 313,
+  "within_archiveii_extra_copies": 515,
+  "per_family": {
+    "16s": {
+      "n": 106,
+      "near_union": 12
+    },
+    "23s": {
+      "n": 30
+    },
+    "5s": {
+      "n": 1283,
+      "exact_rnastralign": 852,
+      "exact_union": 867,
+      "exact_tr0": 85,
+      "near_union": 1197
+    },
+    "RNaseP": {
+      "n": 454,
+      "exact_tr0": 134,
+      "exact_union": 148,
+      "exact_rnastralign": 22,
+      "near_union": 449
+    },
+    "grp1": {
+      "n": 98,
+      "exact_tr0": 34,
+      "exact_union": 35,
+      "exact_rnastralign": 1,
+      "near_union": 91
+    },
+    "grp2": {
+      "n": 11
+    },
+    "srp": {
+      "n": 928,
+      "exact_rnastralign": 601,
+      "exact_union": 673,
+      "exact_tr0": 201,
+      "near_union": 804
+    },
+    "tRNA": {
+      "n": 557,
+      "exact_rnastralign": 97,
+      "exact_union": 250,
+      "exact_tr0": 175,
+      "near_union": 461
+    },
+    "telomerase": {
+      "n": 37,
+      "exact_tr0": 10,
+      "exact_union": 10,
+      "near_union": 37
+    },
+    "tmRNA": {
+      "n": 462,
+      "exact_rnastralign": 432,
+      "exact_union": 444,
+      "exact_tr0": 173,
+      "near_union": 455
+    }
+  },
+  "union_summary": {
+    "n": 3966,
+    "length_min": 28,
+    "length_median": 120,
+    "length_max": 1800,
+    "pairs_total": 229188,
+    "families": 10,
+    "top_families": [
+      [
+        "5s",
+        1283
+      ],
+      [
+        "srp",
+        928
+      ],
+      [
+        "tRNA",
+        557
+      ],
+      [
+        "tmRNA",
+        462
+      ],
+      [
+        "RNaseP",
+        454
+      ],
+      [
+        "16s",
+        106
+      ],
+      [
+        "grp1",
+        98
+      ],
+      [
+        "telomerase",
+        37
+      ],
+      [
+        "23s",
+        30
+      ],
+      [
+        "grp2",
+        11
+      ]
+    ]
+  }
+}

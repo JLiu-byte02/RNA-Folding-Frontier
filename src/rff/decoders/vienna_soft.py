@@ -9,8 +9,13 @@ reproduces ``RNAfold`` exactly and parity is structural rather than earned.
 Conventions that must be checked against the installed version before any
 number is quoted (marked [CHECK] in the Round 4c reply):
 
-* ``sc_add_bp(i, j, e)`` takes **0-based** indices in the Python bindings and
-  adds ``e`` in kcal/mol every time the pair is formed;
+* ``sc_add_bp(i, j, e)`` takes **1-based** indices — the docstring of the
+  matrix overload states ``1 <= i < j <= n``, and the single-pair overload
+  follows the same convention (verified against ViennaRNA 2.8.0 by
+  `scripts/check_vienna_parity.py`: a 0-based call silently constrained the
+  wrong pair and 59 of 60 bonuses failed to attract the pair they were given);
+  it adds ``e`` in kcal/mol every time the pair is formed and returns 0 when the
+  constraint is rejected;
 * the sign: a positive pseudo-energy destabilises a pair, so a score that is
   "higher is better" maps to ``e = -scale * score``;
 * the useful magnitude of ``scale``: log-odds and kcal/mol are different units,
@@ -72,15 +77,23 @@ class ViennaSoftDecoder:
             raise ValueError(f"scores must be {n}x{n}, got {scores.shape}")
         fc = self.rna.fold_compound(seq)
         n_constraints = 0
+        n_rejected = 0
         for i in range(n):
             for j in range(i + 1, n):
                 s = float(scores[i, j])
                 if s <= NEG:
                     continue
-                fc.sc_add_bp(i, j, -self.scale * s)
-                n_constraints += 1
+                ok = fc.sc_add_bp(i + 1, j + 1, -self.scale * s)
+                if ok:
+                    n_constraints += 1
+                else:
+                    n_rejected += 1
         structure, energy = fc.mfe()
-        self.last = {"n_constraints": n_constraints, "energy": float(energy)}
+        self.last = {
+            "n_constraints": n_constraints,
+            "n_rejected": n_rejected,
+            "energy": float(energy),
+        }
         return sorted(parse_dotbracket(structure)), float(energy)
 
     def fold_plain(self, seq: str) -> tuple[str, float]:

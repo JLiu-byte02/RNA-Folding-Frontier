@@ -16,3 +16,7 @@ tqdm>=4.66
 pyyaml>=6.0
 pytest>=8.0
 
+# Decoder A (A-energy). Verified on Windows with the cp312 wheel (2.8.0);
+# the server env should get it from bioconda.
+ViennaRNA>=2.6
+

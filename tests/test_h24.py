@@ -134,6 +134,10 @@ def test_impossible_recall_match_is_reported(tmp_path):
     assert report["matched_recall"]["recall_matched"] is True
 
 
+@pytest.mark.skipif(
+    __import__("importlib.util", fromlist=["util"]).find_spec("RNA") is not None,
+    reason="ViennaRNA is installed here; the absence path cannot be simulated",
+)
 def test_vienna_variant_fails_clearly_when_unavailable(tmp_path):
     import subprocess
 

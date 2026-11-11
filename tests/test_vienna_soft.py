@@ -33,6 +33,7 @@ class FakeFoldCompound:
 
     def sc_add_bp(self, i: int, j: int, e: float) -> None:
         self.bp_calls.append((i, j, e))
+        return 1
 
     def mfe(self):
         return self.structure, self.energy
@@ -66,7 +67,8 @@ def test_scores_map_to_negative_pseudo_energy():
     assert pairs == [(0, 5), (1, 4)]
     assert energy == -5.0
     calls = rna.made[0].bp_calls
-    assert calls == [(0, 8, -6.0), (1, 7, 2.0)]
+    # 1-based: the ViennaRNA bindings reject/ignore 0-based indices
+    assert calls == [(1, 9, -6.0), (2, 8, 2.0)]
 
 
 def test_disallowed_cells_are_not_constrained():
@@ -76,6 +78,27 @@ def test_disallowed_cells_are_not_constrained():
     scores = np.full((len(seq), len(seq)), NEG)
     dec.decode(seq, scores)
     assert rna.made[0].bp_calls == []
+    assert dec.last["n_constraints"] == 0
+
+
+def test_rejected_constraints_are_counted():
+    class Rejecting(FakeFoldCompound):
+        def sc_add_bp(self, i, j, e):
+            self.bp_calls.append((i, j, e))
+            return 0
+
+    class RejectingRNA(FakeRNA):
+        def fold_compound(self, seq):
+            fc = Rejecting(seq, self.structure, self.energy)
+            self.made.append(fc)
+            return fc
+
+    dec = ViennaSoftDecoder(rna_module=RejectingRNA())
+    seq = "GGGAAACCC"
+    scores = np.full((9, 9), NEG)
+    scores[0, 8] = 1.0
+    dec.decode(seq, scores)
+    assert dec.last["n_rejected"] == 1
     assert dec.last["n_constraints"] == 0
 
 

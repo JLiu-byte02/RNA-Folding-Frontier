@@ -1,0 +1,21 @@
+{
+  "vienna_version": "2.8.0",
+  "scale": 1.0,
+  "zero_score_parity": {
+    "n": 60,
+    "mismatched": 0,
+    "examples": []
+  },
+  "bonus_attracts_asked_pair": {
+    "n": 60,
+    "failures": 0,
+    "examples": [],
+    "moved_structure": 56
+  },
+  "index_base_probe": {
+    "n": 60,
+    "wrong_pair": 0,
+    "examples": []
+  },
+  "passes": true
+}

@@ -1,0 +1,80 @@
+{
+  "settings": {
+    "n_sequences": 40,
+    "epochs": 12,
+    "margin": 2.0,
+    "lr": 0.15,
+    "noise": 0.7,
+    "energy_scale": 1.0,
+    "vienna_version": "2.8.0",
+    "labels": "RNAfold MFE"
+  },
+  "curve": [
+    {
+      "epoch": 0,
+      "tp": 166,
+      "fp": 96,
+      "fn": 102,
+      "precision": 0.6336,
+      "recall": 0.6194,
+      "f1": 0.6264
+    },
+    {
+      "epoch": 2,
+      "tp": 236,
+      "fp": 32,
+      "fn": 32,
+      "precision": 0.8806,
+      "recall": 0.8806,
+      "f1": 0.8806
+    },
+    {
+      "epoch": 4,
+      "tp": 246,
+      "fp": 28,
+      "fn": 22,
+      "precision": 0.8978,
+      "recall": 0.9179,
+      "f1": 0.9077
+    },
+    {
+      "epoch": 6,
+      "tp": 258,
+      "fp": 22,
+      "fn": 10,
+      "precision": 0.9214,
+      "recall": 0.9627,
+      "f1": 0.9416
+    },
+    {
+      "epoch": 8,
+      "tp": 263,
+      "fp": 17,
+      "fn": 5,
+      "precision": 0.9393,
+      "recall": 0.9813,
+      "f1": 0.9599
+    },
+    {
+      "epoch": 10,
+      "tp": 267,
+      "fp": 12,
+      "fn": 1,
+      "precision": 0.957,
+      "recall": 0.9963,
+      "f1": 0.9762
+    },
+    {
+      "epoch": 12,
+      "tp": 268,
+      "fp": 11,
+      "fn": 0,
+      "precision": 0.9606,
+      "recall": 1.0,
+      "f1": 0.9799
+    }
+  ],
+  "f1_initial": 0.6264,
+  "f1_final": 0.9799,
+  "improved": true
+}

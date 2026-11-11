@@ -1,8 +1,9 @@
 # Decoder A — nearest-neighbour inference over learned pair scores
 
 Status: **A-struct implemented and enumeration-verified 2026-11-12. A-energy
-(ViennaRNA soft constraints) implemented against a stub; server validation
-pending.**
+verified against real ViennaRNA 2.8.0 locally (60 sequences; zero-score parity
+exact, bonus attraction 60/60). Turnover calibration of `--energy-scale` still
+outstanding.**
 
 Code: `src/rff/decoders/nn_dp.py` (A-struct), `src/rff/decoders/vienna_soft.py`
 (A-energy), `src/rff/training/maxmargin.py` (training). Tests:
@@ -56,17 +57,27 @@ claim depends on owning it). `ViennaSoftDecoder` therefore builds
 allowed cell the head scores, and takes `fc.mfe()`. With all scores zero the
 decode is exactly `RNAfold`, so parity is structural.
 
-Not yet verified anywhere (no ViennaRNA on the development machine, no cluster):
+Verified locally on ViennaRNA 2.8.0 (`scripts/check_vienna_parity.py`, record in
+`experiments/003_decoder_a/parity_vienna_2.8.0.json`):
 
-- index base of `sc_add_bp` in the installed bindings (assumed 0-based);
-- sign convention (assumed: positive energy destabilises, hence `-scale*score`);
+- **index base is 1-based.** The docstring's matrix overload says
+  `1 <= i < j <= n`, and a 0-based call silently constrained a different pair:
+  with 0-based indices 59 of 60 bonuses failed to attract the pair they were
+  given. The wrapper now passes `i+1, j+1` and counts rejected constraints.
+- **sign: `e = -scale * score`** attracts a pair and the decoded structure moves
+  as intended (56 of 60 probes changed the MFE structure, 60/60 included the
+  asked pair).
+- **zero scores reproduce `RNAfold` exactly** on 60 sequences, structure and
+  energy (mismatches 0).
+
+Still open:
+
 - a defensible `--energy-scale` (log-odds and kcal/mol are different units; the
   default 1.0 is a placeholder).
 
-These are pinned by `tests/test_vienna_soft.py` against a stub module and must be
-re-checked against real ViennaRNA on the first server run: fold one sequence
-with zero scores and compare to `RNAfold`, then with one strong correction and
-confirm the pair moves in the intended direction.
+`tests/test_vienna_soft.py` pins the wiring with a stub; `tests/test_vienna_real.py`
+re-runs the parity and attraction checks against the installed package (skipped
+when ViennaRNA is absent).
 
 ## Training: structured max-margin
 

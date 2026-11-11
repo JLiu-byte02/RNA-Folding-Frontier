@@ -1,9 +1,17 @@
-# Decoder A — nearest-neighbour DP over learned scores
+# Decoder A — nearest-neighbour inference over learned pair scores
 
-Status: **implemented and unit-verified 2026-11-12; Turner parity not yet done.**
+Status: **A-struct implemented and enumeration-verified 2026-11-12. A-energy
+(ViennaRNA soft constraints) implemented against a stub; server validation
+pending.**
 
-Code: `src/rff/decoders/nn_dp.py`. Tests: `tests/test_nn_dp.py`. Use:
-`scripts/h24_decoder_compare.py` (H2.4) and, later, BPfold-energy runs.
+Code: `src/rff/decoders/nn_dp.py` (A-struct), `src/rff/decoders/vienna_soft.py`
+(A-energy), `src/rff/training/maxmargin.py` (training). Tests:
+`tests/test_nn_dp.py`, `tests/test_vienna_soft.py`, `tests/test_maxmargin.py`,
+`tests/test_h24.py`. Use: `scripts/h24_decoder_compare.py --energy {struct,vienna}`.
+
+Amendment 3 §A3.1 splits the two variants and only A-energy can confirm H2.4:
+A-struct adds structural validity, which the greedy nested decoder already has;
+A-energy adds *energetic* consistency over Turner terms.
 
 ## What it does
 
@@ -40,15 +48,42 @@ precisely what a ViennaRNA comparison cannot validate.
 Cost: 0.17 s at 120 nt, 1.1 s at 300 nt, 3.4 s at 500 nt (single CPU core,
 sparse score matrix). id_test (1,402 sequences, median 112 nt) is minutes.
 
+## A-energy: Turner terms from ViennaRNA, not from us
+
+PI Round 4c rejected re-implementing Turner 2004 (weeks of parity work, and no
+claim depends on owning it). `ViennaSoftDecoder` therefore builds
+`RNA.fold_compound(seq)`, adds `sc_add_bp(i, j, -scale * score)` for every
+allowed cell the head scores, and takes `fc.mfe()`. With all scores zero the
+decode is exactly `RNAfold`, so parity is structural.
+
+Not yet verified anywhere (no ViennaRNA on the development machine, no cluster):
+
+- index base of `sc_add_bp` in the installed bindings (assumed 0-based);
+- sign convention (assumed: positive energy destabilises, hence `-scale*score`);
+- a defensible `--energy-scale` (log-odds and kcal/mol are different units; the
+  default 1.0 is a placeholder).
+
+These are pinned by `tests/test_vienna_soft.py` against a stub module and must be
+re-checked against real ViennaRNA on the first server run: fold one sequence
+with zero scores and compare to `RNAfold`, then with one strong correction and
+confirm the pair moves in the intended direction.
+
+## Training: structured max-margin
+
+`rff.training.maxmargin` implements the MXfold2-style step: loss-augmented
+decode (`+margin` on every allowed non-true cell), subgradient
+`1[predicted] - 1[true]`, descent on the head's scores. Tests check the sign —
+one step must raise the true-minus-predicted score and a toy must reach zero
+loss — because a sign error here would silently train the complement of the
+truth.
+
 ## What it is not
 
-- **Not Turner-faithful.** No special hairpins, terminal AU/GU, Ninio/logistic
-  multiloop, or dangle models. Loop terms are explicit arrays; the default used
-  for H2.4 is zero penalty, i.e. a maximum-weight non-crossing matching over
-  positive log-odds cells.
-- **Not validated against `RNAfold`.** That check (Turner-2004 parameters,
-  `-d0`, matched options, 100 sequences) is still outstanding and is the gate
-  for calling decoder A a physical model. Until then it is a structural prior.
+- **A-struct is not a physical model.** Loop terms are explicit arrays; with the
+  defaults it is a maximum-weight non-crossing matching over log-odds cells, and
+  it must be reported as an exploratory ablation.
+- **A-energy is not yet validated.** The stub tests pin the wiring, not the
+  physics; the zero-score parity check and the sign check above are the gate.
 
 ## Reading H2.4
 

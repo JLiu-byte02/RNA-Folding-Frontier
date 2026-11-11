@@ -132,3 +132,21 @@ def test_impossible_recall_match_is_reported(tmp_path):
     # both decoders already agree, so the gap is zero and this is a true match
     assert report["matched_recall"]["recall_gap"] <= report["matched_recall"]["recall_tolerance"]
     assert report["matched_recall"]["recall_matched"] is True
+
+
+def test_vienna_variant_fails_clearly_when_unavailable(tmp_path):
+    import subprocess
+
+    split = tmp_path / "split.jsonl"
+    split.write_text(json.dumps({"id": "s1", "seq": "GGGAAACCC", "pairs": []}) + "\n")
+    dump = tmp_path / "dump.jsonl"
+    dump.write_text(json.dumps({"id": "s1", "family": "f1", "length": 9, "truth": [],
+                                "scored": {"0,8": 0.9}}) + "\n")
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "h24_decoder_compare.py"),
+         "--dump", str(dump), "--split", str(split), "--energy", "vienna",
+         "--out", str(tmp_path / "o.json")],
+        capture_output=True, text=True,
+    )
+    assert proc.returncode != 0
+    assert "ViennaRNA is not importable" in (proc.stdout + proc.stderr)

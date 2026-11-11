@@ -150,12 +150,31 @@ def main() -> int:
     ap.add_argument("--mlu", type=float, default=0.0)
     ap.add_argument("--n-boot", type=int, default=10000)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument(
+        "--energy",
+        choices=["struct", "vienna"],
+        default="struct",
+        help="struct = A-struct (log-odds, zero penalties); vienna = A-energy (Turner + sc_add_bp)",
+    )
+    ap.add_argument("--energy-scale", type=float, default=1.0,
+                    help="sc_add_bp energy per score unit (vienna only; calibrate on the server)")
     ap.add_argument("--recall-tol", type=float, default=0.002)
     ap.add_argument("--threshold-lo", type=float, default=0.05)
     ap.add_argument("--threshold-hi", type=float, default=0.99)
     ap.add_argument("--threshold-grid", type=int, default=24)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+
+    vienna = None
+    if args.energy == "vienna":
+        try:
+            import RNA  # noqa: F401
+
+            from rff.decoders.vienna_soft import ViennaSoftDecoder
+
+            vienna = ViennaSoftDecoder(scale=args.energy_scale)
+        except ImportError:
+            vienna = None
 
     seqs = {r["id"]: r["seq"] for r in read_jsonl(ROOT / args.split)}
     rows = read_jsonl(Path(args.dump))
@@ -169,7 +188,15 @@ def main() -> int:
         truth = {tuple(p) for p in row["truth"]}
         scored = normalise_scored(row["scored"])
         model, S = make_model(seq, scored, args)
-        dp_pairs, _ = NNDecoder(model).decode(seq, S)
+        if args.energy == "vienna":
+            if vienna is None:
+                raise SystemExit(
+                    "ViennaRNA is not importable: the A-energy variant cannot run here. "
+                    "Install ViennaRNA (or use --energy struct for the exploratory variant)."
+                )
+            dp_pairs, _ = vienna.decode(seq, S)
+        else:
+            dp_pairs, _ = NNDecoder(model).decode(seq, S)
         records.append(
             {
                 "family": row["family"],
@@ -287,7 +314,12 @@ def main() -> int:
             "ml_unpaired": args.mlu,
             "max_loop": args.max_loop,
             "score": "log-odds of the dumped cells; absent cells disallowed",
-            "variant": "A-struct (zero loop penalties) — exploratory, NOT the H2.4 test",
+            "variant": (
+                "A-energy (ViennaRNA Turner + sc_add_bp)"
+                if args.energy == "vienna"
+                else "A-struct (zero loop penalties) — exploratory, NOT the H2.4 test"
+            ),
+            "energy_scale": args.energy_scale if args.energy == "vienna" else None,
         },
         "at_0_5": b,
         "matched_recall": {

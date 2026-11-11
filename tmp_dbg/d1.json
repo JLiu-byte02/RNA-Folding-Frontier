@@ -1,0 +1,54 @@
+{
+  "cond": {
+    "at_threshold": 0.5,
+    "n_sequences": 20,
+    "tp": 44,
+    "fp": 20,
+    "fn": 56,
+    "precision": 0.6875,
+    "recall": 0.44,
+    "f1": 0.5366,
+    "mean_predicted_pairs": 3.2,
+    "mean_true_pairs": 5.0,
+    "pred_to_true_ratio": 0.64,
+    "auprc": 0.7962,
+    "oracle_threshold": 0.0034,
+    "oracle_f1": 0.9091,
+    "by_region": {
+      "neither_kept": {
+        "tp": 27,
+        "fp": 20,
+        "fn": 33,
+        "precision": 0.5745,
+        "recall": 0.45,
+        "f1": 0.5047
+      },
+      "one_kept": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 23,
+        "precision": 1.0,
+        "recall": 0.425,
+        "f1": 0.5965
+      }
+    },
+    "by_distance": {
+      "d32-128": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 23,
+        "precision": 1.0,
+        "recall": 0.425,
+        "f1": 0.5965
+      },
+      "d>128": {
+        "tp": 27,
+        "fp": 20,
+        "fn": 33,
+        "precision": 0.5745,
+        "recall": 0.45,
+        "f1": 0.5047
+      }
+    }
+  }
+}

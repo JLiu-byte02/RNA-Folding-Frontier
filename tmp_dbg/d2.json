@@ -1,0 +1,21 @@
+{
+  "cond": {
+    "n_sequences": 20,
+    "n_fp": 20,
+    "fp_frac_helix_ge_min": 0.0,
+    "tp_frac_helix_ge_min": 0.0,
+    "fp_median_helix": 1.0,
+    "tp_median_helix": 0.0,
+    "fp_long_range_frac": 1.0,
+    "fp_helix_spanning_kept_boundary": 0,
+    "by_length_band": {
+      "200-399": {
+        "n_seq": 20,
+        "fp": 20,
+        "tp": 44,
+        "fn": 56,
+        "fp_long_range": 20
+      }
+    }
+  }
+}

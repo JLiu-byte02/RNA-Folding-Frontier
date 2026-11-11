@@ -88,3 +88,32 @@ Append-only. Each entry: date, decision, evidence, alternatives, consequences.
   remove the whole clan from the training pool; the tRNA/tmRNA pair is the
   specific fold where a naive implementation leaks.
 
+
+## 2026-11-11 — E1′ P2 result: the prediction is inverted (PI Round 4)
+
+- **Finding (three seeds, RiNALMo-giga, decoder B, family-macro F1, paired family
+  bootstrap 10k):** masking the whole distal region (condition e) *improves*
+  family-macro F1 by +0.089 [+0.045, +0.134] on id_test and +0.041 [+0.019,
+  +0.063] on test_withheld. A low-identity same-family homolog (condition c) is
+  the worst condition on both splits: −0.092 [−0.141, −0.040] and −0.076
+  [−0.101, −0.050] against its own subset baseline. Other-clan (d) is +0.053
+  [+0.009, +0.098] on id_test and +0.007 [−0.014, +0.028] on withheld;
+  dinucleotide-shuffled (b) is +0.027 [−0.014, +0.071] and +0.008 [−0.012, +0.029].
+- **P2 is not met.** The retention criterion is undefined because the (a)−(e)
+  gain is negative.
+- **P3 is not met.** Family-macro +0.008 with a CI that includes 0; micro −0.062.
+- **Amendment 1.3 is not supported**, with the caveat that the clan-decodability
+  covariate has no signal on these splits: the probe scores 0.9216 on held-out
+  training sequences over 590 clans but 0.0526 on id_test (chance 0.042) and is
+  undefined on withheld, because whole families inside a clan are held out.
+- **Status:** the family-identity shortcut, as framed, is not supported by the
+  first causal test. Everything that follows is post hoc and exploratory until
+  confirmed on data not yet touched (test_novel, S4).
+- **Not yet claimable:** that distal context is a "net-negative prior below
+  300 nt". Two artifacts must be ruled out first — a threshold/calibration shift
+  (the head was trained on native inputs and tested on swapped ones at a fixed
+  0.5 cut) and the scoring geometry (one central ±32 window, not a window per
+  position). The replacement candidate is H2, "spurious partners": distal
+  sequence that is locally complementary to the kept region yields confident
+  false long-range pairs that the 2D head cannot reject. H2 is pre-registered
+  only when its diagnostics are in.

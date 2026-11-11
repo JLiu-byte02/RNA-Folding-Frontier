@@ -41,6 +41,11 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--clan-membership", default="data/raw/rfam/clan_membership.txt")
     ap.add_argument("--family-table", default="data/processed/rfam/families.tsv")
+    ap.add_argument(
+        "--input-fasta",
+        default="data/processed/cmscan/input.fasta",
+        help="used to emit explicit NOHIT rows",
+    )
     args = ap.parse_args()
 
     clan_of = load_clans(Path(args.clan_membership))
@@ -56,15 +61,19 @@ def main() -> int:
                     continue
                 n_lines += 1
                 fields = line.split()
-                if len(fields) < 18:
+                # Infernal --tblout (per-target) columns:
+                # 0 target name (CM), 1 target acc, 2 query name (sequence),
+                # 3 query acc, ..., 9 strand, 10 trunc, 11 pass, 12 gc,
+                # 13 bias, 14 score, 15 E-value, 16 inc, 17 description
+                if len(fields) < 17:
                     continue
                 target_name = fields[0]
                 query_name = fields[2]
                 accession = fields[1]
                 try:
-                    evalue = float(fields[16])
-                    score = float(fields[15])
-                    bias = float(fields[17])
+                    evalue = float(fields[15])
+                    score = float(fields[14])
+                    bias = float(fields[13])
                 except ValueError:
                     continue
                 seen.add(query_name)
@@ -86,6 +95,7 @@ def main() -> int:
     cols = [
         "source",
         "query",
+        "target_name",
         "family_accession",
         "family_name",
         "clan",
@@ -100,10 +110,35 @@ def main() -> int:
             source = query.split(":", 1)[0] if ":" in query else "unknown"
             writer.writerow({**row, "source": source})
 
+        all_ids: list[str] = []
+        inp = Path(args.input_fasta)
+        if inp.exists():
+            with open(inp) as fh:
+                for line in fh:
+                    if line.startswith(">"):
+                        all_ids.append(line[1:].strip().split()[0])
+        nohit = [q for q in all_ids if q not in best]
+        for query in nohit:
+            source = query.split(":", 1)[0] if ":" in query else "unknown"
+            writer.writerow(
+                {
+                    "source": source,
+                    "query": query,
+                    "target_name": "NOHIT",
+                    "family_accession": "NOHIT",
+                    "family_name": "NOHIT",
+                    "clan": "NOHIT",
+                    "evalue": "",
+                    "score": "",
+                    "bias": "",
+                }
+            )
+
     summary = {
         "tbl_lines": n_lines,
         "queries_with_hit": len(seen),
         "queries_written": len(best),
+        "queries_nohit": len(all_ids) - len(best) if all_ids else 0,
         "by_source": {},
     }
     for row in best.values():

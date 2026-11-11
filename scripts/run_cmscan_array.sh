@@ -14,33 +14,13 @@ SHARD="${3:-500}"
 JOBS="${4:-16}"
 CM="${ROOT}/data/raw/rfam/Rfam.cm"
 CMS="${ROOT}/tools/infernal/bin/cmscan"
+PY="${RFF_PY:-/home/junxuanliu/.conda/envs/rff/bin/python}"
 
 mkdir -p "${OUT}/shards" "${OUT}/tbl" "${OUT}/logs"
+rm -f "${OUT}"/tbl/*.tbl "${OUT}"/tbl/*.done
 
-/home/junxuanliu/.conda/envs/rff/bin/python - "$IN" "${OUT}/shards" "$SHARD" <<'PY'
-import sys, pathlib
-src, outdir, shard = sys.argv[1], pathlib.Path(sys.argv[2]), int(sys.argv[3])
-outdir.mkdir(parents=True, exist_ok=True)
-name, buf, idx = None, [], 0
-def flush(idx, name, buf):
-    if name is None:
-        return
-    with open(outdir / f"shard_{idx:05d}.fa", "w") as fh:
-        fh.write(f">{name}\n{''.join(buf)}\n")
-n = 0
-with open(src) as fh:
-    for line in fh:
-        if line.startswith(">"):
-            flush(idx, name, buf)
-            if name is not None:
-                n += 1
-            name, buf = line[1:].strip().split()[0], []
-            idx = n // shard
-        else:
-            buf.append(line.strip())
-flush(idx, name, buf)
-print("shards:", idx + 1)
-PY
+"${PY}" "${ROOT}/scripts/shard_fasta.py" \
+  "${IN}" "${OUT}/shards" --size "${SHARD}"
 
 N=$(ls "${OUT}/shards"/shard_*.fa | wc -l)
 echo "submitting ${N} shards, ${JOBS} at a time"

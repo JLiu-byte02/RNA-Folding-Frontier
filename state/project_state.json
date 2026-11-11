@@ -1,9 +1,9 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-11T19:40:40+08:00",
+  "updated_at": "2026-11-11T20:42:20+08:00",
   "phase": "e0-contamination-audit",
-  "cycle": 1,
+  "cycle": 2,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
     "cluster": "Slurm",
@@ -20,22 +20,25 @@
     "rate_limit_reset_at": null
   },
   "active_direction": "D1-local-evidence-global-physics",
-  "active_experiment": "E0b-label-discordance / E0c-clan-map / cmscan-infra",
+  "active_experiment": "E0g-cmscan-family-assignment",
   "open_questions": [
-    "Did BPfold frame ArchiveII as OOD or as a standard benchmark?",
-    "How much does BPfold F1 drop on clan- and near-dup-cleaned ArchiveII?",
-    "Can cmscan run at scale on 64 CPU cores before E1-prime?",
-    "Which clans to hold out for S1-prime (15-25%, stratified)?"
+    "How many ArchiveII clones map to the five BPfold headline families clans?",
+    "How many clans are novel vs withheld for S1-prime?",
+    "Measured GPU cost of crop embeddings for the k-sweep?"
   ],
   "blockers": [
-    "Rfam 15.0 CM download is bandwidth-limited (~30 KB/s); Infernal build in progress"
+    "CPU partition fully allocated; cmscan running on login node",
+    "torch 2.6 install in progress for transformers 5.20 compatibility"
   ],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
     "results": [
       "experiments/000_e0_leakage/report.md",
-      "experiments/000_e0_leakage/label_discordance_bpfold_archiveII/summary.json"
+      "experiments/000_e0_leakage/union_overlap/summary.json",
+      "experiments/000_e0_leakage/label_discordance_rnastralign/summary.json",
+      "experiments/000_e0_leakage/bprna_mirror/summary.json",
+      "experiments/001_e1prime/PREREGISTRATION.md"
     ]
   }
 }

@@ -1,9 +1,9 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-11T00:00:00+08:00",
-  "phase": "round-0-direction-selected",
-  "cycle": 0,
+  "updated_at": "2026-11-11T19:40:40+08:00",
+  "phase": "e0-contamination-audit",
+  "cycle": 1,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
     "cluster": "Slurm",
@@ -20,17 +20,22 @@
     "rate_limit_reset_at": null
   },
   "active_direction": "D1-local-evidence-global-physics",
-  "active_experiment": "E0-leakage-audit",
+  "active_experiment": "E0b-label-discordance / E0c-clan-map / cmscan-infra",
   "open_questions": [
-    "Which of the PI's three candidate directions is most novel and feasible?",
-    "Which leakage-audited benchmark protocol should be adopted?",
-    "What is the strongest reproducible baseline under the 6-GPU cap?"
+    "Did BPfold frame ArchiveII as OOD or as a standard benchmark?",
+    "How much does BPfold F1 drop on clan- and near-dup-cleaned ArchiveII?",
+    "Can cmscan run at scale on 64 CPU cores before E1-prime?",
+    "Which clans to hold out for S1-prime (15-25%, stratified)?"
   ],
-  "blockers": [],
+  "blockers": [
+    "Rfam 15.0 CM download is bandwidth-limited (~30 KB/s); Infernal build in progress"
+  ],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
-    "results": []
+    "results": [
+      "experiments/000_e0_leakage/report.md",
+      "experiments/000_e0_leakage/label_discordance_bpfold_archiveII/summary.json"
+    ]
   }
 }
-

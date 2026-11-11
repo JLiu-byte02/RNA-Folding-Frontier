@@ -1,0 +1,55 @@
+{
+  "n_archiveii": 3966,
+  "n_exact_duplicate_sequences": 812,
+  "n_identical_annotations": 378,
+  "identity_rate": 0.4655,
+  "mean_pair_f1": 0.9191,
+  "median_pair_f1": 0.982,
+  "p10_pair_f1": 0.7104,
+  "n_f1_below_0.8": 132,
+  "n_f1_below_0.5": 6,
+  "per_family": {
+    "5s": {
+      "n": 85,
+      "mean_pair_f1": 0.8768,
+      "median_pair_f1": 0.9565,
+      "n_identical": 18
+    },
+    "RNaseP": {
+      "n": 134,
+      "mean_pair_f1": 0.934,
+      "median_pair_f1": 0.9596,
+      "n_identical": 9
+    },
+    "grp1": {
+      "n": 34,
+      "mean_pair_f1": 0.9649,
+      "median_pair_f1": 0.9671,
+      "n_identical": 0
+    },
+    "srp": {
+      "n": 201,
+      "mean_pair_f1": 0.9703,
+      "median_pair_f1": 1.0,
+      "n_identical": 174
+    },
+    "tRNA": {
+      "n": 175,
+      "mean_pair_f1": 0.9971,
+      "median_pair_f1": 1.0,
+      "n_identical": 174
+    },
+    "telomerase": {
+      "n": 10,
+      "mean_pair_f1": 0.6606,
+      "median_pair_f1": 0.6885,
+      "n_identical": 0
+    },
+    "tmRNA": {
+      "n": 173,
+      "mean_pair_f1": 0.796,
+      "median_pair_f1": 0.8632,
+      "n_identical": 3
+    }
+  }
+}

@@ -39,9 +39,76 @@ Reference training split: bpRNA-1m TR0 (10,814 sequences).
 - The 15-mer criterion is not a substitute for structural homology detection.
 - Only bpRNA TR0 is used as reference here; S1′ will use a clan-aware training
   pool, not TR0.
+- **The family/clan columns in `audit.md` are currently vacuous.** bpRNA records
+  carry no family metadata, so "shared families: 0" there means "unmapped", not
+  "no overlap". Clan numbers must be treated as missing until cmscan is run.
 
 ## Artifacts
 
 - `audit.md`, `summary.json` — machine-readable summary (full hit lists remain on
   the server under `experiments/000_e0_leakage/report/`).
+
+## E0b — label agreement on the exact duplicates
+
+For the 812 ArchiveII sequences that appear verbatim in bpRNA TR0 we can compare
+the two annotations directly. This bounds how well *any* predictor can score
+against either label set on that subset, and it is free of model error.
+
+| family | n | mean pair F1 | median pair F1 | identical annotations |
+|---|---:|---:|---:|---:|
+| tRNA | 175 | 0.9971 | 1.000 | 174 |
+| srp | 201 | 0.9703 | 1.000 | 174 |
+| grp1 | 34 | 0.9649 | 0.967 | 0 |
+| RNaseP | 134 | 0.9340 | 0.960 | 9 |
+| 5s | 85 | 0.8768 | 0.957 | 18 |
+| tmRNA | 173 | 0.7960 | 0.863 | 3 |
+| telomerase | 10 | 0.6606 | 0.689 | 0 |
+| **all** | **812** | **0.9191** | **0.982** | **378 (46.6%)** |
+
+Direction of the disagreement: bpRNA has *fewer* base pairs than ArchiveII in 394
+of 812 cases, more in 30, and the same count in 388. Mean precision (bpRNA scored
+against ArchiveII) is 0.966, mean recall 0.886. Median shifted-register pairs is
+0, so the disagreement is not a small alignment offset; bpRNA is systematically
+missing pairs, most likely pseudoknots and family-consensus projections that the
+comparative model did not resolve.
+
+Consequence: on the overlapping subset, F1 is capped near 0.92 on average and
+near 0.66 for telomerase. A model reporting F1 above these numbers on those
+sequences is partly memorising one annotation convention. This is the seed for
+the D3 evidence-stratified evaluation.
+
+## E0c — ArchiveII's nine "families" are eight clans
+
+Rfam 15.0 ships 4,178 families, 147 clans and 463 clan memberships; 3,715
+families are singletons. Mapping ArchiveII's families through the release's
+`clan_membership.txt`:
+
+| ArchiveII family | Rfam family | clan |
+|---|---|---|
+| 5s | RF00001 | CL00113 |
+| 16s | RF00177 | CL00111 |
+| 23s | RF02541 | CL00112 |
+| tRNA | RF00005 | **CL00001** |
+| tmRNA | RF00023 | **CL00001** |
+| RNaseP | RF00010 | CL00002 |
+| srp | RF00017 / RF00169 | CL00003 |
+| telomerase | RF00025 | CL00004 |
+| grp1 | RF00028 | singleton |
+| grp2 | RF00029 | singleton |
+
+tRNA and tmRNA share a clan, so ArchiveII leave-one-family-out has a
+same-clan sibling in the training pool for those folds. Every other fold is
+cross-clan. Any S2 fold must therefore drop the whole clan from training, not
+just the named family, and the tRNA/tmRNA pair is the specific case where a naive
+implementation leaks.
+
+## Reproduce
+
+```bash
+python scripts/label_discordance.py \
+  --archiveii data/raw/bpfold/BPfold_data/archiveII/archiveII \
+  --out experiments/000_e0_leakage/label_discordance_bpfold_archiveII
+python scripts/audit_splits.py --config configs/e0_bpfold_audit.json
+python scripts/build_rfam_index.py
+```
 

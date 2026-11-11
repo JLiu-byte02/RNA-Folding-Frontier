@@ -1,0 +1,647 @@
+{
+  "reference_split": "train_tr0",
+  "summaries": {
+    "train_tr0": {
+      "n": 10814,
+      "length_min": 33,
+      "length_median": 105,
+      "length_max": 498,
+      "pairs_total": 288935,
+      "families": 9595,
+      "top_families": [
+        [
+          "unknown",
+          1220
+        ],
+        [
+          "RFAM_10014",
+          1
+        ],
+        [
+          "RFAM_10017",
+          1
+        ],
+        [
+          "RFAM_10033",
+          1
+        ],
+        [
+          "RFAM_10042",
+          1
+        ],
+        [
+          "RFAM_10043",
+          1
+        ],
+        [
+          "RFAM_10058",
+          1
+        ],
+        [
+          "RFAM_10063",
+          1
+        ],
+        [
+          "RFAM_10069",
+          1
+        ],
+        [
+          "RFAM_1007",
+          1
+        ]
+      ]
+    },
+    "valid_vl0": {
+      "n": 1300,
+      "length_min": 33,
+      "length_median": 106,
+      "length_max": 497,
+      "pairs_total": 34351,
+      "families": 1147,
+      "top_families": [
+        [
+          "unknown",
+          154
+        ],
+        [
+          "RFAM_10019",
+          1
+        ],
+        [
+          "RFAM_10029",
+          1
+        ],
+        [
+          "RFAM_10044",
+          1
+        ],
+        [
+          "RFAM_10093",
+          1
+        ],
+        [
+          "RFAM_1011",
+          1
+        ],
+        [
+          "RFAM_10125",
+          1
+        ],
+        [
+          "RFAM_1020",
+          1
+        ],
+        [
+          "RFAM_10250",
+          1
+        ],
+        [
+          "RFAM_10268",
+          1
+        ]
+      ]
+    },
+    "test_ts0": {
+      "n": 1305,
+      "length_min": 22,
+      "length_median": 109,
+      "length_max": 499,
+      "pairs_total": 35573,
+      "families": 1131,
+      "top_families": [
+        [
+          "unknown",
+          175
+        ],
+        [
+          "RFAM_10",
+          1
+        ],
+        [
+          "RFAM_10084",
+          1
+        ],
+        [
+          "RFAM_101",
+          1
+        ],
+        [
+          "RFAM_10103",
+          1
+        ],
+        [
+          "RFAM_10243",
+          1
+        ],
+        [
+          "RFAM_10263",
+          1
+        ],
+        [
+          "RFAM_10305",
+          1
+        ],
+        [
+          "RFAM_10379",
+          1
+        ],
+        [
+          "RFAM_10396",
+          1
+        ]
+      ]
+    },
+    "archiveII": {
+      "n": 3966,
+      "length_min": 28,
+      "length_median": 120,
+      "length_max": 1800,
+      "pairs_total": 229188,
+      "families": 10,
+      "top_families": [
+        [
+          "5s",
+          1283
+        ],
+        [
+          "srp",
+          928
+        ],
+        [
+          "tRNA",
+          557
+        ],
+        [
+          "tmRNA",
+          462
+        ],
+        [
+          "RNaseP",
+          454
+        ],
+        [
+          "16s",
+          106
+        ],
+        [
+          "grp1",
+          98
+        ],
+        [
+          "telomerase",
+          37
+        ],
+        [
+          "23s",
+          30
+        ],
+        [
+          "grp2",
+          11
+        ]
+      ]
+    },
+    "bprna_new": {
+      "n": 5401,
+      "length_min": 33,
+      "length_median": 92,
+      "length_max": 489,
+      "pairs_total": 128025,
+      "families": 1,
+      "top_families": [
+        [
+          "unknown",
+          5401
+        ]
+      ]
+    }
+  },
+  "exact_duplicates": {
+    "n_cross_split_duplicate_sequences": 897,
+    "examples": [
+      {
+        "hash": "e20376c5312729ea",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_15639"
+          ],
+          [
+            "archiveII",
+            "5s_Xanthomonas-axonopodis-1"
+          ],
+          [
+            "archiveII",
+            "5s_Xanthomonas-campestris-1"
+          ]
+        ]
+      },
+      {
+        "hash": "ad19c01d11b75dae",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16021"
+          ],
+          [
+            "archiveII",
+            "5s_Candidatus-Portiera-aleyrodidarum-1"
+          ]
+        ]
+      },
+      {
+        "hash": "a373a22e310b3bd9",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16113"
+          ],
+          [
+            "archiveII",
+            "5s_Bradyrhizobium-japonicum-1"
+          ]
+        ]
+      },
+      {
+        "hash": "38e578b5d3dd4303",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16146"
+          ],
+          [
+            "archiveII",
+            "5s_Parachlamydia-sp.-1"
+          ]
+        ]
+      },
+      {
+        "hash": "2f391fb3196cbbe9",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16221"
+          ],
+          [
+            "archiveII",
+            "5s_Pseudomonas-syringae-1"
+          ]
+        ]
+      },
+      {
+        "hash": "e6443e31c93dd53b",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16579"
+          ],
+          [
+            "archiveII",
+            "5s_Corynebacterium-jeikeium-2"
+          ]
+        ]
+      },
+      {
+        "hash": "29323111a26c4e68",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16655"
+          ],
+          [
+            "archiveII",
+            "5s_Gluconobacter-oxydans-3"
+          ]
+        ]
+      },
+      {
+        "hash": "dfdda3fc55df5689",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16680"
+          ],
+          [
+            "archiveII",
+            "5s_Methylobacterium-organophilum-1"
+          ]
+        ]
+      },
+      {
+        "hash": "6239b7c84ce33c70",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16709"
+          ],
+          [
+            "archiveII",
+            "5s_Polyangium-cellulosum-1"
+          ]
+        ]
+      },
+      {
+        "hash": "b74b48813a404c38",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16767"
+          ],
+          [
+            "archiveII",
+            "5s_Thermus-sp.-1"
+          ]
+        ]
+      },
+      {
+        "hash": "d022cf78a7be7bb5",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_16799"
+          ],
+          [
+            "archiveII",
+            "5s_Vibrio-adaptatus-1"
+          ]
+        ]
+      },
+      {
+        "hash": "74b393221431e1d5",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_18570"
+          ],
+          [
+            "archiveII",
+            "5s_Artemia-sp.-2"
+          ]
+        ]
+      },
+      {
+        "hash": "f802b1311388e926",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19000"
+          ],
+          [
+            "archiveII",
+            "5s_Fusarium-asiaticum-6"
+          ],
+          [
+            "archiveII",
+            "5s_Fusarium-lunulosporum-7"
+          ]
+        ]
+      },
+      {
+        "hash": "07fa3a77f5e7600d",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19063"
+          ],
+          [
+            "archiveII",
+            "5s_Blakeslea-trispora-1"
+          ]
+        ]
+      },
+      {
+        "hash": "ad2f11fcfb5c2d7c",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19096"
+          ],
+          [
+            "archiveII",
+            "5s_Chordaria-flagelliformis-1"
+          ]
+        ]
+      },
+      {
+        "hash": "c9ffdb377afbdc66",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19098"
+          ],
+          [
+            "archiveII",
+            "5s_Chlamydomonas-sp.-1"
+          ]
+        ]
+      },
+      {
+        "hash": "bc1ed476e09dcc69",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19109"
+          ],
+          [
+            "archiveII",
+            "5s_Coemansia-mojavensis-1"
+          ]
+        ]
+      },
+      {
+        "hash": "20281119bce60317",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19131"
+          ],
+          [
+            "archiveII",
+            "5s_Cunninghamella-elegans-1"
+          ]
+        ]
+      },
+      {
+        "hash": "928d7f4314b4ad69",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19132"
+          ],
+          [
+            "archiveII",
+            "5s_Cyanophora-paradoxa-1"
+          ]
+        ]
+      },
+      {
+        "hash": "21935566d0b51543",
+        "members": [
+          [
+            "train_tr0",
+            "bpRNA_CRW_19137"
+          ],
+          [
+            "archiveII",
+            "5s_Dictyostelium-discoideum-1"
+          ]
+        ]
+      }
+    ]
+  },
+  "per_test": {
+    "valid_vl0": {
+      "exact_duplicates_vs_reference": {
+        "n_query": 1300,
+        "n_hits": 0,
+        "hit_rate": 0.0,
+        "examples": []
+      },
+      "near_duplicates_vs_reference": {
+        "k": 15,
+        "min_containment": 0.5,
+        "n_query": 1300,
+        "n_query_with_hit": 4,
+        "hit_rate": 0.0031,
+        "n_hits": 4
+      },
+      "family_overlap": {
+        "field": "family",
+        "train_values": 9595,
+        "test_values": 1147,
+        "shared_values": 1,
+        "shared_fraction_of_test": 0.0009,
+        "examples": [
+          "unknown"
+        ]
+      },
+      "clan_overlap": {
+        "field": "clan",
+        "train_values": 0,
+        "test_values": 0,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      }
+    },
+    "test_ts0": {
+      "exact_duplicates_vs_reference": {
+        "n_query": 1305,
+        "n_hits": 0,
+        "hit_rate": 0.0,
+        "examples": []
+      },
+      "near_duplicates_vs_reference": {
+        "k": 15,
+        "min_containment": 0.5,
+        "n_query": 1305,
+        "n_query_with_hit": 6,
+        "hit_rate": 0.0046,
+        "n_hits": 6
+      },
+      "family_overlap": {
+        "field": "family",
+        "train_values": 9595,
+        "test_values": 1131,
+        "shared_values": 1,
+        "shared_fraction_of_test": 0.0009,
+        "examples": [
+          "unknown"
+        ]
+      },
+      "clan_overlap": {
+        "field": "clan",
+        "train_values": 0,
+        "test_values": 0,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      }
+    },
+    "archiveII": {
+      "exact_duplicates_vs_reference": {
+        "n_query": 3966,
+        "n_hits": 812,
+        "hit_rate": 0.2047,
+        "examples": [
+          "5s_Acholeplasma-laidlawii-2",
+          "5s_Acidithiobacillus-thiooxidans-1",
+          "5s_Artemia-sp.-2",
+          "5s_Batrachospermum-ectocarpum-1",
+          "5s_Beggiatoa-alba-1",
+          "5s_Blakeslea-trispora-1",
+          "5s_Bradyrhizobium-japonicum-1",
+          "5s_Candida-azyma-1",
+          "5s_Candidatus-Portiera-aleyrodidarum-1",
+          "5s_Chlamydomonas-sp.-1",
+          "5s_Chordaria-flagelliformis-1",
+          "5s_Clostridium-carnis-1",
+          "5s_Clostridium-pasteurianum-1",
+          "5s_Coemansia-mojavensis-1",
+          "5s_Corynebacterium-jeikeium-2",
+          "5s_Cunninghamella-elegans-1",
+          "5s_Cyanophora-paradoxa-1",
+          "5s_Diatoma-tenue-1",
+          "5s_Dictyostelium-discoideum-1",
+          "5s_Dicyema-misakiense-1"
+        ]
+      },
+      "near_duplicates_vs_reference": {
+        "k": 15,
+        "min_containment": 0.5,
+        "n_query": 3966,
+        "n_query_with_hit": 1517,
+        "hit_rate": 0.3825,
+        "n_hits": 1622
+      },
+      "family_overlap": {
+        "field": "family",
+        "train_values": 9595,
+        "test_values": 10,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      },
+      "clan_overlap": {
+        "field": "clan",
+        "train_values": 0,
+        "test_values": 0,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      }
+    },
+    "bprna_new": {
+      "exact_duplicates_vs_reference": {
+        "n_query": 5401,
+        "n_hits": 0,
+        "hit_rate": 0.0,
+        "examples": []
+      },
+      "near_duplicates_vs_reference": {
+        "k": 15,
+        "min_containment": 0.5,
+        "n_query": 5401,
+        "n_query_with_hit": 3,
+        "hit_rate": 0.0006,
+        "n_hits": 3
+      },
+      "family_overlap": {
+        "field": "family",
+        "train_values": 9595,
+        "test_values": 0,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      },
+      "clan_overlap": {
+        "field": "clan",
+        "train_values": 0,
+        "test_values": 0,
+        "shared_values": 0,
+        "shared_fraction_of_test": 0.0,
+        "examples": []
+      }
+    }
+  }
+}

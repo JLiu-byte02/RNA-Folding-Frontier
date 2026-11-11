@@ -1,0 +1,25 @@
+{
+  "reference_split": "train_tr0",
+  "splits": {
+    "train_tr0": {
+      "path": "data/raw/bpfold/BPfold_data/bpRNA/TR0",
+      "family_from": "bprna"
+    },
+    "valid_vl0": {
+      "path": "data/raw/bpfold/BPfold_data/bpRNA/VL0",
+      "family_from": "bprna"
+    },
+    "test_ts0": {
+      "path": "data/raw/bpfold/BPfold_data/bpRNA/TS0",
+      "family_from": "bprna"
+    },
+    "archiveII": {
+      "path": "data/raw/bpfold/BPfold_data/archiveII/archiveII",
+      "family_from": "prefix"
+    },
+    "bprna_new": {
+      "path": "data/raw/bpfold/BPfold_data/bpRNAnew/bpRNAnew.nr500.canonicals",
+      "family_from": "none"
+    }
+  }
+}

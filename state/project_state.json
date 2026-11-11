@@ -2,7 +2,7 @@
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
   "updated_at": "2026-11-11T00:00:00+08:00",
-  "phase": "bootstrap",
+  "phase": "round-0-direction-selected",
   "cycle": 0,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
@@ -19,8 +19,8 @@
     "last_session_file": null,
     "rate_limit_reset_at": null
   },
-  "active_direction": null,
-  "active_experiment": null,
+  "active_direction": "D1-local-evidence-global-physics",
+  "active_experiment": "E0-leakage-audit",
   "open_questions": [
     "Which of the PI's three candidate directions is most novel and feasible?",
     "Which leakage-audited benchmark protocol should be adopted?",

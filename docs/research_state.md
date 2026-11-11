@@ -14,6 +14,9 @@ Updated: 2026-11-11
 - Remote project root: `/home/junxuanliu/projects/RNA-Folding-Frontier` (empty).
 - Login-node Python is 3.6.8; Conda modules are available. A dedicated environment
   must be created before any experiment.
+- E0 first pass: ArchiveII overlaps bpRNA-1m TR0 by 20.47% exact sequence
+  duplicates and 38.25% near-duplicates (k=15 containment >= 0.5). TS0, VL0 and
+  bpRNA-new are sequence-clean at this threshold.
 
 ## Open questions
 

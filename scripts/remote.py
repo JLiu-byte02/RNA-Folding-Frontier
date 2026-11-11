@@ -105,7 +105,7 @@ def main():
     client = connect()
     try:
         if args.action == "exec":
-            sys.exit(cmd_exec(client, args.command, args.cwd))
+            sys.exit(cmd_exec(client, args.command, args.cwd or REMOTE_ROOT))
         if args.action == "put":
             cmd_put(client, args.local, args.remote)
         if args.action == "get":

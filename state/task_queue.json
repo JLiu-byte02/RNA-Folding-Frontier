@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T00:55:00+08:00",
+  "updated": "2026-11-12T01:05:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
   "blocked_on": "sshd refuses identification (kex_exchange_identification read error); cooled down, low-frequency doctor checks only",
   "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
@@ -26,7 +26,17 @@
       "status": "ready",
       "depends_on": "q1_dump",
       "why": "D1: does condition e change quality or just the operating point?",
-      "command": "python scripts/d1_scoring.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --out experiments/002_e1prime_runs/d1_seed17.json"
+      "command": "python scripts/d1_scoring.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --out experiments/002_e1prime_runs/d1_seed17.json",
+      "notes": "Writes d1_seed*.json plus d1_seed*.json.per_sequence/ for K1. 3 decoders x 4 bands x oracle grid 0.20-0.90."
+    },
+    {
+      "id": "q1_k1",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "q1_score",
+      "why": "Amendment 2 K1: is the e-a gain an operating-point artifact? Decides whether the 'net-negative prior' reading and H2 are worth pursuing.",
+      "command": "python scripts/k1_check.py --a experiments/002_e1prime_runs/d1_seed{17,23,41}.json.per_sequence/a_id_test.jsonl --e experiments/002_e1prime_runs/d1_seed{17,23,41}.json.per_sequence/e_id_test.jsonl --out experiments/002_e1prime_runs/k1_id_test.json",
+      "notes": "Run the same on test_withheld. Verdict rule is in AMENDMENT_2 A2.4, not in the script."
     },
     {
       "id": "q1_structure",

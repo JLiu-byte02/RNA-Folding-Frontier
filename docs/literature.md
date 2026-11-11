@@ -1,58 +1,59 @@
-# Literature Watch
+# Literature records — claims verified against full text
 
-Living document. Add papers with: citation, venue/year, core idea, relevance,
-and a concrete implication for this project.
+Each entry states what the paper actually says, where it says it, and what it
+changes for us. Snippet-level notes live in `docs/literature_watch_*.md` and are
+not citable.
 
-## Seed areas
+## Flamm et al. 2022 — the length-scaling claim, and what they left open
 
-- RNA foundation models: RiNALMo, RNA-FM, RNA-MSM, ERNIE-RNA.
-- Structure prediction: bpRNA / ArchiveII benchmarks, UFold, SPOT-RNA,
-  E2Efold, RNAfold / LinearFold baselines.
-- ML mechanisms worth transplanting: structured decoding, energy-based models,
-  diffusion on graphs, equivariant/geometric priors, test-time adaptation,
-  uncertainty calibration, retrieval-augmented prediction.
+Flamm C., Wielach J., Wolfinger M. T., Badelt S., Lorenz R., Hofacker I. L.
+"Caveats to deep learning approaches to RNA secondary structure prediction."
+*Frontiers in Bioinformatics* 2:835422 (2022). doi 10.3389/fbinf.2022.835422.
+PMC9580944 (full text read 2026-11-12 via the Europe PMC XML).
 
-## Entries
+### What they report
 
-### BPfold — base-pair motif energy learned from a thermodynamic library
+- **Abstract, verbatim:** "the number of predicted base pairs scales
+  quadratically with sequence length, even though a secondary structure can only
+  accommodate a linear number of pairs."
+- **Figure 3** (results, "Predicting Pairedness" / output-matrix section): for
+  2,000 sequences per length bin over 30–250 nt, the number of entries of the
+  output matrix **above 0.5, i.e. before any postprocessing**, grows quadratically
+  for all three network models, while the RNAfold ground truth grows linearly.
+  Their explanation: the matrix has n² entries and the network predicts a
+  constant fraction of all possible pairs.
+- **Discussion, verbatim:** "While this behavior can easily be addressed during
+  postprocessing, it is not clear whether that would correct or merely hide the
+  underlying problem."
 
-- Zhu et al., *Nature Communications* 16:5856 (2025). Code MIT.
-- **What they claim.** A base-pair motif energy (BPM) map predicted from sequence
-  by a CNN, combined with thermodynamic energy minimisation, generalises better
-  than end-to-end structure predictors on unseen families.
-- **What their training set actually is (verified from the paper text).**
-  Trainable models are trained on **RNAStralign (19,313 sequences, <= 600 nt) and
-  bpRNA-1m** (MXfold2's TR0, 12,114 sequences), jointly. RNAStralign covers eight
-  RNA families: 5S, 16S, 23S, group I intron, group II intron, RNase P, SRP,
-  tRNA — i.e. eight of ArchiveII's nine families.
-- **Their evaluation framing (verified verbatim).** "ArchiveII (3966 RNAs) and
-  bpRNA-TS0 (1305 RNAs) are sequence-wise datasets while Rfam12.3–14.10 (10,791
-  RNAs) contains cross-family RNA sequences". ArchiveII is called "the most
-  widely used benchmark dataset for evaluation of RNA secondary structures", not
-  an OOD set. Their cross-family claim rests on the Rfam 12.3→14.10 delta, which
-  is a **temporal** holdout (entries added between releases), not a clan-held-out
-  split.
-  **Correction (same day, after re-reading the text).** The *dataset* is the
-  Rfam 12.3→14.10 delta, but the *protocol* is described as "family-wise
-  cross-validation" and the headline results are on named unseen families
-  (Skip-rope n=240, Twister n=236, C-di-G n=197, RAGATH n=160, Cobalamin n=286).
-  So it is a family-level holdout over the delta, not merely a temporal one. Two
-  flaws remain: it is not clan-aware (a new delta family that is a new member of
-  an old clan leaks), and the accessible main text does not state how homology
-  between the held-out family and the training pool was screened. Our S1′ is
-  therefore a clan-level strengthening of BPfold's protocol, not a different
-  protocol — the novelty must come from the mechanism and the payoff, not from
-  the split itself.
-- **Implication for us.** (i) Do not attribute an OOD claim about ArchiveII to
-  BPfold; the honest statement is that ArchiveII is routinely *reported* as a
-  generalisation benchmark while being in-distribution under BPfold's protocol.
-  (ii) ArchiveII's 20.47% exact overlap with bpRNA TR0 is only half of the
-  contamination; RNAStralign is the other trainer and must be audited too.
-  (iii) The Rfam-delta cross-family set is a fair comparison target for our
-  payoff experiment, but it must itself be checked for clan overlap — new Rfam
-  families are frequently new members of old clans.
-- **Release/paper discrepancy.** The released TR0 has 10,814 sequences; the paper
-  reports 12,114. The released pool is split into TR0 (10,814, train) and VL0
-  (1,300, validation), and 10,814 + 1,300 = 12,114. So the release re-splits the
-  paper's TR0. Any reproduction table must say which convention it uses.
+### What their postprocessing was
 
+They deliberately avoided sophistication: keep the highest entry per row, round
+to 0/1, remove pseudoknots. That is a one-partner, non-crossing rule with **no
+energy term and no loop model** — the same family as our greedy nested decoder.
+They did not test an energy-based decode.
+
+### Consequences for our claims
+
+1. **H2.1 is anticipated.** The phenomenon we measure (long-range FP rate per
+   sequence rising with length) is the same one they report, with a better
+   controlled generative process. H2.1 is replication; cite Figure 3 for the
+   pair-count scaling, not for our statistic.
+2. **H2.4 is a question they explicitly pose but do not answer.** They say
+   postprocessing "can easily be addressed" but may "merely hide" the problem,
+   and they did not run an energy-based decoder. Our restated H2.4
+   (Amendment 3 §A3.1) is therefore the answer to their open question, not a
+   rediscovery — *provided* we measure both the simple one-partner decode
+   (which we do) and the energetic one at matched recall.
+3. **Framing for the paper.** "Deep predictors over-produce long-range pairs"
+   cannot be our finding. "Energetic inference over FM pair evidence changes
+   which errors survive, measured at matched recall" can be, if it holds.
+
+### Still to check
+
+- Whether Flamm et al.'s follow-ups (or the `rnadeep` codebase) test a
+  learned-score + exact-energy DP. The paper itself does not.
+- Whether their Figure 3 statistic (matrix > 0.5, all cells) and ours
+  (per-sequence long-range FP count) can be related quantitatively; if yes, we
+  can reproduce their curve on our splits as a sanity check of the whole
+  pipeline.

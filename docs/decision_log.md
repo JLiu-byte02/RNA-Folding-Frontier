@@ -214,3 +214,43 @@ that do not need the server were built and tested locally.
 - Added `scripts/tunnel_watch.py --once` (probe + `remote.py doctor`, exits 3 while
   closed, 2 if the line is back but SSH fails, 0 on full recovery). Registration
   with Task Scheduler is left as an explicit step.
+
+## 2026-11-12 03:05 — PI Round 4c: H2.4 restated, novelty split, no hand-written Turner
+
+- **Round 4c rulings** (Claude Opus 5.5 High; archived at
+  `docs/claude/transcripts/2026-11-12_round04c_reply.md`): the production
+  decoder already enforces one partner and no crossings, so H2.4 as written was
+  a minor contrast; it is restated as an **energetic** claim at **matched
+  recall**. P > R on withheld under (a) is pre-committed as evidence against H2
+  on OOD data. test_novel is reserved for H2.3, restated H2.4 and P5; H2.1 is
+  replication only. Hand-written Turner is rejected in favour of ViennaRNA soft
+  constraints (`sc_add_bp`), with our verified DP kept as the oracle.
+- **Amendment 3** committed with those changes: sha256
+  `7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c`.
+- **Flamm et al. 2022 read in full** (Europe PMC XML). Verified: abstract says
+  pair counts scale quadratically with length; **Figure 3** shows it on
+  matrix entries > 0.5 before postprocessing, 2,000 sequences per bin over
+  30–250 nt. Their postprocessing is highest-entry-per-row + round + remove
+  pseudoknots — no energy term. Discussion says the behaviour "can easily be
+  addressed during postprocessing" but "it is not clear whether that would
+  correct or merely hide the underlying problem", and they never run an
+  energy-based decoder. Recorded in `docs/literature.md`. Consequence: H2.1 is
+  anticipated (replication), H2.4 answers a question they pose but leave open.
+
+## 2026-11-12 03:40 — H2.4 implemented at matched recall; one design caveat found
+
+- `scripts/h24_decoder_compare.py` now emits two readouts: `at_0_5`
+  (exploratory, old wording) and `matched_recall` (confirmatory, A3.1). The
+  greedy threshold is chosen by grid search, not bisection.
+- **Why not bisection:** greedy nested decoding is monotone in the threshold
+  after all (adding lower-probability candidates cannot evict accepted pairs),
+  so a bisection would work — but the *achievability* question is separate and
+  matters more. A pair that blocks true positives necessarily outranks them, so
+  raising the threshold to remove it removes the true pairs too. When no
+  threshold reaches decoder A's recall, matching is impossible and the script
+  reports `H2_4.status = "inconclusive_no_recall_match"` instead of a verdict.
+  This is recorded in the module docstring and covered by a test. It is an
+  implementation note, not a change to A3.1; the PI must say what to do if it
+  fires on real data (candidate fallbacks: matched pair budget or matched
+  precision).
+- Tests: 79 pass, including the new matched-recall and unmatchable cases.

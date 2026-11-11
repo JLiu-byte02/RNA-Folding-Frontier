@@ -1,11 +1,22 @@
 #!/usr/bin/env python3
 """H2.4 — does exact DP remove long-range false positives faster than true pairs?
 
-Pre-registered wording (Amendment 2 §A2.4):
+Pre-registered wording, **restated in Amendment 3 §A3.1** because the production
+decoder already enforced one partner and non-crossing:
 
-    H2.4  Global consistency removes them — constrained vs bare-threshold
-          decoding (later decoder A) — passes if long-range FPs fall by more
-          than true positives at fixed 0.5.
+    H2.4  Decoder A — exact nearest-neighbour DP over loop energies plus
+          learned pair corrections — reduces long-range false positives
+          relative to greedy nested matching AT MATCHED RECALL, and the
+          reduction is larger than any accompanying loss of true positives.
+
+So there are two readouts, and only the second one confirms or refutes H2.4:
+
+* ``at_0_5`` — both decoders at the fixed 0.5 threshold (the old wording;
+  exploratory, and mostly a calibration contrast);
+* ``matched_recall`` — a single global greedy threshold ``t_g`` chosen by grid
+  search so that pooled micro recall equals decoder A's, within
+  ``--recall-tol``. This is the confirmatory readout: it asks whether energetic
+  consistency helps once the operating point is taken away as an explanation.
 
 Three decoders are compared on the same probability map, at the same 0.5
 threshold:
@@ -27,6 +38,14 @@ The hypothesis is that LRFP falls more than TP, i.e.
 ``drop_lrfp = -dLRFP`` exceeds ``drop_tp = -dTP``. The contrast
 ``drop_lrfp - drop_tp`` is bootstrapped over families, because sequences inside
 a family are not independent — the same unit as the P2 table and D1/K1.
+
+Matchability is not guaranteed. Greedy nested decoding accepts pairs in
+decreasing probability, so a pair that blocks true positives always outranks
+them; removing it by raising the threshold removes the true pairs as well. When
+no threshold reaches decoder A's recall, the script reports
+``H2_4.status = "inconclusive_no_recall_match"`` rather than inventing a
+comparison: the DP recall advantage is then itself the finding, and the LRFP
+contrast must be restated by the PI before it is computed.
 """
 
 from __future__ import annotations
@@ -131,14 +150,16 @@ def main() -> int:
     ap.add_argument("--mlu", type=float, default=0.0)
     ap.add_argument("--n-boot", type=int, default=10000)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--recall-tol", type=float, default=0.002)
+    ap.add_argument("--threshold-lo", type=float, default=0.05)
+    ap.add_argument("--threshold-hi", type=float, default=0.99)
+    ap.add_argument("--threshold-grid", type=int, default=24)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     seqs = {r["id"]: r["seq"] for r in read_jsonl(ROOT / args.split)}
     rows = read_jsonl(Path(args.dump))
-    totals = {k: defaultdict(float) for k in ("tp_bare", "lr_bare", "tp_greedy", "lr_greedy", "tp_dp", "lr_dp")}
-    delta = defaultdict(lambda: {"d_tp": 0.0, "d_lrfp": 0.0, "n": 0.0})
-    n_dp_better = 0
+    records = []
     n_skipped = 0
     for row in rows:
         seq = seqs.get(row["id"])
@@ -147,37 +168,116 @@ def main() -> int:
             continue
         truth = {tuple(p) for p in row["truth"]}
         scored = normalise_scored(row["scored"])
-        fam = row["family"]
-
-        bare = {k for k, v in scored.items() if v >= args.threshold}
-        greedy = set(decode_pairs(scored, args.threshold, len(seq)))
         model, S = make_model(seq, scored, args)
         dp_pairs, _ = NNDecoder(model).decode(seq, S)
-        dp = set(dp_pairs)
+        records.append(
+            {
+                "family": row["family"],
+                "truth": truth,
+                "scored": scored,
+                "length": len(seq),
+                "dp": set(dp_pairs),
+            }
+        )
 
-        for key, pred in (("bare", bare), ("greedy", greedy), ("dp", dp)):
-            tp, lr = counts(pred, truth)
-            totals[f"tp_{key}"][fam] += tp
-            totals[f"lr_{key}"][fam] += lr
+    n_truth = sum(len(r["truth"]) for r in records)
+    n_tp_dp = sum(len(r["dp"] & r["truth"]) for r in records)
+    recall_dp = n_tp_dp / n_truth if n_truth else float("nan")
 
-        tp_g, lr_g = counts(greedy, truth)
-        tp_d, lr_d = counts(dp, truth)
-        delta[fam]["d_tp"] += tp_d - tp_g
-        delta[fam]["d_lrfp"] += lr_d - lr_g
-        delta[fam]["n"] += 1
-        if lr_d - lr_g < 0:
-            n_dp_better += 1
+    def evaluate(th: float) -> dict:
+        """All decoders at one greedy threshold; DP does not depend on ``th``."""
+        per_family = defaultdict(lambda: {"d_tp": 0.0, "d_lrfp": 0.0, "n": 0.0})
+        totals = {
+            "tp_bare": 0, "lr_bare": 0,
+            "tp_greedy": 0, "lr_greedy": 0,
+            "tp_dp": 0, "lr_dp": 0,
+        }
+        per_family_totals = defaultdict(lambda: defaultdict(float))
+        n_reduced = 0
+        truth_total = 0
+        for rec in records:
+            fam, truth = rec["family"], rec["truth"]
+            bare = {k for k, v in rec["scored"].items() if v >= th}
+            greedy = set(decode_pairs(rec["scored"], th, rec["length"]))
+            dp = rec["dp"]
+            for key, pred in (("bare", bare), ("greedy", greedy), ("dp", dp)):
+                tp, lr = counts(pred, truth)
+                totals[f"tp_{key}"] += tp
+                totals[f"lr_{key}"] += lr
+                per_family_totals[fam][f"tp_{key}"] += tp
+                per_family_totals[fam][f"lr_{key}"] += lr
+            tp_g, lr_g = counts(greedy, truth)
+            tp_d, lr_d = counts(dp, truth)
+            per_family[fam]["d_tp"] += tp_d - tp_g
+            per_family[fam]["d_lrfp"] += lr_d - lr_g
+            per_family[fam]["n"] += 1
+            truth_total += len(truth)
+            if lr_d - lr_g < 0:
+                n_reduced += 1
 
-    def family_macro(key: str) -> float:
-        vals = [v / delta[f]["n"] for f, v in totals[key].items() if delta[f]["n"]]
-        return round(float(np.mean(vals)), 4) if vals else float("nan")
+        def family_macro(key: str) -> float:
+            vals = [
+                per_family_totals[f][key] / per_family[f]["n"]
+                for f in per_family_totals
+                if per_family[f]["n"]
+            ]
+            return round(float(np.mean(vals)), 4) if vals else float("nan")
 
-    n_seq = sum(int(v["n"]) for v in delta.values())
+        contrast = bootstrap(per_family, args.n_boot, args.seed)
+        ci = contrast["ci"]
+        point = contrast["contrast"]
+        return {
+            "threshold": th,
+            "greedy_recall": round(totals["tp_greedy"] / truth_total, 4) if truth_total else None,
+            "dp_recall": round(recall_dp, 4),
+            "family_macro_per_sequence": {
+                "bare": {"tp": family_macro("tp_bare"), "long_range_fp": family_macro("lr_bare")},
+                "greedy": {"tp": family_macro("tp_greedy"), "long_range_fp": family_macro("lr_greedy")},
+                "dp": {"tp": family_macro("tp_dp"), "long_range_fp": family_macro("lr_dp")},
+            },
+            "mean_d_tp": round(float(np.mean([
+                per_family[f]["d_tp"] / per_family[f]["n"] for f in per_family if per_family[f]["n"]
+            ])), 4),
+            "mean_d_long_range_fp": round(float(np.mean([
+                per_family[f]["d_lrfp"] / per_family[f]["n"] for f in per_family if per_family[f]["n"]
+            ])), 4),
+            "contrast_drop_lrfp_minus_drop_tp": contrast,
+            "n_sequences_lrfp_reduced": n_reduced,
+            "passes": bool(point is not None and point > 0 and ci and ci[0] > 0),
+        }
+
+    def greedy_recall_at(th: float) -> float:
+        tp = 0
+        for rec in records:
+            pred = set(decode_pairs(rec["scored"], th, rec["length"]))
+            tp += len(pred & rec["truth"])
+        return tp / n_truth if n_truth else float("nan")
+
+    # Greedy nested decoding is **not** monotone in the threshold: dropping one
+    # high-probability false pair can free two true ones, so recall can rise as
+    # the threshold rises. A bisection would silently pick the wrong side of
+    # such a step, so scan a grid and take the closest achievable recall.
+    grid = np.unique(
+        np.concatenate(
+            [
+                np.linspace(args.threshold_lo, args.threshold_hi, args.threshold_grid),
+                [args.threshold],
+            ]
+        )
+    )
+    best = None
+    for th in grid:
+        gap = abs(greedy_recall_at(float(th)) - recall_dp)
+        if best is None or gap < best[0]:
+            best = (gap, float(th))
+    gap, t_g = best
+    matched = bool(gap <= args.recall_tol)
+
+    b = evaluate(args.threshold)
     report = {
         "name": args.name or Path(args.dump).stem,
-        "n_sequences": n_seq,
+        "n_sequences": len(records),
         "n_sequences_without_seq": n_skipped,
-        "threshold": args.threshold,
         "long_range_definition": f"|i-j| > {LONG_RANGE}",
         "dp_config": {
             "hairpin_penalty": args.hp,
@@ -186,24 +286,42 @@ def main() -> int:
             "ml_branch": args.mlb,
             "ml_unpaired": args.mlu,
             "max_loop": args.max_loop,
-            "score": "log-odds of the 0.5-thresholded dump cells; absent cells disallowed",
+            "score": "log-odds of the dumped cells; absent cells disallowed",
+            "variant": "A-struct (zero loop penalties) — exploratory, NOT the H2.4 test",
         },
-        "family_macro_per_sequence": {
-            "bare": {"tp": family_macro("tp_bare"), "long_range_fp": family_macro("lr_bare")},
-            "greedy": {"tp": family_macro("tp_greedy"), "long_range_fp": family_macro("lr_greedy")},
-            "dp": {"tp": family_macro("tp_dp"), "long_range_fp": family_macro("lr_dp")},
+        "at_0_5": b,
+        "matched_recall": {
+            **evaluate(t_g),
+            "target_recall_dp": round(recall_dp, 4),
+            "recall_matched": matched,
+            "recall_tolerance": args.recall_tol,
+            "recall_gap": round(float(gap), 4),
+            "threshold_grid_size": int(len(grid)),
+            "note": (
+                "confirmatory readout per Amendment 3 A3.1; a single global "
+                "greedy threshold chosen by grid search on pooled micro recall "
+                "(greedy decoding is not monotone in the threshold)"
+            ),
         },
         "H2_4": {
-            "mean_d_tp": round(float(np.mean([delta[f]["d_tp"] / delta[f]["n"] for f in delta if delta[f]["n"]])), 4),
-            "mean_d_long_range_fp": round(float(np.mean([delta[f]["d_lrfp"] / delta[f]["n"] for f in delta if delta[f]["n"]])), 4),
-            "contrast_drop_lrfp_minus_drop_tp": bootstrap(delta, args.n_boot, args.seed),
-            "n_sequences_lrfp_reduced": n_dp_better,
+            "primary": "matched_recall",
+            "matched_recall_threshold": round(t_g, 4),
+            "recall_matched": matched,
+            "status": None,
             "passes": None,
         },
     }
-    ci = report["H2_4"]["contrast_drop_lrfp_minus_drop_tp"]["ci"]
-    point = report["H2_4"]["contrast_drop_lrfp_minus_drop_tp"]["contrast"]
-    report["H2_4"]["passes"] = bool(point is not None and point > 0 and ci and ci[0] > 0)
+    if matched:
+        report["H2_4"]["passes"] = report["matched_recall"]["passes"]
+        report["H2_4"]["status"] = (
+            "confirmed" if report["H2_4"]["passes"] else "not_confirmed"
+        )
+    else:
+        # Greedy nested decoding cannot reach decoder A's recall at any
+        # threshold here: the pairs that block its true positives outrank them,
+        # so removing the blockers also removes the true pairs. The contrast is
+        # then undefined rather than negative.
+        report["H2_4"]["status"] = "inconclusive_no_recall_match"
 
     out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)

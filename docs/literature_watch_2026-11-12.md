@@ -6,6 +6,10 @@ been downloaded or verified, so nothing here may be quoted as a finding of those
 papers until the PDFs are read. What follows is what the snippets say and what
 each item changes for us.
 
+> Update: the Flamm et al. 2022 item below has since been read in full. Use
+> `docs/literature.md` for its verified claims (Figure 3, abstract quote) and
+> treat this file's version as superseded for that paper.
+
 ## 1. H2.1 is anticipated — Flamm et al. 2022
 
 **Flamm, Wielach, Wolfinger, Badelt, Lorenz, Hofacker.** "Caveats to deep

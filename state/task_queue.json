@@ -60,9 +60,9 @@
       "priority": 1,
       "status": "ready",
       "depends_on": "q1_dump",
-      "why": "H2.4: does exact DP remove long-range false positives faster than true pairs at the same 0.5 operating point?",
-      "command": "python scripts/h24_decoder_compare.py --dump experiments/002_e1prime_runs/dump_seed17/a_id_test.jsonl --split splits/s1prime_filtered/id_test.jsonl --out experiments/002_e1prime_runs/h24_a_id_test_seed17.json",
-      "notes": "Decoder A is implemented and unit-verified (docs/decoder_a.md). Run for a_id_test and a_test_withheld, 3 seeds. Zero loop penalties are the recorded default; do not tune them on this contrast."
+      "why": "H2.4 (Amendment 3 A3.1, restated): does decoder A reduce long-range FPs relative to greedy nested matching AT MATCHED RECALL, by more than it loses TPs?",
+      "command": "python scripts/h24_decoder_compare.py --dump experiments/002_e1prime_runs/dump_seed17/a_test_withheld.jsonl --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/h24_a_withheld_seed17.json",
+      "notes": "Two readouts: at_0_5 (exploratory) and matched_recall (confirmatory). The A-struct variant (zero loop penalties) cannot confirm H2.4 per A3.1; the confirmatory run needs the ViennaRNA-energy variant. If status=inconclusive_no_recall_match, report it: greedy cannot reach DP recall at any threshold. Run 3 seeds, id_test and withheld."
     },
     {
       "id": "block_donors",
@@ -124,9 +124,10 @@
     {
       "id": "decoder_a",
       "priority": 5,
-      "status": "queued",
-      "why": "If H2 survives, exact DP over learned energies is the central test, not just the payoff.",
-      "command": "MXfold2 DP accepting external score tensors -> Turner-only check on 100 seqs -> decoder A"
+      "status": "in_progress",
+      "why": "Round 4c: decoder A is the central test and the candidate fix; it must use ViennaRNA energies + learned corrections (sc_add_bp), not a hand-written Turner model.",
+      "command": "python scripts/h24_decoder_compare.py (A-struct, done) -> ViennaRNA soft-constraint wrapper -> max-margin training loop",
+      "notes": "A-struct DP is implemented and enumeration-verified (docs/decoder_a.md). Next: sc_add_bp wrapper validated against a stub locally and against RNAfold on the server; then structured max-margin whose subgradient is predicted minus true pair indicator. [CHECK] licence + sc_add_bp units/sign."
     },
     {
       "id": "relaxed_audit",

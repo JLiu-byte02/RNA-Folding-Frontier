@@ -144,3 +144,23 @@ Append-only. Each entry: date, decision, evidence, alternatives, consequences.
 - **Amendment 2 hash:** file `experiments/001_e1prime/AMENDMENT_2.md`,
   sha256 `4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78`,
   written before any D1/D2 dump existed.
+
+## 2026-11-12 — SSH failure is the aTrust SDP line, not sshd
+
+- **Root cause (evidence in `docs/network_diagnosis_2026-11-12.md`).** Every SSH
+  attempt is intercepted by aTrust (`flowSrc: wfpRedirect`) and accepted locally
+  in ~0 ms, then fails upstream with `ec:1 "no proxy line"` and `tcpConnTime =
+  int64 max`. The 0-byte banner is the local proxy, not sshd.
+- **Why the line is gone:** the single WAN line `218.18.235.189:441` answered in
+  46 ms at 18:34, 1055 ms at 21:42, and returned `i/o timeout` from 23:59 on;
+  the client then marked all lines out and tore down the two live sessions at
+  00:01:18.
+- **Not our path:** `check-host.net` probes from Indonesia, Iceland and two US
+  nodes all time out on `:441` while all four reach `:443` on the same host in
+  236–288 ms. The host is up; the line port is closed internet-wide.
+- **Not fixable locally without a credential.** The client caches the line list
+  from login; only a re-login re-fetches it. No route, firewall or VNIC change
+  can create a line the WAN cannot reach.
+- **Tooling:** `remote.py doctor` now reports `suspected_local_interception`
+  when the handshake completes in <5 ms, so this failure mode is no longer
+  misreported as an sshd problem.

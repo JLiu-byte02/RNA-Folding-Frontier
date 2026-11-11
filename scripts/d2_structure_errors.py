@@ -1,32 +1,47 @@
 #!/usr/bin/env python3
-"""D2 — are the false positives "spurious partners"? (H2, predictions 1-3)
+"""D2 — H2.1 and H2.2: are long-range false positives "spurious partners"?
 
-H2 says the distal region supplies sequence that is locally complementary to the
-kept region, the 2D head believes it, and the result is a confident long-range
-pair that no global constraint ever rejects. Its three checkable consequences:
+H2 was pre-registered in Amendment 2 §A2.4. This script computes its first two
+tests exactly as written, on the native head (condition a) dumps:
 
-1. under native inputs, long-range false positives grow with sequence length;
-2. false positives are enriched for a stackable complementary run of >= 4 pairs
-   that is absent from the true structure;
-3. under condition (c), the new false positives link the kept window to a
-   distal position that has exactly that complementarity.
+**H2.1** raw-threshold false-positive rate at ``|i-j| > 128`` **per sequence**;
+passes if the mean rate for ``L >= 150`` is at least twice the mean rate for
+``80 <= L < 150``.
 
-Helix length is computed from the sequence itself, so this is a property of the
-prediction, not of the model's internals.
+**H2.2** among those long-range false positives, the fraction whose pair lies in
+a stretch of at least 4 contiguous stacked canonical or GU pairs, compared with
+a null of random canonical, non-true pairs matched on distance. Passes if the
+observed fraction is at least twice the null.
+
+Both are reported with a family-block bootstrap interval, because sequences
+inside a family are not independent — the same reason the P2 table resamples
+families. The ratio is the statistic; the interval is on the ratio, not on each
+arm separately.
+
+The decoder here is the bare threshold, because H2's wording is "raw-threshold".
+That is not the production decoder and must not be quoted as its error profile;
+the production-decoder splits are printed separately and labelled exploratory.
+
+H2.3 (the block-boundary test) needs P2-block caches and is not computed here.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
-PAIRS = set("AU UA GC CG GU UG".split())
+from rff.analysis.scoring import normalise_scored  # noqa: E402
+
+CANONICAL = set("AU UA GC CG GU UG".split())
+LONG_RANGE = 128
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -35,32 +50,107 @@ def read_jsonl(path: Path) -> list[dict]:
 
 
 def helix_length(seq: str, i: int, j: int, cap: int = 40) -> int:
-    """Length of the contiguous stack containing pair (i, j)."""
-    if seq[i] + seq[j] not in PAIRS:
+    """Length of the contiguous canonical stack containing (i, j)."""
+    if seq[i] + seq[j] not in CANONICAL:
         return 0
     back = 0
     while (
         back < cap
         and i - back - 1 >= 0
         and j + back + 1 < len(seq)
-        and seq[i - back - 1] + seq[j + back + 1] in PAIRS
+        and seq[i - back - 1] + seq[j + back + 1] in CANONICAL
     ):
         back += 1
     fwd = 0
     while (
         fwd < cap
         and i + fwd + 1 < j - fwd - 1
-        and seq[i + fwd + 1] + seq[j - fwd - 1] in PAIRS
+        and seq[i + fwd + 1] + seq[j + fwd - 1] in CANONICAL
     ):
         fwd += 1
     return 1 + back + fwd
 
 
-def length_band(L: int) -> str:
-    for upper, name in ((100, "L<100"), (200, "100-199"), (400, "200-399"), (10**9, "L>=400")):
-        if L < upper:
-            return name
-    return "L>=400"
+def null_pair(
+    seq: str, d: int, truth: set[tuple[int, int]], rng: np.random.Generator, tries: int = 20
+) -> tuple[int, int] | None:
+    """Random canonical, non-true pair with the same distance."""
+    if d <= 0 or d >= len(seq):
+        return None
+    for _ in range(tries):
+        i = int(rng.integers(0, len(seq) - d))
+        j = i + d
+        if (i, j) in truth or (j, i) in truth:
+            continue
+        if seq[i] + seq[j] in CANONICAL:
+            return i, j
+    return None
+
+
+def bootstrap_ratio(
+    per_family: dict[str, dict[str, float]], n_boot: int, seed: int
+) -> dict:
+    """Bootstrap over families: ratio of pooled observed to pooled null rates.
+
+    ``per_family[f] = {"hits_obs", "n_obs", "hits_null", "n_null"}``.
+    """
+    fams = sorted(per_family)
+    if len(fams) < 3:
+        return {"ratio": None, "lo": None, "hi": None, "n_families": len(fams)}
+
+    def ratio_of(sel) -> float:
+        obs_n = sum(per_family[f]["n_obs"] for f in sel)
+        obs_h = sum(per_family[f]["hits_obs"] for f in sel)
+        null_n = sum(per_family[f]["n_null"] for f in sel)
+        null_h = sum(per_family[f]["hits_null"] for f in sel)
+        if obs_n == 0 or null_n == 0 or null_h == 0:
+            return float("nan")
+        return (obs_h / obs_n) / (null_h / null_n)
+
+    point = ratio_of(fams)
+    rng = np.random.default_rng(seed)
+    draws = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, len(fams), len(fams))
+        draws.append(ratio_of([fams[k] for k in idx]))
+    draws = np.array([d for d in draws if np.isfinite(d)])
+    if draws.size == 0:
+        return {"ratio": None, "lo": None, "hi": None, "n_families": len(fams)}
+    return {
+        "ratio": round(float(point), 4) if np.isfinite(point) else None,
+        "lo": round(float(np.percentile(draws, 2.5)), 4),
+        "hi": round(float(np.percentile(draws, 97.5)), 4),
+        "n_families": len(fams),
+    }
+
+
+def bootstrap_mean_ratio(
+    groups: dict[str, dict[str, float]], n_boot: int, seed: int
+) -> dict:
+    """Bootstrap over families: ratio of mean(long) to mean(short)."""
+    fams = sorted(set(groups["short"]) | set(groups["long"]))
+    if len(fams) < 3:
+        return {"ratio": None, "lo": None, "hi": None, "n_families": len(fams)}
+
+    def ratio_of(sel) -> float:
+        s = [groups["short"][f] for f in sel if f in groups["short"]]
+        l = [groups["long"][f] for f in sel if f in groups["long"]]
+        if not s or not l or np.mean(s) == 0:
+            return float("nan")
+        return float(np.mean(l) / np.mean(s))
+
+    point = ratio_of(fams)
+    rng = np.random.default_rng(seed)
+    draws = np.array(
+        [ratio_of([fams[k] for k in rng.integers(0, len(fams), len(fams))]) for _ in range(n_boot)]
+    )
+    draws = draws[np.isfinite(draws)]
+    return {
+        "ratio": round(float(point), 4) if np.isfinite(point) else None,
+        "lo": round(float(np.percentile(draws, 2.5)), 4) if draws.size else None,
+        "hi": round(float(np.percentile(draws, 97.5)), 4) if draws.size else None,
+        "n_families": len(fams),
+    }
 
 
 def main() -> int:
@@ -70,6 +160,9 @@ def main() -> int:
     ap.add_argument("--split", required=True, help="jsonl with id -> seq")
     ap.add_argument("--threshold", type=float, default=0.5)
     ap.add_argument("--min-helix", type=int, default=4)
+    ap.add_argument("--n-boot", type=int, default=10000)
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--null-reps", type=int, default=1)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -80,69 +173,146 @@ def main() -> int:
         if args.names
         else sorted(dump_dir.glob("*.jsonl"))
     )
+    rng = np.random.default_rng(args.seed)
 
     report: dict[str, dict] = {}
     for f in files:
         rows = read_jsonl(f)
         if not rows or "truth" not in rows[0] or "scored" not in rows[0]:
             continue
-        stats = {
-            "tp_helix": [],
-            "fp_helix": [],
-            "fp_long_range": 0,
-            "fp_total": 0,
-            "fp_long_helix_kept_link": 0,
-            "by_band": defaultdict(lambda: {"fp": 0, "fn": 0, "tp": 0, "fp_long": 0, "n_seq": 0}),
-        }
+        short: dict[str, list[float]] = defaultdict(list)  # 80-149
+        long: dict[str, list[float]] = defaultdict(list)  # >=150
+        h22: dict[str, dict[str, float]] = defaultdict(
+            lambda: {"hits_obs": 0, "n_obs": 0, "hits_null": 0, "n_null": 0}
+        )
+        fp_dist: dict[str, int] = defaultdict(int)
+        region_counts: dict[str, dict[str, int]] = defaultdict(
+            lambda: {"tp": 0, "fp": 0, "fn": 0}
+        )
+        n_skipped = 0
         for row in rows:
             seq = seqs.get(row["id"])
             if seq is None:
+                n_skipped += 1
                 continue
             truth = {tuple(p) for p in row["truth"]}
-            scored = {tuple(int(x) for x in k.split(",")): float(v) for k, v in row["scored"].items()}
+            scored = normalise_scored(row["scored"])
             pred = {k for k, v in scored.items() if v >= args.threshold}
-            band = length_band(len(seq))
-            b = stats["by_band"][band]
-            b["n_seq"] += 1
+            fam = row["family"]
+            long_fps = [p for p in (pred - truth) if abs(p[0] - p[1]) > LONG_RANGE]
+            if 80 <= len(seq) < 150:
+                short[fam].append(len(long_fps))
+            elif len(seq) >= 150:
+                long[fam].append(len(long_fps))
+
             kept_lo, kept_hi = row["kept"]
             for i, j in pred - truth:
-                h = helix_length(seq, i, j)
-                stats["fp_helix"].append(h)
-                stats["fp_total"] += 1
-                b["fp"] += 1
-                if abs(i - j) > 128:
-                    stats["fp_long_range"] += 1
-                    b["fp_long"] += 1
-                if h >= args.min_helix and ((kept_lo <= i < kept_hi) != (kept_lo <= j < kept_hi)):
-                    stats["fp_long_helix_kept_link"] += 1
+                d = abs(i - j)
+                key = "d<32" if d < 32 else ("d32-128" if d <= 128 else "d>128")
+                fp_dist[key] += 1
+                in_lo = kept_lo <= i < kept_hi
+                in_hi = kept_lo <= j < kept_hi
+                where = (
+                    "both_kept"
+                    if in_lo and in_hi
+                    else ("one_kept" if in_lo or in_hi else "neither_kept")
+                )
+                region_counts[where]["fp"] += 1
+                if d > LONG_RANGE:
+                    h22[fam]["n_obs"] += 1
+                    if helix_length(seq, i, j) >= args.min_helix:
+                        h22[fam]["hits_obs"] += 1
+                    for _ in range(args.null_reps):
+                        pair = null_pair(seq, d, truth, rng)
+                        if pair is None:
+                            continue
+                        h22[fam]["n_null"] += 1
+                        if helix_length(seq, *pair) >= args.min_helix:
+                            h22[fam]["hits_null"] += 1
             for i, j in truth & pred:
-                stats["tp_helix"].append(helix_length(seq, i, j))
-                b["tp"] += 1
-            b["fn"] += len(truth - pred)
+                in_lo = kept_lo <= i < kept_hi
+                in_hi = kept_lo <= j < kept_hi
+                where = (
+                    "both_kept"
+                    if in_lo and in_hi
+                    else ("one_kept" if in_lo or in_hi else "neither_kept")
+                )
+                region_counts[where]["tp"] += 1
+            for i, j in truth - pred:
+                in_lo = kept_lo <= i < kept_hi
+                in_hi = kept_lo <= j < kept_hi
+                where = (
+                    "both_kept"
+                    if in_lo and in_hi
+                    else ("one_kept" if in_lo or in_hi else "neither_kept")
+                )
+                region_counts[where]["fn"] += 1
 
-        fp = np.array(stats["fp_helix"]) if stats["fp_helix"] else np.array([0])
-        tp = np.array(stats["tp_helix"]) if stats["tp_helix"] else np.array([0])
+        def mean_rate(group: dict[str, list[float]]) -> float:
+            vals = [float(np.mean(v)) for v in group.values() if v]
+            return round(float(np.mean(vals)), 4) if vals else float("nan")
+
+        short_rate = mean_rate(short)
+        long_rate = mean_rate(long)
+        h21_ratio = (
+            round(long_rate / short_rate, 4)
+            if short_rate and np.isfinite(short_rate) and short_rate > 0
+            else None
+        )
+        h22_ratio = bootstrap_ratio(h22, args.n_boot, args.seed)
+        n_obs = sum(v["n_obs"] for v in h22.values())
+        n_null = sum(v["n_null"] for v in h22.values())
+
         report[f.stem] = {
             "n_sequences": len(rows),
-            "n_fp": int(stats["fp_total"]),
-            "fp_frac_helix_ge_min": round(float((fp >= args.min_helix).mean()), 4),
-            "tp_frac_helix_ge_min": round(float((tp >= args.min_helix).mean()), 4),
-            "fp_median_helix": float(np.median(fp)),
-            "tp_median_helix": float(np.median(tp)),
-            "fp_long_range_frac": round(stats["fp_long_range"] / max(1, stats["fp_total"]), 4),
-            "fp_helix_spanning_kept_boundary": stats["fp_long_helix_kept_link"],
-            "by_length_band": {
-                k: {
-                    "n_seq": v["n_seq"],
-                    "fp": v["fp"],
-                    "tp": v["tp"],
-                    "fn": v["fn"],
-                    "fp_long_range": v["fp_long"],
-                }
-                for k, v in sorted(stats["by_band"].items())
+            "n_sequences_without_seq": n_skipped,
+            "decoder": f"bare threshold {args.threshold}",
+            "H2_1": {
+                "long_range_definition": f"|i-j| > {LONG_RANGE}",
+                "mean_fp_per_sequence_80_149": short_rate,
+                "n_sequences_80_149": sum(len(v) for v in short.values()),
+                "mean_fp_per_sequence_ge150": long_rate,
+                "n_sequences_ge150": sum(len(v) for v in long.values()),
+                "ratio_ge150_over_80_149": h21_ratio,
+                "bootstrap_ratio": bootstrap_mean_ratio(
+                    {"short": {k: float(np.mean(v)) for k, v in short.items() if v},
+                     "long": {k: float(np.mean(v)) for k, v in long.items() if v}},
+                    args.n_boot,
+                    args.seed,
+                ),
+                "passes_2x_rule": bool(h21_ratio is not None and h21_ratio >= 2.0),
+            },
+            "H2_2": {
+                "min_helix": args.min_helix,
+                "n_long_range_fp": n_obs,
+                "observed_frac": round(
+                    sum(v["hits_obs"] for v in h22.values()) / n_obs, 4
+                )
+                if n_obs
+                else None,
+                "n_null_pairs": n_null,
+                "null_frac": round(
+                    sum(v["hits_null"] for v in h22.values()) / n_null, 4
+                )
+                if n_null
+                else None,
+                "bootstrap_ratio": h22_ratio,
+                "ratio": h22_ratio["ratio"],
+                "passes_2x_rule": bool(
+                    h22_ratio["ratio"] is not None and h22_ratio["ratio"] >= 2.0
+                ),
+                "null_definition": (
+                    "random canonical pair with the same |i-j| inside the same "
+                    "sequence, not present in the true structure"
+                ),
+            },
+            "exploratory_fp_by_distance": dict(sorted(fp_dist.items())),
+            "exploratory_region_counts": {
+                k: dict(v) for k, v in sorted(region_counts.items())
             },
         }
-        print(json.dumps({f.stem: report[f.stem]}), flush=True)
+        print(json.dumps({f.stem: {"H2_1": report[f.stem]["H2_1"]["ratio_ge150_over_80_149"],
+                                   "H2_2": report[f.stem]["H2_2"]["ratio"]}}), flush=True)
 
     out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)

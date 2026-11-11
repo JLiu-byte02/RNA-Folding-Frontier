@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-12T01:05:00+08:00",
+  "updated": "2026-11-12T01:35:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
-  "blocked_on": "sshd refuses identification (kex_exchange_identification read error); cooled down, low-frequency doctor checks only",
+  "blocked_on": "aTrust SDP line down: 218.18.235.189:441 i/o timeout since 23:59; all SSH accepted locally (0RTT) then dropped with \"no proxy line\". Port 441 closed from 4 external nodes while 443 is open. Needs an aTrust re-login to re-fetch the line list. See docs/network_diagnosis_2026-11-12.md",
   "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
   "tasks": [
     {

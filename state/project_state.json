@@ -1,7 +1,7 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T00:32:00+08:00",
+  "updated_at": "2026-11-12T01:35:00+08:00",
   "phase": "diagnostics-first-after-P2-inversion",
   "cycle": 4,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -26,7 +26,9 @@
     "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
-  "blockers": [],
+  "blockers": [
+    "SSH: aTrust SDP line 218.18.235.189:441 unreachable since 23:59 (port closed internet-wide, 443 open); all 10.22.19.39:22 attempts accepted locally then dropped. Needs aTrust re-login. Diagnostics and queued work proceed locally."
+  ],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
@@ -40,7 +42,8 @@
       "experiments/000_e0_leakage/cmscan_and_split_report.md",
       "experiments/000_e0_leakage/headline_clans/summary.json",
       "experiments/001_e1prime/AMENDMENT_2.md",
-      "docs/claude/transcripts/2026-11-12_round04_decisions.md"
+      "docs/claude/transcripts/2026-11-12_round04_decisions.md",
+      "docs/network_diagnosis_2026-11-12.md"
     ]
   }
 }

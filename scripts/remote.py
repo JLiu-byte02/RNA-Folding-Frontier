@@ -270,16 +270,33 @@ def cmd_doctor() -> int:
     finally:
         sock.close()
 
-    report["diagnosis"] = (
-        "tcp refused"
-        if not report.get("tcp_connect")
-        else (
-            "server accepts TCP but sends no SSH identification: sshd-side refusal "
-            "(connection limit) or an inline filter; not an auth failure"
-            if not report.get("ssh_banner_bytes")
-            else "sshd reachable"
-        )
+    # A handshake that completes essentially instantly is answered by a local
+    # interceptor, not by the far end. On this host the Sangfor aTrust client
+    # accepts 10.22.19.39:22 for the WFP redirect rule and then fails upstream
+    # with "no proxy line", which is indistinguishable from a wedged sshd
+    # unless the timing is looked at. See docs/network_diagnosis_2026-11-12.md.
+    local_accept = (
+        report.get("tcp_connect_seconds") is not None
+        and report["tcp_connect_seconds"] < 0.005
     )
+    report["suspected_local_interception"] = bool(
+        report.get("tcp_connect") and local_accept
+    )
+    if not report.get("tcp_connect"):
+        report["diagnosis"] = "tcp refused or unreachable"
+    elif report.get("ssh_banner_bytes"):
+        report["diagnosis"] = "sshd reachable"
+    elif report["suspected_local_interception"]:
+        report["diagnosis"] = (
+            "local interceptor accepted the connection in <5 ms and forwarded "
+            "nothing: aTrust SDP tunnel is down (upstream: no proxy line). "
+            "sshd was never contacted; retrying SSH cannot help."
+        )
+    else:
+        report["diagnosis"] = (
+            "remote end accepted TCP but sent no SSH identification: sshd-side "
+            "refusal, connection limit, or an inline filter"
+        )
     out = ROOT / "logs" / f"ssh_doctor_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2) + "\n")

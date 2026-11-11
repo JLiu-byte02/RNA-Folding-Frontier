@@ -13,7 +13,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from rff.data.wuss import (  # noqa: E402
     canonical_pairs,
     load_labels_v2_delta,
+    pairs_from_wuss_columns,
     pairs_from_wuss,
+    project_pairs,
     project_wuss,
     v1_pairs,
 )
@@ -49,6 +51,29 @@ def test_projection_keeps_letters_and_drops_gap_columns():
 
 def test_projection_maps_unknown_symbols_to_dot():
     assert project_wuss("A,:_x-", "AAAAAA") == "A...x."
+
+
+def test_column_pairs_keep_alignment_coordinates():
+    assert pairs_from_wuss_columns("(AA..aa)") == [(0, 7), (1, 6), (2, 5)]
+
+
+def test_project_pairs_drops_a_pair_if_either_end_is_gapped():
+    # columns 0 and 5 are the outer pair; column 1/4 are the inner pair
+    assert project_pairs("((..))", "A-ACG-") == []
+
+
+def test_project_pairs_never_fabricates_a_pair_after_a_gap():
+    # v2 projects the characters first, obtaining "(..)" -> (0, 3), even though
+    # column 0 was paired with the gapped column 5 and column 4's partner was
+    # gapped. Pair-level projection must return no pair.
+    assert project_wuss("((..))", "A-ACG-") == "(..)"
+    assert pairs_from_wuss(project_wuss("((..))", "A-ACG-")) == [(0, 3)]
+    assert project_pairs("((..))", "A-ACG-") == []
+
+
+def test_project_pairs_keeps_only_pairs_with_two_ungapped_columns():
+    # outer pair survives (columns 0,7), inner pair loses column 1
+    assert project_pairs("((....))", "A-ACGAAC") == [(0, 6)]
 
 
 def test_canonical_filter_keeps_gc_and_gu_only():

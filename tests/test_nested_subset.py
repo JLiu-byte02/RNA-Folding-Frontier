@@ -8,6 +8,7 @@ fact that it never increases the pair count.
 
 from __future__ import annotations
 
+import json
 import random
 import sys
 from pathlib import Path
@@ -146,3 +147,34 @@ def test_every_crossing_component_of_a_random_structure_survives_the_split():
             arcs.add((i, j))
         overall = max_nested_subset_of_arcs(arcs)
         assert len(overall) == _interval_dp_size(arcs, n)
+
+
+def _old_greedy(component):
+    """Reproduce the pre-Round-4g fallback from the real-label audit."""
+    chosen = set()
+    for pair in sorted(component, key=lambda q: (q[1] - q[0], q)):
+        if not any(crosses(pair, kept) for kept in chosen):
+            chosen.add(pair)
+    return chosen
+
+
+def test_all_87_historical_greedy_failures_are_still_beaten_by_the_dp():
+    """Regression fixture extracted by scripts/check_nested_subset.py.
+
+    These are the real bpRNA conflict components above 16 arcs on which the old
+    shortest-span greedy fallback returned fewer pairs than the exact DP. The
+    fixture records the arcs, not just the aggregate count, so a future solver
+    change is replayed against every historical failure.
+    """
+    path = ROOT / "experiments/007_nested_dp/greedy_suboptimal_components.json"
+    cases = json.loads(path.read_text(encoding="utf-8"))
+    assert len(cases) == 87
+    assert sum(c["dp_size"] - c["greedy_size"] for c in cases) == 692
+    for case in cases:
+        arcs = {tuple(p) for p in case["arcs"]}
+        solved = max_nested_subset_of_arcs(arcs)
+        greedy = _old_greedy(arcs)
+        assert len(solved) == case["dp_size"], case["id"]
+        assert len(greedy) == case["greedy_size"], case["id"]
+        assert len(solved) > len(greedy), case["id"]
+        assert is_nested(solved), case["id"]

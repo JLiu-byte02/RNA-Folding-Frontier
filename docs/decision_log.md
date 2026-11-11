@@ -366,3 +366,46 @@ that do not need the server were built and tested locally.
 - **Adversarial dry run found a real silent-NaN bug**: `d1_scoring.py` and
   `d2_structure_errors.py` turned a NaN score into a NaN quantile instead of
   failing. Both now call `require_finite`.
+
+## 2026-11-12 — Round 4h rulings implemented: v3 labels, Amendment 8, CI
+
+- **Empty truth was scoring as a perfect prediction.** `prf(0, 0, 0)["f1"]` and
+  `pair_prf([], [])["f1"]` both return **1.0** by the vacuous convention. With
+  16,540 seed rows carrying `pairs = []` after a v1 parse failure, that is a
+  label defect, not an unstructured RNA. It can reward a predictor that emits
+  nothing, so the Round 4 withheld numbers are secondary-style only.
+- **`labels_v3` parses pairs, not projected strings.** `project_pairs` parses
+  `SS_cons` in alignment-column coordinates (all bracket levels and WUSS letter
+  pairs), maps both endpoints to ungapped sequence coordinates, drops a pair if
+  either column is a gap, then applies the canonical/GU filter. On 92,781 seed
+  rows the parse rate is **100.00%** (0 failures), producing 2,517,623 canonical
+  pairs versus 2,029,886 under v2-effective labels. The full replacement map is
+  `experiments/011_labels_v3/labels_v3_pairs.json.gz`, sha256
+  `b8fe71ab…`, with gzip `mtime=0`.
+- **Agreement with v2 is not identical.** On 83,459 rows where both parse, 6,757
+  pair sets differ (27,367 v2-only pairs, 58,637 v3-only pairs). This is the v2
+  string-projection bug, not a v3 change: removing a gap can make v2 pair a
+  surviving endpoint with a different closing column. v3 is the specification;
+  v2 is provenance.
+- **Eval-subset counts are clean.** Of 2,372 frozen `test_novel_eval` records,
+  v1 has 463 empty-truth rows; v3 repairs all 463. Under v3 there are 0 empty
+  rows and 0 rows with fewer than four pairs, so the Amendment 8 exclusion rule
+  drops **0.00%** of the eval subset — below the 10% escalation threshold.
+- **Amendment 8 is pinned** at `5411a050…`. Rfam seed primary and secondary
+  labels are v3; rows with fewer than four v3 true pairs are excluded from
+  primary F1 (predicted pairs reported as a separate FP diagnostic); v3 parse
+  failures are excluded and reported. Every Round 4 number is relabelled
+  "secondary-style, v1 labels including empty-truth rows".
+- **Fresh-clone CI added** (`.github/workflows/fresh-clone.yml`): on every push
+  it makes a real `git clone`, installs the test stack, verifies every locked
+  file against its git-blob bytes and working-tree bytes, runs the full test
+  suite, and refuses a dirty clone afterwards.
+- **Historical greedy failures are now a regression fixture.**
+  `experiments/007_nested_dp/greedy_suboptimal_components.json` stores the arcs
+  of all **87** bpRNA components above 16 arcs where the old greedy fallback was
+  suboptimal. The test replays all 87 and confirms the DP recovers the recorded
+  692 pairs.
+- **Cluster queue:** A6.1 now also prints per-split v1-empty-truth and
+  v3-`<4`-pair counts (`--split-dir`). K1 and D1 run on existing P2-central
+  dumps with labels swapped at scoring time, both with and without empty-truth
+  rows. Everything downstream uses v3.

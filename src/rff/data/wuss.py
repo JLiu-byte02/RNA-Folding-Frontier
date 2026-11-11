@@ -33,6 +33,7 @@ from .io import pairs_from_dbn
 OPEN_TO_CLOSE = {"(": ")", "[": "]", "{": "}", "<": ">"}
 CLOSE_TO_OPEN = {v: k for k, v in OPEN_TO_CLOSE.items()}
 LETTERS = string.ascii_uppercase
+GAP_CHARS = frozenset("-._~")
 
 
 def project_wuss(ss_cons: str, aligned: str) -> str:
@@ -63,6 +64,18 @@ def pairs_from_wuss(text: str) -> list[tuple[int, int]]:
     truncated consensus row looks like and dropping them loses no pair that the
     row actually closed.
     """
+    return sorted(pairs_from_wuss_columns(text))
+
+
+def pairs_from_wuss_columns(text: str) -> list[tuple[int, int]]:
+    """Pairs in *alignment-column* coordinates.
+
+    This is the parser underlying :func:`pairs_from_wuss`; it is exposed because
+    pair-level projection must map columns to sequence coordinates before any
+    pair is discarded. Parsing a projected string instead can fabricate a pair
+    when a gap removes one helix endpoint and two unrelated partners become
+    adjacent in the projected string.
+    """
     stacks: dict[str, list[int]] = {c: [] for c in OPEN_TO_CLOSE}
     letters: dict[str, list[int]] = {c: [] for c in LETTERS}
     pairs: list[tuple[int, int]] = []
@@ -82,6 +95,35 @@ def pairs_from_wuss(text: str) -> list[tuple[int, int]]:
                 raise ValueError(f"unmatched '{ch}' at position {idx}")
             pairs.append((letters[key].pop(), idx))
     return sorted(pairs)
+
+
+def project_pairs(ss_cons: str, aligned: str) -> list[tuple[int, int]]:
+    """Project consensus pairs onto one gapped row, pair by pair.
+
+    PI Round 4h §3: parse ``SS_cons`` in alignment-column coordinates, map both
+    endpoints to ungapped sequence coordinates, and drop a pair if either
+    alignment column is a gap. This differs from parsing the character-projected
+    string: when a gap removes one endpoint, the latter can pair the surviving
+    endpoint with a different closing column and silently invent a base pair.
+
+    ``ss_cons`` and ``aligned`` must have equal length. A corrupt consensus row
+    raises ``ValueError`` rather than yielding a partially guessed label.
+    """
+    if len(ss_cons) != len(aligned):
+        raise ValueError(
+            f"alignment length mismatch: SS_cons={len(ss_cons)} row={len(aligned)}"
+        )
+    col_to_seq: dict[int, int] = {}
+    for col, ch in enumerate(aligned):
+        if ch in GAP_CHARS:
+            continue
+        col_to_seq[col] = len(col_to_seq)
+
+    projected: list[tuple[int, int]] = []
+    for i, j in pairs_from_wuss_columns(ss_cons):
+        if i in col_to_seq and j in col_to_seq:
+            projected.append((col_to_seq[i], col_to_seq[j]))
+    return sorted(projected)
 
 
 def canonical_pairs(
@@ -115,8 +157,11 @@ def load_labels_v2_delta(path: str | Path) -> dict[str, set[tuple[int, int]]]:
 
 __all__ = [
     "canonical_pairs",
+    "GAP_CHARS",
     "load_labels_v2_delta",
+    "pairs_from_wuss_columns",
     "pairs_from_wuss",
+    "project_pairs",
     "project_wuss",
     "v1_pairs",
 ]

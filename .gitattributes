@@ -1,0 +1,5 @@
+# Keep every file byte-identical across platforms: the embargo guard compares
+# sha256 of the working-tree files against state/amendments.lock.json, and
+# core.autocrlf=true on Windows would otherwise rewrite LF to CRLF on checkout
+# and break hashes that were quoted elsewhere.
+* text=auto eol=lf

@@ -88,29 +88,3 @@ recorded as one:
   labelled that way.
 - First actions when the cluster returns: copy both manifests into the
   repository, then re-check every split hash.
-
-## A4.6 — Provenance resolution procedure (added after PI Round 4e)
-
-Added on request of the PI (Round 4e) to fix exactly how the A4.5 gap is closed.
-This section was appended after the hash in `docs/decision_log.md` was recorded,
-so that recorded value no longer matches this file; A4.1–A4.5 are unchanged and
-the new hash is recorded alongside the old one. Nothing here changes a claim.
-
-Order of operations when the cluster returns, before any new computation:
-
-1. `git status` and `git log origin/main..HEAD` on the server, then push
-   everything, including per-split sequence-ID membership lists and per-split
-   sha256 hashes.
-2. Record the modification times of the split files and of the test_novel freeze
-   file, plus a statement that no scoring output exists for test_novel.
-3. Determinism check: rebuild every split from committed code, seeds and the
-   pinned inputs into a fresh directory and compare hashes with the on-disk
-   originals. Match → the freeze is credible after the fact. Mismatch → stop and
-   report before going further.
-
-Partial local fact, recorded 2026-11-12: the *evaluation subset*
-`experiments/001_e1prime/test_novel_eval.jsonl` is committed, and its sha256
-recomputes to `9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b`
-over 2,372 records, exactly as declared in `novel_eval_set.md`. That is an
-artifact for the subset, not for the 42,873-record `test_novel` split, whose
-membership list and hash remain uncommitted.

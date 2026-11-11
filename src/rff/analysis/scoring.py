@@ -12,6 +12,7 @@ Everything here is plain numpy so it can be tested without a GPU or a model.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -99,6 +100,25 @@ def normalise_scored(scored: dict) -> dict[tuple[int, int], float]:
     return out
 
 
+def require_finite(scored: dict, where: str = "") -> None:
+    """Fail loudly on NaN/inf scores instead of letting them reach a statistic.
+
+    A NaN probability silently turns every quantile and oracle cut into NaN, and
+    an ``inf`` logit silently saturates a threshold sweep. Both were reachable
+    through the diagnostic scripts before this guard; the adversarial dry run in
+    `tests/test_diagnostic_pipeline.py` is the test that found it.
+    """
+    bad = [
+        (key, value)
+        for key, value in scored.items()
+        if not math.isfinite(float(value))
+    ]
+    if bad:
+        raise ValueError(
+            f"non-finite score(s){' in ' + where if where else ''}: {bad[:5]}"
+        )
+
+
 def increment_sweep(
     rows: list[dict],
     cuts: list[float],
@@ -158,6 +178,43 @@ def prf(tp: int, fp: int, fn: int) -> dict:
         "recall": recall,
         "f1": f1,
     }
+
+
+def slip_counts(
+    pred: set[tuple[int, int]],
+    truth: set[tuple[int, int]],
+    tol: int = 1,
+) -> tuple[int, int, int]:
+    """Counts under a ±``tol`` index tolerance (Amendment 6 §A6.4).
+
+    A truth pair counts as found when an unused predicted pair has both indices
+    within ``tol``. Matching is one-to-one and deterministic: truth pairs are
+    visited in sorted order and take the lexicographically first available
+    prediction inside the window, so the result never depends on set iteration
+    order. This metric can only be >= the exact-match counts, which is what makes
+    it usable as a register-slip check rather than a different score.
+    """
+    available = sorted(pred)
+    used: set[tuple[int, int]] = set()
+    tp = 0
+    for t in sorted(truth):
+        ti, tj = t
+        best = None
+        best_key = None
+        for p in available:
+            if p in used:
+                continue
+            if abs(p[0] - ti) <= tol and abs(p[1] - tj) <= tol:
+                key = (abs(p[0] - ti) + abs(p[1] - tj), p)
+                if best_key is None or key < best_key:
+                    best_key = key
+                    best = p
+        if best is not None:
+            used.add(best)
+            tp += 1
+    fp = len(available) - len(used)
+    fn = len(truth) - tp
+    return tp, fp, fn
 
 
 def pair_scores(truth: set[tuple[int, int]], scored: dict[tuple[int, int], float]) -> tuple[np.ndarray, np.ndarray]:

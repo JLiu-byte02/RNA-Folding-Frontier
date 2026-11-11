@@ -340,3 +340,29 @@ that do not need the server were built and tested locally.
   RNAstructure GPL, ViennaRNA custom (no redistribution for a fee). This closes
   the ViennaRNA redistribution `[CHECK]` for dependency use: we depend on the
   wheel, we do not vendor it.
+
+## 2026-11-12 — Round 4f rulings implemented
+
+- **Amendments are append-only as files** (`docs/decisions.md`). Amendment 4 is
+  restored to the bytes that hash to `08d6771a…`; its former §A4.6 now lives in
+  `AMENDMENT_6.md` as §A6.1. The append that moved A4 to `c6471002…` stays in git
+  history. Amendment 5 re-hashed unchanged at `cba17608…`, so it was never
+  edited after its hash was quoted.
+- **Correction to the entry above.** The line "±1 slip collapses F1 to 0.0055"
+  described `shifted_prediction`, not a tolerance metric. The tolerance metric is
+  `slip_allowed` = 0.5773, which is correctly ≥ exact 0.5407 (P 0.5404 / R 0.6195).
+  The two are now separate fields, in Amendment 6 §A6.4 and in
+  `experiments/004_turner_control/scorer_crosscheck.json`.
+- **Label and pseudoknot policy frozen** in Amendment 6 §A6.2–A6.3: canonical+GU
+  only; primary F1 vs maximum nested subset (deterministic tie-break); secondary
+  F1 vs the full canonical set; prevalence reported per split. Measured: 23.67%
+  of bpRNA-1m sequences carry a crossing pair (6.18% of pairs), so the split
+  manifest's "pseudoknots dropped" wording is a documentation defect. WUSS
+  letter-pair (`Aa`) notation is not parsed by `project_ss` — recorded as a
+  cluster-side fix, because a rebuild changes split hashes.
+- **Embargo guard implemented** (`src/rff/analysis/embargo.py`, lockfile
+  `state/amendments.lock.json`). Confirmatory scripts refuse `test_novel` paths
+  without `--confirmatory`, and refuse even with it if any locked hash has moved.
+- **Adversarial dry run found a real silent-NaN bug**: `d1_scoring.py` and
+  `d2_structure_errors.py` turned a NaN score into a NaN quantile instead of
+  failing. Both now call `require_finite`.

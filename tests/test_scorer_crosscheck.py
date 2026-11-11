@@ -86,3 +86,25 @@ def test_pm1_slip_is_detectable_and_reported_separately():
 
 def test_shift_drops_pairs_that_fall_off_the_sequence():
     assert independent.shift_pairs({(0, 5)}, -1) == set()
+
+
+def test_slip_allowed_can_only_add_matches():
+    """The tolerance metric must never be below the exact one (PI Round 4f)."""
+    from rff.analysis.scoring import slip_counts as project_slip
+
+    truth = {(10, 20), (30, 44), (60, 80)}
+    pred = {(11, 20), (30, 45), (99, 120)}
+    exact = independent.counts(pred, truth)
+    tol = independent.slip_counts(pred, truth)
+    assert tol[0] >= exact[0]
+    assert independent.f1_from_counts(*tol) >= independent.f1_from_counts(*exact)
+    # both implementations must agree, including on which prediction is consumed
+    assert tol == project_slip(pred, truth)
+
+
+def test_slip_matching_is_one_to_one():
+    """Two truths cannot both claim the same single prediction."""
+    truth = {(10, 20), (11, 21)}
+    pred = {(10, 20)}
+    tp, fp, fn = independent.slip_counts(pred, truth)
+    assert (tp, fp, fn) == (1, 0, 1)

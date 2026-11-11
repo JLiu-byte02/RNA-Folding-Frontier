@@ -70,6 +70,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from rff.analysis.scoring import decode_pairs, normalise_scored  # noqa: E402
 from rff.analysis.operating_point import Scan, select_operating_point  # noqa: E402
+from rff.analysis.embargo import assert_allowed  # noqa: E402
 from rff.decoders.nn_dp import (  # noqa: E402
     NEG,
     NNDecoder,
@@ -177,7 +178,18 @@ def main() -> int:
     ap.add_argument("--threshold-hi", type=float, default=0.99)
     ap.add_argument("--threshold-grid", type=int, default=24)
     ap.add_argument("--out", required=True)
+    ap.add_argument(
+        "--confirmatory",
+        action="store_true",
+        help="required to read a test_novel path; also verifies the amendment hashes (A6.5)",
+    )
     args = ap.parse_args()
+
+    assert_allowed(
+        [args.dump, args.split],
+        confirmatory=args.confirmatory,
+        root=ROOT,
+    )
 
     vienna = None
     if args.energy == "vienna":

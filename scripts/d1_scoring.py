@@ -47,6 +47,7 @@ from rff.analysis.scoring import (  # noqa: E402
     increment_sweep,
     length_band,
     prf,
+    require_finite,
 )
 
 ARMS = {
@@ -108,6 +109,7 @@ def main() -> int:
         for row in rows:
             row["_scored"] = row["scored"]
             row["_truth"] = {tuple(p) for p in row["truth"]}
+            require_finite(row["_scored"], where=f"{f.name}:{row['id']}")
         families = [r["family"] for r in rows]
 
         summary: dict = {
@@ -256,4 +258,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except ValueError as exc:  # non-finite dump cell, A6.5 adversarial case
+        print(f"error: refusing to score a malformed dump: {exc}", file=sys.stderr)
+        raise SystemExit(2)

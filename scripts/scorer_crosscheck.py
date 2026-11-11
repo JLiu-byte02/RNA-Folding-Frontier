@@ -25,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from rff.analysis.scoring import prf  # noqa: E402
+from rff.analysis.scoring import prf, slip_counts as project_slip_counts  # noqa: E402
 from rff.decoders.vienna_soft import parse_dotbracket as project_parse  # noqa: E402
 
 _spec = importlib.util.spec_from_file_location(
@@ -54,6 +54,7 @@ def main() -> int:
 
     per_family: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0])
     slip: dict[int, list[int]] = {1: [0, 0, 0], -1: [0, 0, 0]}
+    slip_allowed = [0, 0, 0]
     mismatches = []
     n = 0
     for row in preds:
@@ -94,6 +95,21 @@ def main() -> int:
         bucket[0] += tp
         bucket[1] += fp
         bucket[2] += fn
+        s_tp, s_fp, s_fn = project_slip_counts(a, truth)
+        i_tp, i_fp, i_fn = independent.slip_counts(a, truth)
+        if (s_tp, s_fp, s_fn) != (i_tp, i_fp, i_fn):
+            mismatches.append(
+                {
+                    "id": row["id"],
+                    "error": "slip counts",
+                    "project": [s_tp, s_fp, s_fn],
+                    "independent": [i_tp, i_fp, i_fn],
+                }
+            )
+            continue
+        slip_allowed[0] += s_tp
+        slip_allowed[1] += s_fp
+        slip_allowed[2] += s_fn
         for delta, acc in slip.items():
             s_tp, s_fp, s_fn = independent.counts(independent.shift_pairs(a, delta), truth)
             acc[0] += s_tp
@@ -111,11 +127,14 @@ def main() -> int:
         sum(v[2] for v in per_family.values()),
     )
 
-    def slip_entry(delta: int) -> dict:
+    def shifted_entry(delta: int) -> dict:
         tp, fp, fn = slip[delta]
         s = prf(tp, fp, fn)
         return {
             "shift": delta,
+            "what": "the prediction is moved by delta and scored exactly; a "
+                    "sensitivity check that the indices are exact, NOT a "
+                    "tolerance metric",
             "precision": round(s["precision"], 4),
             "recall": round(s["recall"], 4),
             "f1": round(s["f1"], 4),
@@ -133,7 +152,17 @@ def main() -> int:
             "family_macro_f1_equal": abs(float(macro_independent) - macro_project) < 1e-12,
             "micro_f1": round(micro["f1"], 4),
         },
-        "sensitivity_pm1": [slip_entry(1), slip_entry(-1)],
+        "slip_allowed": {
+            "tolerance": 1,
+            "what": "a truth pair counts as found when an unused prediction has both "
+                    "indices within 1; this is the metric that must be >= the exact F1",
+            "precision": round(prf(*slip_allowed)["precision"], 4),
+            "recall": round(prf(*slip_allowed)["recall"], 4),
+            "f1": round(prf(*slip_allowed)["f1"], 4),
+            "exact_micro_f1": round(micro["f1"], 4),
+            "is_at_least_exact": bool(prf(*slip_allowed)["f1"] >= micro["f1"] - 1e-12),
+        },
+        "shifted_prediction": [shifted_entry(1), shifted_entry(-1)],
         "pseudoknot_policy": (
             "no removal: true pairs are scored as given, including crossing ones; "
             "predictions are always non-crossing, so a pseudoknotted true pair that "

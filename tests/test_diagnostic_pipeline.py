@@ -147,3 +147,73 @@ def test_d2_needs_only_dump_and_split(tmp_path):
     assert report
     text = json.dumps(report)
     assert "both_kept" in text
+
+
+def _adversarial_rows():
+    """Seven labelled pathologies, one per row, on the documented schema."""
+    rows = []
+    # 1. empty prediction (no scored cells)
+    rows.append({"id": "empty_pred", "family": "f1", "length": 100, "kept": [0, 100],
+                 "truth": [[10, 90]], "scored": {}})
+    # 2. empty truth with predictions
+    rows.append({"id": "empty_truth", "family": "f1", "length": 100, "kept": [0, 100],
+                 "truth": [], "scored": {"10,90": 0.8, "20,80": 0.6}})
+    # 3. dense all-pairs map
+    dense = {f"{i},{j}": 0.6 for i in range(0, 100, 10) for j in range(i + 10, 100, 10)}
+    rows.append({"id": "dense", "family": "f2", "length": 100, "kept": [0, 100],
+                 "truth": [[10, 90]], "scored": dense})
+    # 4. NaN and infinite logits
+    rows.append({"id": "nan_inf", "family": "f2", "length": 100, "kept": [0, 100],
+                 "truth": [[10, 90]],
+                 "scored": {"10,90": float("nan"), "20,80": float("inf"), "30,70": 0.5}})
+    # 5. L = 1024
+    rows.append({"id": "long", "family": "f3", "length": 1024, "kept": [0, 1024],
+                 "truth": [[100, 900]], "scored": {"100,900": 0.7, "200,800": 0.3}})
+    # 6. single-sequence family, and 7. pseudoknotted truth
+    rows.append({"id": "solo", "family": "f4", "length": 120, "kept": [0, 120],
+                 "truth": [[5, 60]], "scored": {"5,60": 0.9}})
+    rows.append({"id": "pseudoknot", "family": "f4", "length": 120, "kept": [0, 120],
+                 "truth": [[10, 50], [20, 60]], "scored": {"10,50": 0.8, "20,60": 0.7}})
+    return rows
+
+
+def test_adversarial_dumps_never_silently_produce_a_wrong_number(tmp_path):
+    dump_dir = tmp_path / "dumps"
+    dump_dir.mkdir()
+    rows = _adversarial_rows()
+    dump = dump_dir / "a_edge.jsonl"
+    dump.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    split = tmp_path / "split.jsonl"
+    seq_rows = []
+    for r in rows:
+        n = r["length"]
+        seq = ["A"] * n
+        for i, j in r["truth"]:
+            seq[i], seq[j] = "G", "C"
+        seq_rows.append({"id": r["id"], "seq": "".join(seq), "family": r["family"],
+                         "pairs": r["truth"]})
+    split.write_text("".join(json.dumps(r) + "\n" for r in seq_rows))
+
+    out = tmp_path / "d1.json"
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "d1_scoring.py"),
+         "--dump-dir", str(dump_dir), "--out", str(out)],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    if proc.returncode != 0:
+        # failing loudly is acceptable; a traceback about the bad cell is not
+        assert "Error" in proc.stderr or "error" in proc.stderr
+        return
+    summary = json.loads(out.read_text())
+
+    def walk(node, path=""):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                walk(v, f"{path}.{k}")
+        elif isinstance(node, list):
+            for k, v in enumerate(node):
+                walk(v, f"{path}[{k}]")
+        elif isinstance(node, float) and node != node:  # NaN
+            raise AssertionError(f"silent NaN at {path}")
+
+    walk(summary)

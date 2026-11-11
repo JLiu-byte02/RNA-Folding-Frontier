@@ -38,7 +38,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from rff.analysis.scoring import normalise_scored  # noqa: E402
+from rff.analysis.scoring import normalise_scored, require_finite  # noqa: E402
 
 CANONICAL = set("AU UA GC CG GU UG".split())
 LONG_RANGE = 128
@@ -197,6 +197,7 @@ def main() -> int:
                 continue
             truth = {tuple(p) for p in row["truth"]}
             scored = normalise_scored(row["scored"])
+            require_finite(scored, where=f"{row['id']}")
             pred = {k for k, v in scored.items() if v >= args.threshold}
             fam = row["family"]
             long_fps = [p for p in (pred - truth) if abs(p[0] - p[1]) > LONG_RANGE]

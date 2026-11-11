@@ -1,0 +1,28 @@
+{
+  "status": "label-source measurement, not a model result",
+  "sources": {
+    "bprna": {
+      "n_sequences": 66715,
+      "n_sequences_with_a_crossing_pair": 15794,
+      "fraction_sequences_with_crossing": 0.236738,
+      "n_pairs": 5990889,
+      "n_crossing_pairs": 369951,
+      "fraction_pairs_crossing": 0.061752
+    },
+    "rfam_seed": {
+      "n_sequences": 30370,
+      "n_sequences_with_a_crossing_pair": 5,
+      "fraction_sequences_with_crossing": 0.000165,
+      "n_pairs": 675574,
+      "n_crossing_pairs": 46,
+      "fraction_pairs_crossing": 6.8e-05
+    }
+  },
+  "note": "crossing pairs are counted after the canonical/GU filter, which is the state in which labels reach the scorer; Rfam seeds are capped per family for cost, and the cap is recorded",
+  "rfam_cap_per_family": 20,
+  "inputs": {
+    "data/raw/bprna/data.json": "d36c62ee92eda8b6db90ac4cd6e9d9804aedbaa8a860dd1fcd9b116d5475dff4",
+    "data/raw/rfam/Rfam.seed.gz": "b06ac74d772609e863c5e1906eb491d699e9d325c5f22f4fc78126a808ad0bed"
+  },
+  "script": "scripts/pseudoknot_prevalence.py"
+}

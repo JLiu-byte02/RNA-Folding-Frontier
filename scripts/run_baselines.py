@@ -42,6 +42,7 @@ from rff.analysis.dotbracket import (  # noqa: E402
     extract_predictions,
     parse_dotbracket,
 )
+from rff.analysis.embargo import assert_allowed  # noqa: E402
 from rff.analysis.scoring import prf  # noqa: E402
 
 TEXT_SUFFIXES = {".txt", ".out", ".db", ".dbn", ".dotbracket", ".ct", ".log", ".ps"}
@@ -112,7 +113,18 @@ def main() -> int:
     ap.add_argument("--n-boot", type=int, default=10000)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--keep", action="store_true", help="keep the temporary worksheet")
+    ap.add_argument(
+        "--confirmatory",
+        action="store_true",
+        help="required to read a test_novel path; also verifies the amendment hashes (A6.5)",
+    )
     args = ap.parse_args()
+
+    assert_allowed(
+        [args.split, args.predictions] if args.predictions else [args.split],
+        confirmatory=args.confirmatory,
+        root=ROOT,
+    )
 
     rows = read_jsonl(ROOT / args.split)
     seq_by_id = {r["id"]: r["seq"] for r in rows}

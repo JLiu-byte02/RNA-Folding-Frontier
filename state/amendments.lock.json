@@ -1,0 +1,10 @@
+{
+  "note": "Hashes of the pre-registration documents and the test_novel evaluation subset. The confirmatory scripts refuse to read a test_novel path unless --confirmatory is passed AND every hash here still matches. Amendment 6 §A6.5 (Amendment 6 itself is not checked against its own hash).",
+  "files": {
+    "experiments/001_e1prime/AMENDMENT_2.md": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+    "experiments/001_e1prime/AMENDMENT_3.md": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+    "experiments/001_e1prime/AMENDMENT_4.md": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+    "experiments/001_e1prime/AMENDMENT_5.md": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+    "experiments/001_e1prime/test_novel_eval.jsonl": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b"
+  }
+}

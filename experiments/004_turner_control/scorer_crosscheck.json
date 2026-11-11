@@ -10,15 +10,26 @@
     "family_macro_f1_equal": true,
     "micro_f1": 0.5407
   },
-  "sensitivity_pm1": [
+  "slip_allowed": {
+    "tolerance": 1,
+    "what": "a truth pair counts as found when an unused prediction has both indices within 1; this is the metric that must be >= the exact F1",
+    "precision": 0.5404,
+    "recall": 0.6195,
+    "f1": 0.5773,
+    "exact_micro_f1": 0.5407,
+    "is_at_least_exact": true
+  },
+  "shifted_prediction": [
     {
       "shift": 1,
+      "what": "the prediction is moved by delta and scored exactly; a sensitivity check that the indices are exact, NOT a tolerance metric",
       "precision": 0.0052,
       "recall": 0.0059,
       "f1": 0.0055
     },
     {
       "shift": -1,
+      "what": "the prediction is moved by delta and scored exactly; a sensitivity check that the indices are exact, NOT a tolerance metric",
       "precision": 0.0051,
       "recall": 0.0058,
       "f1": 0.0054

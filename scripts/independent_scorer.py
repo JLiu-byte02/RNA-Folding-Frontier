@@ -71,3 +71,38 @@ def shift_pairs(pairs: set[tuple[int, int]], delta: int) -> set[tuple[int, int]]
         if a >= 0 and b > a:
             out.add((a, b))
     return out
+
+
+def slip_counts(
+    pred: set[tuple[int, int]],
+    truth: set[tuple[int, int]],
+    tol: int = 1,
+) -> tuple[int, int, int]:
+    """Counts under a ±``tol`` tolerance, built from a neighbour index.
+
+    Deliberately a different algorithm from the project version: it indexes the
+    predictions by their first index and looks up a window of truth-adjacent
+    keys, rather than scanning the prediction list in order.
+    """
+    by_first: dict[int, list[tuple[int, int]]] = {}
+    for p in sorted(pred):
+        by_first.setdefault(p[0], []).append(p)
+    used: set[tuple[int, int]] = set()
+    tp = 0
+    for ti, tj in sorted(truth):
+        found = None
+        found_key = None
+        for di in range(-tol, tol + 1):
+            for candidate in by_first.get(ti + di, []):
+                if candidate in used:
+                    continue
+                if abs(candidate[1] - tj) > tol:
+                    continue
+                key = (abs(candidate[0] - ti) + abs(candidate[1] - tj), candidate)
+                if found_key is None or key < found_key:
+                    found_key = key
+                    found = candidate
+        if found is not None:
+            used.add(found)
+            tp += 1
+    return tp, len(pred) - len(used), len(truth) - tp

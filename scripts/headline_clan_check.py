@@ -76,7 +76,9 @@ def main() -> int:
             for name, tgt in targets.items():
                 if row["clan"] not in tgt["clans"]:
                     continue
-                bucket = stats[name][source]
+                bucket = stats[name].get(source)
+                if bucket is None:
+                    continue
                 if row["family_accession"] in tgt["accs"]:
                     bucket["same_family"] += 1
                 else:

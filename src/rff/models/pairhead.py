@@ -70,8 +70,8 @@ class PairMapHead(nn.Module):
         )
         idx = torch.arange(n, device=h.device)
         dist = (idx[None, :] - idx[:, None]).abs().clamp(max=self.max_len - 1)
-        feats = feats + self.rel(dist).unsqueeze(0)
         x = self.in_conv(feats.permute(0, 3, 1, 2))
+        x = x + self.rel(dist).permute(2, 0, 1).unsqueeze(0)
         for block in self.blocks:
             x = block(x)
         logits = self.out(x).squeeze(1)

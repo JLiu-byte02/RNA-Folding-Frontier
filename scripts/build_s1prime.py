@@ -122,6 +122,7 @@ def main() -> int:
     bprna_by_clan: dict[str, list[dict]] = defaultdict(list)
     bprna_unassigned = 0
     bprna_nohit = 0
+    bprna_scanned = 0
     with open(ROOT / args.bprna_pool) as fh:
         for line in fh:
             rec = json.loads(line)
@@ -129,6 +130,7 @@ def main() -> int:
             if row is None:
                 bprna_unassigned += 1
                 continue
+            bprna_scanned += 1
             if row["family_accession"] == "NOHIT" or row["clan"] == "NOHIT":
                 # NOHIT is "no family above the Rfam gathering threshold", not a
                 # family. Folding it into a clan would create a pseudo-cluster.
@@ -224,7 +226,8 @@ def main() -> int:
             "id_test": len(id_test),
             "test_novel": len(novel_test),
             "test_withheld": len(withheld_test),
-            "bprna_unassigned": bprna_unassigned,
+            "bprna_scanned": bprna_scanned,
+            "bprna_pool_file_not_scanned": bprna_unassigned,
             "bprna_nohit": bprna_nohit,
         },
         "pair_families": {

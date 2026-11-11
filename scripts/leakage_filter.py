@@ -92,15 +92,24 @@ def build_index(train_seqs: list[dict], k: int, max_df: float):
     return np.unique(codes), df, cut
 
 
+def _present(codes: np.ndarray, sorted_index: np.ndarray) -> np.ndarray:
+    """Membership in a sorted uint64 index without rebuilding it per query."""
+    if sorted_index.size == 0 or codes.size == 0:
+        return np.zeros(codes.shape, dtype=bool)
+    pos = np.searchsorted(sorted_index, codes)
+    pos = np.clip(pos, 0, sorted_index.size - 1)
+    return sorted_index[pos] == codes
+
+
 def containment(seq: str, k: int, index, df: Counter, cut: int) -> tuple[float, float, int]:
     kmers = kmer_codes(seq, k)
     if kmers.size == 0:
         return 0.0, 0.0, 0
-    raw = float(np.isin(kmers, index).sum()) / kmers.size
+    raw = float(_present(kmers, index).sum()) / kmers.size
     info = kmers[[df.get(int(c), 0) <= cut for c in kmers]]
     if info.size == 0:
         return raw, 0.0, 0
-    return raw, float(np.isin(info, index).sum()) / info.size, int(info.size)
+    return raw, float(_present(info, index).sum()) / info.size, int(info.size)
 
 
 def load_hits_by_query(path: Path, evalue_max: float) -> dict[str, set[str]]:
@@ -174,6 +183,7 @@ def main() -> int:
     for name in ("id_test", "test_novel", "test_withheld"):
         keep, drop = [], []
         vals = []
+        n_unscreened = 0
         for rec in splits[name]:
             if train_hashes.get(seq_hash(rec["seq"])):
                 drop.append({"id": rec["id"], "reason": "exact_duplicate"})
@@ -182,6 +192,8 @@ def main() -> int:
                 rec["seq"], args.k, train_kmers, df, df_keep_cut
             )
             vals.append({"id": rec["id"], "clan": rec["clan"], "raw": raw, "info": info, "n_info": n_info})
+            if n_info < 20:
+                n_unscreened += 1
             if n_info >= 20 and info > args.containment_max:
                 drop.append(
                     {"id": rec["id"], "reason": "kmer_containment", "info": round(info, 4)}
@@ -202,6 +214,7 @@ def main() -> int:
             if vals
             else {},
             "n_above_max": sum(1 for v in vals if v["info"] > args.containment_max),
+            "n_unscreened_short": n_unscreened,
             "per_clan_withheld": {
                 clan: {
                     "n": len(v),

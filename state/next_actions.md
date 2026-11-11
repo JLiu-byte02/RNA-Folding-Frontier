@@ -1,34 +1,48 @@
 # Next Actions
 
-Updated: 2026-11-11
+Updated: 2026-11-11 (after PI Round 3)
 
-## Immediate (E0)
+The pre-registration is now `PREREGISTRATION.md` plus Amendment 1. The amendment,
+not the frozen text, governs: swaps are primary evidence, the k-sweep is
+descriptive, P2 is a test-time intervention while P3/P5 are train-and-test per
+condition.
 
-- [x] Get PI decision on direction and first experiment batch (D1 selected).
-- [x] Verify PI's literature claims independently (CHANRG, BPfold, MXfold2 DP,
-      RiNALMo weights).
-- [x] Acquire BPfold release (bpRNA TR0/VL0/TS0, ArchiveII, bpRNA-new,
-      RNAStrAlign) and ArchiveII mirror.
-- [x] Archive Round 1 (E1′) and Round 1b (E0 decisions) transcripts.
-- [x] Label-discordance analysis on the 812 exact duplicates (E0b).
-- [x] Rfam 15.0 metadata: 4,178 families / 147 clans / 463 memberships; ArchiveII
-      clan map (E0c). SEED dump parsed to 92,781 ungapped seed sequences.
-- [ ] Download Rfam 15.0 CMs (EBI intermittent) and run cmscan to map every
-      sequence to an Rfam family/clan.
-- [ ] Build Infernal from source (in progress; no conda, no cmsearch on PATH).
-- [ ] Check BPfold's own framing of ArchiveII (OOD vs standard benchmark).
-- [ ] Re-score BPfold on clan/near-dup-cleaned ArchiveII (T4/A.2).
-- [ ] RiNALMo-giga crop-and-positional sanity check (PI Round-1 ask 2).
-- [ ] Homolog pool counts below 60% identity per test family (condition c).
+## Running now
+
+- [ ] `cache_emb.sbatch` x3: RiNALMo-giga, full context, on train (17,746),
+      test_withheld (17,371) and id_test (1,402) -> `data/cache/giga_full_*`.
+- [ ] NOHIT relaxed-scan audit (E <= 10, no GA cutoff): report both counts and
+      escalate if training sequences with secondary hits to a test clan exceed
+      0.5%.
+
+## Immediate
+
+- [ ] Check RNA-FM `position_embedding_type`; if absolute, pass the original
+      `position_ids` or restrict RNA-FM to the swap conditions.
+- [ ] `scripts/build_conditions.py`: conditions b (dinucleotide-shuffled distal),
+      d (other-clan distal), e (pad/mask distal), local window fixed at +/-32 and
+      length preserved. Condition c needs `build_homolog_pool.py`.
+- [ ] Cache giga conditions b/c/d/e (full-length inputs, ~0.2 h each).
+- [ ] Cache giga k=32 crops for the k-arm (train ~4 h), then {8, 128, full}.
+- [ ] P2 head: train decoder B on condition a, 3 seeds; evaluate under a-e on
+      id_test and withheld; record per-position distortion (1 - cos) and clan
+      decodability; regress F1 on both.
+- [ ] Build the canonical test_novel catalogue under Amendment 1.6: 310
+      published-structure families, 2,720 sequences after the 10-per-family cap
+      (above the 150-clan gate); commit its hash before scoring it.
+
+## CPU / development
+
+- [ ] MXfold2 DP with external score tensors; check against Turner-only output on
+      100 sequences; then build decoder A (nearest-neighbour DP with learned
+      corrections).
+- [ ] Withheld label calibration: F1 on the bpRNA vs seed subsets of the same
+      withheld clans.
+- [ ] Fold the bpRNA mirror provenance table into the Round 4 report.
+
+## Standing
+
+- [ ] Memorization-gap runs need UFold/MXfold2/BPfold checkpoints (the MXfold2
+      repo URL 404'd earlier; find the correct one).
 - [ ] structRFM pretraining manifest and overlap with every test set.
-- [ ] Build splits S1-S4 and run the leakage audit (identity, clan overlap,
-      pretraining-corpus hits).
-- [ ] Record cluster facts: scratch quota, CPU cores per node, preemption.
-- [ ] Decide repository license with the PI (RiNALMo-giga is AGPL; rest is MIT).
-
-## Queued
-
-- [ ] E1′ context-intervention factorial (pre-registered P1–P5).
-- [ ] E2 clan-shortcut probe.
-- [ ] E3 evidence-stratified evaluation.
-
+- [ ] Repository license decision (RiNALMo-giga AGPL vs MIT rest).

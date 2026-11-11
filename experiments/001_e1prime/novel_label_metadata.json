@@ -1,0 +1,72 @@
+{
+  "families_parsed": 4178,
+  "ss_source_counts_all_families": {
+    "published": 814,
+    "predicted": 3322,
+    "other": 42
+  },
+  "ss_source_by_type_all_families": {
+    "predicted|Gene; miRNA;": 1594,
+    "predicted|Gene; sRNA;": 468,
+    "predicted|Gene; snRNA; snoRNA; CD-box;": 464,
+    "published|Gene; sRNA;": 292,
+    "predicted|Gene; snRNA; snoRNA; HACA-box;": 275,
+    "predicted|Gene; lncRNA;": 216,
+    "published|Cis-reg;": 211,
+    "predicted|Cis-reg;": 79,
+    "predicted|Gene; CRISPR;": 64,
+    "predicted|Gene; antisense;": 49,
+    "published|Gene;": 48,
+    "published|Cis-reg; leader;": 43,
+    "published|Cis-reg; riboswitch;": 42,
+    "published|Gene; ribozyme;": 33,
+    "other|Cis-reg;": 31,
+    "published|Cis-reg; thermoregulator;": 30,
+    "predicted|Gene;": 24,
+    "predicted|Gene; snRNA; snoRNA; scaRNA;": 24,
+    "published|Cis-reg; frameshift_element;": 20,
+    "predicted|Cis-reg; IRES;": 17,
+    "published|Cis-reg; IRES;": 15,
+    "published|Gene; snRNA; splicing;": 14,
+    "predicted|Cis-reg; leader;": 13,
+    "published|Gene; rRNA;": 11,
+    "published|Gene; snRNA; snoRNA; CD-box;": 11,
+    "published|Gene; antisense;": 11,
+    "predicted|Cis-reg; riboswitch;": 10,
+    "predicted|Intron;": 8,
+    "published|Gene; snRNA; snoRNA; HACA-box;": 8,
+    "other|Cis-reg; frameshift_element;": 8,
+    "predicted|Gene; antitoxin;": 6,
+    "predicted|Cis-reg; thermoregulator;": 5,
+    "published|Gene; snRNA; snoRNA; scaRNA;": 5,
+    "published|Gene; antitoxin;": 5,
+    "published|Gene; snRNA; snoRNA;": 5,
+    "published|Gene; miRNA;": 4,
+    "published|Gene; tRNA;": 2,
+    "published|Gene; lncRNA;": 2,
+    "predicted|Gene; ribozyme;": 2,
+    "predicted|Gene; rRNA;": 2
+  },
+  "test_novel": {
+    "sequences": 42873,
+    "families": 2013,
+    "eligible_families_min_pairs": 1685,
+    "primary_published_families": 310,
+    "primary_sequence_budget_capped": 2720,
+    "primary_type_counts": {
+      "Gene; sRNA;": 186,
+      "Cis-reg;": 61,
+      "Cis-reg; thermoregulator;": 22,
+      "Cis-reg; leader;": 21,
+      "Gene; ribozyme;": 14,
+      "Cis-reg; riboswitch;": 4,
+      "Gene;": 2
+    }
+  },
+  "rule": {
+    "min_pairs_in_ss_cons": 4,
+    "cap_per_family": 10,
+    "requires": "ss_source == published"
+  },
+  "below_150_clans": false
+}

@@ -94,4 +94,59 @@ recorded here before the run:
 
 ## Amendments
 
-_None yet._
+### Amendment 1 — 2026-11-11: swaps primary, protocol split, reduced sweep
+
+Source: PI Round 3 (`docs/claude/transcripts/2026-11-11_round03_decisions.md`).
+The text above stays as written; this section overrides it where they differ.
+
+**A1.1 Evidence hierarchy.** The (b)-(e) distal-context swaps, not the k-sweep,
+are the primary causal evidence. The k-sweep is descriptive and secondary:
+RiNALMo-micro at k in {8, 32, 128, full}, RiNALMo-giga at k in {32, full}. P1 is
+reported as a descriptive curve, not as a go/no-go test.
+
+Reason: `DIAGNOSTIC_context_probe.md`. Cropping to a small k also degrades the
+representation for reasons unrelated to family identity (a 33-layer model
+pretrained on full sequences is fed an out-of-distribution input), so an ID-F1
+increase with k cannot by itself evidence the shortcut mechanism.
+
+**A1.2 P2 and P3/P5 need different protocols.**
+
+- P2 is a **test-time intervention**: train one head on native inputs (condition
+  a), then swap the distal context at evaluation only. Same weights, only the
+  input changes.
+- P3 and P5 are **train-and-test per condition**: a separate head is trained on
+  each condition's embeddings and evaluated on that same condition.
+
+**A1.3 Swap confound is measured, not assumed.** For every condition and
+position record two numbers: *distortion* = 1 - cos(swap(i), native(i)), and
+*clan decodability* = the clan probe's accuracy on the swapped embeddings. Fit
+F1 ~ distortion + clan decodability across conditions and positions. P2 counts as
+supported only if clan decodability predicts F1 beyond what distortion explains.
+Condition (e) pad/mask is a lower anchor for distortion, not a natural-input
+condition.
+
+**A1.4 Backbones without rotary positions.** RNA-FM's positional encoding must be
+checked before it enters the k-factor. If it uses learned absolute positions,
+crops must pass the original `position_ids`; otherwise RNA-FM runs only the
+swap conditions, whose positions are fixed by construction.
+
+**A1.5 NOHIT policy (unchanged) plus an audit.** NOHIT sequences stay excluded
+from S1' (6.4% of the bpRNA pool). A relaxed scan (E <= 10, no GA cutoff) is run
+as an audit that reports (i) how many NOHIT pool sequences hit a test clan and
+(ii) how many hit training sequences also carry secondary hits to a test clan at
+E <= 10. If (ii) exceeds 0.5% of training, it is escalated before E1' results are
+interpreted.
+
+**A1.6 test_novel evaluation set (frozen before any model sees it).**
+
+- Primary: clan-macro F1, bootstrapped by clan, over novel clans whose SEED
+  `#=GF SS` source is *published* and whose SS_cons has at least 4 base pairs.
+  Within each family, deduplicate at 90% identity and keep at most 10 sequences,
+  sampled with a fixed seed.
+- Stratified rows: by type (cis-regulatory/riboswitch, ribozyme, snoRNA, miRNA,
+  sRNA, other) and by complexity (multiloop present or not).
+- Supplementary: all 42,873 sequences, all families, no caps.
+- If the published-structure subset is smaller than ~150 clans, stop and
+  re-decide rather than relaxing the rule silently.
+- No model is scored on test_novel until this section is committed and its hash
+  recorded.

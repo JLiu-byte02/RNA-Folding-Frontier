@@ -113,7 +113,11 @@ def main() -> int:
     ap.add_argument("--train-dump", required=True, help="per-sequence dump on the frozen train split")
     ap.add_argument("--train-split", required=True, help="jsonl with id -> seq")
     ap.add_argument("--grid-s", default="0.25,0.5,1.0,2.0,4.0")
-    ap.add_argument("--grid-b", default="-3,-1.5,0,1.5,3")
+    ap.add_argument(
+        "--grid-b",
+        default="-6,-3,0,3,6",
+        help="coarse offsets, Amendment 7 section A7.4 (±2 ln 20 around zero)",
+    )
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-seqs", type=int, default=0, help="0 = all records")

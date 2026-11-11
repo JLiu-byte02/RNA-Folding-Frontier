@@ -28,6 +28,9 @@ venv/
 # Logs and transient outputs
 experiments/**/logs/
 experiments/**/runs/
+# Per-sequence dumps are multi-MB and fully regenerable from the committed
+# script + seed + pinned input hash; the metadata file records which.
+experiments/**/dump.jsonl
 wandb/
 *.log
 *.out

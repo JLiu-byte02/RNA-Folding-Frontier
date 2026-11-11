@@ -1,0 +1,11 @@
+{
+  "purpose": "pipeline rehearsal only; no scientific claim",
+  "archive": "data/raw/archiveII/data.json",
+  "archive_sha256": "d43276a64beb2d992aa40b060df48ac6dca288c67a1c3ed32a16fc3fce96e28a",
+  "n_sequences": 300,
+  "seed": 17,
+  "max_length": 400,
+  "score_source": "ViennaRNA partition function base-pair probabilities, logit",
+  "caveat": "ViennaRNA probabilities fed back into ViennaRNA: circular by construction. EternaFold/CONTRAfold were preferred but are not installed locally.",
+  "median_length": 120.0
+}

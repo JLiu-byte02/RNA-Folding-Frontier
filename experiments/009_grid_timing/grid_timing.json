@@ -1,0 +1,58 @@
+{
+  "purpose": "cost of one soft-constrained fold, by length bin (A7.4 decision input)",
+  "archive": "data/raw/archiveII/data.json",
+  "grid_points": 50,
+  "assumed_training_sequences": 17700,
+  "rows": [
+    {
+      "band": "0-79",
+      "n_sequences_in_file": 465,
+      "n_timed": 8,
+      "median_s": 0.0032,
+      "mean_s": 0.0045,
+      "p90_s": 0.0036,
+      "median_constraints": 969
+    },
+    {
+      "band": "80-149",
+      "n_sequences_in_file": 1522,
+      "n_timed": 8,
+      "median_s": 0.0098,
+      "mean_s": 0.0098,
+      "p90_s": 0.013,
+      "median_constraints": 2610
+    },
+    {
+      "band": "150-299",
+      "n_sequences_in_file": 332,
+      "n_timed": 8,
+      "median_s": 0.0497,
+      "mean_s": 0.0508,
+      "p90_s": 0.0683,
+      "median_constraints": 11422
+    },
+    {
+      "band": "300-599",
+      "n_sequences_in_file": 1004,
+      "n_timed": 8,
+      "median_s": 0.1153,
+      "mean_s": 0.1098,
+      "p90_s": 0.1231,
+      "median_constraints": 24185
+    },
+    {
+      "band": "600-1999",
+      "n_sequences_in_file": 47,
+      "n_timed": 8,
+      "median_s": 0.4649,
+      "mean_s": 1.7449,
+      "p90_s": 3.8945,
+      "median_constraints": 81352
+    }
+  ],
+  "implied_seconds_per_full_pass_over_this_file": 170.5,
+  "implied_cpu_hours_per_full_pass_over_this_file": 0.05,
+  "implied_cpu_hours_for_the_grid_assuming_train_size": 12.44,
+  "caveat": "ArchiveII lengths are not the training split's lengths; the bin table is the measurement and the grid projection is an estimate that must be recomputed on the cluster from the real split before the A7.4 subsample decision",
+  "decoder": "rff.decoders.vienna_soft.ViennaSoftDecoder, one sc_add_bp per candidate cell"
+}

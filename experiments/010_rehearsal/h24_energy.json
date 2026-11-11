@@ -1,0 +1,91 @@
+{
+  "name": "rehearsal_energy",
+  "n_sequences": 300,
+  "n_sequences_without_seq": 0,
+  "long_range_definition": "|i-j| > 128",
+  "dp_config": {
+    "hairpin_penalty": 0.0,
+    "interior_penalty": 0.0,
+    "ml_closing": 0.0,
+    "ml_branch": 0.0,
+    "ml_unpaired": 0.0,
+    "max_loop": 30,
+    "score": "log-odds of the dumped cells; absent cells disallowed",
+    "variant": "A-energy (ViennaRNA Turner + sc_add_bp)",
+    "energy_scale": 0.5,
+    "energy_offset": 6.0,
+    "calibration_status": "explicit values supplied on the command line; record the fitting job"
+  },
+  "at_0_5": {
+    "threshold": 0.5,
+    "greedy_recall": 0.5137,
+    "dp_recall": 0.5752,
+    "family_macro_per_sequence": {
+      "bare": {
+        "tp": 35.6852,
+        "long_range_fp": 3.6485
+      },
+      "greedy": {
+        "tp": 35.6852,
+        "long_range_fp": 3.6485
+      },
+      "dp": {
+        "tp": 39.1431,
+        "long_range_fp": 5.965
+      }
+    },
+    "mean_d_tp": 3.4578,
+    "mean_d_long_range_fp": 2.3164,
+    "pooled": {
+      "bare": {
+        "tp": 8092,
+        "long_range_fp": 678,
+        "pairs": 12666
+      },
+      "greedy": {
+        "tp": 8092,
+        "long_range_fp": 678,
+        "pairs": 12666
+      },
+      "dp": {
+        "tp": 9061,
+        "long_range_fp": 1061,
+        "pairs": 15964
+      }
+    },
+    "contrast_drop_lrfp_minus_drop_tp": {
+      "n_families": 8,
+      "contrast": 73.25,
+      "ci": [
+        22.7719,
+        124.1562
+      ]
+    },
+    "n_sequences_lrfp_reduced": 0,
+    "passes": true
+  },
+  "greedy_recall_ceiling": {
+    "recall": 0.5486,
+    "threshold": 0.05,
+    "note": "descriptive only (Amendment 4 A4.1 item 3): the best greedy recall reachable on this split, over the whole threshold grid"
+  },
+  "H2_4": {
+    "order": [
+      "recall_matched",
+      "pair_budget"
+    ],
+    "basis": null,
+    "status": "inconclusive_no_recall_match",
+    "passes": null,
+    "verdicts": {},
+    "recall_matched_threshold": null,
+    "recall_matched_gap": null,
+    "recall_tolerance": 0.002,
+    "pair_budget_threshold": 0.05,
+    "pair_budget_gap_pairs": 1523,
+    "pair_budget_tolerance_pairs": 159.64000000000001,
+    "pair_budget_feasible": false,
+    "threshold_grid_size": 25,
+    "note": "Amendment 4 A4.1: recall-matched primary; pair-budget fallback only when no threshold reaches decoder A's recall; greedy recall ceiling always reported, descriptively"
+  }
+}

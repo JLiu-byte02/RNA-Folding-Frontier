@@ -1,0 +1,36 @@
+{
+  "project": "RNA-Folding-Frontier",
+  "schema_version": 1,
+  "updated_at": "2026-11-11T00:00:00+08:00",
+  "phase": "bootstrap",
+  "cycle": 0,
+  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
+  "compute": {
+    "cluster": "Slurm",
+    "partition": "g-3090-2",
+    "gpu_type": "RTX 3090",
+    "project_gpu_cap": 6,
+    "remote_root": "/home/junxuanliu/projects/RNA-Folding-Frontier"
+  },
+  "pi": {
+    "model": "Claude Opus 5.5",
+    "effort": "High",
+    "last_session_url": null,
+    "last_session_file": null,
+    "rate_limit_reset_at": null
+  },
+  "active_direction": null,
+  "active_experiment": null,
+  "open_questions": [
+    "Which of the PI's three candidate directions is most novel and feasible?",
+    "Which leakage-audited benchmark protocol should be adopted?",
+    "What is the strongest reproducible baseline under the 6-GPU cap?"
+  ],
+  "blockers": [],
+  "artifacts": {
+    "datasets": [],
+    "checkpoints": [],
+    "results": []
+  }
+}
+

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Data and checkpoints (live on the compute server)
+data/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.hdf5
+*.npz
+*.pkl
+*.fa
+*.fasta
+*.fa.gz
+
+# Logs and transient outputs
+experiments/**/logs/
+experiments/**/runs/
+wandb/
+*.log
+*.out
+*.err
+
+# Local / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Secrets
+.env
+secrets/
+*.pem
+

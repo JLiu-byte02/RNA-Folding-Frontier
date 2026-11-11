@@ -34,6 +34,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from rff.analysis.clans import load_family_table  # noqa: E402
 from rff.data.io import pairs_from_dbn  # noqa: E402
 
 CANONICAL = {("A", "U"), ("U", "A"), ("G", "C"), ("C", "G"), ("G", "U"), ("U", "G")}
@@ -94,6 +95,7 @@ def main() -> int:
         "--rfam-structures", default="data/processed/rfam/seed_structures.json"
     )
     ap.add_argument("--out", default="splits/s1prime")
+    ap.add_argument("--family-table", default="data/processed/rfam/families.tsv")
     ap.add_argument("--novel-clan-fraction", type=float, default=0.20)
     ap.add_argument("--seed", type=int, default=17)
     args = ap.parse_args()
@@ -107,13 +109,19 @@ def main() -> int:
         print("no assignments yet; nothing to do")
         return 1
 
-    fam_clan: dict[str, str] = {}
-    for row in assignments.values():
-        fam_clan[row["family_accession"]] = row["clan"]
+    # Clan membership must come from the Rfam release, not from whatever the
+    # bpRNA scan happened to hit: a clan whose members are never hit by bpRNA is
+    # precisely a *novel* clan, and deriving its map from hits would drop it.
+    family_table = load_family_table(ROOT / args.family_table)
+    if not family_table:
+        print(f"missing family table {args.family_table}")
+        return 1
+    fam_clans = {acc: meta["clan"] for acc, meta in family_table.items()}
 
     # bpRNA sequences: keep those with a family assignment
     bprna_by_clan: dict[str, list[dict]] = defaultdict(list)
     bprna_unassigned = 0
+    bprna_nohit = 0
     with open(ROOT / args.bprna_pool) as fh:
         for line in fh:
             rec = json.loads(line)
@@ -121,14 +129,20 @@ def main() -> int:
             if row is None:
                 bprna_unassigned += 1
                 continue
+            if row["family_accession"] == "NOHIT" or row["clan"] == "NOHIT":
+                # NOHIT is "no family above the Rfam gathering threshold", not a
+                # family. Folding it into a clan would create a pseudo-cluster.
+                bprna_nohit += 1
+                continue
             pairs = filter_pairs(rec["seq"], rec["pairs"])
-            bprna_by_clan[row["clan"]].append(
+            clan = fam_clans.get(row["family_accession"]) or row["clan"]
+            bprna_by_clan[clan].append(
                 {
                     "id": f"bprna:{rec['id']}",
                     "seq": rec["seq"],
                     "pairs": pairs,
                     "family": row["family_accession"],
-                    "clan": row["clan"],
+                    "clan": clan,
                     "source": "bprna",
                 }
             )
@@ -138,9 +152,10 @@ def main() -> int:
     seeds_by_clan: dict[str, list[dict]] = defaultdict(list)
     for header, seq in read_fasta(ROOT / args.rfam_seeds):
         acc, name = header.split("|", 1) if "|" in header else (header, "")
-        clan = fam_clan.get(acc)
-        if clan is None:
+        meta = family_table.get(acc)
+        if meta is None:
             continue
+        clan = meta["clan"]
         dbn = structures.get(acc, {}).get(name, "")
         pairs = []
         if dbn and len(dbn) == len(seq):
@@ -210,6 +225,7 @@ def main() -> int:
             "test_novel": len(novel_test),
             "test_withheld": len(withheld_test),
             "bprna_unassigned": bprna_unassigned,
+            "bprna_nohit": bprna_nohit,
         },
         "pair_families": {
             "train": dict(Counter(rec["source"] for rec in train)),
@@ -220,6 +236,8 @@ def main() -> int:
         "rules": {
             "pairs": "canonical AU/UA/GC/CG plus GU/UG; non-canonical and pseudoknots dropped",
             "novelty": "clan has no bpRNA sequence assigned by cmscan --rfam --cut_ga",
+            "nohit_policy": "sequences without a cut_ga hit are excluded, never treated as a clan",
+            "clan_source": args.family_table,
             "withheld_fraction": args.novel_clan_fraction,
         },
     }

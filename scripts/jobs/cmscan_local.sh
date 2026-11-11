@@ -8,11 +8,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OUT="${1:?outdir}"
 NPROC="${2:-12}"
+FIRST="${3:-0}"
+LAST="${4:-9999}"
 CMS="${ROOT}/tools/infernal/bin/cmscan"
 CM="${ROOT}/data/raw/rfam/Rfam.cm"
 
 cd "${ROOT}"
 ls "${OUT}"/shards/shard_*.fa |
+  awk -v a="${FIRST}" -v b="${LAST}" '{n=substr($0, length($0)-7, 5)+0; if (n>=a && n<=b) print}' |
   xargs -P "${NPROC}" -I{} bash -c '
     shard="{}"
     base=$(basename "${shard}" .fa)

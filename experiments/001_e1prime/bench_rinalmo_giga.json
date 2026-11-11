@@ -1,0 +1,31 @@
+{
+  "backbone": "rinalmo-giga",
+  "device": "NVIDIA GeForce RTX 3090",
+  "load_seconds": 52.6,
+  "n_seqs": 4,
+  "length": 300,
+  "full": {
+    "seconds": 3.246,
+    "residues": 1200,
+    "seconds_per_residue": 0.0027047,
+    "dim": 1280,
+    "peak_gb": 1.38
+  },
+  "crops": {
+    "8": {
+      "seconds": 3.426,
+      "seconds_per_residue": 0.002855,
+      "window": 17
+    },
+    "32": {
+      "seconds": 7.829,
+      "seconds_per_residue": 0.006524,
+      "window": 65
+    },
+    "128": {
+      "seconds": 23.981,
+      "seconds_per_residue": 0.019984,
+      "window": 257
+    }
+  }
+}

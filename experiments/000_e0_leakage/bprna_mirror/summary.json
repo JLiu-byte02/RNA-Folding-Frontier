@@ -1,0 +1,101 @@
+{
+  "pool_records": 66715,
+  "unique_sequences": 65233,
+  "duplicate_sequences": 1482,
+  "prefixes": [
+    [
+      "bpRNA_RFAM",
+      39601
+    ],
+    [
+      "bpRNA_CRW",
+      24552
+    ],
+    [
+      "bpRNA_SRP",
+      723
+    ],
+    [
+      "bpRNA_PDB",
+      533
+    ],
+    [
+      "bpRNA_SPR",
+      483
+    ],
+    [
+      "bpRNA_RNP",
+      419
+    ],
+    [
+      "bpRNA_tmRNA",
+      404
+    ]
+  ],
+  "length": {
+    "min": 1,
+    "median": 107,
+    "p99": 1553,
+    "max": 4381
+  },
+  "pairs": {
+    "total": 6428740,
+    "gu_wobble": 810511,
+    "non_canonical": 437851,
+    "non_canonical_rate": 0.06811
+  },
+  "containment": {
+    "TR0": {
+      "n": 10814,
+      "found_in_mirror": 10682,
+      "found_rate": 0.9878,
+      "identical_pairs": 2752,
+      "identical_rate_of_found": 0.2576,
+      "identical_after_canonical_filter": 9744,
+      "identical_after_canonical_filter_rate": 0.9122,
+      "bpseq_is_subset_of_mirror": 10682,
+      "subset_rate": 1.0,
+      "extra_mirror_pairs": 42106,
+      "extra_mirror_pairs_noncanonical": 33934,
+      "extra_noncanonical_rate": 0.8059,
+      "missing_bpseq_pairs": 0
+    },
+    "VL0": {
+      "n": 1300,
+      "found_in_mirror": 1286,
+      "found_rate": 0.9892,
+      "identical_pairs": 330,
+      "identical_rate_of_found": 0.2566,
+      "identical_after_canonical_filter": 1188,
+      "identical_after_canonical_filter_rate": 0.9238,
+      "bpseq_is_subset_of_mirror": 1286,
+      "subset_rate": 1.0,
+      "extra_mirror_pairs": 4797,
+      "extra_mirror_pairs_noncanonical": 4074,
+      "extra_noncanonical_rate": 0.8493,
+      "missing_bpseq_pairs": 0
+    },
+    "TS0": {
+      "n": 1305,
+      "found_in_mirror": 1288,
+      "found_rate": 0.987,
+      "identical_pairs": 323,
+      "identical_rate_of_found": 0.2508,
+      "identical_after_canonical_filter": 1169,
+      "identical_after_canonical_filter_rate": 0.9076,
+      "bpseq_is_subset_of_mirror": 1288,
+      "subset_rate": 1.0,
+      "extra_mirror_pairs": 5059,
+      "extra_mirror_pairs_noncanonical": 4051,
+      "extra_noncanonical_rate": 0.8008,
+      "missing_bpseq_pairs": 0
+    }
+  },
+  "file": {
+    "path": "data/raw/bprna/bpRNA_1m.json",
+    "sha256": "d36c62ee92eda8b6db90ac4cd6e9d9804aedbaa8a860dd1fcd9b116d5475dff4",
+    "bytes": 103163072
+  },
+  "hf_revision": "8b973adeba0218113a696dd1c22ada682f26324a",
+  "hf_source": "https://huggingface.co/datasets/rouskinlab/bpRNA-1m"
+}

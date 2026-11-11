@@ -32,6 +32,17 @@ and a concrete implication for this project.
   an OOD set. Their cross-family claim rests on the Rfam 12.3→14.10 delta, which
   is a **temporal** holdout (entries added between releases), not a clan-held-out
   split.
+  **Correction (same day, after re-reading the text).** The *dataset* is the
+  Rfam 12.3→14.10 delta, but the *protocol* is described as "family-wise
+  cross-validation" and the headline results are on named unseen families
+  (Skip-rope n=240, Twister n=236, C-di-G n=197, RAGATH n=160, Cobalamin n=286).
+  So it is a family-level holdout over the delta, not merely a temporal one. Two
+  flaws remain: it is not clan-aware (a new delta family that is a new member of
+  an old clan leaks), and the accessible main text does not state how homology
+  between the held-out family and the training pool was screened. Our S1′ is
+  therefore a clan-level strengthening of BPfold's protocol, not a different
+  protocol — the novelty must come from the mechanism and the payoff, not from
+  the split itself.
 - **Implication for us.** (i) Do not attribute an OOD claim about ArchiveII to
   BPfold; the honest statement is that ArchiveII is routinely *reported* as a
   generalisation benchmark while being in-distribution under BPfold's protocol.

@@ -117,3 +117,30 @@ Append-only. Each entry: date, decision, evidence, alternatives, consequences.
   sequence that is locally complementary to the kept region yields confident
   false long-range pairs that the 2D head cannot reject. H2 is pre-registered
   only when its diagnostics are in.
+
+## 2026-11-12 — P2-central recorded as a protocol deviation; H2 pre-registered (PI Round 4b)
+
+- **Protocol deviation.** Round 1 specified a per-position ±32 nt window. The
+  implementation kept one central window `[L//2-32, L//2+32]` and rewrote
+  everything outside it. The Round-4 table is therefore renamed
+  **P2-central (exploratory)**; only its kept–kept cell is a valid readout, and
+  cross-band comparisons are not comparable (`1 - 65/L`: 19% rewritten at L=80,
+  78% at L=300). No P2-central number may be reported as a test of P2.
+- **P2-block replaces it** (pre-registered, Amendment 2 §A2.2): 16-nt blocks,
+  each embedded with its own ±32 nt native flank, one pass per block, ~20 GPU-h.
+- **Decoder fixed in writing before dumps** (§A2.3): symmetrise → sigmoid →
+  `prob >= 0.5` and `j-i > 3` → greedy accept in decreasing probability under
+  one-partner and non-crossing. D1 additionally reports a bare-threshold arm so
+  the value of the global constraint is measured.
+- **H2 "spurious partners" pre-registered** (§A2.4) with a kill criterion K1:
+  if oracle-threshold plus one-partner decoding gives `e - a < 0.01` with a CI
+  covering 0 in the 80–299 band, the "distal context is a net-negative prior"
+  reading is dropped and H2 is not pursued.
+- **test_novel stays embargoed** until H2's status is settled (§A2.5).
+- **Order of work (PI Round 4 Q4):** D1/D2 diagnostics → train-and-test heads
+  (giga a/e/crop-32, 3 seeds; micro paused) → sequence-level positive control
+  (~80% identity inside training clans) → external baselines (BPfold,
+  RNAstructure, EternaFold, MXfold2) → decoder A. Relaxed scan audit non-gating.
+- **Amendment 2 hash:** file `experiments/001_e1prime/AMENDMENT_2.md`,
+  sha256 `4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78`,
+  written before any D1/D2 dump existed.

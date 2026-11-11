@@ -1,9 +1,9 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-11T22:10:00+08:00",
-  "phase": "e1prime-context-factorial",
-  "cycle": 3,
+  "updated_at": "2026-11-12T00:32:00+08:00",
+  "phase": "diagnostics-first-after-P2-inversion",
+  "cycle": 4,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
     "cluster": "Slurm",
@@ -16,15 +16,15 @@
     "model": "Claude Opus 5.5",
     "effort": "High",
     "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
-    "last_session_file": "docs/claude/transcripts/2026-11-11_round03_decisions.md",
+    "last_session_file": "docs/claude/transcripts/2026-11-12_round04_decisions.md",
     "rate_limit_reset_at": null
   },
-  "active_direction": "D1-local-evidence-global-physics",
-  "active_experiment": "E1prime-condition-caches-then-P2-test-time-swap",
+  "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics",
+  "active_experiment": "E1prime-Q1-dumps-then-D1-D2; P2-block cache; train-and-test heads",
   "open_questions": [
-    "Does clan decodability predict F1 beyond distortion under swaps (P2 rule)?",
-    "Is RNA-FM's positional encoding absolute, which would restrict it to swaps?",
-    "Do relaxed-threshold secondary hits to test clans exceed 0.5% of training?"
+    "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
+    "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
+    "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
   "blockers": [],
   "artifacts": {
@@ -38,7 +38,9 @@
       "experiments/001_e1prime/PREREGISTRATION.md",
       "experiments/001_e1prime/novel_label_metadata.json",
       "experiments/000_e0_leakage/cmscan_and_split_report.md",
-      "experiments/000_e0_leakage/headline_clans/summary.json"
+      "experiments/000_e0_leakage/headline_clans/summary.json",
+      "experiments/001_e1prime/AMENDMENT_2.md",
+      "docs/claude/transcripts/2026-11-12_round04_decisions.md"
     ]
   }
 }

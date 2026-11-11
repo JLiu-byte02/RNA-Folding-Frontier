@@ -1,9 +1,17 @@
 {
-  "updated": "2026-11-12T00:40:00+08:00",
+  "updated": "2026-11-12T00:55:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
   "blocked_on": "sshd refuses identification (kex_exchange_identification read error); cooled down, low-frequency doctor checks only",
   "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
   "tasks": [
+    {
+      "id": "verify_paths",
+      "priority": 0,
+      "status": "ready",
+      "why": "Paths for the P2-block donors and the c homolog map must be confirmed before submitting; the repo code documents the convention, not the actual file names.",
+      "command": "pwd; ls data/processed; ls data/processed/conditions/id_test | head; ls data/cache | head -30; ls splits/s1prime_filtered",
+      "notes": "Read-only. Also reconcile squeue -u $USER with sacct for jobs 14284-86, 14269, 14302, 14306-08 before any new submission."
+    },
     {
       "id": "q1_dump",
       "priority": 1,
@@ -29,12 +37,43 @@
       "command": "python scripts/d2_structure_errors.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/d2_withheld_seed17.json"
     },
     {
+      "id": "block_donors",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "verify_paths",
+      "why": "P2-block needs a donor value at every position; the existing condition files only replace outside one central window.",
+      "command": "for split in id_test test_withheld; do python scripts/build_block_donors.py --split splits/s1prime_filtered/$split.jsonl --out-dir data/processed/block_donors/$split --conditions b,d,e --seed 17; python scripts/build_block_donors.py --split splits/s1prime_filtered/$split.jsonl --out-dir data/processed/block_donors/$split --conditions c --seed 17 --homolog-map <CONFIRM: homolog map used for condition c>; done",
+      "notes": "CPU, login node, nice 19. Length assertions are built in. e is all N; b keeps dinucleotide composition."
+    },
+    {
+      "id": "block_cache_ac_idtest",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "block_donors",
+      "why": "H2.3 needs (a) vs (c) at the block boundary; (a) is already the full giga_a cache, so only c is GPU work here.",
+      "command": "sbatch scripts/jobs/block_cache.sbatch c splits/s1prime_filtered/id_test.jsonl data/processed/block_donors/id_test/c.json data/cache/block_c_id_test",
+      "notes": "1,402 seqs, ~7 passes each. c only covers the csubset, so evaluate against csubset_native as with P2-central."
+    },
+    {
+      "id": "block_cache_bde",
+      "priority": 2,
+      "status": "queued",
+      "depends_on": "block_cache_ac_idtest",
+      "why": "b/d/e under the same geometry, then withheld. Scope the withheld run by what H2.3 needs instead of assuming 20 GPU-h.",
+      "command": "for cond in b d e; do sbatch scripts/jobs/block_cache.sbatch $cond splits/s1prime_filtered/id_test.jsonl data/processed/block_donors/id_test/$cond.json data/cache/block_${cond}_id_test; done",
+      "notes": "e under this geometry is approximately a k=32 crop; record the measured cost in the manifest and report it against the 20 GPU-h estimate."
+    },
+    {
       "id": "p3_train_and_test",
       "priority": 2,
       "status": "queued",
       "why": "The real P3 arms: a separate head per condition removes the calibration artifact by construction.",
       "command": "sbatch scripts/jobs/train_head.sbatch <seed> runs/p3_<cond>_seed<seed> --train-cache data/cache/giga_<cond>_train --eval <cond>_test_withheld=...:<cache> --eval <cond>_id_test=...:<cache>",
-      "arms": ["a", "e", "k32-crop"],
+      "arms": [
+        "a",
+        "e",
+        "k32-crop"
+      ],
       "n_seeds": 3,
       "notes": "train on giga only; micro is paused per PI"
     },

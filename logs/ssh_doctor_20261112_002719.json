@@ -1,0 +1,10 @@
+{
+  "host": "10.22.19.39",
+  "port": 22,
+  "at": "2026-11-11T16:27:19+00:00",
+  "tcp_connect": true,
+  "tcp_connect_seconds": 0.001,
+  "ssh_banner_bytes": 0,
+  "ssh_banner": "",
+  "diagnosis": "server accepts TCP but sends no SSH identification: sshd-side refusal (connection limit) or an inline filter; not an auth failure"
+}

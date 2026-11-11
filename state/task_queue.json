@@ -1,0 +1,79 @@
+{
+  "updated": "2026-11-12T00:40:00+08:00",
+  "server_status": "SSH_UNAVAILABLE",
+  "blocked_on": "sshd refuses identification (kex_exchange_identification read error); cooled down, low-frequency doctor checks only",
+  "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
+  "tasks": [
+    {
+      "id": "q1_dump",
+      "priority": 1,
+      "status": "ready",
+      "why": "D1/D2 need per-sequence pair probabilities; the P2 runs only stored F1 per sequence.",
+      "command": "for s in 17 23 41; do python scripts/e1prime_dump.py --checkpoint runs/p2_seed$s/best.pt --out-dir experiments/002_e1prime_runs/dump_seed$s --eval a_id_test=splits/s1prime_filtered/id_test.jsonl:data/cache/giga_a_id_test --eval b_id_test=... --eval c_id_test=... --eval d_id_test=... --eval e_id_test=... --eval a_test_withheld=... --eval b_test_withheld=... --eval c_test_withheld=... --eval d_test_withheld=... --eval e_test_withheld=...; done",
+      "notes": "c arms use splits/s1prime_filtered/<split>.jsonl restricted to the c cache; a_csub rows come from data/processed/conditions/<split>/csubset_native.jsonl"
+    },
+    {
+      "id": "q1_score",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "q1_dump",
+      "why": "D1: does condition e change quality or just the operating point?",
+      "command": "python scripts/d1_scoring.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --out experiments/002_e1prime_runs/d1_seed17.json"
+    },
+    {
+      "id": "q1_structure",
+      "priority": 1,
+      "status": "ready",
+      "depends_on": "q1_dump",
+      "why": "D2/H2: are false positives enriched for stackable complementary runs, and do they grow with length?",
+      "command": "python scripts/d2_structure_errors.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/d2_withheld_seed17.json"
+    },
+    {
+      "id": "p3_train_and_test",
+      "priority": 2,
+      "status": "queued",
+      "why": "The real P3 arms: a separate head per condition removes the calibration artifact by construction.",
+      "command": "sbatch scripts/jobs/train_head.sbatch <seed> runs/p3_<cond>_seed<seed> --train-cache data/cache/giga_<cond>_train --eval <cond>_test_withheld=...:<cache> --eval <cond>_id_test=...:<cache>",
+      "arms": ["a", "e", "k32-crop"],
+      "n_seeds": 3,
+      "notes": "train on giga only; micro is paused per PI"
+    },
+    {
+      "id": "positive_control",
+      "priority": 3,
+      "status": "queued",
+      "why": "Show the instrument can detect a family shortcut when one exists: sequence-level split inside training clans, ~80% identity, near-duplicates allowed.",
+      "command": "build seq-level split -> conditions a-e -> cache -> train/eval 3 seeds on giga",
+      "notes": "prediction: (c) holds up relative to (d) there, the reverse of S1'"
+    },
+    {
+      "id": "baselines",
+      "priority": 4,
+      "status": "queued",
+      "why": "Needed whatever the hypothesis: BPfold, RNAstructure, EternaFold, MXfold2 on id_test and test_withheld.",
+      "notes": "run on CPU in parallel with 1-3"
+    },
+    {
+      "id": "decoder_a",
+      "priority": 5,
+      "status": "queued",
+      "why": "If H2 survives, exact DP over learned energies is the central test, not just the payoff.",
+      "command": "MXfold2 DP accepting external score tensors -> Turner-only check on 100 seqs -> decoder A"
+    },
+    {
+      "id": "relaxed_audit",
+      "priority": 6,
+      "status": "running",
+      "why": "Amendment 1.5 audit counts; does not gate anything else.",
+      "command": "python scripts/relaxed_scan_audit.py --out experiments/000_e0_leakage/relaxed_scan_audit.json",
+      "notes": "37/94 shards done when the cluster dropped; the scan keeps running on the login node"
+    },
+    {
+      "id": "test_novel_scoring",
+      "priority": 7,
+      "status": "embargoed",
+      "why": "Confirmation set. No model is scored until H2 or its replacement is pre-registered.",
+      "notes": "primary = family-macro F1 bootstrapped over clan blocks (singletons as their own clan); robustness = homology blocks from test-vs-test cmscan at E<=1"
+    }
+  ]
+}

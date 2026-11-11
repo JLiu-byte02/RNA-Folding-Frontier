@@ -1,21 +1,40 @@
 #!/usr/bin/env python3
-"""Minimal SSH/SFTP helper for the RNA-Folding-Frontier compute server.
+"""SSH/SFTP helper with a connection manager for the compute server.
 
 Usage:
     python scripts/remote.py exec "squeue -u $USER"
+    python scripts/remote.py batch commands.txt
     python scripts/remote.py put local/file remote/path
     python scripts/remote.py get remote/path local/file
     python scripts/remote.py submit path/to/job.sbatch
+    python scripts/remote.py sync scripts src tests
+    python scripts/remote.py doctor
+    python scripts/remote.py status
 
 Password is read from the SSHPASS environment variable. Prefer an SSH key once
 one is provisioned; this helper exists so the project is never blocked on
 interactive password entry.
+
+Connection policy (see docs/runbook_ssh.md):
+
+* one login per invocation, never parallel logins from one agent;
+  ``batch`` runs a list of commands over a single connection;
+* ``keepalive`` is enabled so a long command does not die of an idle transport;
+* the host key is pinned on first success and verified afterwards;
+* failures are counted in ``state/ssh_status.json``. After two consecutive
+  failures the helper refuses to connect for 30 minutes unless ``--force`` is
+  passed, so a dead server cannot be hammered by a retry loop.
 """
 
 import argparse
+import json
 import os
 import posixpath
+import socket
 import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
 
 import paramiko
 
@@ -24,9 +43,78 @@ USER = os.environ.get("RFF_USER", "junxuanliu")
 REMOTE_ROOT = os.environ.get(
     "RFF_REMOTE_ROOT", "/home/junxuanliu/projects/RNA-Folding-Frontier"
 )
+ROOT = Path(__file__).resolve().parents[1]
+STATE = ROOT / "state" / "ssh_status.json"
+COOLDOWN_SECONDS = 30 * 60
 
 
-def connect():
+def now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def load_state() -> dict:
+    if STATE.exists():
+        try:
+            return json.loads(STATE.read_text())
+        except json.JSONDecodeError:
+            pass
+    return {"status": "UNKNOWN", "failures": 0, "cooldown_until": 0}
+
+
+def save_state(state: dict) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n")
+
+
+def gate(state: dict, force: bool) -> None:
+    if force:
+        return
+    until = float(state.get("cooldown_until") or 0)
+    if until > time.time():
+        left = int(until - time.time())
+        sys.exit(
+            f"SSH marked {state.get('status')} with {state.get('failures')} "
+            f"consecutive failures; cooling down for {left // 60} more min. "
+            f"Last error: {state.get('last_error')}. Use --force to override."
+        )
+
+
+def record_failure(state: dict, reason: str) -> dict:
+    state["failures"] = int(state.get("failures", 0)) + 1
+    state["last_error"] = reason
+    state["last_attempt"] = now()
+    if state["failures"] >= 2:
+        state["status"] = "SSH_UNAVAILABLE"
+        state["cooldown_until"] = time.time() + COOLDOWN_SECONDS
+    else:
+        state["status"] = "RETRY"
+        state["cooldown_until"] = time.time() + 60
+    save_state(state)
+    return state
+
+
+def pin_host_key(client: paramiko.SSHClient, state: dict) -> None:
+    """Trust-on-first-use pinning, verified on every later connection.
+
+    paramiko has no portable known_hosts entry for an arbitrary host without
+    writing a file, so the pinned key is stored here and compared after the
+    handshake. A mismatch aborts the session before any command runs.
+    """
+    key = client.get_transport().get_remote_server_key()
+    fingerprint = f"{key.get_name()} {key.get_base64()}"
+    known = state.get("host_fingerprint")
+    if known and known != fingerprint:
+        client.close()
+        sys.exit(
+            "host key changed: pinned %r but server offered %r. Refusing to "
+            "connect; investigate before trusting this host." % (known, fingerprint)
+        )
+    if not known:
+        state["host_fingerprint"] = fingerprint
+        save_state(state)
+
+
+def connect(state: dict):
     password = os.environ.get("SSHPASS")
     key_path = os.environ.get("RFF_KEY")
     client = paramiko.SSHClient()
@@ -45,6 +133,10 @@ def connect():
             sys.exit("Set SSHPASS or RFF_KEY before running this script.")
         kwargs["password"] = password
     client.connect(**kwargs)
+    pin_host_key(client, state)
+    client.get_transport().set_keepalive(30)
+    state.update({"status": "OK", "failures": 0, "cooldown_until": 0, "last_success": now()})
+    save_state(state)
     return client
 
 
@@ -136,6 +228,65 @@ def cmd_get(client, remote, local):
     print(f"downloaded {resolve(remote)} -> {local}")
 
 
+def cmd_batch(client, path: str) -> int:
+    """Run a list of commands over one connection.
+
+    Each non-empty, non-comment line is one command and gets a banner so the
+    output stays readable. This exists so a multi-step check costs one login
+    instead of ten.
+    """
+    code = 0
+    for line in Path(path).read_text().splitlines():
+        command = line.strip()
+        if not command or command.startswith("#"):
+            continue
+        print(f"\n$ {command}", flush=True)
+        code = cmd_exec(client, command, REMOTE_ROOT)
+        if code != 0:
+            print(f"[exit {code}]", flush=True)
+    return code
+
+
+def cmd_doctor() -> int:
+    """Protocol-level diagnosis; writes a redacted report under logs/."""
+    report: dict = {"host": HOST, "port": 22, "at": now()}
+    sock = socket.socket()
+    sock.settimeout(10)
+    started = time.time()
+    try:
+        sock.connect((HOST, 22))
+        report["tcp_connect"] = True
+        report["tcp_connect_seconds"] = round(time.time() - started, 3)
+        try:
+            banner = sock.recv(256)
+            report["ssh_banner_bytes"] = len(banner)
+            report["ssh_banner"] = banner.decode("utf-8", "replace").strip()
+        except OSError as exc:
+            report["ssh_banner_bytes"] = 0
+            report["ssh_banner_error"] = f"{type(exc).__name__}: {exc}"
+    except OSError as exc:
+        report["tcp_connect"] = False
+        report["tcp_connect_error"] = f"{type(exc).__name__}: {exc}"
+    finally:
+        sock.close()
+
+    report["diagnosis"] = (
+        "tcp refused"
+        if not report.get("tcp_connect")
+        else (
+            "server accepts TCP but sends no SSH identification: sshd-side refusal "
+            "(connection limit) or an inline filter; not an auth failure"
+            if not report.get("ssh_banner_bytes")
+            else "sshd reachable"
+        )
+    )
+    out = ROOT / "logs" / f"ssh_doctor_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps(report, indent=2))
+    return 0 if report.get("ssh_banner_bytes") else 1
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="action", required=True)
@@ -143,6 +294,7 @@ def main():
     p_exec = sub.add_parser("exec")
     p_exec.add_argument("command")
     p_exec.add_argument("--cwd", default=None)
+    p_exec.add_argument("--force", action="store_true")
 
     p_put = sub.add_parser("put")
     p_put.add_argument("local")
@@ -158,9 +310,37 @@ def main():
     p_sync = sub.add_parser("sync")
     p_sync.add_argument("dirs", nargs="+")
     p_sync.add_argument("--dry-run", action="store_true")
+    p_sync.add_argument("--force", action="store_true")
+
+    p_batch = sub.add_parser("batch")
+    p_batch.add_argument("path")
+    p_batch.add_argument("--force", action="store_true")
+
+    sub.add_parser("doctor")
+    sub.add_parser("status")
 
     args = parser.parse_args()
-    client = connect()
+    if args.action == "doctor":
+        sys.exit(cmd_doctor())
+    state = load_state()
+    if args.action == "status":
+        print(json.dumps(state, indent=2))
+        return
+    gate(state, getattr(args, "force", False))
+    try:
+        client = connect(state)
+    except Exception as exc:  # noqa: BLE001 - any failure must be recorded
+        record_failure(state, f"{type(exc).__name__}: {exc}")
+        print(
+            f"connect failed: {type(exc).__name__}: {exc}",
+            file=sys.stderr,
+        )
+        print(
+            f"marked {state['status']}; failures={state['failures']}; "
+            f"see state/ssh_status.json",
+            file=sys.stderr,
+        )
+        sys.exit(1)
     try:
         if args.action == "exec":
             sys.exit(cmd_exec(client, args.command, args.cwd or REMOTE_ROOT))
@@ -172,6 +352,8 @@ def main():
             sys.exit(cmd_exec(client, f"sbatch {args.script}", REMOTE_ROOT))
         if args.action == "sync":
             sys.exit(cmd_sync(client, args.dirs, REMOTE_ROOT, args.dry_run))
+        if args.action == "batch":
+            sys.exit(cmd_batch(client, args.path))
     finally:
         client.close()
 

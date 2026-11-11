@@ -43,3 +43,4 @@ Thumbs.db
 secrets/
 *.pem
 
+tmp_dbg/

@@ -18,6 +18,13 @@ Conditions:
 ``b``  distal replaced by a dinucleotide-composition-preserving shuffle
        (Altschul-Erickson Eulerian trail over the dinucleotide multigraph), so
        nucleotide *and* dinucleotide statistics are kept but no family signal is.
+``c``  distal replaced by the *aligned* distal region of a same-family homolog
+       below 60% identity (``--homolog-map`` from ``build_homolog_pool.py``).
+       Positions whose column aligns to a gap in the homolog keep the native
+       base; the fraction of distal positions that actually came from the
+       homolog is written per record as ``distal_mapped_frac``. Only records with
+       a verified homolog are written, and ``csubset_native.jsonl`` holds their
+       unmodified sequences so the (a) row can be scored on exactly that subset.
 ``d``  distal replaced by a same-length slice from a sequence of a different
        clan (neither the instance nor its family).
 ``e``  distal replaced by ``N`` (unknown token); this is the distortion anchor,
@@ -33,6 +40,30 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 ALPHABET = "ACGU"
+
+
+def positional_map(target: str, donor: str) -> list[int]:
+    """``map[i]`` = donor index aligned to target index ``i``, or -1 for a gap.
+
+    Match/mismatch scoring is used rather than a substitution matrix because
+    Rfam seed rows contain IUPAC ambiguity codes that a matrix would reject.
+    """
+    from Bio import Align
+
+    aligner = Align.PairwiseAligner()
+    aligner.mode = "global"
+    aligner.match_score = 2.0
+    aligner.mismatch_score = -1.0
+    aligner.open_gap_score = -6.0
+    aligner.extend_gap_score = -1.0
+    aln = aligner.align(target, donor)[0]
+    mapping = [-1] * len(target)
+    for (ts, te), (ds, de) in zip(aln.aligned[0], aln.aligned[1]):
+        if te - ts != de - ds:
+            raise AssertionError("aligned blocks must have equal length")
+        for off in range(te - ts):
+            mapping[ts + off] = ds + off
+    return mapping
 
 
 def dinuc_shuffle(seq: str, rng: random.Random) -> str:
@@ -94,6 +125,11 @@ def main() -> int:
     ap.add_argument("--window-mode", default="centre", choices=["centre", "paired"])
     ap.add_argument("--seed", type=int, default=17)
     ap.add_argument("--donor-pool", default=None, help="jsonl of sequences for (d)")
+    ap.add_argument(
+        "--homolog-map",
+        default=None,
+        help="json from build_homolog_pool.py; required for condition c",
+    )
     args = ap.parse_args()
 
     rng = random.Random(args.seed)
@@ -107,14 +143,20 @@ def main() -> int:
     for rec in donor_recs:
         donors_by_clan[rec.get("clan", "?")].append(rec["seq"])
     clan_keys = sorted(donors_by_clan)
+    homolog: dict[str, dict] = (
+        json.loads(Path(args.homolog_map).read_text()) if args.homolog_map else {}
+    )
+    seq_by_id = {r["id"]: r["seq"] for r in donor_recs}
 
     for cond in [c.strip() for c in args.conditions.split(",") if c.strip()]:
         rows = []
+        native_rows: list[dict] = []
         for rec in recs:
             seq = rec["seq"]
             pairs = [tuple(p) for p in rec.get("pairs", [])]
             mask = distal_mask(len(seq), args.window, args.window_mode, pairs)
             out = list(seq)
+            extra: dict = {}
             if cond == "b":
                 idx = [k for k, d in enumerate(mask) if d]
                 if idx:
@@ -122,6 +164,32 @@ def main() -> int:
                     shuffled = dinuc_shuffle(sub, rng)
                     for pos, ch in zip(idx, shuffled):
                         out[pos] = ch
+            elif cond == "c":
+                if not args.homolog_map:
+                    raise SystemExit("condition c needs --homolog-map")
+                hit = homolog.get(rec["id"])
+                if not hit:
+                    continue
+                donor = seq_by_id.get(hit["homolog"])
+                if donor is None:
+                    continue
+                mapping = positional_map(seq, donor)
+                moved = 0
+                distal_n = 0
+                for pos, is_distal in enumerate(mask):
+                    if not is_distal:
+                        continue
+                    distal_n += 1
+                    j = mapping[pos]
+                    if 0 <= j < len(donor):
+                        out[pos] = donor[j]
+                        moved += 1
+                extra = {
+                    "homolog": hit["homolog"],
+                    "homolog_identity": hit["identity"],
+                    "distal_mapped_frac": round(moved / max(1, distal_n), 4),
+                }
+                native_rows.append(rec)
             elif cond == "d":
                 own = rec.get("clan", "?")
                 other_clans = [c for c in clan_keys if c != own]
@@ -145,6 +213,8 @@ def main() -> int:
             else:
                 raise ValueError(f"unknown condition {cond!r}")
             rows.append({**rec, "seq": "".join(out), "condition": cond})
+            if extra:
+                rows[-1].update(extra)
 
         path = Path(args.out) / f"{cond}.jsonl"
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -152,6 +222,12 @@ def main() -> int:
             for row in rows:
                 fh.write(json.dumps(row) + "\n")
         print(f"{cond}: wrote {len(rows)} -> {path}")
+        if cond == "c":
+            sub = Path(args.out) / "csubset_native.jsonl"
+            with open(sub, "w") as fh:
+                for row in native_rows:
+                    fh.write(json.dumps(row) + "\n")
+            print(f"c: wrote {len(native_rows)} native rows -> {sub}")
     return 0
 
 

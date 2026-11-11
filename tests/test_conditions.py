@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from build_conditions import dinuc_shuffle, distal_mask  # noqa: E402
+from build_conditions import dinuc_shuffle, distal_mask, positional_map  # noqa: E402
 
 
 def test_dinucleotide_composition_is_preserved():
@@ -47,3 +47,19 @@ def test_paired_window_is_kept():
 def test_short_sequence_still_masks_something():
     mask = distal_mask(30, 32, "centre", [])
     assert len(mask) == 30
+
+
+def test_positional_map_is_identity_for_equal_sequences():
+    seq = "ACGUGCAUGC"
+    assert positional_map(seq, seq) == list(range(len(seq)))
+
+
+def test_positional_map_reports_gaps_as_minus_one():
+    target = "ACGUGCAUGC"
+    donor = "ACGUGCAUGCGGG"
+    mapping = positional_map(target, donor)
+    assert len(mapping) == len(target)
+    assert all(0 <= j < len(donor) for j in mapping)
+    # An insertion in the donor must leave a gap somewhere on the target side.
+    shorter = positional_map(donor, target)
+    assert any(j == -1 for j in shorter)

@@ -1,0 +1,175 @@
+{
+  "status": "pipeline exercise, not a protocol number (Amendment 4 A4.5)",
+  "why": "the frozen split files exist only on the cluster; this runs on the local ArchiveII mirror",
+  "tool": "RNAfold",
+  "vienna_version": "2.8.0",
+  "inputs": {
+    "archive": "data/raw/archiveII/data.json",
+    "archive_sha256": "d43276a64beb2d992aa40b060df48ac6dca288c67a1c3ed32a16fc3fce96e28a",
+    "n_records_in_file": 3370,
+    "n_scored": 3370,
+    "n_skipped": 0
+  },
+  "summary": {
+    "family_macro_f1": 0.5198,
+    "micro": {
+      "precision": 0.5062,
+      "recall": 0.5802,
+      "f1": 0.5407,
+      "tp": 113113,
+      "fp": 110359,
+      "fn": 81832
+    },
+    "mean_pairs_pred": 66.312,
+    "mean_pairs_true": 57.847
+  },
+  "per_family": {
+    "16s": {
+      "n_pairs_true": 9707,
+      "n_pairs_pred": 12483,
+      "tp": 4599,
+      "fp": 7884,
+      "fn": 5108,
+      "precision": 0.3684,
+      "recall": 0.4738,
+      "f1": 0.4145
+    },
+    "23s": {
+      "n_pairs_true": 3962,
+      "n_pairs_pred": 4450,
+      "tp": 2821,
+      "fp": 1629,
+      "fn": 1141,
+      "precision": 0.6339,
+      "recall": 0.712,
+      "f1": 0.6707
+    },
+    "5s": {
+      "n_pairs_true": 37107,
+      "n_pairs_pred": 41531,
+      "tp": 23878,
+      "fp": 17653,
+      "fn": 13229,
+      "precision": 0.5749,
+      "recall": 0.6435,
+      "f1": 0.6073
+    },
+    "RNaseP": {
+      "n_pairs_true": 40254,
+      "n_pairs_pred": 44812,
+      "tp": 22594,
+      "fp": 22218,
+      "fn": 17660,
+      "precision": 0.5042,
+      "recall": 0.5613,
+      "f1": 0.5312
+    },
+    "grp1": {
+      "n_pairs_true": 9416,
+      "n_pairs_pred": 12277,
+      "tp": 5538,
+      "fp": 6739,
+      "fn": 3878,
+      "precision": 0.4511,
+      "recall": 0.5881,
+      "f1": 0.5106
+    },
+    "grp2": {
+      "n_pairs_true": 1390,
+      "n_pairs_pred": 2462,
+      "tp": 545,
+      "fp": 1917,
+      "fn": 845,
+      "precision": 0.2214,
+      "recall": 0.3921,
+      "f1": 0.283
+    },
+    "srp": {
+      "n_pairs_true": 39545,
+      "n_pairs_pred": 43592,
+      "tp": 26025,
+      "fp": 17567,
+      "fn": 13520,
+      "precision": 0.597,
+      "recall": 0.6581,
+      "f1": 0.6261
+    },
+    "tRNA": {
+      "n_pairs_true": 10117,
+      "n_pairs_pred": 11487,
+      "tp": 7315,
+      "fp": 4172,
+      "fn": 2802,
+      "precision": 0.6368,
+      "recall": 0.723,
+      "f1": 0.6772
+    },
+    "telomerase": {
+      "n_pairs_true": 3774,
+      "n_pairs_pred": 5375,
+      "tp": 2103,
+      "fp": 3272,
+      "fn": 1671,
+      "precision": 0.3913,
+      "recall": 0.5572,
+      "f1": 0.4597
+    },
+    "tmRNA": {
+      "n_pairs_true": 39673,
+      "n_pairs_pred": 45003,
+      "tp": 17695,
+      "fp": 27308,
+      "fn": 21978,
+      "precision": 0.3932,
+      "recall": 0.446,
+      "f1": 0.4179
+    }
+  },
+  "per_length_band": {
+    "150-299": {
+      "n_pairs_true": 25166,
+      "n_pairs_pred": 28738,
+      "tp": 15626,
+      "fp": 13112,
+      "fn": 9540,
+      "precision": 0.5437,
+      "recall": 0.6209,
+      "f1": 0.5798
+    },
+    "80-149": {
+      "n_pairs_true": 48225,
+      "n_pairs_pred": 54670,
+      "tp": 31823,
+      "fp": 22847,
+      "fn": 16402,
+      "precision": 0.5821,
+      "recall": 0.6599,
+      "f1": 0.6186
+    },
+    "ge300": {
+      "n_pairs_true": 112569,
+      "n_pairs_pred": 130009,
+      "tp": 59291,
+      "fp": 70718,
+      "fn": 53278,
+      "precision": 0.4561,
+      "recall": 0.5267,
+      "f1": 0.4888
+    },
+    "lt80": {
+      "n_pairs_true": 8985,
+      "n_pairs_pred": 10055,
+      "tp": 6373,
+      "fp": 3682,
+      "fn": 2612,
+      "precision": 0.6338,
+      "recall": 0.7093,
+      "f1": 0.6694
+    }
+  },
+  "caveats": [
+    "ArchiveII is contaminated by design (61.2% exact duplicates of the BPfold training union), so this number is not a generalisation estimate.",
+    "The mirror has 3,370 records while the cmscan input used in E0 had 3,966; the difference is unresolved.",
+    "Canonical/GU filtering is not applied here: labels are scored as distributed."
+  ]
+}

@@ -18,6 +18,28 @@ differently and one of them writes CT files:
 Scoring: family-macro base-pair F1 with a family-block bootstrap
 (10,000 resamples), plus sequence-micro F1 and F1 by length band.
 
+## Turner-only reference on the local ArchiveII mirror (not a protocol number)
+
+`scripts/archiveii_turner_control.py` runs `RNAfold` on the 3,370-sequence
+mirror and scores it with the same `prf` function the model table uses. Record:
+`experiments/004_turner_control/archiveii_rnafold.json`.
+
+| quantity | value |
+|---|---|
+| family-macro F1 | **0.5198** |
+| micro precision / recall / F1 | 0.5062 / 0.5802 / 0.5407 |
+| mean pairs predicted / true per sequence | 66.31 / 57.85 |
+
+Per family: tRNA 0.677, 23s 0.671, srp 0.626, 5s 0.607, RNaseP 0.531,
+grp1 0.511, telomerase 0.460, 16s 0.414, tmRNA 0.418, grp2 0.283.
+
+This is a **pipeline exercise on contaminated, unpacked data**: the frozen
+split files are on the cluster (Amendment 4 §A4.5), canonical/GU filtering is
+not applied, and ArchiveII overlaps the BPfold training union by design. It
+exists to prove that the reader, the dot-bracket parser and the scorer agree,
+and to have a Turner reference that does not depend on the cluster. It must not
+be quoted as our RNAfold baseline.
+
 ## Commands to verify on the server (not yet run)
 
 The exact flags below are guesses and must be confirmed with `--help` before

@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-12T04:05:00+08:00",
+  "updated": "2026-11-12T04:50:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
   "blocked_on": "Both WAN SDP lines closed on :441 (218.18.235.188 via vpn.suat-sz.edu.cn, and 218.18.235.189) while the aTrust portal answers 200 on :443 from both addresses. Client is sticky in 'all line out' and runs no further detection; use scripts/tunnel_watch.py --once and force a tray disconnect/reconnect once the school restores the line. Ask the admin whether the line port is still 441 and whether .188 is current.",
-  "order": "PI Round 4d: D1/D2 dumps > P2-block cache > train-and-test heads > positive control > A-energy-fixed ((s,b) fit, then H2.4 on id_test and withheld) > A-energy-learned training",
+  "order": "PI Round 4e: provenance resolution > D1/D2 dumps + K1 > P2-block cache > A-energy-fixed ((s,b) fit, then H2.4) > train-and-test heads > positive control > baseline retraining (Amendment 5) > A-energy-learned",
   "tasks": [
     {
       "id": "verify_paths",
@@ -159,6 +159,22 @@
       "why": "The confirmatory H2.4 comparison (Amendment 3 A3.1 + Amendment 4 A4.1/A4.2).",
       "command": "python scripts/h24_decoder_compare.py --dump <dump> --split splits/s1prime_filtered/<split>.jsonl --energy vienna --energy-scale <s> --energy-offset <b> --out <out>",
       "notes": "Report the basis (recall_matched vs pair_budget), the greedy recall ceiling, and whether the fitted (s, b) hash is recorded. Run on id_test and withheld; test_novel stays embargoed."
+    },
+    {
+      "id": "provenance_resolution",
+      "priority": 1,
+      "status": "blocked",
+      "why": "PI Round 4e: the frozen split hashes are not in the pushed repository, so the test_novel embargo currently rests on our word rather than an artifact. Amendment 4 A4.6 fixes the procedure.",
+      "command": "ssh: git status; git log origin/main..HEAD; git push; copy splits/s1prime/manifest.json and splits/s1prime_filtered/filter_report.json into the repo; sha256sum splits/s1prime_filtered/*.jsonl; stat the split files",
+      "notes": "Then determinism check: rebuild every split from committed code, seeds and pinned inputs into a fresh directory and compare hashes. Match = the freeze is credible after the fact. Mismatch = stop and report before further computation. Partial fact already verified: test_novel_eval.jsonl sha256 == 9d1ab36c... over 2,372 records, matching novel_eval_set.md."
+    },
+    {
+      "id": "baseline_retraining",
+      "priority": 7,
+      "status": "blocked",
+      "why": "Amendment 5: on withheld, released weights have seen the held-out clans and our model has not, so a released-weight comparison cannot carry the P5 claim.",
+      "command": "mxfold2 train --model MixC --param runs/mxfold2_frozen/model.pth --save-config runs/mxfold2_frozen/model.conf <frozen-train BPSEQ .lst>",
+      "notes": "MXfold2 supports training from BPSEQ, so a retrained entry is feasible; BPfold's training code to be assessed first. Released-weight scores are reported separately with clan-overlap labels. Fixed-parameter tools (RNAfold, RNAstructure, EternaFold) are reported as is."
     }
   ]
 }

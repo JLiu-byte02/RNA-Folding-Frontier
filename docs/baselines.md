@@ -74,3 +74,27 @@ rather than loosening the matcher.
   of a split is not comparable.
 - Do not tune any baseline on id_test or withheld. If a tool needs parameters,
   choose them from its paper/defaults before looking at the split.
+
+## Provenance table (Amendment 5 §A5.3)
+
+Every baseline needs items 1–3 filled before it gets a number. Verified
+2026-11-12 from package metadata, the authors' own README/LICENSE files, and the
+paper text where noted. `training overlap with our clans` stays empty until
+`cmscan` is reachable.
+
+| tool | version / licence | released parameters trained on | training code / retrain on our split | clan overlap |
+|---|---|---|---|---|
+| **RNAfold** (ViennaRNA) | 2.8.0; ViennaRNA licence: free for research/education/commercial use, **no redistribution for a fee**, credit required | nothing sequence-specific: Turner 2004 nearest-neighbour parameters (Mathews et al., *PNAS* 101:7287, 2004) | n/a — fixed parameters, no retraining | none by construction |
+| **RNAstructure** | "free of charge, GNU public license" (download page); version to be recorded on the server | Turner 2004 parameters, same as above; no sequence training | n/a | none by construction |
+| **EternaFold** | v1.3.1; Stanford BSD-3-clause-style licence (LICENSE in repo) | Eterna crowdsourced high-throughput probing data (Wayment-Steele et al., *PNAS* 2022) — **not** bpRNA or RNAStrAlign | `contrafold` training code ships with the repo; retraining on our split would mean abandoning its reference parameters, so treat as fixed-parameter for P5 | unmeasured; expected small, must be checked not assumed |
+| **MXfold2** | 0.1.1 (PyPI), MIT | default parameters are **TrainSetA + TrainSetB** as defined in Sato, Akiyama & Sakakibara, *Nat Mach Intell* 3:601 (2021) — **not** bpRNA-1m TR0. [CHECK: exact composition of the two sets from the paper PDF] | `mxfold2 train --model MixC --param ... data/<set>.lst` trains from BPSEQ, so retraining on our frozen train split is feasible | unmeasured; the Rivas/Rfam-era composition matters and is not the same as BPfold's |
+| **BPfold** | 0.3.1 (PyPI), MIT | **RNAStrAlign (19,313 sequences, ≤600 nt) and bpRNA-1m TR0 (12,114)**, verified from the paper text in `experiments/000_e0_leakage/report.md` §E0d | training code in the repo; retraining on our split to be assessed when the cluster returns | **known to be large**: E0 measured ArchiveII at 61.20% exact / 88.40% near-duplicate against this union |
+
+### A correction to the premise behind Amendment 5
+
+Amendment 5 §A5.1 groups MXfold2 with BPfold as "trained on TR0 and/or
+RNAStrAlign". That holds for **BPfold**, not for **MXfold2's default
+parameters**, which are trained on TrainSetA/TrainSetB. The P5 consequence is
+the same in direction (released weights are not trained on our frozen split), so
+the rule stands, but the entry for MXfold2 must say what it actually saw rather
+than inheriting BPfold's description.

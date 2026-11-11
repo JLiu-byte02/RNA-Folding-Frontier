@@ -309,3 +309,34 @@ that do not need the server were built and tested locally.
   WSL on this machine returns `HCS_E_SERVICE_NOT_AVAILABLE` — so the rebuild
   cannot be attempted here without admin action. Consequence unchanged: no
   local number is a protocol number until the cluster returns.
+
+## 2026-11-12 04:45 — Round 4e rulings: provenance first, scorer cross-checked, P5 rule frozen
+
+- **Provenance.** The PI flagged that Round 3 claimed frozen split hashes were in
+  the repository and that Round 4 quoted a `test_novel` hash. Checked: the
+  *evaluation subset* `experiments/001_e1prime/test_novel_eval.jsonl` is
+  committed and its sha256 recomputes to `9d1ab36c…` over 2,372 records, exactly
+  as declared. The `s1prime` split manifests are not committed, so the
+  contradiction stands for the full splits. Resolution procedure written as
+  Amendment 4 §A4.6 (server `git status`/push, mtimes, determinism rebuild);
+  Amendment 4's hash moved because the section was appended, and both hashes are
+  recorded.
+- **Scorer cross-check done.** `scripts/independent_scorer.py` (separate parser,
+  exact `Fraction` arithmetic) vs `rff.analysis.scoring.prf`, on the 3,370
+  RNAfold predictions for the local ArchiveII mirror: **0 mismatches**, pair sets
+  and family-macro F1 identical (0.519820191391). ±1 slip collapses F1 to 0.0055,
+  which is the point of reporting it separately. Edge cases (empty truth / empty
+  prediction / both, pseudoknot, non-canonical, slip) are unit tests.
+- **Amendment 5** committed before any baseline is scored: trainable baselines
+  (MXfold2 certainly, BPfold if code allows) are retrained on our frozen train
+  split for P5; released-weight numbers are context only and must be labelled
+  with clan overlap; RNAfold/RNAstructure/EternaFold are fixed-parameter and
+  reported with that caveat.
+- **Provenance table filled**, and one correction to Amendment 5's premise:
+  MXfold2's *default* parameters are TrainSetA/TrainSetB (Sato et al. 2021), not
+  bpRNA TR0. BPfold is the one trained on RNAStrAlign ∪ bpRNA-1m TR0. The rule is
+  unaffected; the description had to be fixed.
+- Licences recorded: BPfold MIT, MXfold2 MIT, EternaFold Stanford BSD-style,
+  RNAstructure GPL, ViennaRNA custom (no redistribution for a fee). This closes
+  the ViennaRNA redistribution `[CHECK]` for dependency use: we depend on the
+  wheel, we do not vendor it.

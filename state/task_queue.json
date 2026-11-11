@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-12T02:20:00+08:00",
+  "updated": "2026-11-12T04:05:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
   "blocked_on": "Both WAN SDP lines closed on :441 (218.18.235.188 via vpn.suat-sz.edu.cn, and 218.18.235.189) while the aTrust portal answers 200 on :443 from both addresses. Client is sticky in 'all line out' and runs no further detection; use scripts/tunnel_watch.py --once and force a tray disconnect/reconnect once the school restores the line. Ask the admin whether the line port is still 441 and whether .188 is current.",
-  "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
+  "order": "PI Round 4d: D1/D2 dumps > P2-block cache > train-and-test heads > positive control > A-energy-fixed ((s,b) fit, then H2.4 on id_test and withheld) > A-energy-learned training",
   "tasks": [
     {
       "id": "verify_paths",
@@ -126,8 +126,8 @@
       "priority": 5,
       "status": "in_progress",
       "why": "Round 4c: decoder A is the central test and the candidate fix; it must use ViennaRNA energies + learned corrections (sc_add_bp), not a hand-written Turner model.",
-      "command": "python scripts/h24_decoder_compare.py (A-struct, done) -> ViennaRNA soft-constraint wrapper -> max-margin training loop",
-      "notes": "A-struct DP is implemented and enumeration-verified (docs/decoder_a.md). Next: sc_add_bp wrapper validated against a stub locally and against RNAfold on the server; then structured max-margin whose subgradient is predicted minus true pair indicator. [CHECK] licence + sc_add_bp units/sign."
+      "command": "python scripts/fit_energy_calibration.py --train-dump <train dump> --train-split splits/s1prime_filtered/train.jsonl --out experiments/003_decoder_a/energy_calibration.json; then python scripts/h24_decoder_compare.py --energy vienna --energy-scale <s> --energy-offset <b>",
+      "notes": "A-struct DP enumeration-verified; ViennaRNA sc_add_bp wrapper parity 60/60 (record 003_decoder_a/parity_vienna_2.8.0.json); A4.1 comparison order implemented in rff.analysis.operating_point with unit tests; A4.2 two-parameter calibration fitter implemented and smoke-tested on 12 synthetic sequences (NOT a fit: it needs the frozen train dump). Still open: licence terms for redistributing ViennaRNA [CHECK]."
     },
     {
       "id": "relaxed_audit",
@@ -143,6 +143,22 @@
       "status": "embargoed",
       "why": "Confirmation set. No model is scored until H2 or its replacement is pre-registered.",
       "notes": "primary = family-macro F1 bootstrapped over clan blocks (singletons as their own clan); robustness = homology blocks from test-vs-test cmscan at E<=1"
+    },
+    {
+      "id": "energy_calibration_fit",
+      "priority": 5,
+      "status": "blocked",
+      "why": "Amendment 4 A4.2: (s, b) must be fitted on the frozen train split and frozen before id_test or withheld is scored, or H2.4 is not confirmatory.",
+      "command": "python scripts/fit_energy_calibration.py --train-dump runs/<head>/train_dump.jsonl --train-split splits/s1prime_filtered/train.jsonl --grid-s 0.25,0.5,1.0,2.0,4.0 --grid-b=-5,-3,-1.5,0,1.5 --folds 5 --workers <n> --out experiments/003_decoder_a/energy_calibration.json",
+      "notes": "About 12 CPU-h at 17.7k train sequences and a 5x5 grid (0.2 s/decode). The grid is centred on b=-3 because pos_weight 20 inflates the logits by about log 20. Needs the train-split dump, which does not exist yet: no cached embeddings on this side."
+    },
+    {
+      "id": "h24_a_energy_fixed",
+      "priority": 5,
+      "status": "blocked",
+      "why": "The confirmatory H2.4 comparison (Amendment 3 A3.1 + Amendment 4 A4.1/A4.2).",
+      "command": "python scripts/h24_decoder_compare.py --dump <dump> --split splits/s1prime_filtered/<split>.jsonl --energy vienna --energy-scale <s> --energy-offset <b> --out <out>",
+      "notes": "Report the basis (recall_matched vs pair_budget), the greedy recall ceiling, and whether the fitted (s, b) hash is recorded. Run on id_test and withheld; test_novel stays embargoed."
     }
   ]
 }

@@ -286,3 +286,26 @@ that do not need the server were built and tested locally.
   16s 69, telomerase 37, 23s 30, grp2 11. Note `grp2` is present here, so the
   "nine families" statement in `research_state.md` needs a check against the
   clan table before it is quoted again.
+
+## 2026-11-12 04:10 — A4.1/A4.2 implemented; the local split rebuild is not possible
+
+- **A4.1 order implemented** as a pure function
+  (`src/rff/analysis/operating_point.py`) and used by
+  `scripts/h24_decoder_compare.py`. The report now exposes `basis`
+  (`recall_matched` / `pair_budget` / null), the greedy recall ceiling, and the
+  two verdicts separately, so a reader can see which one decided the status.
+  Five unit tests plus the three toy decoder tests cover it.
+- **A4.2 implemented.** `ViennaSoftDecoder` takes `offset`, and
+  `scripts/fit_energy_calibration.py` runs the 5-fold CV fit over the `(s, b)`
+  grid and records input hashes. Smoke-tested on 12 synthetic sequences only —
+  that is a wiring test, not a fit, and the queue entry says so.
+- **Sign convention corrected against the library, not the test.** `dG =
+  -(s*score + b)`, so a **positive** offset attracts pairs; an initial test that
+  assumed the opposite failed against ViennaRNA 2.8.0 and was fixed. Since
+  `pos_weight = 20` inflates logits by about `log 20 ≈ 3`, the calibration grid
+  is centred on `b = -3`.
+- **Local split rebuild is blocked by more than data.** `splits/*` has no
+  committed membership list or hash, `cmscan` (Infernal) is a Linux binary, and
+  WSL on this machine returns `HCS_E_SERVICE_NOT_AVAILABLE` — so the rebuild
+  cannot be attempted here without admin action. Consequence unchanged: no
+  local number is a protocol number until the cluster returns.

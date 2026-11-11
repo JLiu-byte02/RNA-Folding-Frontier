@@ -196,3 +196,21 @@ that do not need the server were built and tested locally.
   reported as such.
 - Suite: 68 tests pass. Nothing in this entry is a result — no dump, no model
   output, and no number from id_test/withheld exists for H2.3 or H2.4 yet.
+
+## 2026-11-12 02:12 — SSH: both WAN SDP addresses closed, portal healthy
+
+- The 01:20 re-login *did* fetch a new line list. It has three lines, one of
+  which the earlier diagnosis never saw: `vpn.suat-sz.edu.cn` →
+  `218.18.235.188:441`, alongside `218.18.235.189:441` and a LAN line. So
+  "controller publishes zero lines" was wrong; the correct statement is that all
+  three fail detection within six seconds of the reload.
+- `:441` is closed on both WAN addresses (15 s timeouts), while `:443` answers on
+  both and `https://vpn.suat-sz.edu.cn/` returns HTTP 200 with the aTrust login
+  page. Gateway healthy, line service unreachable — still school-side.
+- The client is sticky: after `all line out` at 01:21:36 no further detection ran
+  (healthy-period detection was triggered by network change/latency, not a
+  timer). Recovery therefore needs a tray disconnect/reconnect once the school
+  restores the port, not patience.
+- Added `scripts/tunnel_watch.py --once` (probe + `remote.py doctor`, exits 3 while
+  closed, 2 if the line is back but SSH fails, 0 on full recovery). Registration
+  with Task Scheduler is left as an explicit step.

@@ -1,7 +1,7 @@
 {
   "updated": "2026-11-12T02:20:00+08:00",
   "server_status": "SSH_UNAVAILABLE",
-  "blocked_on": "aTrust re-login at 01:20 did not restore the tunnel: node group Default now reports \"selectline:no current line\" (controller publishes zero lines). 218.18.235.189:441 still closed (443 open). School-side outage from 23:59; re-check after their service window.",
+  "blocked_on": "Both WAN SDP lines closed on :441 (218.18.235.188 via vpn.suat-sz.edu.cn, and 218.18.235.189) while the aTrust portal answers 200 on :443 from both addresses. Client is sticky in 'all line out' and runs no further detection; use scripts/tunnel_watch.py --once and force a tray disconnect/reconnect once the school restores the line. Ask the admin whether the line port is still 441 and whether .188 is current.",
   "order": "PI Round 4: Q1 diagnostics > train-and-test heads > positive control > baselines > decoder A",
   "tasks": [
     {

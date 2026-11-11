@@ -78,6 +78,49 @@ So, in order of preference:
 
 ## What not to do
 
+## Update 02:12 — the re-login did fetch new lines, and one is new
+
+The 01:20 re-login **did** refresh the line list, which corrects the earlier
+"controller publishes zero lines" reading. At 01:21:30 the config reload carries
+three lines:
+
+```
+10.20.4.21:441          (lan)
+vpn.suat-sz.edu.cn:441  (wan)  -> 218.18.235.188
+218.18.235.189:441      (wan)  second address, same node group
+```
+
+So the school has a second WAN address (`218.18.235.188`, published under the
+hostname `vpn.suat-sz.edu.cn`) that the earlier diagnosis never tested. It is
+usable in principle: DNS resolves the hostname to `.188`, and `.188:443`
+answers (as does `.189:443`). The SDP line port, however, is closed on both:
+
+| probe (01:35–02:12) | result |
+|---|---|
+| `218.18.235.188:441` | closed (15 s timeout) |
+| `218.18.235.189:441` | closed (15 s timeout) |
+| `218.18.235.188:443` | open |
+| `218.18.235.189:443` | open |
+| `https://vpn.suat-sz.edu.cn/` | HTTP 200, serves the aTrust login page |
+
+That combination is the useful part: the gateway is *healthy* (portal 200 on both
+addresses), and only the line service on `:441` is unreachable from the public
+internet on both addresses. A dead appliance, an expired certificate or a
+blocked client would not leave the portal answering.
+
+The client then entered `all line out` at 01:21:36, six seconds after the reload,
+and has run no further detection since: the log's last selectLine event is that
+transition, and detection in the healthy period was triggered by network change
+or latency degradation, not by a free-running timer. So the "all line out" state
+is sticky — when the school restores the service, a tray disconnect/reconnect
+(not necessarily a full re-login) is needed to force a fresh detection round.
+
+**Question for the school's network administrator** (now specific enough to
+answer in one reply): is the aTrust SDP line port still 441, is `218.18.235.188`
+the current line address, and is there a maintenance window in progress? The
+portal is up and both candidate addresses answer on 443, so the line port is the
+only thing to explain.
+
 - Do not keep retrying SSH: each attempt is accepted locally and dropped, so it
   cannot succeed and only adds noise.
 - Do not change default routes or delete the ZoogVPN default route. The redirect

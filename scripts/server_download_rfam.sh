@@ -33,7 +33,7 @@ fi
 
 echo "--- press CMs ---"
 if [ ! -s Rfam.cm ]; then
-  gzip -dkf Rfam.cm.gz
+  gzip -dc Rfam.cm.gz > Rfam.cm
 fi
 CMPRESS="${ROOT}/tools/infernal/bin/cmpress"
 if [ -x "${CMPRESS}" ]; then

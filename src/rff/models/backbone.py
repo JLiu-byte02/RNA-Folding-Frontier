@@ -126,7 +126,9 @@ class FrozenBackbone:
         return results
 
 
-def load_backbone(name: str, device: str = "cuda") -> FrozenBackbone:
+def load_backbone(
+    name: str, device: str = "cuda", path: str | None = None
+) -> FrozenBackbone:
     if name not in BACKBONES:
         raise KeyError(f"unknown backbone {name!r}; choices: {sorted(BACKBONES)}")
-    return FrozenBackbone(BACKBONES[name], device=device)
+    return FrozenBackbone(BACKBONES[name], device=device, path=path)

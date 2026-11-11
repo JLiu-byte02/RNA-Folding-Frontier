@@ -91,3 +91,28 @@ So, in order of preference:
 `python scripts/remote.py doctor` now distinguishes the two failure modes:
 `suspected_local_interception` is true when the handshake completes in under
 5 ms, which means a local proxy accepted it and the far end was never contacted.
+
+## Update 01:35 — after a manual aTrust logout/login
+
+The user logged out and back in at about 01:20. Nothing improved, and the state
+changed in one informative way:
+
+| | before re-login | after re-login |
+|---|---|---|
+| node group `Default` | one line, `218.18.235.189:441`, `delayMS 46` -> `1055` -> `i/o timeout` | `{"state":"selectline:no current line"}` — **zero lines** |
+| `:441` from this laptop | timeout | timeout |
+| `:443` from this laptop | open | open |
+| `remote.py doctor` | 0 ms accept, 0-byte banner | 32 ms accept, 0-byte banner |
+| `ssh -vvv` | `kex_exchange_identification: read: Unknown error` | identical |
+
+So the line address and port did **not** change; what changed is that the SDP
+controller no longer offers any line for this node group. A client cannot select
+a line that the controller does not publish, and the previous line's port is
+still closed to the internet (checked again at 01:35; four external nodes had
+already failed at 00:35 and the control on `:443` succeeded).
+
+The break began at 23:59-00:00 exactly, which is the shape of a scheduled
+maintenance window rather than a configuration drift. There is no client-side
+action left: the next check should be after the school's service window, and the
+question for their administrator is whether the aTrust SDP gateway is down or
+its line endpoint changed.

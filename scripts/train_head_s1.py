@@ -160,6 +160,12 @@ def parse_eval_specs(specs: list[str]) -> list[tuple[str, Path, Path]]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--train", default="splits/s1prime_filtered/train.jsonl")
+    ap.add_argument(
+        "--val",
+        default=None,
+        help="explicit validation jsonl (already cluster-disjoint); "
+        "default holds out whole families from --train",
+    )
     ap.add_argument("--train-cache", default="data/cache/giga_a_train")
     ap.add_argument("--eval", nargs="*", default=[], help="name=data.jsonl:cache_dir")
     ap.add_argument("--out", required=True)
@@ -190,7 +196,19 @@ def main() -> int:
         return 1
     d_in = int(next(iter(embs.values())).shape[-1])
 
-    fit, val = split_families(train_all, args.val_frac, args.seed)
+    if args.val:
+        fit = train_all
+        val = [r for r in read_jsonl(ROOT / args.val) if r["id"] in embs]
+        if not val:
+            print("validation file does not overlap the training cache")
+            return 1
+        shared = {r["family"] for r in fit} & {r["family"] for r in val}
+        print(
+            json.dumps({"val_source": args.val, "families_shared_with_train": len(shared)}),
+            flush=True,
+        )
+    else:
+        fit, val = split_families(train_all, args.val_frac, args.seed)
     print(json.dumps({"fit": len(fit), "val": len(val), "d_in": d_in}), flush=True)
 
     eval_sets = []

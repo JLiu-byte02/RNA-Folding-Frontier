@@ -1,7 +1,7 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T01:35:00+08:00",
+  "updated_at": "2026-11-12T01:40:00+08:00",
   "phase": "diagnostics-first-after-P2-inversion",
   "cycle": 4,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -27,7 +27,7 @@
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
   "blockers": [
-    "SSH: aTrust SDP line 218.18.235.189:441 unreachable since 23:59 (port closed internet-wide, 443 open); all 10.22.19.39:22 attempts accepted locally then dropped. Needs aTrust re-login. Diagnostics and queued work proceed locally."
+    "SSH down after aTrust re-login (01:20): SDP node group now reports \"selectline:no current line\" (zero lines published) instead of one dead line 218.18.235.189:441. Port 441 closed internet-wide, 443 open. School-side SDP outage starting 23:59-00:00; no client action left. Positive-control split + D1/K1/D2 ready to run when it returns."
   ],
   "artifacts": {
     "datasets": [],

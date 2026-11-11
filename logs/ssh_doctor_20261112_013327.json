@@ -1,0 +1,11 @@
+{
+  "host": "10.22.19.39",
+  "port": 22,
+  "at": "2026-11-11T17:33:27+00:00",
+  "tcp_connect": true,
+  "tcp_connect_seconds": 0.032,
+  "ssh_banner_bytes": 0,
+  "ssh_banner": "",
+  "suspected_local_interception": false,
+  "diagnosis": "remote end accepted TCP but sent no SSH identification: sshd-side refusal, connection limit, or an inline filter"
+}

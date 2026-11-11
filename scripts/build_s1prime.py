@@ -237,7 +237,11 @@ def main() -> int:
         },
         "hashes": hashes,
         "rules": {
-            "pairs": "canonical AU/UA/GC/CG plus GU/UG; non-canonical and pseudoknots dropped",
+            "pairs": (
+                "canonical AU/UA/GC/CG plus GU/UG; non-canonical dropped; "
+                "crossing (pseudoknotted) pairs RETAINED "
+                "(corrected 2026-11-12, docs/corrections.md)"
+            ),
             "novelty": "clan has no bpRNA sequence assigned by cmscan --rfam --cut_ga",
             "nohit_policy": "sequences without a cut_ga hit are excluded, never treated as a clan",
             "clan_source": args.family_table,

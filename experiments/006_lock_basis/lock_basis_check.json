@@ -1,0 +1,123 @@
+{
+  "hash_basis_question": "do working-tree bytes and git blob bytes give the same sha256?",
+  "lockfile": "state/amendments.lock.json",
+  "all_agree": true,
+  "files": [
+    {
+      "path": "experiments/001_e1prime/AMENDMENT_2.md",
+      "locked": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+      "worktree_sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+      "worktree_eol_crlf": false,
+      "head_blob_sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+      "matching_commits": [
+        "a8e4d48242d6"
+      ],
+      "history": [
+        {
+          "commit": "a8e4d48242d6",
+          "sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+          "crlf": false
+        }
+      ],
+      "blob_matches": true,
+      "worktree_matches": true,
+      "worktree_equals_head": true,
+      "verdict": "both"
+    },
+    {
+      "path": "experiments/001_e1prime/AMENDMENT_3.md",
+      "locked": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+      "worktree_sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+      "worktree_eol_crlf": false,
+      "head_blob_sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+      "matching_commits": [
+        "207a8eb560cd"
+      ],
+      "history": [
+        {
+          "commit": "207a8eb560cd",
+          "sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+          "crlf": false
+        }
+      ],
+      "blob_matches": true,
+      "worktree_matches": true,
+      "worktree_equals_head": true,
+      "verdict": "both"
+    },
+    {
+      "path": "experiments/001_e1prime/AMENDMENT_4.md",
+      "locked": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+      "worktree_sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+      "worktree_eol_crlf": false,
+      "head_blob_sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+      "matching_commits": [
+        "d6a2abb106ff",
+        "3a16258146fc"
+      ],
+      "history": [
+        {
+          "commit": "d6a2abb106ff",
+          "sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+          "crlf": false
+        },
+        {
+          "commit": "0117538d80a7",
+          "sha256": "c6471002a8f57f4b65f19bc411c1269d115568c26f2cfb269f88a6e6364ddf50",
+          "crlf": false
+        },
+        {
+          "commit": "3a16258146fc",
+          "sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+          "crlf": false
+        }
+      ],
+      "blob_matches": true,
+      "worktree_matches": true,
+      "worktree_equals_head": true,
+      "verdict": "both"
+    },
+    {
+      "path": "experiments/001_e1prime/AMENDMENT_5.md",
+      "locked": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+      "worktree_sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+      "worktree_eol_crlf": false,
+      "head_blob_sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+      "matching_commits": [
+        "0117538d80a7"
+      ],
+      "history": [
+        {
+          "commit": "0117538d80a7",
+          "sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+          "crlf": false
+        }
+      ],
+      "blob_matches": true,
+      "worktree_matches": true,
+      "worktree_equals_head": true,
+      "verdict": "both"
+    },
+    {
+      "path": "experiments/001_e1prime/test_novel_eval.jsonl",
+      "locked": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+      "worktree_sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+      "worktree_eol_crlf": false,
+      "head_blob_sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+      "matching_commits": [
+        "b40d22e551e3"
+      ],
+      "history": [
+        {
+          "commit": "b40d22e551e3",
+          "sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+          "crlf": false
+        }
+      ],
+      "blob_matches": true,
+      "worktree_matches": true,
+      "worktree_equals_head": true,
+      "verdict": "both"
+    }
+  ]
+}

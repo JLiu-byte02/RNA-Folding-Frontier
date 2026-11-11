@@ -8,9 +8,11 @@ __pycache__/
 .venv/
 venv/
 
-# Data and checkpoints (live on the compute server)
-data/
-checkpoints/
+# Data and checkpoints (live on the compute server).
+# Root-anchored: "data/" also matched src/rff/data/, which silently ignored new
+# source modules placed there.
+/data/
+/checkpoints/
 *.pt
 *.pth
 *.ckpt

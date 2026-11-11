@@ -15,7 +15,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from rff.analysis.embargo import (  # noqa: E402
     EmbargoViolation,
     assert_allowed,
+    blob_at_head,
     check_amendments,
+    sha256_bytes,
     sha256_file,
 )
 
@@ -69,6 +71,83 @@ def test_the_real_lockfile_matches_the_real_amendments():
     """If this fails, an amendment was edited after its hash was quoted."""
     verified = check_amendments(ROOT, Path("state/amendments.lock.json"))
     assert verified["experiments/001_e1prime/AMENDMENT_4.md"].startswith("08d6771a")
+
+
+def _git_repo(tmp_path: Path, text: str = "frozen text\n") -> Path:
+    """A throwaway repo with one committed amendment; returns its path."""
+    repo = tmp_path / "repo"
+    repo.mkdir()
+
+    def git(*args):
+        subprocess.run(
+            ["git", "-c", "user.name=t", "-c", "user.email=t@local", *args],
+            cwd=repo, check=True, capture_output=True,
+        )
+
+    git("init", "-q")
+    (repo / "AMENDMENT_X.md").write_bytes(text.encode())
+    git("add", "AMENDMENT_X.md")
+    git("commit", "-q", "-m", "freeze")
+    return repo
+
+
+def _blob_lock(repo: Path, path: str = "AMENDMENT_X.md") -> Path:
+    digest = sha256_bytes(blob_at_head(repo, path))
+    lock = repo / "lock.json"
+    lock.write_text(
+        json.dumps({"hash_basis": "git-blob", "files": {path: {"blob_sha256": digest}}}),
+        encoding="utf-8",
+    )
+    return lock
+
+
+def test_blob_basis_ignores_an_uncommitted_edit_but_refuses_it(tmp_path):
+    """The lock is over HEAD bytes; a dirty worktree must not slip through."""
+    repo = _git_repo(tmp_path)
+    lock = _blob_lock(repo)
+    assert_allowed([str(repo / "test_novel.jsonl")], confirmatory=True,
+                   root=repo, lockfile=lock.relative_to(repo))
+    (repo / "AMENDMENT_X.md").write_text("edited after the freeze\n", encoding="utf-8")
+    with pytest.raises(EmbargoViolation) as err:
+        check_amendments(repo, lock.relative_to(repo))
+    assert "working tree" in str(err.value)
+
+
+def test_blob_basis_refuses_a_line_ending_rewrite(tmp_path):
+    """The exact autocrlf failure mode: same text, different bytes."""
+    repo = _git_repo(tmp_path)
+    lock = _blob_lock(repo)
+    (repo / "AMENDMENT_X.md").write_bytes(b"frozen text\r\n")
+    with pytest.raises(EmbargoViolation) as err:
+        check_amendments(repo, lock.relative_to(repo))
+    assert "line-ending" in str(err.value)
+
+
+def test_blob_basis_refuses_when_head_moved(tmp_path):
+    repo = _git_repo(tmp_path)
+    lock = _blob_lock(repo)
+    (repo / "AMENDMENT_X.md").write_text("a later amendment\n", encoding="utf-8")
+    subprocess.run(
+        ["git", "-c", "user.name=t", "-c", "user.email=t@local", "commit", "-qam", "edit"],
+        cwd=repo, check=True, capture_output=True,
+    )
+    with pytest.raises(EmbargoViolation) as err:
+        check_amendments(repo, lock.relative_to(repo))
+    assert "blob" in str(err.value)
+
+
+def test_untracked_locked_file_is_refused(tmp_path):
+    repo = _git_repo(tmp_path)
+    lock = _blob_lock(repo)
+    (repo / "EXTRA.md").write_text("never committed\n", encoding="utf-8")
+    lock.write_text(
+        json.dumps({"hash_basis": "git-blob",
+                    "files": {"EXTRA.md": {"blob_sha256": sha256_file(repo / "EXTRA.md")}}}),
+        encoding="utf-8",
+    )
+    with pytest.raises(EmbargoViolation) as err:
+        check_amendments(repo, lock.relative_to(repo))
+    assert "not present in HEAD" in str(err.value)
 
 
 CONFIRMATORY_SCRIPTS = [

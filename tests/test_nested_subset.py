@@ -18,6 +18,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from rff.analysis.labels import (  # noqa: E402
     crosses,
     max_nested_subset,
+    max_nested_subset_enumeration,
+    max_nested_subset_of_arcs,
     pseudoknot_pairs,
 )
 
@@ -79,3 +81,68 @@ def test_shortest_span_tie_break_is_lexicographic_not_random():
     kept = max_nested_subset(crossing)
     assert len(kept) == 1
     assert kept == {(0, 4)}
+
+
+def _interval_dp_size(arcs, n: int) -> int:
+    """Independent exact solver: the textbook interval recurrence, O(n^3).
+
+    A different recurrence from the production DP (it splits at every ``k`` and
+    allows ``j`` to be unpaired from either side), so agreement on random inputs
+    is a real cross-check rather than the same code twice.
+    """
+    allowed = set(arcs)
+    f = [[0] * n for _ in range(n)]
+
+    def get(i, j):
+        return 0 if i > j or i < 0 or j >= n else f[i][j]
+
+    for span in range(1, n + 1):
+        for i in range(0, n - span + 1):
+            j = i + span - 1
+            best = max(get(i + 1, j), get(i, j - 1))
+            if (i, j) in allowed:
+                best = max(best, 1 + get(i + 1, j - 1))
+            for k in range(i, j):
+                best = max(best, get(i, k) + get(k + 1, j))
+            f[i][j] = best
+    return f[0][n - 1]
+
+
+def test_dp_matches_enumeration_on_small_random_arc_sets():
+    rng = random.Random(11)
+    for _ in range(25):
+        n = 30
+        arcs = set()
+        for _ in range(rng.randint(1, 12)):
+            i, j = sorted(rng.sample(range(n), 2))
+            arcs.add((i, j))
+        reference = max_nested_subset_enumeration(arcs)
+        solved = max_nested_subset_of_arcs(arcs)
+        assert solved == reference, sorted(arcs)
+
+
+def test_dp_matches_an_independent_recurrence_above_the_old_limit():
+    """The old code fell back to greedy above 16 arcs; the DP must stay exact."""
+    rng = random.Random(5)
+    for _ in range(15):
+        n = 60
+        arcs = set()
+        while len(arcs) < 24:
+            i, j = sorted(rng.sample(range(n), 2))
+            arcs.add((i, j))
+        solved = max_nested_subset_of_arcs(arcs)
+        assert len(solved) == _interval_dp_size(arcs, n)
+        assert is_nested(solved)
+
+
+def test_every_crossing_component_of_a_random_structure_survives_the_split():
+    """Solving components separately must equal solving the whole set at once."""
+    rng = random.Random(3)
+    for _ in range(20):
+        n = 40
+        arcs = set()
+        for _ in range(14):
+            i, j = sorted(rng.sample(range(n), 2))
+            arcs.add((i, j))
+        overall = max_nested_subset_of_arcs(arcs)
+        assert len(overall) == _interval_dp_size(arcs, n)

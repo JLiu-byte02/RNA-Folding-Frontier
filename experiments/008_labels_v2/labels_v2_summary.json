@@ -1,0 +1,5725 @@
+{
+  "purpose": "recover WUSS letter-pair pseudoknots in Rfam seed labels without touching splits",
+  "seed_source": "data/raw/rfam/Rfam.seed.gz",
+  "max_per_family": 0,
+  "n_sequences": 92781,
+  "n_sequences_with_pairs_v1": 71563,
+  "n_sequences_changed": 20931,
+  "pairs_v1": 1659775,
+  "pairs_v2": 2020347,
+  "pairs_added": 360572,
+  "letters_present": {
+    "a": 75086,
+    "A": 74626,
+    "b": 16961,
+    "B": 16770,
+    "c": 5879,
+    "C": 5776,
+    "d": 4220,
+    "D": 4121
+  },
+  "n_v1_unbalanced_rows": 16540,
+  "n_v2_unbalanced_rows": 9322,
+  "n_v1_failed_v2_ok": 7670,
+  "n_families": 4178,
+  "families_changed": {
+    "RF00001": {
+      "n_sequences": 642,
+      "n_changed": 32,
+      "added_pairs": 842
+    },
+    "RF00002": {
+      "n_sequences": 56,
+      "n_changed": 8,
+      "added_pairs": 140
+    },
+    "RF00003": {
+      "n_sequences": 67,
+      "n_changed": 4,
+      "added_pairs": 158
+    },
+    "RF00004": {
+      "n_sequences": 193,
+      "n_changed": 6,
+      "added_pairs": 228
+    },
+    "RF00005": {
+      "n_sequences": 949,
+      "n_changed": 5,
+      "added_pairs": 85
+    },
+    "RF00006": {
+      "n_sequences": 73,
+      "n_changed": 7,
+      "added_pairs": 60
+    },
+    "RF00007": {
+      "n_sequences": 55,
+      "n_changed": 4,
+      "added_pairs": 135
+    },
+    "RF00008": {
+      "n_sequences": 65,
+      "n_changed": 3,
+      "added_pairs": 45
+    },
+    "RF00009": {
+      "n_sequences": 103,
+      "n_changed": 103,
+      "added_pairs": 1496
+    },
+    "RF00010": {
+      "n_sequences": 393,
+      "n_changed": 393,
+      "added_pairs": 9606
+    },
+    "RF00011": {
+      "n_sequences": 94,
+      "n_changed": 94,
+      "added_pairs": 1277
+    },
+    "RF00012": {
+      "n_sequences": 77,
+      "n_changed": 31,
+      "added_pairs": 1360
+    },
+    "RF00013": {
+      "n_sequences": 123,
+      "n_changed": 33,
+      "added_pairs": 935
+    },
+    "RF00015": {
+      "n_sequences": 175,
+      "n_changed": 52,
+      "added_pairs": 1099
+    },
+    "RF00017": {
+      "n_sequences": 57,
+      "n_changed": 15,
+      "added_pairs": 1314
+    },
+    "RF00018": {
+      "n_sequences": 25,
+      "n_changed": 3,
+      "added_pairs": 152
+    },
+    "RF00019": {
+      "n_sequences": 102,
+      "n_changed": 23,
+      "added_pairs": 442
+    },
+    "RF00020": {
+      "n_sequences": 159,
+      "n_changed": 28,
+      "added_pairs": 607
+    },
+    "RF00021": {
+      "n_sequences": 18,
+      "n_changed": 3,
+      "added_pairs": 90
+    },
+    "RF00022": {
+      "n_sequences": 21,
+      "n_changed": 7,
+      "added_pairs": 287
+    },
+    "RF00023": {
+      "n_sequences": 65,
+      "n_changed": 65,
+      "added_pairs": 5537
+    },
+    "RF00024": {
+      "n_sequences": 18,
+      "n_changed": 18,
+      "added_pairs": 1055
+    },
+    "RF00025": {
+      "n_sequences": 10,
+      "n_changed": 10,
+      "added_pairs": 106
+    },
+    "RF00026": {
+      "n_sequences": 187,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00027": {
+      "n_sequences": 53,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF00028": {
+      "n_sequences": 8,
+      "n_changed": 8,
+      "added_pairs": 214
+    },
+    "RF00029": {
+      "n_sequences": 87,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF00030": {
+      "n_sequences": 56,
+      "n_changed": 56,
+      "added_pairs": 1242
+    },
+    "RF00031": {
+      "n_sequences": 61,
+      "n_changed": 2,
+      "added_pairs": 28
+    },
+    "RF00033": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF00034": {
+      "n_sequences": 12,
+      "n_changed": 3,
+      "added_pairs": 41
+    },
+    "RF00035": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 48
+    },
+    "RF00037": {
+      "n_sequences": 55,
+      "n_changed": 28,
+      "added_pairs": 315
+    },
+    "RF00039": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF00040": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 63
+    },
+    "RF00041": {
+      "n_sequences": 58,
+      "n_changed": 58,
+      "added_pairs": 567
+    },
+    "RF00045": {
+      "n_sequences": 60,
+      "n_changed": 7,
+      "added_pairs": 273
+    },
+    "RF00046": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00047": {
+      "n_sequences": 42,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00050": {
+      "n_sequences": 107,
+      "n_changed": 107,
+      "added_pairs": 452
+    },
+    "RF00052": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 18
+    },
+    "RF00053": {
+      "n_sequences": 96,
+      "n_changed": 15,
+      "added_pairs": 331
+    },
+    "RF00055": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00056": {
+      "n_sequences": 36,
+      "n_changed": 1,
+      "added_pairs": 36
+    },
+    "RF00057": {
+      "n_sequences": 26,
+      "n_changed": 5,
+      "added_pairs": 48
+    },
+    "RF00059": {
+      "n_sequences": 100,
+      "n_changed": 27,
+      "added_pairs": 579
+    },
+    "RF00062": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 50
+    },
+    "RF00064": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 46
+    },
+    "RF00072": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF00074": {
+      "n_sequences": 143,
+      "n_changed": 4,
+      "added_pairs": 66
+    },
+    "RF00076": {
+      "n_sequences": 136,
+      "n_changed": 16,
+      "added_pairs": 361
+    },
+    "RF00078": {
+      "n_sequences": 16,
+      "n_changed": 6,
+      "added_pairs": 63
+    },
+    "RF00079": {
+      "n_sequences": 19,
+      "n_changed": 4,
+      "added_pairs": 60
+    },
+    "RF00080": {
+      "n_sequences": 20,
+      "n_changed": 11,
+      "added_pairs": 226
+    },
+    "RF00081": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF00086": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 4
+    },
+    "RF00088": {
+      "n_sequences": 20,
+      "n_changed": 2,
+      "added_pairs": 5
+    },
+    "RF00090": {
+      "n_sequences": 20,
+      "n_changed": 9,
+      "added_pairs": 472
+    },
+    "RF00091": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00094": {
+      "n_sequences": 32,
+      "n_changed": 32,
+      "added_pairs": 284
+    },
+    "RF00096": {
+      "n_sequences": 49,
+      "n_changed": 6,
+      "added_pairs": 106
+    },
+    "RF00100": {
+      "n_sequences": 39,
+      "n_changed": 14,
+      "added_pairs": 930
+    },
+    "RF00102": {
+      "n_sequences": 52,
+      "n_changed": 52,
+      "added_pairs": 1483
+    },
+    "RF00103": {
+      "n_sequences": 110,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00105": {
+      "n_sequences": 30,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF00106": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF00108": {
+      "n_sequences": 47,
+      "n_changed": 1,
+      "added_pairs": 6
+    },
+    "RF00109": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF00127": {
+      "n_sequences": 78,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF00128": {
+      "n_sequences": 17,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF00130": {
+      "n_sequences": 40,
+      "n_changed": 7,
+      "added_pairs": 138
+    },
+    "RF00131": {
+      "n_sequences": 140,
+      "n_changed": 26,
+      "added_pairs": 417
+    },
+    "RF00133": {
+      "n_sequences": 69,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00139": {
+      "n_sequences": 28,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00140": {
+      "n_sequences": 27,
+      "n_changed": 27,
+      "added_pairs": 252
+    },
+    "RF00150": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 1
+    },
+    "RF00155": {
+      "n_sequences": 25,
+      "n_changed": 3,
+      "added_pairs": 56
+    },
+    "RF00156": {
+      "n_sequences": 43,
+      "n_changed": 2,
+      "added_pairs": 29
+    },
+    "RF00162": {
+      "n_sequences": 384,
+      "n_changed": 384,
+      "added_pairs": 6231
+    },
+    "RF00164": {
+      "n_sequences": 39,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF00165": {
+      "n_sequences": 50,
+      "n_changed": 50,
+      "added_pairs": 315
+    },
+    "RF00166": {
+      "n_sequences": 33,
+      "n_changed": 9,
+      "added_pairs": 289
+    },
+    "RF00167": {
+      "n_sequences": 127,
+      "n_changed": 15,
+      "added_pairs": 250
+    },
+    "RF00168": {
+      "n_sequences": 42,
+      "n_changed": 11,
+      "added_pairs": 420
+    },
+    "RF00169": {
+      "n_sequences": 230,
+      "n_changed": 31,
+      "added_pairs": 574
+    },
+    "RF00174": {
+      "n_sequences": 357,
+      "n_changed": 357,
+      "added_pairs": 4033
+    },
+    "RF00175": {
+      "n_sequences": 69,
+      "n_changed": 2,
+      "added_pairs": 15
+    },
+    "RF00176": {
+      "n_sequences": 18,
+      "n_changed": 17,
+      "added_pairs": 51
+    },
+    "RF00177": {
+      "n_sequences": 84,
+      "n_changed": 26,
+      "added_pairs": 10788
+    },
+    "RF00178": {
+      "n_sequences": 48,
+      "n_changed": 11,
+      "added_pairs": 221
+    },
+    "RF00179": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 32
+    },
+    "RF00181": {
+      "n_sequences": 59,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00183": {
+      "n_sequences": 16,
+      "n_changed": 2,
+      "added_pairs": 46
+    },
+    "RF00185": {
+      "n_sequences": 84,
+      "n_changed": 15,
+      "added_pairs": 231
+    },
+    "RF00186": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 1
+    },
+    "RF00188": {
+      "n_sequences": 40,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00190": {
+      "n_sequences": 29,
+      "n_changed": 3,
+      "added_pairs": 53
+    },
+    "RF00193": {
+      "n_sequences": 9,
+      "n_changed": 2,
+      "added_pairs": 136
+    },
+    "RF00194": {
+      "n_sequences": 25,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF00199": {
+      "n_sequences": 29,
+      "n_changed": 4,
+      "added_pairs": 80
+    },
+    "RF00200": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 5
+    },
+    "RF00202": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 4
+    },
+    "RF00209": {
+      "n_sequences": 25,
+      "n_changed": 1,
+      "added_pairs": 71
+    },
+    "RF00210": {
+      "n_sequences": 88,
+      "n_changed": 2,
+      "added_pairs": 231
+    },
+    "RF00212": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF00213": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00214": {
+      "n_sequences": 26,
+      "n_changed": 3,
+      "added_pairs": 42
+    },
+    "RF00216": {
+      "n_sequences": 21,
+      "n_changed": 21,
+      "added_pairs": 225
+    },
+    "RF00218": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00221": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 2
+    },
+    "RF00223": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00229": {
+      "n_sequences": 90,
+      "n_changed": 2,
+      "added_pairs": 111
+    },
+    "RF00230": {
+      "n_sequences": 41,
+      "n_changed": 6,
+      "added_pairs": 245
+    },
+    "RF00231": {
+      "n_sequences": 22,
+      "n_changed": 3,
+      "added_pairs": 154
+    },
+    "RF00233": {
+      "n_sequences": 23,
+      "n_changed": 23,
+      "added_pairs": 193
+    },
+    "RF00234": {
+      "n_sequences": 15,
+      "n_changed": 2,
+      "added_pairs": 62
+    },
+    "RF00236": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00237": {
+      "n_sequences": 165,
+      "n_changed": 13,
+      "added_pairs": 291
+    },
+    "RF00238": {
+      "n_sequences": 39,
+      "n_changed": 2,
+      "added_pairs": 41
+    },
+    "RF00239": {
+      "n_sequences": 118,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00241": {
+      "n_sequences": 119,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF00242": {
+      "n_sequences": 15,
+      "n_changed": 4,
+      "added_pairs": 68
+    },
+    "RF00244": {
+      "n_sequences": 58,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00245": {
+      "n_sequences": 54,
+      "n_changed": 3,
+      "added_pairs": 74
+    },
+    "RF00246": {
+      "n_sequences": 73,
+      "n_changed": 29,
+      "added_pairs": 768
+    },
+    "RF00247": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00249": {
+      "n_sequences": 52,
+      "n_changed": 2,
+      "added_pairs": 26
+    },
+    "RF00250": {
+      "n_sequences": 45,
+      "n_changed": 4,
+      "added_pairs": 71
+    },
+    "RF00251": {
+      "n_sequences": 74,
+      "n_changed": 3,
+      "added_pairs": 56
+    },
+    "RF00252": {
+      "n_sequences": 17,
+      "n_changed": 2,
+      "added_pairs": 109
+    },
+    "RF00255": {
+      "n_sequences": 64,
+      "n_changed": 5,
+      "added_pairs": 105
+    },
+    "RF00256": {
+      "n_sequences": 69,
+      "n_changed": 4,
+      "added_pairs": 73
+    },
+    "RF00259": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 33
+    },
+    "RF00260": {
+      "n_sequences": 55,
+      "n_changed": 27,
+      "added_pairs": 1198
+    },
+    "RF00261": {
+      "n_sequences": 10,
+      "n_changed": 10,
+      "added_pairs": 96
+    },
+    "RF00263": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF00264": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF00267": {
+      "n_sequences": 14,
+      "n_changed": 2,
+      "added_pairs": 15
+    },
+    "RF00271": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00272": {
+      "n_sequences": 12,
+      "n_changed": 2,
+      "added_pairs": 35
+    },
+    "RF00273": {
+      "n_sequences": 24,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00276": {
+      "n_sequences": 20,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00280": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 1
+    },
+    "RF00281": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00284": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00291": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF00302": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00304": {
+      "n_sequences": 18,
+      "n_changed": 4,
+      "added_pairs": 76
+    },
+    "RF00309": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 1
+    },
+    "RF00319": {
+      "n_sequences": 8,
+      "n_changed": 3,
+      "added_pairs": 87
+    },
+    "RF00322": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF00324": {
+      "n_sequences": 30,
+      "n_changed": 2,
+      "added_pairs": 5
+    },
+    "RF00333": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF00335": {
+      "n_sequences": 41,
+      "n_changed": 5,
+      "added_pairs": 23
+    },
+    "RF00369": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 55
+    },
+    "RF00373": {
+      "n_sequences": 56,
+      "n_changed": 56,
+      "added_pairs": 977
+    },
+    "RF00374": {
+      "n_sequences": 25,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF00375": {
+      "n_sequences": 132,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00377": {
+      "n_sequences": 24,
+      "n_changed": 1,
+      "added_pairs": 5
+    },
+    "RF00378": {
+      "n_sequences": 30,
+      "n_changed": 3,
+      "added_pairs": 57
+    },
+    "RF00379": {
+      "n_sequences": 100,
+      "n_changed": 3,
+      "added_pairs": 62
+    },
+    "RF00380": {
+      "n_sequences": 154,
+      "n_changed": 154,
+      "added_pairs": 354
+    },
+    "RF00381": {
+      "n_sequences": 13,
+      "n_changed": 13,
+      "added_pairs": 84
+    },
+    "RF00386": {
+      "n_sequences": 139,
+      "n_changed": 5,
+      "added_pairs": 134
+    },
+    "RF00388": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00389": {
+      "n_sequences": 42,
+      "n_changed": 9,
+      "added_pairs": 246
+    },
+    "RF00390": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 17
+    },
+    "RF00391": {
+      "n_sequences": 45,
+      "n_changed": 6,
+      "added_pairs": 109
+    },
+    "RF00394": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00396": {
+      "n_sequences": 41,
+      "n_changed": 6,
+      "added_pairs": 182
+    },
+    "RF00397": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF00399": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF00400": {
+      "n_sequences": 26,
+      "n_changed": 2,
+      "added_pairs": 44
+    },
+    "RF00404": {
+      "n_sequences": 22,
+      "n_changed": 5,
+      "added_pairs": 149
+    },
+    "RF00405": {
+      "n_sequences": 23,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00406": {
+      "n_sequences": 20,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00409": {
+      "n_sequences": 30,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF00410": {
+      "n_sequences": 17,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF00411": {
+      "n_sequences": 33,
+      "n_changed": 6,
+      "added_pairs": 123
+    },
+    "RF00414": {
+      "n_sequences": 28,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF00417": {
+      "n_sequences": 13,
+      "n_changed": 2,
+      "added_pairs": 36
+    },
+    "RF00419": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF00420": {
+      "n_sequences": 23,
+      "n_changed": 2,
+      "added_pairs": 38
+    },
+    "RF00422": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00423": {
+      "n_sequences": 22,
+      "n_changed": 2,
+      "added_pairs": 53
+    },
+    "RF00424": {
+      "n_sequences": 31,
+      "n_changed": 6,
+      "added_pairs": 232
+    },
+    "RF00425": {
+      "n_sequences": 28,
+      "n_changed": 3,
+      "added_pairs": 78
+    },
+    "RF00426": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00428": {
+      "n_sequences": 25,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00429": {
+      "n_sequences": 22,
+      "n_changed": 2,
+      "added_pairs": 24
+    },
+    "RF00430": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 40
+    },
+    "RF00431": {
+      "n_sequences": 28,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF00433": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 90
+    },
+    "RF00434": {
+      "n_sequences": 15,
+      "n_changed": 2,
+      "added_pairs": 50
+    },
+    "RF00435": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 58
+    },
+    "RF00437": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF00438": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00442": {
+      "n_sequences": 95,
+      "n_changed": 95,
+      "added_pairs": 385
+    },
+    "RF00443": {
+      "n_sequences": 20,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF00444": {
+      "n_sequences": 17,
+      "n_changed": 3,
+      "added_pairs": 77
+    },
+    "RF00445": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 32
+    },
+    "RF00446": {
+      "n_sequences": 92,
+      "n_changed": 3,
+      "added_pairs": 42
+    },
+    "RF00449": {
+      "n_sequences": 15,
+      "n_changed": 4,
+      "added_pairs": 113
+    },
+    "RF00454": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF00455": {
+      "n_sequences": 132,
+      "n_changed": 55,
+      "added_pairs": 689
+    },
+    "RF00456": {
+      "n_sequences": 97,
+      "n_changed": 30,
+      "added_pairs": 536
+    },
+    "RF00458": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 71
+    },
+    "RF00459": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 44
+    },
+    "RF00461": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 67
+    },
+    "RF00463": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 36
+    },
+    "RF00464": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF00470": {
+      "n_sequences": 32,
+      "n_changed": 3,
+      "added_pairs": 106
+    },
+    "RF00478": {
+      "n_sequences": 12,
+      "n_changed": 2,
+      "added_pairs": 89
+    },
+    "RF00480": {
+      "n_sequences": 147,
+      "n_changed": 4,
+      "added_pairs": 55
+    },
+    "RF00481": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF00486": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 29
+    },
+    "RF00487": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 50
+    },
+    "RF00488": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 64
+    },
+    "RF00490": {
+      "n_sequences": 22,
+      "n_changed": 4,
+      "added_pairs": 64
+    },
+    "RF00492": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 35
+    },
+    "RF00494": {
+      "n_sequences": 29,
+      "n_changed": 1,
+      "added_pairs": 4
+    },
+    "RF00495": {
+      "n_sequences": 11,
+      "n_changed": 3,
+      "added_pairs": 115
+    },
+    "RF00499": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 7
+    },
+    "RF00503": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 190
+    },
+    "RF00504": {
+      "n_sequences": 44,
+      "n_changed": 3,
+      "added_pairs": 41
+    },
+    "RF00505": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 53
+    },
+    "RF00507": {
+      "n_sequences": 28,
+      "n_changed": 28,
+      "added_pairs": 136
+    },
+    "RF00510": {
+      "n_sequences": 20,
+      "n_changed": 4,
+      "added_pairs": 47
+    },
+    "RF00512": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 38
+    },
+    "RF00513": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF00514": {
+      "n_sequences": 29,
+      "n_changed": 5,
+      "added_pairs": 134
+    },
+    "RF00515": {
+      "n_sequences": 23,
+      "n_changed": 2,
+      "added_pairs": 60
+    },
+    "RF00519": {
+      "n_sequences": 87,
+      "n_changed": 2,
+      "added_pairs": 24
+    },
+    "RF00522": {
+      "n_sequences": 43,
+      "n_changed": 39,
+      "added_pairs": 53
+    },
+    "RF00523": {
+      "n_sequences": 148,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF00524": {
+      "n_sequences": 12,
+      "n_changed": 2,
+      "added_pairs": 53
+    },
+    "RF00525": {
+      "n_sequences": 87,
+      "n_changed": 3,
+      "added_pairs": 45
+    },
+    "RF00528": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00530": {
+      "n_sequences": 20,
+      "n_changed": 5,
+      "added_pairs": 5
+    },
+    "RF00532": {
+      "n_sequences": 21,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00533": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF00534": {
+      "n_sequences": 7,
+      "n_changed": 2,
+      "added_pairs": 63
+    },
+    "RF00536": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 3
+    },
+    "RF00538": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 5
+    },
+    "RF00544": {
+      "n_sequences": 14,
+      "n_changed": 3,
+      "added_pairs": 72
+    },
+    "RF00545": {
+      "n_sequences": 9,
+      "n_changed": 3,
+      "added_pairs": 86
+    },
+    "RF00546": {
+      "n_sequences": 26,
+      "n_changed": 4,
+      "added_pairs": 111
+    },
+    "RF00547": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 76
+    },
+    "RF00548": {
+      "n_sequences": 68,
+      "n_changed": 7,
+      "added_pairs": 242
+    },
+    "RF00549": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 164
+    },
+    "RF00553": {
+      "n_sequences": 24,
+      "n_changed": 3,
+      "added_pairs": 87
+    },
+    "RF00554": {
+      "n_sequences": 23,
+      "n_changed": 2,
+      "added_pairs": 56
+    },
+    "RF00555": {
+      "n_sequences": 23,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF00557": {
+      "n_sequences": 85,
+      "n_changed": 2,
+      "added_pairs": 25
+    },
+    "RF00558": {
+      "n_sequences": 43,
+      "n_changed": 7,
+      "added_pairs": 127
+    },
+    "RF00559": {
+      "n_sequences": 38,
+      "n_changed": 6,
+      "added_pairs": 65
+    },
+    "RF00560": {
+      "n_sequences": 45,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF00561": {
+      "n_sequences": 26,
+      "n_changed": 5,
+      "added_pairs": 168
+    },
+    "RF00562": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 52
+    },
+    "RF00563": {
+      "n_sequences": 25,
+      "n_changed": 7,
+      "added_pairs": 436
+    },
+    "RF00564": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 56
+    },
+    "RF00565": {
+      "n_sequences": 23,
+      "n_changed": 3,
+      "added_pairs": 57
+    },
+    "RF00567": {
+      "n_sequences": 16,
+      "n_changed": 2,
+      "added_pairs": 136
+    },
+    "RF00568": {
+      "n_sequences": 63,
+      "n_changed": 8,
+      "added_pairs": 193
+    },
+    "RF00578": {
+      "n_sequences": 17,
+      "n_changed": 2,
+      "added_pairs": 54
+    },
+    "RF00581": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 1
+    },
+    "RF00584": {
+      "n_sequences": 15,
+      "n_changed": 3,
+      "added_pairs": 14
+    },
+    "RF00586": {
+      "n_sequences": 21,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00591": {
+      "n_sequences": 21,
+      "n_changed": 6,
+      "added_pairs": 86
+    },
+    "RF00598": {
+      "n_sequences": 20,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00599": {
+      "n_sequences": 17,
+      "n_changed": 2,
+      "added_pairs": 51
+    },
+    "RF00600": {
+      "n_sequences": 22,
+      "n_changed": 2,
+      "added_pairs": 58
+    },
+    "RF00602": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF00604": {
+      "n_sequences": 34,
+      "n_changed": 2,
+      "added_pairs": 9
+    },
+    "RF00614": {
+      "n_sequences": 34,
+      "n_changed": 7,
+      "added_pairs": 203
+    },
+    "RF00618": {
+      "n_sequences": 61,
+      "n_changed": 15,
+      "added_pairs": 389
+    },
+    "RF00619": {
+      "n_sequences": 60,
+      "n_changed": 3,
+      "added_pairs": 8
+    },
+    "RF00621": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 135
+    },
+    "RF00622": {
+      "n_sequences": 10,
+      "n_changed": 10,
+      "added_pairs": 68
+    },
+    "RF00627": {
+      "n_sequences": 21,
+      "n_changed": 5,
+      "added_pairs": 142
+    },
+    "RF00629": {
+      "n_sequences": 14,
+      "n_changed": 5,
+      "added_pairs": 287
+    },
+    "RF00630": {
+      "n_sequences": 27,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF00634": {
+      "n_sequences": 36,
+      "n_changed": 4,
+      "added_pairs": 104
+    },
+    "RF00636": {
+      "n_sequences": 23,
+      "n_changed": 2,
+      "added_pairs": 113
+    },
+    "RF00639": {
+      "n_sequences": 127,
+      "n_changed": 6,
+      "added_pairs": 129
+    },
+    "RF00641": {
+      "n_sequences": 178,
+      "n_changed": 51,
+      "added_pairs": 865
+    },
+    "RF00642": {
+      "n_sequences": 48,
+      "n_changed": 4,
+      "added_pairs": 85
+    },
+    "RF00643": {
+      "n_sequences": 57,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00645": {
+      "n_sequences": 100,
+      "n_changed": 37,
+      "added_pairs": 411
+    },
+    "RF00646": {
+      "n_sequences": 60,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF00650": {
+      "n_sequences": 56,
+      "n_changed": 6,
+      "added_pairs": 134
+    },
+    "RF00653": {
+      "n_sequences": 45,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00654": {
+      "n_sequences": 52,
+      "n_changed": 4,
+      "added_pairs": 58
+    },
+    "RF00655": {
+      "n_sequences": 31,
+      "n_changed": 13,
+      "added_pairs": 250
+    },
+    "RF00656": {
+      "n_sequences": 44,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF00658": {
+      "n_sequences": 41,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00661": {
+      "n_sequences": 69,
+      "n_changed": 27,
+      "added_pairs": 483
+    },
+    "RF00662": {
+      "n_sequences": 50,
+      "n_changed": 2,
+      "added_pairs": 20
+    },
+    "RF00663": {
+      "n_sequences": 36,
+      "n_changed": 3,
+      "added_pairs": 50
+    },
+    "RF00664": {
+      "n_sequences": 25,
+      "n_changed": 3,
+      "added_pairs": 36
+    },
+    "RF00667": {
+      "n_sequences": 68,
+      "n_changed": 9,
+      "added_pairs": 110
+    },
+    "RF00668": {
+      "n_sequences": 46,
+      "n_changed": 13,
+      "added_pairs": 296
+    },
+    "RF00669": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00671": {
+      "n_sequences": 32,
+      "n_changed": 2,
+      "added_pairs": 43
+    },
+    "RF00672": {
+      "n_sequences": 67,
+      "n_changed": 4,
+      "added_pairs": 81
+    },
+    "RF00674": {
+      "n_sequences": 25,
+      "n_changed": 2,
+      "added_pairs": 38
+    },
+    "RF00676": {
+      "n_sequences": 18,
+      "n_changed": 2,
+      "added_pairs": 49
+    },
+    "RF00677": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 40
+    },
+    "RF00679": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF00682": {
+      "n_sequences": 29,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00684": {
+      "n_sequences": 32,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF00690": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00693": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 25
+    },
+    "RF00694": {
+      "n_sequences": 52,
+      "n_changed": 2,
+      "added_pairs": 50
+    },
+    "RF00697": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF00698": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 46
+    },
+    "RF00702": {
+      "n_sequences": 24,
+      "n_changed": 3,
+      "added_pairs": 61
+    },
+    "RF00706": {
+      "n_sequences": 49,
+      "n_changed": 23,
+      "added_pairs": 299
+    },
+    "RF00711": {
+      "n_sequences": 34,
+      "n_changed": 21,
+      "added_pairs": 356
+    },
+    "RF00713": {
+      "n_sequences": 11,
+      "n_changed": 5,
+      "added_pairs": 57
+    },
+    "RF00717": {
+      "n_sequences": 27,
+      "n_changed": 2,
+      "added_pairs": 46
+    },
+    "RF00721": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 30
+    },
+    "RF00722": {
+      "n_sequences": 21,
+      "n_changed": 3,
+      "added_pairs": 63
+    },
+    "RF00723": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF00724": {
+      "n_sequences": 21,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF00725": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF00726": {
+      "n_sequences": 27,
+      "n_changed": 2,
+      "added_pairs": 36
+    },
+    "RF00727": {
+      "n_sequences": 28,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF00744": {
+      "n_sequences": 13,
+      "n_changed": 3,
+      "added_pairs": 45
+    },
+    "RF00746": {
+      "n_sequences": 17,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF00749": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00751": {
+      "n_sequences": 20,
+      "n_changed": 4,
+      "added_pairs": 64
+    },
+    "RF00754": {
+      "n_sequences": 39,
+      "n_changed": 5,
+      "added_pairs": 119
+    },
+    "RF00757": {
+      "n_sequences": 22,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF00761": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF00765": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF00767": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00769": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00770": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF00777": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00779": {
+      "n_sequences": 10,
+      "n_changed": 5,
+      "added_pairs": 120
+    },
+    "RF00780": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF00782": {
+      "n_sequences": 69,
+      "n_changed": 29,
+      "added_pairs": 259
+    },
+    "RF00783": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF00790": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00793": {
+      "n_sequences": 18,
+      "n_changed": 2,
+      "added_pairs": 44
+    },
+    "RF00807": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00812": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 6
+    },
+    "RF00814": {
+      "n_sequences": 20,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00819": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 16
+    },
+    "RF00820": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF00822": {
+      "n_sequences": 13,
+      "n_changed": 5,
+      "added_pairs": 85
+    },
+    "RF00824": {
+      "n_sequences": 7,
+      "n_changed": 3,
+      "added_pairs": 18
+    },
+    "RF00827": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF00832": {
+      "n_sequences": 36,
+      "n_changed": 2,
+      "added_pairs": 24
+    },
+    "RF00837": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF00838": {
+      "n_sequences": 41,
+      "n_changed": 6,
+      "added_pairs": 116
+    },
+    "RF00839": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF00842": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 32
+    },
+    "RF00844": {
+      "n_sequences": 30,
+      "n_changed": 2,
+      "added_pairs": 37
+    },
+    "RF00849": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF00858": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 49
+    },
+    "RF00861": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF00865": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00869": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF00870": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF00874": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF00876": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF00879": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF00884": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF00885": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 74
+    },
+    "RF00886": {
+      "n_sequences": 27,
+      "n_changed": 2,
+      "added_pairs": 48
+    },
+    "RF00891": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF00900": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF00905": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF00918": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF00920": {
+      "n_sequences": 17,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF00929": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF00936": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 49
+    },
+    "RF00943": {
+      "n_sequences": 12,
+      "n_changed": 11,
+      "added_pairs": 245
+    },
+    "RF00947": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF00948": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF00959": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF00964": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF00965": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF00968": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF00969": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF00976": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF00988": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF00991": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF00995": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 52
+    },
+    "RF00997": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF00998": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF01001": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF01010": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF01011": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF01012": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF01014": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF01016": {
+      "n_sequences": 16,
+      "n_changed": 5,
+      "added_pairs": 99
+    },
+    "RF01019": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF01023": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF01029": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF01039": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF01043": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 40
+    },
+    "RF01045": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF01046": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 57
+    },
+    "RF01050": {
+      "n_sequences": 7,
+      "n_changed": 7,
+      "added_pairs": 889
+    },
+    "RF01051": {
+      "n_sequences": 151,
+      "n_changed": 41,
+      "added_pairs": 755
+    },
+    "RF01052": {
+      "n_sequences": 19,
+      "n_changed": 3,
+      "added_pairs": 47
+    },
+    "RF01054": {
+      "n_sequences": 14,
+      "n_changed": 14,
+      "added_pairs": 75
+    },
+    "RF01055": {
+      "n_sequences": 158,
+      "n_changed": 20,
+      "added_pairs": 649
+    },
+    "RF01057": {
+      "n_sequences": 52,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF01061": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF01065": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF01067": {
+      "n_sequences": 89,
+      "n_changed": 5,
+      "added_pairs": 97
+    },
+    "RF01068": {
+      "n_sequences": 66,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF01069": {
+      "n_sequences": 20,
+      "n_changed": 3,
+      "added_pairs": 54
+    },
+    "RF01071": {
+      "n_sequences": 14,
+      "n_changed": 11,
+      "added_pairs": 1385
+    },
+    "RF01072": {
+      "n_sequences": 25,
+      "n_changed": 25,
+      "added_pairs": 137
+    },
+    "RF01073": {
+      "n_sequences": 8,
+      "n_changed": 8,
+      "added_pairs": 53
+    },
+    "RF01074": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 12
+    },
+    "RF01075": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01076": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF01077": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 15
+    },
+    "RF01078": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01079": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 7
+    },
+    "RF01080": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 16
+    },
+    "RF01081": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 11
+    },
+    "RF01082": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01083": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 10
+    },
+    "RF01084": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 54
+    },
+    "RF01085": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF01087": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 56
+    },
+    "RF01088": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 12
+    },
+    "RF01089": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 31
+    },
+    "RF01090": {
+      "n_sequences": 7,
+      "n_changed": 7,
+      "added_pairs": 51
+    },
+    "RF01091": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01092": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF01093": {
+      "n_sequences": 12,
+      "n_changed": 12,
+      "added_pairs": 60
+    },
+    "RF01094": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01095": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 6
+    },
+    "RF01096": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF01097": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 23
+    },
+    "RF01098": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 13
+    },
+    "RF01099": {
+      "n_sequences": 32,
+      "n_changed": 32,
+      "added_pairs": 180
+    },
+    "RF01100": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01101": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 15
+    },
+    "RF01102": {
+      "n_sequences": 1,
+      "n_changed": 1,
+      "added_pairs": 5
+    },
+    "RF01103": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF01104": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 20
+    },
+    "RF01105": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01106": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF01107": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01108": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01109": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 10
+    },
+    "RF01111": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 20
+    },
+    "RF01113": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01114": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 8
+    },
+    "RF01116": {
+      "n_sequences": 33,
+      "n_changed": 4,
+      "added_pairs": 48
+    },
+    "RF01153": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 4
+    },
+    "RF01167": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF01173": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF01191": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 6
+    },
+    "RF01213": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 4
+    },
+    "RF01214": {
+      "n_sequences": 16,
+      "n_changed": 2,
+      "added_pairs": 3
+    },
+    "RF01220": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF01221": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF01225": {
+      "n_sequences": 30,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF01228": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF01229": {
+      "n_sequences": 22,
+      "n_changed": 3,
+      "added_pairs": 107
+    },
+    "RF01233": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF01236": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF01237": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF01238": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 57
+    },
+    "RF01241": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF01242": {
+      "n_sequences": 9,
+      "n_changed": 3,
+      "added_pairs": 124
+    },
+    "RF01244": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 48
+    },
+    "RF01247": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 60
+    },
+    "RF01251": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF01252": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF01253": {
+      "n_sequences": 5,
+      "n_changed": 3,
+      "added_pairs": 131
+    },
+    "RF01255": {
+      "n_sequences": 11,
+      "n_changed": 3,
+      "added_pairs": 109
+    },
+    "RF01256": {
+      "n_sequences": 20,
+      "n_changed": 5,
+      "added_pairs": 210
+    },
+    "RF01258": {
+      "n_sequences": 12,
+      "n_changed": 2,
+      "added_pairs": 100
+    },
+    "RF01260": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 56
+    },
+    "RF01261": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 50
+    },
+    "RF01262": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 39
+    },
+    "RF01263": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 71
+    },
+    "RF01264": {
+      "n_sequences": 5,
+      "n_changed": 3,
+      "added_pairs": 220
+    },
+    "RF01267": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 94
+    },
+    "RF01268": {
+      "n_sequences": 12,
+      "n_changed": 4,
+      "added_pairs": 283
+    },
+    "RF01271": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 157
+    },
+    "RF01272": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 503
+    },
+    "RF01290": {
+      "n_sequences": 19,
+      "n_changed": 2,
+      "added_pairs": 13
+    },
+    "RF01291": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF01292": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF01294": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 115
+    },
+    "RF01296": {
+      "n_sequences": 16,
+      "n_changed": 4,
+      "added_pairs": 171
+    },
+    "RF01383": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 6
+    },
+    "RF01385": {
+      "n_sequences": 10,
+      "n_changed": 3,
+      "added_pairs": 31
+    },
+    "RF01386": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF01389": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 25
+    },
+    "RF01390": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 65
+    },
+    "RF01405": {
+      "n_sequences": 73,
+      "n_changed": 4,
+      "added_pairs": 140
+    },
+    "RF01410": {
+      "n_sequences": 29,
+      "n_changed": 3,
+      "added_pairs": 19
+    },
+    "RF01411": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF01412": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 111
+    },
+    "RF01413": {
+      "n_sequences": 26,
+      "n_changed": 4,
+      "added_pairs": 44
+    },
+    "RF01415": {
+      "n_sequences": 21,
+      "n_changed": 21,
+      "added_pairs": 21
+    },
+    "RF01419": {
+      "n_sequences": 308,
+      "n_changed": 1,
+      "added_pairs": 4
+    },
+    "RF01434": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF01435": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF01449": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF01456": {
+      "n_sequences": 11,
+      "n_changed": 3,
+      "added_pairs": 58
+    },
+    "RF01468": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 44
+    },
+    "RF01470": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 59
+    },
+    "RF01476": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 37
+    },
+    "RF01477": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 132
+    },
+    "RF01482": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF01491": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 142
+    },
+    "RF01492": {
+      "n_sequences": 18,
+      "n_changed": 5,
+      "added_pairs": 84
+    },
+    "RF01494": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 76
+    },
+    "RF01495": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF01496": {
+      "n_sequences": 19,
+      "n_changed": 2,
+      "added_pairs": 44
+    },
+    "RF01497": {
+      "n_sequences": 26,
+      "n_changed": 2,
+      "added_pairs": 22
+    },
+    "RF01502": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 248
+    },
+    "RF01508": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF01510": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 12
+    },
+    "RF01512": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 86
+    },
+    "RF01517": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF01533": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF01544": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 18
+    },
+    "RF01570": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 78
+    },
+    "RF01577": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 14
+    },
+    "RF01580": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 41
+    },
+    "RF01581": {
+      "n_sequences": 20,
+      "n_changed": 4,
+      "added_pairs": 152
+    },
+    "RF01591": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF01600": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 2
+    },
+    "RF01602": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF01606": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF01610": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF01612": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF01635": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF01655": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF01669": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF01675": {
+      "n_sequences": 13,
+      "n_changed": 6,
+      "added_pairs": 280
+    },
+    "RF01676": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF01683": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 141
+    },
+    "RF01684": {
+      "n_sequences": 51,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF01688": {
+      "n_sequences": 67,
+      "n_changed": 4,
+      "added_pairs": 34
+    },
+    "RF01689": {
+      "n_sequences": 145,
+      "n_changed": 145,
+      "added_pairs": 348
+    },
+    "RF01690": {
+      "n_sequences": 89,
+      "n_changed": 19,
+      "added_pairs": 292
+    },
+    "RF01692": {
+      "n_sequences": 25,
+      "n_changed": 7,
+      "added_pairs": 100
+    },
+    "RF01693": {
+      "n_sequences": 40,
+      "n_changed": 31,
+      "added_pairs": 579
+    },
+    "RF01694": {
+      "n_sequences": 30,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF01695": {
+      "n_sequences": 453,
+      "n_changed": 4,
+      "added_pairs": 85
+    },
+    "RF01696": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF01697": {
+      "n_sequences": 17,
+      "n_changed": 3,
+      "added_pairs": 53
+    },
+    "RF01699": {
+      "n_sequences": 29,
+      "n_changed": 12,
+      "added_pairs": 603
+    },
+    "RF01700": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 81
+    },
+    "RF01701": {
+      "n_sequences": 263,
+      "n_changed": 8,
+      "added_pairs": 102
+    },
+    "RF01703": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 51
+    },
+    "RF01704": {
+      "n_sequences": 586,
+      "n_changed": 586,
+      "added_pairs": 3723
+    },
+    "RF01705": {
+      "n_sequences": 200,
+      "n_changed": 23,
+      "added_pairs": 219
+    },
+    "RF01707": {
+      "n_sequences": 128,
+      "n_changed": 2,
+      "added_pairs": 6
+    },
+    "RF01708": {
+      "n_sequences": 50,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF01709": {
+      "n_sequences": 30,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF01710": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF01712": {
+      "n_sequences": 29,
+      "n_changed": 5,
+      "added_pairs": 124
+    },
+    "RF01715": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 64
+    },
+    "RF01717": {
+      "n_sequences": 317,
+      "n_changed": 317,
+      "added_pairs": 2754
+    },
+    "RF01718": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF01719": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF01721": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF01723": {
+      "n_sequences": 15,
+      "n_changed": 3,
+      "added_pairs": 75
+    },
+    "RF01724": {
+      "n_sequences": 9,
+      "n_changed": 2,
+      "added_pairs": 42
+    },
+    "RF01725": {
+      "n_sequences": 294,
+      "n_changed": 285,
+      "added_pairs": 1357
+    },
+    "RF01726": {
+      "n_sequences": 125,
+      "n_changed": 125,
+      "added_pairs": 505
+    },
+    "RF01727": {
+      "n_sequences": 53,
+      "n_changed": 53,
+      "added_pairs": 265
+    },
+    "RF01728": {
+      "n_sequences": 42,
+      "n_changed": 42,
+      "added_pairs": 1349
+    },
+    "RF01730": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF01731": {
+      "n_sequences": 137,
+      "n_changed": 33,
+      "added_pairs": 1313
+    },
+    "RF01732": {
+      "n_sequences": 30,
+      "n_changed": 7,
+      "added_pairs": 262
+    },
+    "RF01734": {
+      "n_sequences": 283,
+      "n_changed": 283,
+      "added_pairs": 1130
+    },
+    "RF01735": {
+      "n_sequences": 30,
+      "n_changed": 30,
+      "added_pairs": 120
+    },
+    "RF01736": {
+      "n_sequences": 9,
+      "n_changed": 3,
+      "added_pairs": 82
+    },
+    "RF01738": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF01739": {
+      "n_sequences": 921,
+      "n_changed": 918,
+      "added_pairs": 918
+    },
+    "RF01740": {
+      "n_sequences": 5,
+      "n_changed": 3,
+      "added_pairs": 59
+    },
+    "RF01744": {
+      "n_sequences": 8,
+      "n_changed": 3,
+      "added_pairs": 70
+    },
+    "RF01745": {
+      "n_sequences": 136,
+      "n_changed": 135,
+      "added_pairs": 1837
+    },
+    "RF01746": {
+      "n_sequences": 35,
+      "n_changed": 6,
+      "added_pairs": 109
+    },
+    "RF01747": {
+      "n_sequences": 113,
+      "n_changed": 47,
+      "added_pairs": 510
+    },
+    "RF01749": {
+      "n_sequences": 73,
+      "n_changed": 3,
+      "added_pairs": 45
+    },
+    "RF01750": {
+      "n_sequences": 182,
+      "n_changed": 182,
+      "added_pairs": 1296
+    },
+    "RF01751": {
+      "n_sequences": 136,
+      "n_changed": 8,
+      "added_pairs": 72
+    },
+    "RF01752": {
+      "n_sequences": 30,
+      "n_changed": 9,
+      "added_pairs": 441
+    },
+    "RF01754": {
+      "n_sequences": 128,
+      "n_changed": 128,
+      "added_pairs": 1596
+    },
+    "RF01756": {
+      "n_sequences": 16,
+      "n_changed": 4,
+      "added_pairs": 231
+    },
+    "RF01757": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 176
+    },
+    "RF01758": {
+      "n_sequences": 16,
+      "n_changed": 5,
+      "added_pairs": 263
+    },
+    "RF01760": {
+      "n_sequences": 47,
+      "n_changed": 12,
+      "added_pairs": 315
+    },
+    "RF01761": {
+      "n_sequences": 98,
+      "n_changed": 98,
+      "added_pairs": 413
+    },
+    "RF01763": {
+      "n_sequences": 40,
+      "n_changed": 40,
+      "added_pairs": 202
+    },
+    "RF01764": {
+      "n_sequences": 62,
+      "n_changed": 7,
+      "added_pairs": 143
+    },
+    "RF01766": {
+      "n_sequences": 8,
+      "n_changed": 3,
+      "added_pairs": 271
+    },
+    "RF01767": {
+      "n_sequences": 25,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF01768": {
+      "n_sequences": 7,
+      "n_changed": 7,
+      "added_pairs": 45
+    },
+    "RF01769": {
+      "n_sequences": 21,
+      "n_changed": 3,
+      "added_pairs": 63
+    },
+    "RF01775": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 77
+    },
+    "RF01776": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF01782": {
+      "n_sequences": 70,
+      "n_changed": 2,
+      "added_pairs": 23
+    },
+    "RF01785": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 5
+    },
+    "RF01786": {
+      "n_sequences": 46,
+      "n_changed": 46,
+      "added_pairs": 399
+    },
+    "RF01787": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 26
+    },
+    "RF01788": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 99
+    },
+    "RF01794": {
+      "n_sequences": 43,
+      "n_changed": 24,
+      "added_pairs": 818
+    },
+    "RF01803": {
+      "n_sequences": 52,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF01807": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 191
+    },
+    "RF01813": {
+      "n_sequences": 48,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF01815": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF01816": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF01817": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF01820": {
+      "n_sequences": 12,
+      "n_changed": 3,
+      "added_pairs": 72
+    },
+    "RF01821": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF01824": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF01825": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 47
+    },
+    "RF01826": {
+      "n_sequences": 7,
+      "n_changed": 7,
+      "added_pairs": 28
+    },
+    "RF01830": {
+      "n_sequences": 19,
+      "n_changed": 3,
+      "added_pairs": 55
+    },
+    "RF01831": {
+      "n_sequences": 89,
+      "n_changed": 89,
+      "added_pairs": 681
+    },
+    "RF01833": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 19
+    },
+    "RF01834": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 30
+    },
+    "RF01839": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF01840": {
+      "n_sequences": 14,
+      "n_changed": 14,
+      "added_pairs": 98
+    },
+    "RF01841": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 3
+    },
+    "RF01846": {
+      "n_sequences": 13,
+      "n_changed": 10,
+      "added_pairs": 551
+    },
+    "RF01847": {
+      "n_sequences": 11,
+      "n_changed": 6,
+      "added_pairs": 268
+    },
+    "RF01848": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 160
+    },
+    "RF01849": {
+      "n_sequences": 102,
+      "n_changed": 102,
+      "added_pairs": 1925
+    },
+    "RF01850": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 101
+    },
+    "RF01852": {
+      "n_sequences": 84,
+      "n_changed": 3,
+      "added_pairs": 80
+    },
+    "RF01853": {
+      "n_sequences": 41,
+      "n_changed": 13,
+      "added_pairs": 302
+    },
+    "RF01854": {
+      "n_sequences": 54,
+      "n_changed": 25,
+      "added_pairs": 1254
+    },
+    "RF01855": {
+      "n_sequences": 23,
+      "n_changed": 11,
+      "added_pairs": 1074
+    },
+    "RF01856": {
+      "n_sequences": 12,
+      "n_changed": 9,
+      "added_pairs": 229
+    },
+    "RF01857": {
+      "n_sequences": 9,
+      "n_changed": 8,
+      "added_pairs": 530
+    },
+    "RF01859": {
+      "n_sequences": 61,
+      "n_changed": 28,
+      "added_pairs": 903
+    },
+    "RF01867": {
+      "n_sequences": 6,
+      "n_changed": 3,
+      "added_pairs": 110
+    },
+    "RF01900": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF01911": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF01912": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF01913": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF01919": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF01927": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 30
+    },
+    "RF01945": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF01959": {
+      "n_sequences": 78,
+      "n_changed": 13,
+      "added_pairs": 5510
+    },
+    "RF01960": {
+      "n_sequences": 57,
+      "n_changed": 29,
+      "added_pairs": 10817
+    },
+    "RF01996": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF01998": {
+      "n_sequences": 227,
+      "n_changed": 9,
+      "added_pairs": 124
+    },
+    "RF01999": {
+      "n_sequences": 130,
+      "n_changed": 50,
+      "added_pairs": 1713
+    },
+    "RF02001": {
+      "n_sequences": 329,
+      "n_changed": 158,
+      "added_pairs": 4716
+    },
+    "RF02003": {
+      "n_sequences": 80,
+      "n_changed": 12,
+      "added_pairs": 258
+    },
+    "RF02004": {
+      "n_sequences": 76,
+      "n_changed": 38,
+      "added_pairs": 1643
+    },
+    "RF02005": {
+      "n_sequences": 125,
+      "n_changed": 125,
+      "added_pairs": 2980
+    },
+    "RF02012": {
+      "n_sequences": 221,
+      "n_changed": 80,
+      "added_pairs": 2553
+    },
+    "RF02019": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF02020": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF02029": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF02030": {
+      "n_sequences": 20,
+      "n_changed": 4,
+      "added_pairs": 80
+    },
+    "RF02031": {
+      "n_sequences": 28,
+      "n_changed": 4,
+      "added_pairs": 24
+    },
+    "RF02032": {
+      "n_sequences": 28,
+      "n_changed": 28,
+      "added_pairs": 720
+    },
+    "RF02033": {
+      "n_sequences": 50,
+      "n_changed": 50,
+      "added_pairs": 1392
+    },
+    "RF02034": {
+      "n_sequences": 146,
+      "n_changed": 146,
+      "added_pairs": 1018
+    },
+    "RF02035": {
+      "n_sequences": 317,
+      "n_changed": 317,
+      "added_pairs": 1579
+    },
+    "RF02036": {
+      "n_sequences": 32,
+      "n_changed": 9,
+      "added_pairs": 352
+    },
+    "RF02051": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF02053": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF02058": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF02060": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF02064": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 24
+    },
+    "RF02067": {
+      "n_sequences": 7,
+      "n_changed": 2,
+      "added_pairs": 20
+    },
+    "RF02076": {
+      "n_sequences": 19,
+      "n_changed": 4,
+      "added_pairs": 152
+    },
+    "RF02079": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 123
+    },
+    "RF02081": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 40
+    },
+    "RF02088": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 201
+    },
+    "RF02093": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF02100": {
+      "n_sequences": 10,
+      "n_changed": 3,
+      "added_pairs": 69
+    },
+    "RF02144": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 61
+    },
+    "RF02194": {
+      "n_sequences": 30,
+      "n_changed": 10,
+      "added_pairs": 151
+    },
+    "RF02221": {
+      "n_sequences": 30,
+      "n_changed": 5,
+      "added_pairs": 86
+    },
+    "RF02222": {
+      "n_sequences": 9,
+      "n_changed": 4,
+      "added_pairs": 105
+    },
+    "RF02228": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF02230": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 74
+    },
+    "RF02232": {
+      "n_sequences": 12,
+      "n_changed": 4,
+      "added_pairs": 128
+    },
+    "RF02235": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF02243": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 68
+    },
+    "RF02261": {
+      "n_sequences": 23,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF02263": {
+      "n_sequences": 33,
+      "n_changed": 3,
+      "added_pairs": 24
+    },
+    "RF02264": {
+      "n_sequences": 28,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF02265": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF02266": {
+      "n_sequences": 19,
+      "n_changed": 2,
+      "added_pairs": 28
+    },
+    "RF02271": {
+      "n_sequences": 30,
+      "n_changed": 19,
+      "added_pairs": 648
+    },
+    "RF02275": {
+      "n_sequences": 33,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF02277": {
+      "n_sequences": 18,
+      "n_changed": 2,
+      "added_pairs": 65
+    },
+    "RF02278": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 23
+    },
+    "RF02319": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF02335": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF02339": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF02340": {
+      "n_sequences": 15,
+      "n_changed": 2,
+      "added_pairs": 20
+    },
+    "RF02342": {
+      "n_sequences": 20,
+      "n_changed": 3,
+      "added_pairs": 72
+    },
+    "RF02344": {
+      "n_sequences": 88,
+      "n_changed": 36,
+      "added_pairs": 932
+    },
+    "RF02345": {
+      "n_sequences": 52,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF02347": {
+      "n_sequences": 36,
+      "n_changed": 8,
+      "added_pairs": 290
+    },
+    "RF02349": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 95
+    },
+    "RF02351": {
+      "n_sequences": 1,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF02354": {
+      "n_sequences": 11,
+      "n_changed": 3,
+      "added_pairs": 125
+    },
+    "RF02355": {
+      "n_sequences": 13,
+      "n_changed": 4,
+      "added_pairs": 125
+    },
+    "RF02356": {
+      "n_sequences": 19,
+      "n_changed": 6,
+      "added_pairs": 186
+    },
+    "RF02363": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 48
+    },
+    "RF02364": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF02366": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF02370": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF02374": {
+      "n_sequences": 6,
+      "n_changed": 5,
+      "added_pairs": 214
+    },
+    "RF02375": {
+      "n_sequences": 12,
+      "n_changed": 7,
+      "added_pairs": 256
+    },
+    "RF02377": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 60
+    },
+    "RF02378": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 40
+    },
+    "RF02379": {
+      "n_sequences": 46,
+      "n_changed": 11,
+      "added_pairs": 194
+    },
+    "RF02384": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 48
+    },
+    "RF02399": {
+      "n_sequences": 15,
+      "n_changed": 6,
+      "added_pairs": 63
+    },
+    "RF02400": {
+      "n_sequences": 5,
+      "n_changed": 4,
+      "added_pairs": 492
+    },
+    "RF02402": {
+      "n_sequences": 19,
+      "n_changed": 6,
+      "added_pairs": 63
+    },
+    "RF02405": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 52
+    },
+    "RF02410": {
+      "n_sequences": 7,
+      "n_changed": 4,
+      "added_pairs": 105
+    },
+    "RF02411": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF02413": {
+      "n_sequences": 16,
+      "n_changed": 3,
+      "added_pairs": 94
+    },
+    "RF02415": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 95
+    },
+    "RF02419": {
+      "n_sequences": 25,
+      "n_changed": 6,
+      "added_pairs": 57
+    },
+    "RF02421": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF02422": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 57
+    },
+    "RF02423": {
+      "n_sequences": 13,
+      "n_changed": 8,
+      "added_pairs": 469
+    },
+    "RF02425": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF02429": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 48
+    },
+    "RF02430": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF02431": {
+      "n_sequences": 22,
+      "n_changed": 3,
+      "added_pairs": 78
+    },
+    "RF02432": {
+      "n_sequences": 20,
+      "n_changed": 8,
+      "added_pairs": 241
+    },
+    "RF02434": {
+      "n_sequences": 13,
+      "n_changed": 3,
+      "added_pairs": 52
+    },
+    "RF02435": {
+      "n_sequences": 9,
+      "n_changed": 2,
+      "added_pairs": 49
+    },
+    "RF02436": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF02440": {
+      "n_sequences": 401,
+      "n_changed": 6,
+      "added_pairs": 24
+    },
+    "RF02442": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 55
+    },
+    "RF02445": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF02446": {
+      "n_sequences": 20,
+      "n_changed": 9,
+      "added_pairs": 207
+    },
+    "RF02447": {
+      "n_sequences": 18,
+      "n_changed": 5,
+      "added_pairs": 113
+    },
+    "RF02449": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF02452": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 49
+    },
+    "RF02454": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF02457": {
+      "n_sequences": 8,
+      "n_changed": 2,
+      "added_pairs": 92
+    },
+    "RF02459": {
+      "n_sequences": 5,
+      "n_changed": 3,
+      "added_pairs": 53
+    },
+    "RF02466": {
+      "n_sequences": 10,
+      "n_changed": 4,
+      "added_pairs": 49
+    },
+    "RF02471": {
+      "n_sequences": 20,
+      "n_changed": 3,
+      "added_pairs": 80
+    },
+    "RF02472": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF02484": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 25
+    },
+    "RF02495": {
+      "n_sequences": 31,
+      "n_changed": 8,
+      "added_pairs": 156
+    },
+    "RF02496": {
+      "n_sequences": 26,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF02500": {
+      "n_sequences": 32,
+      "n_changed": 8,
+      "added_pairs": 155
+    },
+    "RF02502": {
+      "n_sequences": 26,
+      "n_changed": 4,
+      "added_pairs": 103
+    },
+    "RF02505": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 34
+    },
+    "RF02514": {
+      "n_sequences": 11,
+      "n_changed": 3,
+      "added_pairs": 212
+    },
+    "RF02516": {
+      "n_sequences": 19,
+      "n_changed": 14,
+      "added_pairs": 174
+    },
+    "RF02519": {
+      "n_sequences": 5,
+      "n_changed": 5,
+      "added_pairs": 15
+    },
+    "RF02521": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 30
+    },
+    "RF02523": {
+      "n_sequences": 16,
+      "n_changed": 8,
+      "added_pairs": 140
+    },
+    "RF02525": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 36
+    },
+    "RF02535": {
+      "n_sequences": 12,
+      "n_changed": 3,
+      "added_pairs": 65
+    },
+    "RF02540": {
+      "n_sequences": 45,
+      "n_changed": 8,
+      "added_pairs": 6029
+    },
+    "RF02541": {
+      "n_sequences": 62,
+      "n_changed": 35,
+      "added_pairs": 27122
+    },
+    "RF02542": {
+      "n_sequences": 38,
+      "n_changed": 22,
+      "added_pairs": 6938
+    },
+    "RF02543": {
+      "n_sequences": 39,
+      "n_changed": 28,
+      "added_pairs": 21463
+    },
+    "RF02551": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 32
+    },
+    "RF02552": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 44
+    },
+    "RF02553": {
+      "n_sequences": 6,
+      "n_changed": 5,
+      "added_pairs": 5
+    },
+    "RF02555": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF02574": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 63
+    },
+    "RF02575": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 90
+    },
+    "RF02576": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 142
+    },
+    "RF02594": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 35
+    },
+    "RF02598": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF02599": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 118
+    },
+    "RF02602": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 58
+    },
+    "RF02605": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 40
+    },
+    "RF02611": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 180
+    },
+    "RF02657": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 43
+    },
+    "RF02668": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 49
+    },
+    "RF02678": {
+      "n_sequences": 130,
+      "n_changed": 21,
+      "added_pairs": 263
+    },
+    "RF02679": {
+      "n_sequences": 46,
+      "n_changed": 46,
+      "added_pairs": 299
+    },
+    "RF02680": {
+      "n_sequences": 20,
+      "n_changed": 20,
+      "added_pairs": 222
+    },
+    "RF02681": {
+      "n_sequences": 113,
+      "n_changed": 37,
+      "added_pairs": 61
+    },
+    "RF02682": {
+      "n_sequences": 48,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF02683": {
+      "n_sequences": 71,
+      "n_changed": 9,
+      "added_pairs": 165
+    },
+    "RF02684": {
+      "n_sequences": 208,
+      "n_changed": 208,
+      "added_pairs": 1337
+    },
+    "RF02685": {
+      "n_sequences": 39,
+      "n_changed": 39,
+      "added_pairs": 133
+    },
+    "RF02687": {
+      "n_sequences": 58,
+      "n_changed": 5,
+      "added_pairs": 241
+    },
+    "RF02689": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 69
+    },
+    "RF02690": {
+      "n_sequences": 5,
+      "n_changed": 3,
+      "added_pairs": 155
+    },
+    "RF02691": {
+      "n_sequences": 7,
+      "n_changed": 3,
+      "added_pairs": 148
+    },
+    "RF02695": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 49
+    },
+    "RF02707": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 56
+    },
+    "RF02711": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF02715": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 45
+    },
+    "RF02716": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF02720": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF02721": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF02724": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF02725": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF02727": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF02737": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 89
+    },
+    "RF02763": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 69
+    },
+    "RF02773": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF02783": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF02803": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF02804": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF02809": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF02814": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF02821": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF02830": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 106
+    },
+    "RF02833": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 34
+    },
+    "RF02840": {
+      "n_sequences": 63,
+      "n_changed": 11,
+      "added_pairs": 248
+    },
+    "RF02846": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF02852": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 59
+    },
+    "RF02856": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF02860": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 57
+    },
+    "RF02861": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 45
+    },
+    "RF02863": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 49
+    },
+    "RF02867": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 113
+    },
+    "RF02868": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 87
+    },
+    "RF02872": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 36
+    },
+    "RF02877": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF02878": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 49
+    },
+    "RF02889": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF02894": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 153
+    },
+    "RF02899": {
+      "n_sequences": 6,
+      "n_changed": 3,
+      "added_pairs": 74
+    },
+    "RF02913": {
+      "n_sequences": 1493,
+      "n_changed": 8,
+      "added_pairs": 84
+    },
+    "RF02914": {
+      "n_sequences": 1175,
+      "n_changed": 1175,
+      "added_pairs": 3722
+    },
+    "RF02916": {
+      "n_sequences": 54,
+      "n_changed": 18,
+      "added_pairs": 273
+    },
+    "RF02917": {
+      "n_sequences": 19,
+      "n_changed": 4,
+      "added_pairs": 53
+    },
+    "RF02918": {
+      "n_sequences": 15,
+      "n_changed": 2,
+      "added_pairs": 21
+    },
+    "RF02919": {
+      "n_sequences": 20,
+      "n_changed": 3,
+      "added_pairs": 140
+    },
+    "RF02920": {
+      "n_sequences": 13,
+      "n_changed": 13,
+      "added_pairs": 113
+    },
+    "RF02921": {
+      "n_sequences": 130,
+      "n_changed": 40,
+      "added_pairs": 1138
+    },
+    "RF02923": {
+      "n_sequences": 60,
+      "n_changed": 30,
+      "added_pairs": 353
+    },
+    "RF02924": {
+      "n_sequences": 1180,
+      "n_changed": 1180,
+      "added_pairs": 6830
+    },
+    "RF02925": {
+      "n_sequences": 273,
+      "n_changed": 273,
+      "added_pairs": 1081
+    },
+    "RF02928": {
+      "n_sequences": 232,
+      "n_changed": 72,
+      "added_pairs": 1992
+    },
+    "RF02932": {
+      "n_sequences": 90,
+      "n_changed": 90,
+      "added_pairs": 1226
+    },
+    "RF02933": {
+      "n_sequences": 32,
+      "n_changed": 32,
+      "added_pairs": 1205
+    },
+    "RF02935": {
+      "n_sequences": 97,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF02936": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 82
+    },
+    "RF02937": {
+      "n_sequences": 40,
+      "n_changed": 5,
+      "added_pairs": 49
+    },
+    "RF02938": {
+      "n_sequences": 42,
+      "n_changed": 5,
+      "added_pairs": 41
+    },
+    "RF02940": {
+      "n_sequences": 42,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF02941": {
+      "n_sequences": 23,
+      "n_changed": 6,
+      "added_pairs": 136
+    },
+    "RF02942": {
+      "n_sequences": 115,
+      "n_changed": 6,
+      "added_pairs": 241
+    },
+    "RF02943": {
+      "n_sequences": 29,
+      "n_changed": 29,
+      "added_pairs": 116
+    },
+    "RF02944": {
+      "n_sequences": 191,
+      "n_changed": 14,
+      "added_pairs": 258
+    },
+    "RF02947": {
+      "n_sequences": 17,
+      "n_changed": 16,
+      "added_pairs": 35
+    },
+    "RF02951": {
+      "n_sequences": 121,
+      "n_changed": 10,
+      "added_pairs": 244
+    },
+    "RF02953": {
+      "n_sequences": 61,
+      "n_changed": 3,
+      "added_pairs": 73
+    },
+    "RF02954": {
+      "n_sequences": 74,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF02955": {
+      "n_sequences": 55,
+      "n_changed": 55,
+      "added_pairs": 804
+    },
+    "RF02956": {
+      "n_sequences": 62,
+      "n_changed": 18,
+      "added_pairs": 504
+    },
+    "RF02957": {
+      "n_sequences": 366,
+      "n_changed": 130,
+      "added_pairs": 4014
+    },
+    "RF02958": {
+      "n_sequences": 427,
+      "n_changed": 427,
+      "added_pairs": 3483
+    },
+    "RF02959": {
+      "n_sequences": 16,
+      "n_changed": 16,
+      "added_pairs": 91
+    },
+    "RF02960": {
+      "n_sequences": 121,
+      "n_changed": 121,
+      "added_pairs": 917
+    },
+    "RF02962": {
+      "n_sequences": 47,
+      "n_changed": 5,
+      "added_pairs": 124
+    },
+    "RF02963": {
+      "n_sequences": 10,
+      "n_changed": 2,
+      "added_pairs": 56
+    },
+    "RF02964": {
+      "n_sequences": 70,
+      "n_changed": 17,
+      "added_pairs": 355
+    },
+    "RF02965": {
+      "n_sequences": 119,
+      "n_changed": 8,
+      "added_pairs": 119
+    },
+    "RF02966": {
+      "n_sequences": 102,
+      "n_changed": 13,
+      "added_pairs": 371
+    },
+    "RF02967": {
+      "n_sequences": 136,
+      "n_changed": 11,
+      "added_pairs": 221
+    },
+    "RF02968": {
+      "n_sequences": 186,
+      "n_changed": 2,
+      "added_pairs": 37
+    },
+    "RF02969": {
+      "n_sequences": 318,
+      "n_changed": 25,
+      "added_pairs": 739
+    },
+    "RF02972": {
+      "n_sequences": 142,
+      "n_changed": 38,
+      "added_pairs": 646
+    },
+    "RF02975": {
+      "n_sequences": 254,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF02976": {
+      "n_sequences": 114,
+      "n_changed": 16,
+      "added_pairs": 523
+    },
+    "RF02978": {
+      "n_sequences": 28,
+      "n_changed": 4,
+      "added_pairs": 100
+    },
+    "RF02980": {
+      "n_sequences": 188,
+      "n_changed": 5,
+      "added_pairs": 73
+    },
+    "RF02982": {
+      "n_sequences": 108,
+      "n_changed": 6,
+      "added_pairs": 58
+    },
+    "RF02984": {
+      "n_sequences": 78,
+      "n_changed": 2,
+      "added_pairs": 25
+    },
+    "RF02986": {
+      "n_sequences": 94,
+      "n_changed": 94,
+      "added_pairs": 1865
+    },
+    "RF02987": {
+      "n_sequences": 477,
+      "n_changed": 53,
+      "added_pairs": 812
+    },
+    "RF02988": {
+      "n_sequences": 35,
+      "n_changed": 35,
+      "added_pairs": 485
+    },
+    "RF02989": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF02991": {
+      "n_sequences": 48,
+      "n_changed": 48,
+      "added_pairs": 269
+    },
+    "RF02994": {
+      "n_sequences": 79,
+      "n_changed": 79,
+      "added_pairs": 643
+    },
+    "RF02995": {
+      "n_sequences": 41,
+      "n_changed": 9,
+      "added_pairs": 306
+    },
+    "RF02996": {
+      "n_sequences": 157,
+      "n_changed": 156,
+      "added_pairs": 1012
+    },
+    "RF02997": {
+      "n_sequences": 13,
+      "n_changed": 13,
+      "added_pairs": 78
+    },
+    "RF02998": {
+      "n_sequences": 44,
+      "n_changed": 44,
+      "added_pairs": 400
+    },
+    "RF03000": {
+      "n_sequences": 296,
+      "n_changed": 223,
+      "added_pairs": 6872
+    },
+    "RF03003": {
+      "n_sequences": 206,
+      "n_changed": 206,
+      "added_pairs": 794
+    },
+    "RF03004": {
+      "n_sequences": 9,
+      "n_changed": 9,
+      "added_pairs": 54
+    },
+    "RF03005": {
+      "n_sequences": 126,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF03007": {
+      "n_sequences": 18,
+      "n_changed": 5,
+      "added_pairs": 93
+    },
+    "RF03013": {
+      "n_sequences": 164,
+      "n_changed": 145,
+      "added_pairs": 589
+    },
+    "RF03015": {
+      "n_sequences": 150,
+      "n_changed": 3,
+      "added_pairs": 42
+    },
+    "RF03016": {
+      "n_sequences": 37,
+      "n_changed": 37,
+      "added_pairs": 312
+    },
+    "RF03018": {
+      "n_sequences": 60,
+      "n_changed": 17,
+      "added_pairs": 732
+    },
+    "RF03019": {
+      "n_sequences": 41,
+      "n_changed": 18,
+      "added_pairs": 489
+    },
+    "RF03021": {
+      "n_sequences": 137,
+      "n_changed": 8,
+      "added_pairs": 96
+    },
+    "RF03022": {
+      "n_sequences": 95,
+      "n_changed": 10,
+      "added_pairs": 227
+    },
+    "RF03023": {
+      "n_sequences": 27,
+      "n_changed": 4,
+      "added_pairs": 49
+    },
+    "RF03026": {
+      "n_sequences": 58,
+      "n_changed": 58,
+      "added_pairs": 402
+    },
+    "RF03027": {
+      "n_sequences": 58,
+      "n_changed": 6,
+      "added_pairs": 71
+    },
+    "RF03028": {
+      "n_sequences": 32,
+      "n_changed": 20,
+      "added_pairs": 722
+    },
+    "RF03032": {
+      "n_sequences": 308,
+      "n_changed": 3,
+      "added_pairs": 18
+    },
+    "RF03033": {
+      "n_sequences": 12,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF03034": {
+      "n_sequences": 50,
+      "n_changed": 9,
+      "added_pairs": 121
+    },
+    "RF03035": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF03036": {
+      "n_sequences": 33,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF03037": {
+      "n_sequences": 80,
+      "n_changed": 80,
+      "added_pairs": 652
+    },
+    "RF03038": {
+      "n_sequences": 4,
+      "n_changed": 4,
+      "added_pairs": 73
+    },
+    "RF03039": {
+      "n_sequences": 132,
+      "n_changed": 2,
+      "added_pairs": 21
+    },
+    "RF03041": {
+      "n_sequences": 19,
+      "n_changed": 19,
+      "added_pairs": 93
+    },
+    "RF03043": {
+      "n_sequences": 16,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF03044": {
+      "n_sequences": 66,
+      "n_changed": 66,
+      "added_pairs": 579
+    },
+    "RF03045": {
+      "n_sequences": 12,
+      "n_changed": 9,
+      "added_pairs": 179
+    },
+    "RF03046": {
+      "n_sequences": 19,
+      "n_changed": 19,
+      "added_pairs": 211
+    },
+    "RF03047": {
+      "n_sequences": 18,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF03049": {
+      "n_sequences": 22,
+      "n_changed": 7,
+      "added_pairs": 102
+    },
+    "RF03052": {
+      "n_sequences": 82,
+      "n_changed": 6,
+      "added_pairs": 64
+    },
+    "RF03054": {
+      "n_sequences": 354,
+      "n_changed": 354,
+      "added_pairs": 469
+    },
+    "RF03057": {
+      "n_sequences": 204,
+      "n_changed": 74,
+      "added_pairs": 732
+    },
+    "RF03058": {
+      "n_sequences": 54,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF03062": {
+      "n_sequences": 72,
+      "n_changed": 9,
+      "added_pairs": 258
+    },
+    "RF03063": {
+      "n_sequences": 36,
+      "n_changed": 13,
+      "added_pairs": 126
+    },
+    "RF03064": {
+      "n_sequences": 1382,
+      "n_changed": 31,
+      "added_pairs": 212
+    },
+    "RF03065": {
+      "n_sequences": 119,
+      "n_changed": 119,
+      "added_pairs": 2821
+    },
+    "RF03067": {
+      "n_sequences": 127,
+      "n_changed": 18,
+      "added_pairs": 165
+    },
+    "RF03068": {
+      "n_sequences": 215,
+      "n_changed": 8,
+      "added_pairs": 252
+    },
+    "RF03069": {
+      "n_sequences": 215,
+      "n_changed": 215,
+      "added_pairs": 7430
+    },
+    "RF03071": {
+      "n_sequences": 144,
+      "n_changed": 2,
+      "added_pairs": 25
+    },
+    "RF03072": {
+      "n_sequences": 455,
+      "n_changed": 455,
+      "added_pairs": 11544
+    },
+    "RF03074": {
+      "n_sequences": 162,
+      "n_changed": 26,
+      "added_pairs": 465
+    },
+    "RF03075": {
+      "n_sequences": 202,
+      "n_changed": 5,
+      "added_pairs": 96
+    },
+    "RF03076": {
+      "n_sequences": 43,
+      "n_changed": 3,
+      "added_pairs": 27
+    },
+    "RF03077": {
+      "n_sequences": 161,
+      "n_changed": 65,
+      "added_pairs": 2303
+    },
+    "RF03078": {
+      "n_sequences": 163,
+      "n_changed": 4,
+      "added_pairs": 30
+    },
+    "RF03079": {
+      "n_sequences": 8,
+      "n_changed": 8,
+      "added_pairs": 1337
+    },
+    "RF03081": {
+      "n_sequences": 46,
+      "n_changed": 45,
+      "added_pairs": 94
+    },
+    "RF03082": {
+      "n_sequences": 56,
+      "n_changed": 3,
+      "added_pairs": 65
+    },
+    "RF03083": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF03084": {
+      "n_sequences": 20,
+      "n_changed": 20,
+      "added_pairs": 86
+    },
+    "RF03086": {
+      "n_sequences": 311,
+      "n_changed": 311,
+      "added_pairs": 1531
+    },
+    "RF03087": {
+      "n_sequences": 53,
+      "n_changed": 53,
+      "added_pairs": 5691
+    },
+    "RF03089": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF03090": {
+      "n_sequences": 56,
+      "n_changed": 12,
+      "added_pairs": 383
+    },
+    "RF03092": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 5
+    },
+    "RF03093": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF03094": {
+      "n_sequences": 21,
+      "n_changed": 3,
+      "added_pairs": 94
+    },
+    "RF03095": {
+      "n_sequences": 7,
+      "n_changed": 7,
+      "added_pairs": 28
+    },
+    "RF03096": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF03098": {
+      "n_sequences": 18,
+      "n_changed": 2,
+      "added_pairs": 46
+    },
+    "RF03100": {
+      "n_sequences": 12,
+      "n_changed": 12,
+      "added_pairs": 90
+    },
+    "RF03103": {
+      "n_sequences": 21,
+      "n_changed": 2,
+      "added_pairs": 40
+    },
+    "RF03105": {
+      "n_sequences": 25,
+      "n_changed": 4,
+      "added_pairs": 112
+    },
+    "RF03110": {
+      "n_sequences": 21,
+      "n_changed": 6,
+      "added_pairs": 179
+    },
+    "RF03112": {
+      "n_sequences": 20,
+      "n_changed": 20,
+      "added_pairs": 192
+    },
+    "RF03113": {
+      "n_sequences": 6,
+      "n_changed": 6,
+      "added_pairs": 36
+    },
+    "RF03116": {
+      "n_sequences": 9,
+      "n_changed": 9,
+      "added_pairs": 662
+    },
+    "RF03117": {
+      "n_sequences": 13,
+      "n_changed": 9,
+      "added_pairs": 343
+    },
+    "RF03119": {
+      "n_sequences": 3,
+      "n_changed": 3,
+      "added_pairs": 96
+    },
+    "RF03121": {
+      "n_sequences": 10,
+      "n_changed": 6,
+      "added_pairs": 214
+    },
+    "RF03122": {
+      "n_sequences": 11,
+      "n_changed": 7,
+      "added_pairs": 434
+    },
+    "RF03123": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 44
+    },
+    "RF03124": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 93
+    },
+    "RF03125": {
+      "n_sequences": 10,
+      "n_changed": 1,
+      "added_pairs": 91
+    },
+    "RF03127": {
+      "n_sequences": 349,
+      "n_changed": 27,
+      "added_pairs": 376
+    },
+    "RF03128": {
+      "n_sequences": 75,
+      "n_changed": 2,
+      "added_pairs": 12
+    },
+    "RF03129": {
+      "n_sequences": 110,
+      "n_changed": 13,
+      "added_pairs": 159
+    },
+    "RF03131": {
+      "n_sequences": 380,
+      "n_changed": 5,
+      "added_pairs": 24
+    },
+    "RF03132": {
+      "n_sequences": 232,
+      "n_changed": 12,
+      "added_pairs": 188
+    },
+    "RF03133": {
+      "n_sequences": 77,
+      "n_changed": 3,
+      "added_pairs": 41
+    },
+    "RF03134": {
+      "n_sequences": 26,
+      "n_changed": 4,
+      "added_pairs": 89
+    },
+    "RF03135": {
+      "n_sequences": 290,
+      "n_changed": 41,
+      "added_pairs": 1008
+    },
+    "RF03136": {
+      "n_sequences": 196,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF03137": {
+      "n_sequences": 99,
+      "n_changed": 4,
+      "added_pairs": 67
+    },
+    "RF03140": {
+      "n_sequences": 129,
+      "n_changed": 3,
+      "added_pairs": 29
+    },
+    "RF03141": {
+      "n_sequences": 254,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF03142": {
+      "n_sequences": 446,
+      "n_changed": 25,
+      "added_pairs": 286
+    },
+    "RF03143": {
+      "n_sequences": 203,
+      "n_changed": 5,
+      "added_pairs": 29
+    },
+    "RF03144": {
+      "n_sequences": 502,
+      "n_changed": 20,
+      "added_pairs": 180
+    },
+    "RF03145": {
+      "n_sequences": 13,
+      "n_changed": 13,
+      "added_pairs": 116
+    },
+    "RF03146": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF03147": {
+      "n_sequences": 117,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03148": {
+      "n_sequences": 9,
+      "n_changed": 9,
+      "added_pairs": 35
+    },
+    "RF03149": {
+      "n_sequences": 24,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF03150": {
+      "n_sequences": 14,
+      "n_changed": 7,
+      "added_pairs": 478
+    },
+    "RF03151": {
+      "n_sequences": 26,
+      "n_changed": 26,
+      "added_pairs": 152
+    },
+    "RF03152": {
+      "n_sequences": 15,
+      "n_changed": 15,
+      "added_pairs": 117
+    },
+    "RF03154": {
+      "n_sequences": 9,
+      "n_changed": 9,
+      "added_pairs": 86
+    },
+    "RF03155": {
+      "n_sequences": 27,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF03156": {
+      "n_sequences": 1083,
+      "n_changed": 12,
+      "added_pairs": 58
+    },
+    "RF03158": {
+      "n_sequences": 827,
+      "n_changed": 213,
+      "added_pairs": 1413
+    },
+    "RF03159": {
+      "n_sequences": 20,
+      "n_changed": 20,
+      "added_pairs": 372
+    },
+    "RF03160": {
+      "n_sequences": 1566,
+      "n_changed": 1566,
+      "added_pairs": 8355
+    },
+    "RF03161": {
+      "n_sequences": 922,
+      "n_changed": 22,
+      "added_pairs": 59
+    },
+    "RF03162": {
+      "n_sequences": 35,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03164": {
+      "n_sequences": 8,
+      "n_changed": 4,
+      "added_pairs": 85
+    },
+    "RF03166": {
+      "n_sequences": 26,
+      "n_changed": 2,
+      "added_pairs": 82
+    },
+    "RF03167": {
+      "n_sequences": 39,
+      "n_changed": 28,
+      "added_pairs": 73
+    },
+    "RF03168": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 39
+    },
+    "RF03169": {
+      "n_sequences": 446,
+      "n_changed": 446,
+      "added_pairs": 4570
+    },
+    "RF03170": {
+      "n_sequences": 32,
+      "n_changed": 32,
+      "added_pairs": 371
+    },
+    "RF03171": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF03187": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF03189": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 27
+    },
+    "RF03199": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03200": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03209": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF03269": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03296": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03301": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 50
+    },
+    "RF03304": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 12
+    },
+    "RF03311": {
+      "n_sequences": 8,
+      "n_changed": 3,
+      "added_pairs": 76
+    },
+    "RF03341": {
+      "n_sequences": 2,
+      "n_changed": 2,
+      "added_pairs": 56
+    },
+    "RF03349": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF03372": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF03374": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03378": {
+      "n_sequences": 21,
+      "n_changed": 7,
+      "added_pairs": 63
+    },
+    "RF03386": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF03387": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF03419": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF03458": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 30
+    },
+    "RF03465": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03480": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF03506": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF03519": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF03525": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 28
+    },
+    "RF03530": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 86
+    },
+    "RF03531": {
+      "n_sequences": 19,
+      "n_changed": 13,
+      "added_pairs": 195
+    },
+    "RF03532": {
+      "n_sequences": 51,
+      "n_changed": 42,
+      "added_pairs": 1819
+    },
+    "RF03534": {
+      "n_sequences": 7,
+      "n_changed": 3,
+      "added_pairs": 65
+    },
+    "RF03536": {
+      "n_sequences": 13,
+      "n_changed": 11,
+      "added_pairs": 171
+    },
+    "RF03537": {
+      "n_sequences": 9,
+      "n_changed": 4,
+      "added_pairs": 36
+    },
+    "RF03538": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03542": {
+      "n_sequences": 12,
+      "n_changed": 8,
+      "added_pairs": 183
+    },
+    "RF03543": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 7
+    },
+    "RF03545": {
+      "n_sequences": 14,
+      "n_changed": 6,
+      "added_pairs": 76
+    },
+    "RF03546": {
+      "n_sequences": 7,
+      "n_changed": 4,
+      "added_pairs": 165
+    },
+    "RF03547": {
+      "n_sequences": 29,
+      "n_changed": 11,
+      "added_pairs": 136
+    },
+    "RF03579": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF03600": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03601": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 33
+    },
+    "RF03632": {
+      "n_sequences": 7,
+      "n_changed": 3,
+      "added_pairs": 107
+    },
+    "RF03654": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF03684": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF03690": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF03691": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF03702": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03726": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF03746": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03767": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03775": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF03778": {
+      "n_sequences": 7,
+      "n_changed": 2,
+      "added_pairs": 26
+    },
+    "RF03784": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF03785": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 15
+    },
+    "RF03798": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF03850": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 32
+    },
+    "RF03896": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03899": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF03917": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF03956": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF03962": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 50
+    },
+    "RF03983": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 44
+    },
+    "RF04021": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF04027": {
+      "n_sequences": 15,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF04052": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 24
+    },
+    "RF04054": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 37
+    },
+    "RF04057": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 29
+    },
+    "RF04060": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF04062": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 9
+    },
+    "RF04063": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 16
+    },
+    "RF04066": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 13
+    },
+    "RF04069": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 46
+    },
+    "RF04070": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF04072": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 13
+    },
+    "RF04073": {
+      "n_sequences": 5,
+      "n_changed": 2,
+      "added_pairs": 44
+    },
+    "RF04079": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 37
+    },
+    "RF04081": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF04087": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 30
+    },
+    "RF04088": {
+      "n_sequences": 19,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF04094": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 31
+    },
+    "RF04096": {
+      "n_sequences": 1,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF04117": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 17
+    },
+    "RF04122": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF04124": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 64
+    },
+    "RF04134": {
+      "n_sequences": 7,
+      "n_changed": 3,
+      "added_pairs": 76
+    },
+    "RF04141": {
+      "n_sequences": 1,
+      "n_changed": 1,
+      "added_pairs": 67
+    },
+    "RF04147": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 84
+    },
+    "RF04170": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 47
+    },
+    "RF04175": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 63
+    },
+    "RF04179": {
+      "n_sequences": 8,
+      "n_changed": 1,
+      "added_pairs": 24
+    },
+    "RF04180": {
+      "n_sequences": 7,
+      "n_changed": 1,
+      "added_pairs": 45
+    },
+    "RF04185": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 14
+    },
+    "RF04188": {
+      "n_sequences": 25,
+      "n_changed": 25,
+      "added_pairs": 285
+    },
+    "RF04189": {
+      "n_sequences": 14,
+      "n_changed": 1,
+      "added_pairs": 25
+    },
+    "RF04190": {
+      "n_sequences": 69,
+      "n_changed": 9,
+      "added_pairs": 147
+    },
+    "RF04192": {
+      "n_sequences": 29,
+      "n_changed": 2,
+      "added_pairs": 23
+    },
+    "RF04194": {
+      "n_sequences": 6,
+      "n_changed": 2,
+      "added_pairs": 22
+    },
+    "RF04201": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 20
+    },
+    "RF04204": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 21
+    },
+    "RF04211": {
+      "n_sequences": 11,
+      "n_changed": 2,
+      "added_pairs": 64
+    },
+    "RF04217": {
+      "n_sequences": 7,
+      "n_changed": 2,
+      "added_pairs": 37
+    },
+    "RF04218": {
+      "n_sequences": 57,
+      "n_changed": 21,
+      "added_pairs": 229
+    },
+    "RF04222": {
+      "n_sequences": 40,
+      "n_changed": 40,
+      "added_pairs": 359
+    },
+    "RF04227": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 23
+    },
+    "RF04228": {
+      "n_sequences": 4,
+      "n_changed": 1,
+      "added_pairs": 36
+    },
+    "RF04234": {
+      "n_sequences": 49,
+      "n_changed": 5,
+      "added_pairs": 65
+    },
+    "RF04244": {
+      "n_sequences": 6,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF04247": {
+      "n_sequences": 101,
+      "n_changed": 18,
+      "added_pairs": 247
+    },
+    "RF04249": {
+      "n_sequences": 17,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF04257": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF04260": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF04272": {
+      "n_sequences": 36,
+      "n_changed": 1,
+      "added_pairs": 8
+    },
+    "RF04274": {
+      "n_sequences": 9,
+      "n_changed": 2,
+      "added_pairs": 16
+    },
+    "RF04275": {
+      "n_sequences": 11,
+      "n_changed": 1,
+      "added_pairs": 27
+    },
+    "RF04276": {
+      "n_sequences": 3,
+      "n_changed": 2,
+      "added_pairs": 75
+    },
+    "RF04279": {
+      "n_sequences": 2,
+      "n_changed": 1,
+      "added_pairs": 26
+    },
+    "RF04284": {
+      "n_sequences": 13,
+      "n_changed": 1,
+      "added_pairs": 18
+    },
+    "RF04285": {
+      "n_sequences": 9,
+      "n_changed": 1,
+      "added_pairs": 22
+    },
+    "RF04286": {
+      "n_sequences": 33,
+      "n_changed": 2,
+      "added_pairs": 30
+    },
+    "RF04288": {
+      "n_sequences": 5,
+      "n_changed": 1,
+      "added_pairs": 11
+    },
+    "RF04292": {
+      "n_sequences": 56,
+      "n_changed": 1,
+      "added_pairs": 19
+    },
+    "RF04297": {
+      "n_sequences": 9,
+      "n_changed": 2,
+      "added_pairs": 32
+    },
+    "RF04299": {
+      "n_sequences": 3,
+      "n_changed": 1,
+      "added_pairs": 10
+    },
+    "RF04303": {
+      "n_sequences": 4,
+      "n_changed": 2,
+      "added_pairs": 31
+    },
+    "RF04310": {
+      "n_sequences": 12,
+      "n_changed": 3,
+      "added_pairs": 118
+    }
+  },
+  "per_split": {
+    "status": "not computed: membership lists are server-side (A6.1)",
+    "what_to_run_on_the_cluster": "scripts/build_labels_v2.py --split-dir splits/s1prime"
+  },
+  "delta_file": "experiments\\008_labels_v2\\labels_v2_delta.json.gz",
+  "delta_bytes": 1237022,
+  "delta_bytes_uncompressed": 7856064,
+  "delta_sha256": "27bbaa32d11837c77b95207c8eac00dbc81890d55eb72e4f1f509f0626deb0af"
+}

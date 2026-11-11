@@ -1,10 +1,40 @@
 {
-  "note": "Hashes of the pre-registration documents and the test_novel evaluation subset. The confirmatory scripts refuse to read a test_novel path unless --confirmatory is passed AND every hash here still matches. Amendment 6 §A6.5 (Amendment 6 itself is not checked against its own hash).",
+  "note": "Hashes of the pre-registration documents and the test_novel evaluation subset. The confirmatory scripts refuse to read a test_novel path unless --confirmatory is passed AND every hash here still matches. Amendment 6 A6.5 (Amendment 6 itself is not checked against its own hash).",
+  "hash_basis": "git-blob",
+  "hash_basis_note": "Each value is the sha256 of the git blob at HEAD:<path>, not of the working-tree file (PI Round 4g section 1). The guard also refuses when the working tree differs from that blob, which catches an uncommitted edit or an autocrlf line-ending rewrite. Verified 2026-11-12 in experiments/006_lock_basis/lock_basis_check.json: working tree, HEAD blob and every historical blob agree for all locked files, and none contains CRLF. Re-run scripts/verify_lock_basis.py from a fresh Linux clone when the cluster returns.",
   "files": {
-    "experiments/001_e1prime/AMENDMENT_2.md": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
-    "experiments/001_e1prime/AMENDMENT_3.md": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
-    "experiments/001_e1prime/AMENDMENT_4.md": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
-    "experiments/001_e1prime/AMENDMENT_5.md": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
-    "experiments/001_e1prime/test_novel_eval.jsonl": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b"
+    "experiments/001_e1prime/AMENDMENT_2.md": {
+      "blob_sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+      "first_quoted_in": "a8e4d48242d6"
+    },
+    "experiments/001_e1prime/AMENDMENT_3.md": {
+      "blob_sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+      "first_quoted_in": "207a8eb560cd"
+    },
+    "experiments/001_e1prime/AMENDMENT_4.md": {
+      "blob_sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+      "first_quoted_in": "3a16258146fc",
+      "restored_in": "d6a2abb",
+      "note": "The blob was 08d6771a in 3a16258, moved to c6471002 when A4.6 was appended, and restored to 08d6771a in d6a2abb. Both pre-restore commits remain in history."
+    },
+    "experiments/001_e1prime/AMENDMENT_5.md": {
+      "blob_sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+      "first_quoted_in": "0117538d80a7"
+    },
+    "experiments/001_e1prime/test_novel_eval.jsonl": {
+      "blob_sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+      "first_quoted_in": "b40d22e551e3",
+      "n_records": 2372
+    },
+    "experiments/001_e1prime/AMENDMENT_6.md": {
+      "blob_sha256": "231172e4916c823d2e909a3206a69b3053bdabfc3cde2e20f07bf0946872f8fd",
+      "first_quoted_in": "d6a2abb",
+      "note": "Amendment 6 excluded itself from the lock because its own hash could not be written inside itself. It is pinned here now that its bytes are fixed."
+    },
+    "experiments/001_e1prime/AMENDMENT_7.md": {
+      "blob_sha256": "c183b92191e1474815cd014c6ce9f3d4b56cc73557dfab6a1de238b704fc8e01",
+      "first_quoted_in": "pending-commit",
+      "note": "Written 2026-11-12 (Round 4g rulings). Frozen on first commit; no further edits."
+    }
   }
 }

@@ -1,0 +1,299 @@
+{
+  "runs": [
+    "runs/p2_seed17",
+    "runs/p2_seed23",
+    "runs/p2_seed41"
+  ],
+  "table": {
+    "a_csub_id_test": {
+      "micro_f1_mean": 0.6518,
+      "family_macro_f1_mean": 0.6352,
+      "family_macro_f1_per_seed": [
+        0.6478,
+        0.6339,
+        0.6239
+      ],
+      "n": 532,
+      "by_band": {
+        "150-299": 0.5762,
+        "80-149": 0.7146,
+        "L<80": 0.7315,
+        "L>=300": 0.5692
+      }
+    },
+    "a_id_test": {
+      "micro_f1_mean": 0.6562,
+      "family_macro_f1_mean": 0.6662,
+      "family_macro_f1_per_seed": [
+        0.6878,
+        0.6506,
+        0.6601
+      ],
+      "n": 1392,
+      "by_band": {
+        "150-299": 0.5425,
+        "80-149": 0.6715,
+        "L<80": 0.7476,
+        "L>=300": 0.5497
+      }
+    },
+    "a_test_withheld": {
+      "micro_f1_mean": 0.592,
+      "family_macro_f1_mean": 0.6028,
+      "family_macro_f1_per_seed": [
+        0.6219,
+        0.5977,
+        0.5887
+      ],
+      "n": 16793,
+      "by_band": {
+        "150-299": 0.4701,
+        "80-149": 0.6219,
+        "L<80": 0.6619,
+        "L>=300": 0.2951
+      }
+    },
+    "b_id_test": {
+      "micro_f1_mean": 0.6251,
+      "family_macro_f1_mean": 0.6936,
+      "family_macro_f1_per_seed": [
+        0.7076,
+        0.6856,
+        0.6875
+      ],
+      "n": 1392,
+      "by_band": {
+        "150-299": 0.5841,
+        "80-149": 0.633,
+        "L<80": 0.7314,
+        "L>=300": 0.4299
+      },
+      "vs_native": {
+        "delta": 0.0274,
+        "lo": -0.0144,
+        "hi": 0.0706,
+        "n_families": 168,
+        "frac_le_0": 0.1005
+      }
+    },
+    "b_test_withheld": {
+      "micro_f1_mean": 0.5305,
+      "family_macro_f1_mean": 0.6108,
+      "family_macro_f1_per_seed": [
+        0.6256,
+        0.6052,
+        0.6017
+      ],
+      "n": 16793,
+      "by_band": {
+        "150-299": 0.4305,
+        "80-149": 0.5232,
+        "L<80": 0.6438,
+        "L>=300": 0.3982
+      },
+      "vs_native": {
+        "delta": 0.008,
+        "lo": -0.0119,
+        "hi": 0.029,
+        "n_families": 442,
+        "frac_le_0": 0.2243
+      }
+    },
+    "c_id_test": {
+      "micro_f1_mean": 0.4685,
+      "family_macro_f1_mean": 0.546,
+      "family_macro_f1_per_seed": [
+        0.5641,
+        0.544,
+        0.53
+      ],
+      "n": 532,
+      "by_band": {
+        "150-299": 0.3815,
+        "80-149": 0.5115,
+        "L<80": 0.6968,
+        "L>=300": 0.3821
+      },
+      "vs_native": {
+        "delta": -0.0915,
+        "lo": -0.1412,
+        "hi": -0.0402,
+        "n_families": 32,
+        "frac_le_0": 0.9999
+      }
+    },
+    "c_test_withheld": {
+      "micro_f1_mean": 0.473,
+      "family_macro_f1_mean": 0.5335,
+      "family_macro_f1_per_seed": [
+        0.5492,
+        0.5367,
+        0.5146
+      ],
+      "n": 8558,
+      "by_band": {
+        "150-299": 0.3273,
+        "80-149": 0.5101,
+        "L<80": 0.632,
+        "L>=300": 0.4319
+      },
+      "vs_native": {
+        "delta": -0.0757,
+        "lo": -0.1014,
+        "hi": -0.0502,
+        "n_families": 93,
+        "frac_le_0": 1.0
+      }
+    },
+    "d_id_test": {
+      "micro_f1_mean": 0.6553,
+      "family_macro_f1_mean": 0.719,
+      "family_macro_f1_per_seed": [
+        0.7318,
+        0.7102,
+        0.7151
+      ],
+      "n": 1392,
+      "by_band": {
+        "150-299": 0.6183,
+        "80-149": 0.6674,
+        "L<80": 0.7375,
+        "L>=300": 0.4789
+      },
+      "vs_native": {
+        "delta": 0.0528,
+        "lo": 0.0086,
+        "hi": 0.0977,
+        "n_families": 168,
+        "frac_le_0": 0.009
+      }
+    },
+    "d_test_withheld": {
+      "micro_f1_mean": 0.5338,
+      "family_macro_f1_mean": 0.6097,
+      "family_macro_f1_per_seed": [
+        0.6224,
+        0.6016,
+        0.6052
+      ],
+      "n": 16793,
+      "by_band": {
+        "150-299": 0.4462,
+        "80-149": 0.5286,
+        "L<80": 0.6329,
+        "L>=300": 0.3805
+      },
+      "vs_native": {
+        "delta": 0.0069,
+        "lo": -0.0135,
+        "hi": 0.0279,
+        "n_families": 442,
+        "frac_le_0": 0.2561
+      }
+    },
+    "e_id_test": {
+      "micro_f1_mean": 0.7103,
+      "family_macro_f1_mean": 0.7549,
+      "family_macro_f1_per_seed": [
+        0.7578,
+        0.7588,
+        0.7482
+      ],
+      "n": 1392,
+      "by_band": {
+        "150-299": 0.657,
+        "80-149": 0.744,
+        "L<80": 0.7502,
+        "L>=300": 0.5183
+      },
+      "vs_native": {
+        "delta": 0.0888,
+        "lo": 0.0448,
+        "hi": 0.1342,
+        "n_families": 168,
+        "frac_le_0": 0.0
+      }
+    },
+    "e_test_withheld": {
+      "micro_f1_mean": 0.5695,
+      "family_macro_f1_mean": 0.6433,
+      "family_macro_f1_per_seed": [
+        0.6434,
+        0.6471,
+        0.6395
+      ],
+      "n": 16793,
+      "by_band": {
+        "150-299": 0.4813,
+        "80-149": 0.5781,
+        "L<80": 0.6423,
+        "L>=300": 0.4067
+      },
+      "vs_native": {
+        "delta": 0.0405,
+        "lo": 0.019,
+        "hi": 0.0633,
+        "n_families": 442,
+        "frac_le_0": 0.0
+      }
+    }
+  },
+  "mechanism_regression": {
+    "csub_id_test|a": {
+      "n": 591,
+      "r2_distortion": 0.0,
+      "r2_distortion_plus_decodability": 0.0077,
+      "incremental_r2": 0.0077,
+      "beta_intercept_distortion_p_true": [
+        0.5951,
+        0.0,
+        0.1414
+      ]
+    },
+    "id_test|a": {
+      "n": 1260,
+      "r2_distortion": 0.0,
+      "r2_distortion_plus_decodability": 0.006,
+      "incremental_r2": 0.006,
+      "beta_intercept_distortion_p_true": [
+        0.6064,
+        0.0,
+        0.1499
+      ]
+    },
+    "id_test|b": {
+      "n": 1260,
+      "r2_distortion": 0.1142,
+      "r2_distortion_plus_decodability": 0.1166,
+      "incremental_r2": 0.0024,
+      "beta_intercept_distortion_p_true": [
+        0.7569,
+        -0.4978,
+        -0.1992
+      ]
+    },
+    "id_test|d": {
+      "n": 1260,
+      "r2_distortion": 0.1059,
+      "r2_distortion_plus_decodability": 0.1078,
+      "incremental_r2": 0.0019,
+      "beta_intercept_distortion_p_true": [
+        0.8007,
+        -0.3976,
+        -0.1465
+      ]
+    },
+    "id_test|e": {
+      "n": 1260,
+      "r2_distortion": 0.0467,
+      "r2_distortion_plus_decodability": 0.05,
+      "incremental_r2": 0.0033,
+      "beta_intercept_distortion_p_true": [
+        0.8195,
+        -0.2658,
+        -0.2266
+      ]
+    }
+  },
+  "regression_rows": 5631
+}

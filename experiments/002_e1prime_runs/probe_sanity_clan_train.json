@@ -1,0 +1,13 @@
+{
+  "split": "splits/s1prime_filtered/train.jsonl",
+  "cache": "data/cache/giga_a_train",
+  "label": "clan",
+  "n_classes": 590,
+  "n_train": 12499,
+  "n_test": 3125,
+  "chance": 0.0017,
+  "probe_acc": 0.9216,
+  "probe_balanced_acc": 0.8571,
+  "probe_top5": 0.9741,
+  "centroid_acc": 0.7315
+}

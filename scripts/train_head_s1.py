@@ -105,6 +105,7 @@ def evaluate(
     d_in = int(model.proj[1].in_features)
     per_seq, per_family = [], defaultdict(list)
     bands: dict[str, list[float]] = defaultdict(list)
+    sources: dict[str, list[float]] = defaultdict(list)
     for batch in bucket_batches(records, budget, False, 0):
         h, _target, _lens = collate(batch, embs, device, d_in)
         prob = torch.sigmoid(model(h)).cpu().numpy()
@@ -115,6 +116,7 @@ def evaluate(
             per_seq.append(m)
             per_family[rec["family"]].append(m["f1"])
             bands[length_band(n)].append(m["f1"])
+            sources[rec.get("source", "?")].append(m["f1"])
             if per_seq_out is not None:
                 per_seq_out.append({"id": rec["id"], "f1": round(m["f1"], 6)})
     fam_macro = {f: float(np.mean(v)) for f, v in per_family.items()}
@@ -127,6 +129,8 @@ def evaluate(
         if fam_macro
         else 0.0,
         "by_band": {b: round(float(np.mean(v)), 4) for b, v in sorted(bands.items())},
+        "by_source": {s: round(float(np.mean(v)), 4) for s, v in sorted(sources.items())},
+        "n_source": {s: len(v) for s, v in sorted(sources.items())},
         "n_band": {b: len(v) for b, v in sorted(bands.items())},
         "per_family": {k: round(v, 4) for k, v in sorted(fam_macro.items())},
     }

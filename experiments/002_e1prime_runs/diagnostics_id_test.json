@@ -1,0 +1,59 @@
+{
+  "split": "splits/s1prime_filtered/id_test.jsonl",
+  "window": 32,
+  "probe_clans": 590,
+  "n": 1392,
+  "conditions": {
+    "a": {
+      "native": true,
+      "probe": {
+        "n": 420,
+        "clans": 24,
+        "balanced_acc": 0.0526,
+        "acc": 0.1238
+      }
+    },
+    "b": {
+      "cache": "data/cache/giga_b_id_test",
+      "n": 1392,
+      "distortion_all": 0.31141,
+      "distortion_distal": 0.51921,
+      "distortion_local": 0.16159,
+      "distortion_local_p90": 0.34084,
+      "probe": {
+        "n": 420,
+        "clans": 24,
+        "balanced_acc": 0.0791,
+        "acc": 0.0524
+      }
+    },
+    "d": {
+      "cache": "data/cache/giga_d_id_test",
+      "n": 1392,
+      "distortion_all": 0.37991,
+      "distortion_distal": 0.61224,
+      "distortion_local": 0.21926,
+      "distortion_local_p90": 0.4415,
+      "probe": {
+        "n": 420,
+        "clans": 24,
+        "balanced_acc": 0.0862,
+        "acc": 0.0714
+      }
+    },
+    "e": {
+      "cache": "data/cache/giga_e_id_test",
+      "n": 1392,
+      "distortion_all": 0.52021,
+      "distortion_distal": 0.88402,
+      "distortion_local": 0.27893,
+      "distortion_local_p90": 0.51177,
+      "probe": {
+        "n": 420,
+        "clans": 24,
+        "balanced_acc": 0.0349,
+        "acc": 0.0429
+      }
+    }
+  }
+}

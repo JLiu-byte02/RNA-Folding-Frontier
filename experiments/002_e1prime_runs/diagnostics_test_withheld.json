@@ -1,0 +1,55 @@
+{
+  "split": "splits/s1prime_filtered/test_withheld.jsonl",
+  "window": 32,
+  "probe_clans": 590,
+  "n": 16793,
+  "conditions": {
+    "a": {
+      "native": true,
+      "probe": {
+        "n": 0,
+        "balanced_acc": null,
+        "acc": null
+      }
+    },
+    "b": {
+      "cache": "data/cache/giga_b_test_withheld",
+      "n": 16793,
+      "distortion_all": 0.2797,
+      "distortion_distal": 0.49368,
+      "distortion_local": 0.1389,
+      "distortion_local_p90": 0.28029,
+      "probe": {
+        "n": 0,
+        "balanced_acc": null,
+        "acc": null
+      }
+    },
+    "d": {
+      "cache": "data/cache/giga_d_test_withheld",
+      "n": 16793,
+      "distortion_all": 0.34611,
+      "distortion_distal": 0.58484,
+      "distortion_local": 0.19518,
+      "distortion_local_p90": 0.37354,
+      "probe": {
+        "n": 0,
+        "balanced_acc": null,
+        "acc": null
+      }
+    },
+    "e": {
+      "cache": "data/cache/giga_e_test_withheld",
+      "n": 16793,
+      "distortion_all": 0.46807,
+      "distortion_distal": 0.84566,
+      "distortion_local": 0.24489,
+      "distortion_local_p90": 0.43978,
+      "probe": {
+        "n": 0,
+        "balanced_acc": null,
+        "acc": null
+      }
+    }
+  }
+}

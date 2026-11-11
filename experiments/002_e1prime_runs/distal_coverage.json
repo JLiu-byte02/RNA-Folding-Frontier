@@ -1,0 +1,138 @@
+{
+  "train": {
+    "n": 17746,
+    "window": 32,
+    "len_mean": 167.7,
+    "len_median": 96.0,
+    "len_max": 2394,
+    "vacuous": 1823,
+    "vacuous_frac": 0.1027,
+    "distal_frac_median": 0.3229,
+    "distal_frac_p90": 0.789,
+    "distal_frac_mean": 0.3596,
+    "bands": {
+      "100-199": {
+        "n": 5793,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "200-399": {
+        "n": 1707,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "L<100": {
+        "n": 9332,
+        "vacuous": 1823,
+        "vacuous_frac": 0.1953
+      },
+      "L>=400": {
+        "n": 914,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      }
+    }
+  },
+  "id_test": {
+    "n": 1402,
+    "window": 32,
+    "len_mean": 156.3,
+    "len_median": 112.0,
+    "len_max": 2729,
+    "vacuous": 122,
+    "vacuous_frac": 0.087,
+    "distal_frac_median": 0.4196,
+    "distal_frac_p90": 0.7855,
+    "distal_frac_mean": 0.4093,
+    "bands": {
+      "100-199": {
+        "n": 602,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "200-399": {
+        "n": 187,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "L<100": {
+        "n": 566,
+        "vacuous": 122,
+        "vacuous_frac": 0.2155
+      },
+      "L>=400": {
+        "n": 47,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      }
+    }
+  },
+  "test_withheld": {
+    "n": 17371,
+    "window": 32,
+    "len_mean": 221.7,
+    "len_median": 108,
+    "len_max": 4381,
+    "vacuous": 1469,
+    "vacuous_frac": 0.0846,
+    "distal_frac_median": 0.3981,
+    "distal_frac_p90": 0.6934,
+    "distal_frac_mean": 0.3861,
+    "bands": {
+      "100-199": {
+        "n": 7195,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "200-399": {
+        "n": 1495,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "L<100": {
+        "n": 8011,
+        "vacuous": 1469,
+        "vacuous_frac": 0.1834
+      },
+      "L>=400": {
+        "n": 670,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      }
+    }
+  },
+  "test_novel": {
+    "n": 42873,
+    "window": 32,
+    "len_mean": 97.0,
+    "len_median": 78,
+    "len_max": 951,
+    "vacuous": 14842,
+    "vacuous_frac": 0.3462,
+    "distal_frac_median": 0.1667,
+    "distal_frac_p90": 0.6243,
+    "distal_frac_mean": 0.2309,
+    "bands": {
+      "100-199": {
+        "n": 9861,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "200-399": {
+        "n": 2716,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      },
+      "L<100": {
+        "n": 29837,
+        "vacuous": 14842,
+        "vacuous_frac": 0.4974
+      },
+      "L>=400": {
+        "n": 459,
+        "vacuous": 0,
+        "vacuous_frac": 0.0
+      }
+    }
+  }
+}

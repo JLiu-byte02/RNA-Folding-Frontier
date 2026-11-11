@@ -128,6 +128,8 @@ def main() -> int:
                     key = (row["id"], cond)
                     if key in diag:
                         dr = diag[key]
+                        if dr.get("p_true") is None or dr.get("distortion_all") is None:
+                            continue
                         reg_rows.append(
                             {
                                 "split": name.split("_", 1)[1],

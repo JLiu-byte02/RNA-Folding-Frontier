@@ -53,9 +53,24 @@ sparse score matrix). id_test (1,402 sequences, median 112 nt) is minutes.
 
 PI Round 4c rejected re-implementing Turner 2004 (weeks of parity work, and no
 claim depends on owning it). `ViennaSoftDecoder` therefore builds
-`RNA.fold_compound(seq)`, adds `sc_add_bp(i, j, -scale * score)` for every
-allowed cell the head scores, and takes `fc.mfe()`. With all scores zero the
-decode is exactly `RNAfold`, so parity is structural.
+`RNA.fold_compound(seq)`, adds `sc_add_bp(i, j, -(scale * score + offset))` for
+every allowed cell the head scores, and takes `fc.mfe()`. With all scores zero
+and offset zero the decode is exactly `RNAfold`, so parity is structural.
+
+**Amendment 4 §A4.2 splits this into two variants.** `A-energy-fixed` is the
+confirmatory H2.4 decoder: `(scale, offset)` are fitted by 5-fold
+cross-validation on the frozen train split (`scripts/fit_energy_calibration.py`,
+maximising pooled family-macro F1) and then frozen and hashed. `A-energy-learned`
+bounds the per-pair bonus with `tanh(C)` and trains through the decoder; it is
+the P5 method and is *not* evidence for H2.4.
+
+Sign convention, verified twice (stub test and real RNA): `dG = -(s*logit + b)`,
+so **a positive offset attracts pairs** while a negative score lowers `dG`
+directly. A test that assumed "negative offset favours pairs" was wrong and was
+corrected against the library, not the other way round. Because the head is
+trained with `pos_weight = 20`, the logits carry roughly `+log 20 ≈ 3.0` of
+inflation, so the offset that undoes it is about `-3.0`; the CV grid is centred
+on that value rather than on zero.
 
 Verified locally on ViennaRNA 2.8.0 (`scripts/check_vienna_parity.py`, record in
 `experiments/003_decoder_a/parity_vienna_2.8.0.json`):

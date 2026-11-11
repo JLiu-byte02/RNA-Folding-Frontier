@@ -9,14 +9,22 @@ decoder already enforced one partner and non-crossing:
           relative to greedy nested matching AT MATCHED RECALL, and the
           reduction is larger than any accompanying loss of true positives.
 
-So there are two readouts, and only the second one confirms or refutes H2.4:
+So there are three readouts, in the order frozen by Amendment 4 §A4.1:
 
-* ``at_0_5`` — both decoders at the fixed 0.5 threshold (the old wording;
-  exploratory, and mostly a calibration contrast);
-* ``matched_recall`` — a single global greedy threshold ``t_g`` chosen by grid
-  search so that pooled micro recall equals decoder A's, within
-  ``--recall-tol``. This is the confirmatory readout: it asks whether energetic
-  consistency helps once the operating point is taken away as an explanation.
+* ``recall_matched`` — **primary**. A single global greedy threshold chosen by
+  grid search so that pooled micro recall equals decoder A's within
+  ``--recall-tol``; if no exact match exists, the closest point at or above A's
+  recall. Verdict: A must have fewer long-range false positives **and** at least
+  as many true positives.
+* ``pair_budget`` — **fallback, only when no threshold reaches A's recall**. The
+  greedy threshold whose total pair count matches A's (within
+  ``--pair-tol-frac``). Verdict: A must have **both** more true positives and
+  fewer long-range false positives at equal count.
+* ``greedy_recall_ceiling`` — descriptive only: the best greedy recall
+  reachable over the grid. Reported always.
+
+``at_0_5`` is also written (both decoders at the fixed 0.5 threshold) but it is
+exploratory: it mostly reflects calibration, not consistency.
 
 Three decoders are compared on the same probability map, at the same 0.5
 threshold:
@@ -40,12 +48,11 @@ The hypothesis is that LRFP falls more than TP, i.e.
 a family are not independent — the same unit as the P2 table and D1/K1.
 
 Matchability is not guaranteed. Greedy nested decoding accepts pairs in
-decreasing probability, so a pair that blocks true positives always outranks
-them; removing it by raising the threshold removes the true pairs as well. When
-no threshold reaches decoder A's recall, the script reports
-``H2_4.status = "inconclusive_no_recall_match"`` rather than inventing a
-comparison: the DP recall advantage is then itself the finding, and the LRFP
-contrast must be restated by the PI before it is computed.
+decreasing probability, so a pair that blocks true positives can outrank them;
+removing it by raising the threshold removes the true pairs as well. If neither
+the recall match nor the pair budget is feasible, the script reports
+``H2_4.status = "inconclusive_no_recall_match"`` and no further fallback is
+added (A4.1 item 4).
 """
 
 from __future__ import annotations
@@ -62,6 +69,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from rff.analysis.scoring import decode_pairs, normalise_scored  # noqa: E402
+from rff.analysis.operating_point import Scan, select_operating_point  # noqa: E402
 from rff.decoders.nn_dp import (  # noqa: E402
     NEG,
     NNDecoder,
@@ -157,8 +165,14 @@ def main() -> int:
         help="struct = A-struct (log-odds, zero penalties); vienna = A-energy (Turner + sc_add_bp)",
     )
     ap.add_argument("--energy-scale", type=float, default=1.0,
-                    help="sc_add_bp energy per score unit (vienna only; calibrate on the server)")
+                    help="sc_add_bp energy per score unit (vienna only; fit by 5-fold CV per A4.2)")
+    ap.add_argument("--energy-offset", type=float, default=0.0,
+                    help="constant term inside the pseudo-energy, -(scale*score + offset); "
+                         "absorbs the pos_weight-20 shift (A4.2)")
     ap.add_argument("--recall-tol", type=float, default=0.002)
+    ap.add_argument("--pair-tol-frac", type=float, default=0.01,
+                    help="pair-budget fallback counts as matched within this fraction of "
+                         "decoder A's predicted pair count (A4.1 item 2)")
     ap.add_argument("--threshold-lo", type=float, default=0.05)
     ap.add_argument("--threshold-hi", type=float, default=0.99)
     ap.add_argument("--threshold-grid", type=int, default=24)
@@ -172,7 +186,7 @@ def main() -> int:
 
             from rff.decoders.vienna_soft import ViennaSoftDecoder
 
-            vienna = ViennaSoftDecoder(scale=args.energy_scale)
+            vienna = ViennaSoftDecoder(scale=args.energy_scale, offset=args.energy_offset)
         except ImportError:
             vienna = None
 
@@ -218,6 +232,7 @@ def main() -> int:
             "tp_bare": 0, "lr_bare": 0,
             "tp_greedy": 0, "lr_greedy": 0,
             "tp_dp": 0, "lr_dp": 0,
+            "n_bare_pairs": 0, "n_greedy_pairs": 0, "n_dp_pairs": 0,
         }
         per_family_totals = defaultdict(lambda: defaultdict(float))
         n_reduced = 0
@@ -231,6 +246,7 @@ def main() -> int:
                 tp, lr = counts(pred, truth)
                 totals[f"tp_{key}"] += tp
                 totals[f"lr_{key}"] += lr
+                totals[f"n_{key}_pairs"] += len(pred)
                 per_family_totals[fam][f"tp_{key}"] += tp
                 per_family_totals[fam][f"lr_{key}"] += lr
             tp_g, lr_g = counts(greedy, truth)
@@ -268,22 +284,32 @@ def main() -> int:
             "mean_d_long_range_fp": round(float(np.mean([
                 per_family[f]["d_lrfp"] / per_family[f]["n"] for f in per_family if per_family[f]["n"]
             ])), 4),
+            "pooled": {
+                key: {
+                    "tp": totals[f"tp_{key}"],
+                    "long_range_fp": totals[f"lr_{key}"],
+                    "pairs": totals[f"n_{key}_pairs"],
+                }
+                for key in ("bare", "greedy", "dp")
+            },
             "contrast_drop_lrfp_minus_drop_tp": contrast,
             "n_sequences_lrfp_reduced": n_reduced,
             "passes": bool(point is not None and point > 0 and ci and ci[0] > 0),
         }
 
-    def greedy_recall_at(th: float) -> float:
+    def greedy_stats(th: float) -> tuple[float, int]:
         tp = 0
+        n_pairs = 0
         for rec in records:
             pred = set(decode_pairs(rec["scored"], th, rec["length"]))
             tp += len(pred & rec["truth"])
-        return tp / n_truth if n_truth else float("nan")
+            n_pairs += len(pred)
+        return (tp / n_truth if n_truth else float("nan")), n_pairs
 
-    # Greedy nested decoding is **not** monotone in the threshold: dropping one
+    # Greedy nested decoding need not be monotone in the threshold: dropping one
     # high-probability false pair can free two true ones, so recall can rise as
     # the threshold rises. A bisection would silently pick the wrong side of
-    # such a step, so scan a grid and take the closest achievable recall.
+    # such a step, so scan a grid and take the closest achievable point.
     grid = np.unique(
         np.concatenate(
             [
@@ -292,15 +318,61 @@ def main() -> int:
             ]
         )
     )
-    best = None
-    for th in grid:
-        gap = abs(greedy_recall_at(float(th)) - recall_dp)
-        if best is None or gap < best[0]:
-            best = (gap, float(th))
-    gap, t_g = best
-    matched = bool(gap <= args.recall_tol)
+    dp_pairs_total = sum(len(r["dp"]) for r in records)
+    scan = [Scan(float(th), *greedy_stats(float(th))) for th in grid]
+    ceiling = max(s.recall for s in scan)
+    t_ceiling = max(scan, key=lambda s: s.recall).threshold
+
+    picked = select_operating_point(
+        scan,
+        dp_recall=recall_dp,
+        dp_pairs=dp_pairs_total,
+        recall_tol=args.recall_tol,
+        pair_tol_frac=args.pair_tol_frac,
+    )
+    primary = picked["recall_matched"]
+    pb = picked["pair_budget"]
+    pb_th, pb_recall, pb_pairs = pb["threshold"], pb["recall"], pb["pairs"]
+    pair_tol = pb["tolerance_pairs"]
+    pair_gap = pb["gap_pairs"]
+    pair_feasible = pb["feasible"]
 
     b = evaluate(args.threshold)
+    verdicts = {}
+    if primary is not None:
+        m = evaluate(primary["threshold"])
+        g, d = m["pooled"]["greedy"], m["pooled"]["dp"]
+        verdicts["recall_matched"] = {
+            "pooled_tp_greedy": g["tp"],
+            "pooled_tp_dp": d["tp"],
+            "pooled_long_range_fp_greedy": g["long_range_fp"],
+            "pooled_long_range_fp_dp": d["long_range_fp"],
+            "fewer_long_range_fp": bool(d["long_range_fp"] < g["long_range_fp"]),
+            "no_fewer_true_positives": bool(d["tp"] >= g["tp"]),
+            "passes": bool(d["long_range_fp"] < g["long_range_fp"] and d["tp"] >= g["tp"]),
+        }
+    if pair_feasible:
+        p = evaluate(pb_th)
+        g, d = p["pooled"]["greedy"], p["pooled"]["dp"]
+        verdicts["pair_budget"] = {
+            "pooled_pairs_greedy": g["pairs"],
+            "pooled_pairs_dp": d["pairs"],
+            "pooled_tp_greedy": g["tp"],
+            "pooled_tp_dp": d["tp"],
+            "pooled_long_range_fp_greedy": g["long_range_fp"],
+            "pooled_long_range_fp_dp": d["long_range_fp"],
+            "more_true_positives": bool(d["tp"] > g["tp"]),
+            "fewer_long_range_fp": bool(d["long_range_fp"] < g["long_range_fp"]),
+            "passes": bool(d["tp"] > g["tp"] and d["long_range_fp"] < g["long_range_fp"]),
+        }
+
+    if primary is not None:
+        basis = "recall_matched"
+    elif pair_feasible:
+        basis = "pair_budget"
+    else:
+        basis = None
+
     report = {
         "name": args.name or Path(args.dump).stem,
         "n_sequences": len(records),
@@ -320,39 +392,52 @@ def main() -> int:
                 else "A-struct (zero loop penalties) — exploratory, NOT the H2.4 test"
             ),
             "energy_scale": args.energy_scale if args.energy == "vienna" else None,
-        },
-        "at_0_5": b,
-        "matched_recall": {
-            **evaluate(t_g),
-            "target_recall_dp": round(recall_dp, 4),
-            "recall_matched": matched,
-            "recall_tolerance": args.recall_tol,
-            "recall_gap": round(float(gap), 4),
-            "threshold_grid_size": int(len(grid)),
-            "note": (
-                "confirmatory readout per Amendment 3 A3.1; a single global "
-                "greedy threshold chosen by grid search on pooled micro recall "
-                "(greedy decoding is not monotone in the threshold)"
+            "energy_offset": args.energy_offset if args.energy == "vienna" else None,
+            "calibration_status": (
+                "uncalibrated placeholder (A4.2 requires 5-fold CV fit on the frozen train split)"
+                if args.energy == "vienna"
+                and args.energy_scale == 1.0
+                and args.energy_offset == 0.0
+                else "explicit values supplied on the command line; record the fitting job"
+                if args.energy == "vienna"
+                else None
             ),
         },
+        "at_0_5": b,
+        "greedy_recall_ceiling": {
+            "recall": round(float(ceiling), 4),
+            "threshold": round(float(t_ceiling), 4),
+            "note": "descriptive only (Amendment 4 A4.1 item 3): the best greedy recall "
+                    "reachable on this split, over the whole threshold grid",
+        },
         "H2_4": {
-            "primary": "matched_recall",
-            "matched_recall_threshold": round(t_g, 4),
-            "recall_matched": matched,
+            "order": ["recall_matched", "pair_budget"],
+            "basis": basis,
             "status": None,
             "passes": None,
+            "verdicts": verdicts,
+            "recall_matched_threshold": round(primary["threshold"], 4) if primary else None,
+            "recall_matched_gap": round(float(primary["gap"]), 4) if primary else None,
+            "recall_tolerance": args.recall_tol,
+            "pair_budget_threshold": round(float(pb_th), 4),
+            "pair_budget_gap_pairs": int(pair_gap),
+            "pair_budget_tolerance_pairs": float(pair_tol),
+            "pair_budget_feasible": pair_feasible,
+            "threshold_grid_size": int(len(grid)),
+            "note": (
+                "Amendment 4 A4.1: recall-matched primary; pair-budget fallback only "
+                "when no threshold reaches decoder A's recall; greedy recall ceiling "
+                "always reported, descriptively"
+            ),
         },
     }
-    if matched:
-        report["H2_4"]["passes"] = report["matched_recall"]["passes"]
-        report["H2_4"]["status"] = (
-            "confirmed" if report["H2_4"]["passes"] else "not_confirmed"
-        )
+    if basis is not None:
+        report["H2_4"]["passes"] = verdicts[basis]["passes"]
+        report["H2_4"]["status"] = "confirmed" if report["H2_4"]["passes"] else "not_confirmed"
     else:
-        # Greedy nested decoding cannot reach decoder A's recall at any
-        # threshold here: the pairs that block its true positives outrank them,
-        # so removing the blockers also removes the true pairs. The contrast is
-        # then undefined rather than negative.
+        # Neither a recall-matched nor a pair-budget-matched greedy operating
+        # point exists on this split. A4.1 item 4: report it, do not invent a
+        # third fallback after seeing data.
         report["H2_4"]["status"] = "inconclusive_no_recall_match"
 
     out = ROOT / args.out

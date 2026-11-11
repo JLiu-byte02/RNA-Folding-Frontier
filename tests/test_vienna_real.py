@@ -44,3 +44,14 @@ def test_bonus_attracts_the_asked_pair():
     scores[i, j] = 20.0
     pairs, _ = dec.decode(seq, scores)
     assert (i, j) in set(pairs)
+
+
+def test_offset_direction_is_physically_consistent():
+    """dG = -(s*score + b): a positive offset must favour more pairs."""
+    seq = "GCGCUUCGCCGC"
+    zeros = np.zeros((len(seq), len(seq)))
+    favoured, _ = ViennaSoftDecoder(scale=0.0, offset=2.0).decode(seq, zeros)
+    penalised, e_pen = ViennaSoftDecoder(scale=0.0, offset=-2.0).decode(seq, zeros)
+    plain, e_plain = RNA.fold(seq)
+    assert len(favoured) >= len(penalised)
+    assert e_pen >= e_plain

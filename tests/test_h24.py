@@ -100,14 +100,13 @@ def test_dp_output_is_a_valid_structure(tmp_path):
     assert report["n_sequences"] == 1
     assert report["dp_config"]["hairpin_penalty"] == 0.0
     assert report["at_0_5"]["family_macro_per_sequence"]["dp"]["tp"] >= 1
-    assert report["H2_4"]["primary"] == "matched_recall"
-    assert report["matched_recall"]["target_recall_dp"] == pytest.approx(
-        report["matched_recall"]["dp_recall"], abs=1e-4
-    )
+    assert report["H2_4"]["order"] == ["recall_matched", "pair_budget"]
+    assert report["H2_4"]["basis"] in {"recall_matched", "pair_budget"}
+    assert report["greedy_recall_ceiling"]["recall"] <= 1.0
 
 
-def test_unmatchable_recall_is_reported_not_forced(tmp_path):
-    """If greedy cannot reach the DP's recall at any threshold, say so."""
+def test_pair_budget_fallback_when_recall_is_unmatchable(tmp_path):
+    """A4.1 item 2: fall back to a matched pair budget, not to a forced recall."""
     truth = [[5, 12], [20, 160]]
     fp = (10, 140)
     seq = _seq_with_pairs(200, [tuple(p) for p in truth], [fp])
@@ -118,9 +117,10 @@ def test_unmatchable_recall_is_reported_not_forced(tmp_path):
     assert report["at_0_5"]["family_macro_per_sequence"]["greedy"]["tp"] == 0
     # raising the threshold removes the false pair and the true pairs with it,
     # so no threshold reaches DP recall
-    assert report["matched_recall"]["recall_matched"] is False
-    assert report["H2_4"]["status"] == "inconclusive_no_recall_match"
-    assert report["H2_4"]["passes"] is None
+    assert report["H2_4"]["basis"] == "pair_budget"
+    assert report["H2_4"]["verdicts"]["pair_budget"]["more_true_positives"] is True
+    assert report["H2_4"]["verdicts"]["pair_budget"]["fewer_long_range_fp"] is True
+    assert report["H2_4"]["passes"] is True
 
 
 def test_impossible_recall_match_is_reported(tmp_path):
@@ -130,8 +130,10 @@ def test_impossible_recall_match_is_reported(tmp_path):
     scored = {"2,20": 0.9, "30,48": 0.9}
     report = _run(tmp_path, seq, truth, scored, name="trivial")
     # both decoders already agree, so the gap is zero and this is a true match
-    assert report["matched_recall"]["recall_gap"] <= report["matched_recall"]["recall_tolerance"]
-    assert report["matched_recall"]["recall_matched"] is True
+    assert report["H2_4"]["basis"] == "recall_matched"
+    assert report["H2_4"]["recall_matched_gap"] <= report["H2_4"]["recall_tolerance"]
+    # ...but A must still cut long-range false positives to be confirmed
+    assert report["H2_4"]["status"] == "not_confirmed"
 
 
 @pytest.mark.skipif(

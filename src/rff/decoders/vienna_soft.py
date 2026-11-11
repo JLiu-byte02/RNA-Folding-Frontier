@@ -17,11 +17,15 @@ number is quoted (marked [CHECK] in the Round 4c reply):
   it adds ``e`` in kcal/mol every time the pair is formed and returns 0 when the
   constraint is rejected;
 * the sign: a positive pseudo-energy destabilises a pair, so a score that is
-  "higher is better" maps to ``e = -scale * score``;
+  "higher is better" maps to ``e = -(scale * score + offset)``. The offset
+  exists because the head is trained with ``pos_weight = 20``, which shifts
+  logits by about ``log 20``; without it the scale absorbs calibration
+  (Amendment 4 §A4.2);
 * the useful magnitude of ``scale``: log-odds and kcal/mol are different units,
   and a scale that is too large makes pseudo-energies dominate the physical
-  model. Calibrate on the server (one sequence, corrections on/off) rather than
-  guessing here; the default 1.0 is a placeholder, not a calibrated value.
+  model. ``(scale, offset)`` are fitted by 5-fold cross-validation on the frozen
+  train split and then frozen (Amendment 4 §A4.2). The defaults below are
+  placeholders, not calibrated values.
 
 The class imports ``RNA`` lazily so the module and its tests run on machines
 without ViennaRNA.
@@ -59,8 +63,9 @@ class ViennaSoftDecoder:
     which is why a zero matrix reproduces plain ``RNAfold``.
     """
 
-    def __init__(self, scale: float = 1.0, rna_module=None):
+    def __init__(self, scale: float = 1.0, offset: float = 0.0, rna_module=None):
         self.scale = float(scale)
+        self.offset = float(offset)
         self._rna = rna_module
 
     @property
@@ -83,7 +88,7 @@ class ViennaSoftDecoder:
                 s = float(scores[i, j])
                 if s <= NEG:
                     continue
-                ok = fc.sc_add_bp(i + 1, j + 1, -self.scale * s)
+                ok = fc.sc_add_bp(i + 1, j + 1, -(self.scale * s + self.offset))
                 if ok:
                     n_constraints += 1
                 else:

@@ -71,6 +71,18 @@ def test_scores_map_to_negative_pseudo_energy():
     assert calls == [(1, 9, -6.0), (2, 8, 2.0)]
 
 
+def test_offset_enters_the_pseudo_energy_before_the_sign():
+    """A4.2: dG = -(s*score + b). The offset is not a per-structure constant."""
+    rna = FakeRNA()
+    dec = ViennaSoftDecoder(scale=2.0, offset=-1.5, rna_module=rna)
+    seq = "GGGAAACCC"
+    scores = np.full((len(seq), len(seq)), NEG)
+    scores[0, 8] = 3.0
+    dec.decode(seq, scores)
+    # -(2.0*3.0 + (-1.5)) = -4.5, not -(2.0*3.0) - 1.5 = -7.5
+    assert rna.made[0].bp_calls == [(1, 9, -4.5)]
+
+
 def test_disallowed_cells_are_not_constrained():
     rna = FakeRNA()
     dec = ViennaSoftDecoder(rna_module=rna)

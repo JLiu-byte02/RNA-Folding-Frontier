@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import numpy as np  # noqa: E402
 
-from rff.analysis.labels import pair_prf  # noqa: E402
+from rff.analysis.labels import max_nested_subset, pair_prf  # noqa: E402
 from rff.analysis.scoring import (  # noqa: E402
     Region,
     distance_bin,
@@ -88,6 +88,12 @@ def main() -> int:
     ap.add_argument("--threshold", type=float, default=0.5)
     ap.add_argument("--label-version", choices=("v1", "v3"), default="v1")
     ap.add_argument(
+        "--truth-mode",
+        choices=("full", "nested"),
+        default="full",
+        help="nested is the Amendment 6 primary truth (maximum nested subset)",
+    )
+    ap.add_argument(
         "--min-true-pairs",
         type=int,
         default=0,
@@ -131,7 +137,13 @@ def main() -> int:
                 excluded.append(row)
                 continue
             row["_scored"] = row["scored"]
-            row["_truth"] = {tuple(p) for p in truth}
+            truth_set = {tuple(p) for p in truth}
+            row["_truth"] = (
+                max_nested_subset(truth_set)
+                if args.truth_mode == "nested"
+                else truth_set
+            )
+            row["_truth_full"] = truth_set
             require_finite(row["_scored"], where=f"{f.name}:{row['id']}")
             rows.append(row)
         if not rows:
@@ -142,6 +154,7 @@ def main() -> int:
             "n_sequences": len(rows),
             "label_policy": {
                 "version": args.label_version,
+                "truth_mode": args.truth_mode,
                 "min_true_pairs": args.min_true_pairs,
                 "n_input": len(raw_rows),
                 "n_excluded_below_min": n_below_min,
@@ -221,6 +234,9 @@ def main() -> int:
                     "source": row.get("source"),
                     "length": row["length"],
                     "band": length_band(row["length"]),
+                        "truth_mode": args.truth_mode,
+                        "n_truth_full": len(row["_truth_full"]),
+                        "n_truth_scored": len(row["_truth"]),
                 }
                 for arm in ARMS:
                     f1 = f1_cache[arm]

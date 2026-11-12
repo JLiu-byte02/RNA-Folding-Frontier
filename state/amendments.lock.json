@@ -40,6 +40,11 @@
       "blob_sha256": "5411a05021e4a0207fa60f55f3616bc4dca1e38889f3f944dfe52ea6b345fffa",
       "first_quoted_in": "a9de0a2",
       "note": "Written 2026-11-12 (Round 4h rulings). Frozen on first commit; no further edits."
+    },
+    "experiments/001_e1prime/AMENDMENT_9.md": {
+      "blob_sha256": "a1dae27eb500798db0c00d8bea66f1fea60cb2af65afd385eeffaa165480704c",
+      "first_quoted_in": "pending-commit",
+      "note": "Written 2026-11-12 (Round 4j correction rulings). Frozen on first commit; no further edits."
     }
   }
 }

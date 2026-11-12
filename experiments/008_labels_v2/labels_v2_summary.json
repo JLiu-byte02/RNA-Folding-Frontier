@@ -5718,7 +5718,7 @@
     "status": "not computed: membership lists are server-side (A6.1)",
     "what_to_run_on_the_cluster": "scripts/build_labels_v2.py --split-dir splits/s1prime"
   },
-  "delta_file": "experiments\\008_labels_v2\\labels_v2_delta.json.gz",
+  "delta_file": "experiments/008_labels_v2/labels_v2_delta.json.gz",
   "delta_bytes": 1237022,
   "delta_bytes_uncompressed": 7856064,
   "delta_sha256": "27bbaa32d11837c77b95207c8eac00dbc81890d55eb72e4f1f509f0626deb0af"

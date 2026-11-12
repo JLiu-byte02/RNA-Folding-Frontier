@@ -37,8 +37,9 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
 - [x] D2C FP-helix energetics: FP helices are energetically close to true
       helices; 26.6%/26.7% fully in RNAfold MFE.
 - [x] v3 cross-check: 37,797 exact-sequence comparisons; v3 F1 .915 vs v2 .823.
-- [ ] all-N and dinucleotide-shuffle native-head controls (3 seeds; caches and
-      dumps running).
+- [ ] all-N and dinucleotide-shuffle native-head controls: dumps complete for
+      all 3 seeds; D1-style scoring job 14668 is queued behind the full CPU
+      partition.
 - [ ] `(s,b)` coarse fit on the full train split (4.3 CPU-h estimate; job 14662).
 - [ ] H2.4 A-energy fixed on id_test/withheld (depends on fit).
 

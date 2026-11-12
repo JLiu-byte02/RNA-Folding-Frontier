@@ -1,7 +1,7 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T17:25:00+08:00",
+  "updated_at": "2026-11-12T17:55:00+08:00",
   "phase": "h2-template-controls-running",
   "cycle": 5,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -20,13 +20,18 @@
     "rate_limit_reset_at": null
   },
   "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics on v3 labels",
-  "active_experiment": "Round 4i template controls: all-N/shuffle dumps, train logits for (s,b), H2.4 after fit",
+  "active_experiment": "Round 4i template controls scored next; (s,b) fit job 14662 running; H2.4 after freeze",
   "open_questions": [
     "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
     "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
   "blockers": [],
+  "running_jobs": {
+    "energy_fit": 14662,
+    "seqfree_score": 14668
+  },
+  "remote_head": "03f49f4",
   "artifacts": {
     "datasets": [],
     "checkpoints": [],

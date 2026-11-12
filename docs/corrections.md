@@ -122,3 +122,18 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   P2-block, where every condition is measured on the same population.
 - **Artifact:** `experiments/002_e1prime_runs/p2central_ratios_ci.json` and
   `docs/p2central_ratios_ci_2026-11-12.md`.
+
+## 2026-11-12 — `(s,b)` fit objective pooled counts, not the primary metric
+
+- **Where:** `scripts/fit_energy_calibration.py:family_macro_f1`.
+- **What was wrong:** it pooled tp/fp/fn per family and took the F1 of the
+  pooled counts. The project's family-macro primary metric is the mean of
+  per-family **mean per-sequence** F1; pooling weights long sequences more
+  heavily and is a different selector.
+- **Consequence:** no H2.4 number has been produced, but the first fit job
+  started with the old objective and is cancelled; its output may not be
+  frozen or quoted.
+- **Action:** compute per-sequence F1 with the Amendment 9 zero-TP convention,
+  then mean within family and across families; added
+  `tests/test_energy_fit.py`. Refit from the existing p2fix train dump before
+  freezing `(s,b)`.

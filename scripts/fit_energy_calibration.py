@@ -90,7 +90,13 @@ def _decode_one(task: tuple[int, float, float]) -> tuple[int, float, set[tuple[i
 
 
 def family_macro_f1(preds: dict[int, set], items: list[dict], idxs: list[int]) -> float:
-    per_family: dict[str, list[int]] = {}
+    """Mean of per-family mean per-sequence F1 (the project's primary metric).
+
+    Pooling tp/fp/fn per family would weight long sequences more heavily and is
+    not the metric used by the D1/P2 tables. The earlier implementation pooled
+    counts; it is corrected here before any H2.4 number is produced.
+    """
+    per_family: dict[str, list[float]] = {}
     for idx in idxs:
         item = items[idx]
         pred = preds[idx]
@@ -98,15 +104,15 @@ def family_macro_f1(preds: dict[int, set], items: list[dict], idxs: list[int]) -
         tp = len(pred & truth)
         fp = len(pred - truth)
         fn = len(truth - pred)
-        rec = per_family.setdefault(item["family"], [0, 0, 0])
-        rec[0] += tp
-        rec[1] += fp
-        rec[2] += fn
-    f1s = []
-    for tp, fp, fn in per_family.values():
-        denom = 2 * tp + fp + fn
-        f1s.append(2 * tp / denom if denom else 0.0)
-    return float(np.mean(f1s)) if f1s else float("nan")
+        if tp + fp + fn == 0:
+            f1 = 1.0
+        elif tp == 0:
+            f1 = 0.0
+        else:
+            f1 = 2 * tp / (2 * tp + fp + fn)
+        per_family.setdefault(item["family"], []).append(f1)
+    means = [float(np.mean(values)) for values in per_family.values()]
+    return float(np.mean(means)) if means else float("nan")
 
 
 def main() -> int:
@@ -206,7 +212,10 @@ def main() -> int:
         "max_seqs": args.max_seqs or None,
         "grid": {"s": [float(x) for x in args.grid_s.split(",")],
                  "b": [float(x) for x in args.grid_b.split(",")]},
-        "metric": "pooled family-macro F1, held-out folds; selection by mean over folds",
+        "metric": (
+            "family-macro F1 (mean of per-family mean per-sequence F1), "
+            "held-out folds; selection by mean over folds"
+        ),
         "selected": {"s": best["s"], "b": best["b"], "mean_f1": best["mean_f1"]},
         "all": results,
         "inputs": {

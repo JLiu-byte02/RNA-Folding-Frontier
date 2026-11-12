@@ -129,3 +129,18 @@ def test_donor_c_takes_aligned_bases_and_keeps_native_at_gaps():
         assert out[pos] == expected, (pos, j)
     assert sum(a != b for a, b in zip(out, target)) > 0
     assert any(j < 0 and out[pos] == target[pos] for pos, j in enumerate(mapping))
+
+
+def test_donor_c_fails_loudly_when_homolog_targets_are_not_in_pool():
+    recs = [{"id": "t", "seq": "ACGUGCAUGCGGG", "clan": "X"}]
+    try:
+        build_donors(
+            "c",
+            recs,
+            rng=random.Random(0),
+            donor_pool=[{"id": "other", "seq": "A" * 13, "clan": "Y"}],
+            homolog_map={"t": {"homolog": "h", "identity": 0.9}},
+        )
+    except SystemExit:
+        return
+    raise AssertionError("expected SystemExit for an unusable donor pool")

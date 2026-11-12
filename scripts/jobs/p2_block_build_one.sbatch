@@ -35,9 +35,13 @@ mkdir -p "${DONOR_DIR}"
 if [ "${COND}" = "c" ]; then
   HOMOLOG="data/processed/homologs/${SPLIT}.json"
   test -f "${HOMOLOG}"
+  # The homolog map is built per split and points to another record in the
+  # same split; the donor pool must therefore contain those records. Using the
+  # train pool here silently produced an empty donor map and an empty cache.
+  C_POOL="${DATA}"
   "${PY}" scripts/build_block_donors.py \
     --split "${DATA}" --out-dir "${DONOR_DIR}" \
-    --conditions c --seed 17 --donor-pool "${POOL}" \
+    --conditions c --seed 17 --donor-pool "${C_POOL}" \
     --homolog-map "${HOMOLOG}"
 else
   "${PY}" scripts/build_block_donors.py \

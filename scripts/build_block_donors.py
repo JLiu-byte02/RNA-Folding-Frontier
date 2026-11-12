@@ -74,6 +74,12 @@ def build_donors(
                 for pos, j in enumerate(mapping)
             ]
             donors[rec["id"]] = "".join(out)
+        if not donors:
+            raise SystemExit(
+                "condition c produced no donors: the homolog map's targets are "
+                "not present in --donor-pool. For the per-split homolog maps, "
+                "pass the same split as the donor pool."
+            )
         return donors
 
     for rec in recs:

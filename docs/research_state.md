@@ -1,12 +1,12 @@
 # Research State
 
-Updated: 2026-11-12 15:10
+Updated: 2026-11-12 17:55
 
 ## Phase
 
-`v3-label-diagnostics` — SSH restored, the server is a git checkout, and the
-seed labels are corrected. D1/K1 are being re-run on P2-central probabilities
-with v1/v3 and empty/`<4` label policies.
+`h2-template-controls` — v3 labels and D1/K1/D2 are complete; the native-head
+all-N/shuffle controls and the `(s,b)` fit are in flight. H2 continues, but
+H2.4 waits for a frozen calibration.
 
 ## Established facts
 
@@ -44,6 +44,21 @@ with v1/v3 and empty/`<4` label policies.
   2,392 (20.75%) had empty truth under v1; under v3, 112 are empty and 341
   (2.96%) fall below four pairs. In `test_novel`, 10,470/42,873 v1 rows were
   empty and 3,675 (8.57%) fall below four under v3.
+- **v3 cross-check:** 37,797 exact-sequence comparisons against bpRNA-1m give
+  mean pair-F1 .915 for v3 vs .823 for v2; v3 wins 5,293 comparisons and loses
+  2,136. Details in `experiments/011_labels_v3/v2_v3_bprna_crosscheck.json`.
+- **D1 label policy:** primary nested-truth e−a is +.0819 on id_test and +.0198
+  on withheld; partner-arm totals are +.0740 and +.0119. K1 is a near miss on
+  withheld (Δ=.0119, CI contains 0), not support.
+- **H2.2:** long-range FP helices are about 4× enriched over the null on both
+  splits. H2.1 is split-dependent after candidate normalisation (1.62× id_test,
+  3.89× withheld).
+- **Template control 1:** condition e's one-kept and neither-kept F1 are near
+  zero (one: .018–.024, neither: .006–.009), so it does not invent pairs outside
+  the kept window.
+- **FP-helix energetics:** 26.6%/26.7% of FP helices are fully in the RNAfold
+  MFE, 37.5%/37.3% have at least one pair there; their isolated energies are
+  close to true helices. H2.4 may fail for a principled reason.
 - Infrastructure: Infernal 1.1.5 built from source; Rfam 15.0 CMs pressed;
   cmscan running over 37,343 sequences (bpRNA-90 reps + ArchiveII + TS0 +
   bpRNA-new) on the login node because the CPU partition is fully allocated.
@@ -77,16 +92,21 @@ with v1/v3 and empty/`<4` label policies.
 
 ## Open questions
 
-- Which of the PI's three candidate directions is most novel and feasible?
-- Which datasets and splits give a defensible, leakage-audited benchmark?
-- What is the strongest reproducible baseline achievable under the compute cap?
+- Does the native head recover structure from all-N/shuffle inputs (template
+  prior), and is condition e's id_test gain therefore partly geometric?
+- Does A-energy-fixed H2.4 fail because FP helices are energetically competitive
+  and present in the RNAfold MFE?
+- Does H2.3 show the expected block-boundary false positives once P2-block
+  caches exist?
 
 ## Current blockers
 
-- CPU partition `c-80-255` is fully allocated by other users, so cmscan runs on
-  the login node at low priority with 14 workers.
-- `tools/mmseqs-c/bin/mmseqs` segfaults against this host's glibc; CD-HIT 4.8.1
-  was built instead and is used for the 90% clustering.
+- CPU partition `c-80-255` is fully allocated by other users. The `(s,b)` fit
+  is running there; the all-N/shuffle scoring job is queued behind it. Do not
+  bypass Slurm on the login node for data-scale scoring.
+- The workspace `.git` is read-only under the managed profile; commits are being
+  created through a temporary object/worktree repository and pushed with the
+  repository deploy key.
 
 ## Do not claim
 

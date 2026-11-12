@@ -185,7 +185,7 @@ def main() -> int:
     blob = gzip_deterministic(payload)
     delta_path = out_dir / "labels_v2_delta.json.gz"
     delta_path.write_bytes(blob)
-    summary["delta_file"] = str(delta_path.relative_to(ROOT))
+    summary["delta_file"] = delta_path.relative_to(ROOT).as_posix()
     summary["delta_bytes"] = delta_path.stat().st_size
     summary["delta_bytes_uncompressed"] = len(payload)
     summary["delta_sha256"] = hashlib.sha256(blob).hexdigest()

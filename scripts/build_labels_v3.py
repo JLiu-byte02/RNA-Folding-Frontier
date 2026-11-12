@@ -271,7 +271,7 @@ def main() -> int:
             v3_lt4 += len(p3) < 4
         dropout = v3_lt4 / n_eval if n_eval else 0.0
         eval_audit = {
-            "eval_jsonl": str(eval_path.relative_to(ROOT)),
+            "eval_jsonl": eval_path.relative_to(ROOT).as_posix(),
             "n_records": n_eval,
             "n_keys_missing_from_seed": n_eval - len(eval_seen),
             "n_v1_pairs_mismatch_against_reprojection": len(eval_v1_mismatch),
@@ -318,7 +318,7 @@ def main() -> int:
         "n_v3_zero_pairs": v3_dist.get("0", 0),
         "n_v3_lt4_pairs": v3_dist.get("0", 0) + v3_dist.get("1-3", 0),
         "eval_subset_audit": eval_audit,
-        "pairs_file": str(pairs_path.relative_to(ROOT)),
+        "pairs_file": pairs_path.relative_to(ROOT).as_posix(),
         "pairs_bytes": len(blob),
         "pairs_bytes_uncompressed": len(payload),
         "pairs_sha256": hashlib.sha256(blob).hexdigest(),

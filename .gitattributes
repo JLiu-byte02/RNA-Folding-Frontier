@@ -3,3 +3,18 @@
 # core.autocrlf=true on Windows would otherwise rewrite LF to CRLF on checkout
 # and break hashes that were quoted elsewhere.
 * text=auto eol=lf
+
+# Git's text conversion must never touch opaque artifacts. Without these,
+# a byte pair 0d0a inside a gzip stream is treated as CRLF and the clean
+# filter silently rewrites the file: the worktree and blob hashes stay
+# correct, but `git status` reports a phantom modification and a future
+# `git add` would store the altered bytes.
+*.gz binary
+*.pt binary
+*.pth binary
+*.ckpt binary
+*.safetensors binary
+*.h5 binary
+*.hdf5 binary
+*.npz binary
+*.pkl binary

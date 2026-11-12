@@ -68,6 +68,8 @@ failure threshold. Both reporting invariants pass.
 - `experiments/002_e1prime_runs/p2central_fixed_seed23.json`
 - `experiments/002_e1prime_runs/p2central_fixed_seed41.json`
 - `experiments/002_e1prime_runs/p2central_fixed_summary.json`
+- `experiments/002_e1prime_runs/p2central_ratios_ci.json` (family-bootstrap CIs
+  for the c/d retention ratios) and `docs/p2central_ratios_ci_2026-11-12.md`
 - `scripts/p2central_eval.py`
 - `scripts/aggregate_p2central.py`
 

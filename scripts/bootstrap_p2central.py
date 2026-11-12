@@ -20,6 +20,7 @@ import numpy as np  # noqa: E402
 
 from rff.analysis.block_eval import (  # noqa: E402
     SeqScore,
+    bootstrap_mean,
     bootstrap_ratio,
     common_ids,
     family_means,
@@ -87,9 +88,13 @@ def ratio_for(
     ratio = bootstrap_ratio(
         values, numerator=numerator, denominator_a="a", denominator_e="e"
     )
+    condition_means = {
+        cond: rnd(bootstrap_mean(values[cond])["mean"]) for cond in values
+    }
     return {
         "n_sequences": len(ids),
         "n_families": ratio["n_families"],
+        "condition_family_macro_f1": condition_means,
         "R": {k: rnd(v) if isinstance(v, float) else v for k, v in ratio.items()},
     }
 
@@ -196,6 +201,26 @@ def render_markdown(result: dict) -> str:
                     f"{row['n_families']} | {r['ratio']:.4f} | "
                     f"[{r['lo']:.4f}, {r['hi']:.4f}] | "
                     f"{r['undefined_fraction']:.4f} |"
+                )
+    lines += [
+        "",
+        "## Condition means on the common population",
+        "",
+        "These are the seed-averaged family-macro F1 values that enter each",
+        "ratio, so a reader can see the population restriction directly.",
+        "",
+        "| split | readout | numerator | n | a | numerator | e |",
+        "|---|---|---|---:|---:|---:|---:|",
+    ]
+    for split, blocks in result["splits"].items():
+        for readout in ("kept_kept", "all_pairs"):
+            for cond in ("c", "d"):
+                row = blocks[readout][cond]
+                means = row["condition_family_macro_f1"]
+                lines.append(
+                    f"| {split} | {readout} | {cond} | {row['n_sequences']} | "
+                    f"{means['a']:.4f} | {means[cond]:.4f} | "
+                    f"{means['e']:.4f} |"
                 )
     lines += [
         "",

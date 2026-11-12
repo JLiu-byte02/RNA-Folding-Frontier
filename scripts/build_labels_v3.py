@@ -330,6 +330,7 @@ def main() -> int:
             n = len(records)
             v1_empty = v1_lt4 = v3_ok = v3_empty = v3_lt4 = missing = 0
             v1_known = 0
+            seed_v1_empty = seed_v1_lt4 = 0
             for key, rec in records.items():
                 if "pairs" in rec:
                     v1_known += 1
@@ -340,6 +341,10 @@ def main() -> int:
                 if p3 == "__missing__":
                     missing += 1
                     continue
+                if "pairs" in rec:
+                    p1 = {(int(i), int(j)) for i, j in rec["pairs"]}
+                    seed_v1_empty += not p1
+                    seed_v1_lt4 += len(p1) < 4
                 if p3 is None:
                     continue
                 v3_ok += 1
@@ -348,9 +353,12 @@ def main() -> int:
             per_split[name] = {
                 "n_records": n,
                 "n_ids_missing_from_seed": missing,
+                "n_seed_rows": n - missing,
                 "n_v1_pairs_known": v1_known,
                 "n_v1_empty_truth": v1_empty,
                 "n_v1_lt4_pairs": v1_lt4,
+                "n_v1_empty_truth_seed_rows": seed_v1_empty,
+                "n_v1_lt4_pairs_seed_rows": seed_v1_lt4,
                 "n_v3_parse_ok": v3_ok,
                 "n_v3_parse_errors": n - missing - v3_ok,
                 "n_v3_empty_truth": v3_empty,

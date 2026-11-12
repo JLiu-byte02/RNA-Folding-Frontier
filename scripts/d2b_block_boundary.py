@@ -157,6 +157,8 @@ def main() -> int:
     ap.add_argument("--n-boot", type=int, default=10000)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--min-extra", type=int, default=30)
+    ap.add_argument("--label-version", choices=("v1", "v3"), default="v1")
+    ap.add_argument("--min-true-pairs", type=int, default=0)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -186,13 +188,23 @@ def main() -> int:
     )
     n_skipped = 0
     n_extra_total = 0
+    n_excluded_below_min = 0
+    n_excluded_parse = 0
+    truth_key = "truth" if args.label_version == "v1" else "truth_v3"
 
     for rid in common:
         seq = seqs.get(rid)
         if seq is None:
             n_skipped += 1
             continue
-        truth = {tuple(p) for p in c_rows[rid]["truth"]}
+        raw_truth = c_rows[rid][truth_key]
+        if raw_truth is None:
+            n_excluded_parse += 1
+            continue
+        if len(raw_truth) < args.min_true_pairs:
+            n_excluded_below_min += 1
+            continue
+        truth = {tuple(p) for p in raw_truth}
         fam = c_rows[rid]["family"]
 
         def pairs_of(row, length: int) -> set[tuple[int, int]]:
@@ -269,8 +281,17 @@ def main() -> int:
             "threshold": args.threshold,
             "mutually_native": "j in W(i) and i in W(j); W(i) = block(i) +/- flank",
         },
-        "n_sequences": len(common) - n_skipped,
+        "n_sequences": len(common)
+        - n_skipped
+        - n_excluded_below_min
+        - n_excluded_parse,
         "n_sequences_without_seq": n_skipped,
+        "label_policy": {
+            "version": args.label_version,
+            "min_true_pairs": args.min_true_pairs,
+            "n_excluded_below_min": n_excluded_below_min,
+            "n_excluded_label_parse_failure": n_excluded_parse,
+        },
         "n_extra_fp": extra_n,
         "H2_3": {
             "extra_boundary_frac": extra_frac if extra_n else None,

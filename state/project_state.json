@@ -29,7 +29,7 @@
   "blockers": [],
   "running_jobs": {
     "energy_fit": 14662,
-    "seqfree_score": 14668
+    "seqfree_score": 14710
   },
   "remote_head": "03f49f4",
   "artifacts": {

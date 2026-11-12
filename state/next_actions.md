@@ -60,6 +60,8 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
 - [ ] P2-block cache/H2.3 (~20 GPU-h) only after the template controls are read.
       The per-split cache template is ready at
       `scripts/jobs/p2_block_split.sbatch`; do not submit yet.
+      The dependent H2.3 template is ready at
+      `scripts/jobs/p2_block_eval_split.sbatch`.
 
 ## Standing
 

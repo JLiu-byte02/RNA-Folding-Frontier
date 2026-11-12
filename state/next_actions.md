@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-12 15:25 (after A6.1 and v3 per-split counts)
+Updated: 2026-11-12 16:35 (after D1/K1/D2 completion)
 
 The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
 Amendments 1–8, and `state/amendments.lock.json`. Amendment 8 supersedes the
@@ -29,15 +29,23 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
 
 ## Running now
 
-- [ ] D1 seeds 17/23/41, four label policies (`v1all`, `v1nonempty`, `v3all`,
-      `v3primary`), both splits.
-- [ ] K1 depends on all three D1 jobs.
-- [ ] D2 H2.1/H2.2 depends on D1 seed17.
+- [x] D1 seeds 17/23/41, four label policies plus nested-truth primary.
+- [x] K1 full-truth and nested-truth; neither fires.
+- [x] D2 H2.1/H2.2 on seed17; H2.2 passes strongly, H2.1 confounded.
+- [ ] D2 length-normalised H2.1 sensitivity (job submitted; SSH transiently
+      reset, result not yet collected).
 
 ## Immediate local
 
-- [ ] Pull D1/K1/D2 results, archive them, and prepare Round 4i with the v3
-      parse rate, eval-subset counts, and the A6.1 provenance result first.
+- [ ] Commit/push the uncommitted D1/K1/D2 JSONs and
+      `docs/d1_k1_d2_2026-11-12.md`. The workspace `.git` is read-only and the
+      escalation approval review is timing out; retry when the approval channel
+      recovers.
+- [ ] Reopen Claude once ZoogVPN has a non-China IP. The current tab redirects
+      to `claude.com/app-unavailable-in-region`; do not change VPN settings
+      without user approval.
+- [ ] Prepare Round 4i with the v3 parse rate, eval-subset counts, A6.1
+      provenance, D1/K1 and D2 in that order.
 - [ ] Record the PI's Round 4i ruling in a transcript and `docs/decision_log.md`.
 - [ ] Keep probing with `scripts/remote.py doctor` plus an authenticated command;
       the public `:441` probe is not a liveness test.

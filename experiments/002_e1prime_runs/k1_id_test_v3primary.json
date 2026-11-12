@@ -1,0 +1,33 @@
+{
+  "metric": "oracle threshold, 80-299 nt, id_test, v3primary",
+  "band": [
+    80,
+    300
+  ],
+  "arms": {
+    "bare": {
+      "delta": 0.064,
+      "lo": 0.0116,
+      "hi": 0.1176,
+      "n_families": 113,
+      "frac_le_0": 0.0085
+    },
+    "partner": {
+      "delta": 0.0734,
+      "lo": 0.0177,
+      "hi": 0.1291,
+      "n_families": 113,
+      "frac_le_0": 0.0051
+    },
+    "nested": {
+      "delta": 0.0821,
+      "lo": 0.0266,
+      "hi": 0.1371,
+      "n_families": 113,
+      "frac_le_0": 0.0019
+    }
+  },
+  "k1_fires": false,
+  "rule": "drop the 'distal context is a net-negative prior' reading iff partner-arm e-a < 0.01 and the 95% CI includes 0",
+  "verdict": "K1 does not fire - the gain survives an oracle cut"
+}

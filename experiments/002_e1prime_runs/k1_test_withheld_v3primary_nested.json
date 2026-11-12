@@ -1,0 +1,33 @@
+{
+  "metric": "nested-truth primary F1, oracle threshold, 80-299 nt, test_withheld, v3primary_nested",
+  "band": [
+    80,
+    300
+  ],
+  "arms": {
+    "bare": {
+      "delta": 0.0058,
+      "lo": -0.0232,
+      "hi": 0.0346,
+      "n_families": 311,
+      "frac_le_0": 0.3472
+    },
+    "partner": {
+      "delta": 0.012,
+      "lo": -0.0169,
+      "hi": 0.0412,
+      "n_families": 311,
+      "frac_le_0": 0.2095
+    },
+    "nested": {
+      "delta": 0.0198,
+      "lo": -0.0079,
+      "hi": 0.0475,
+      "n_families": 311,
+      "frac_le_0": 0.0768
+    }
+  },
+  "k1_fires": false,
+  "rule": "drop the 'distal context is a net-negative prior' reading iff partner-arm e-a < 0.01 and the 95% CI includes 0",
+  "verdict": "K1 does not fire - the gain survives an oracle cut"
+}

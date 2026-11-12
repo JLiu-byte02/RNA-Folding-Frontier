@@ -1,8 +1,8 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T14:45:00+08:00",
-  "phase": "labels-v3-frozen-cluster-restored",
+  "updated_at": "2026-11-12T16:35:00+08:00",
+  "phase": "v3-diagnostics-complete",
   "cycle": 5,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
@@ -20,13 +20,16 @@
     "rate_limit_reset_at": null
   },
   "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics on v3 labels",
-  "active_experiment": "A6.1 remote provenance and v3 per-split counts; then D1/K1 on P2-central dumps",
+  "active_experiment": "D1/K1/D2 complete on v3 labels; H2.1 normalised sensitivity pending; Claude blocked by VPN region",
   "open_questions": [
     "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
     "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
-  "blockers": [],
+  "blockers": [
+    "ZoogVPN is stuck at 'connecting' and the local IP remains in China; Claude redirects to https://claude.com/app-unavailable-in-region. Do not change VPN settings without user approval.",
+    "The workspace .git is read-only under the current managed permission profile. git add/commit/push require escalation, and the automatic approval review is timing out. All uncommitted results are present in the workspace; no data loss."
+  ],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],

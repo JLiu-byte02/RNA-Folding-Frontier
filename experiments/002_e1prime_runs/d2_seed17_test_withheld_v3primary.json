@@ -1,0 +1,67 @@
+{
+  "a_test_withheld": {
+    "n_sequences": 16163,
+    "label_policy": {
+      "version": "v3",
+      "min_true_pairs": 4,
+      "n_input": 16793,
+      "n_excluded_below_min": 630,
+      "n_excluded_label_parse_failure": 0
+    },
+    "n_sequences_without_seq": 0,
+    "decoder": "bare threshold 0.5",
+    "H2_1": {
+      "long_range_definition": "|i-j| > 128",
+      "mean_fp_per_sequence_80_149": 0.052,
+      "n_sequences_80_149": 8106,
+      "mean_fp_per_sequence_ge150": 7.6178,
+      "n_sequences_ge150": 4091,
+      "ratio_ge150_over_80_149": 146.4962,
+      "bootstrap_ratio": {
+        "ratio": 146.4873,
+        "lo": 53.3063,
+        "hi": 453.3529,
+        "n_families": 327
+      },
+      "passes_2x_rule": true
+    },
+    "H2_2": {
+      "min_helix": 4,
+      "n_long_range_fp": 16942,
+      "observed_frac": 0.8385,
+      "n_null_pairs": 16921,
+      "null_frac": 0.2208,
+      "bootstrap_ratio": {
+        "ratio": 3.7967,
+        "lo": 3.4497,
+        "hi": 4.18,
+        "n_families": 86
+      },
+      "ratio": 3.7967,
+      "passes_2x_rule": true,
+      "null_definition": "random canonical pair with the same |i-j| inside the same sequence, not present in the true structure"
+    },
+    "exploratory_fp_by_distance": {
+      "d32-128": 112389,
+      "d<32": 213137,
+      "d>128": 16942
+    },
+    "exploratory_region_counts": {
+      "both_kept": {
+        "tp": 124622,
+        "fp": 109299,
+        "fn": 34451
+      },
+      "neither_kept": {
+        "tp": 85772,
+        "fp": 133460,
+        "fn": 49321
+      },
+      "one_kept": {
+        "tp": 82066,
+        "fp": 99709,
+        "fn": 49432
+      }
+    }
+  }
+}

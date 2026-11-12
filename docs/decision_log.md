@@ -438,3 +438,33 @@ that do not need the server were built and tested locally.
   a minimum true-pair count at scoring time, and report predictions on excluded
   rows as a separate false-positive diagnostic. Three GPU dump jobs (4 files
   each) finished; three CPU D1 jobs are queued.
+
+## 2026-11-12 16:30 — D1/K1/D2 results on v3 labels
+
+- **Probability dumps were rebuilt, not retrained.** P2-central stored only
+  per-sequence F1, so the three existing heads were run over the existing a/e
+  caches to produce 1,392 id_test and 16,793 withheld dump rows per seed. Each
+  row carries v1 and v3 truth.
+- **Primary D1 (maximum-nested-subset truth, oracle cut, 80–299 nt), three
+  seeds:** id_test partner a .6626 → e .7366 (**+.0740**); withheld partner
+  .6774 → .6894 (**+.0119**). Nested decoder: id_test +.0819; withheld +.0198.
+  Full-truth numbers are nearly identical and remain secondary-style.
+- **The v3 correction raises withheld absolute F1 by about .05** relative to
+  v1-all, confirming the empty-truth rows were depressing the headline. It
+  reduces the partner e−a effect from +.0157 (v1-all) to +.0119 (v3 primary),
+  but does not remove it.
+- **K1 does not fire.** In the primary nested-truth run, the partner delta is
+  +.0740 [.0182, .1303] on id_test and +.0119 [−.0169, .0412] on withheld.
+  The rule requires delta < .01 plus a CI containing 0; the withheld point
+  estimate is just above .01 even though its interval contains 0. The honest
+  reading is a large id_test effect and a weak, not statistically resolved,
+  withheld effect.
+- **D2 H2.2 passes strongly:** for seed 17 condition a at threshold .5, 81.0%
+  (id_test) and 83.9% (withheld) of long-range false positives lie in a >=4-pair
+  canonical stack, versus 18.9% / 22.1% in the distance-matched null; ratios
+  4.29 [3.77, 5.11] and 3.80 [3.45, 4.18].
+- **D2 H2.1 is confounded:** the pre-registered raw long-range FP count per
+  sequence gives enormous ratios (235.6 / 146.5), but longer sequences have far
+  more candidate pairs. A length/candidate-normalised exploratory sensitivity
+  was added; H2.1 must not be described as a length effect until that result is
+  reported.

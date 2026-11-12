@@ -46,3 +46,15 @@ greedy nested matching on fixed FM pair scores? — never depended on “e helps
 It remains a standalone question, motivated by H2.2 and the helix-energetics
 check. It is not launched until the corrected P2-central table has been seen by
 the PI.
+
+## 2026-11-12 — Round 4k: P2-block becomes the decisive D1 test
+
+P2-central is exploratory because one forward pass cannot give every position
+its own native flank. The decisive test is **P3 train-and-test**: train separate
+heads on condition a, an e-block cache, and a b-block cache, then evaluate each
+on the same condition in withheld. The D1-core rule, the H3 test-time estimand,
+the c dose-response bins, and the `(s,b)`/H2.4 order are frozen in
+`experiments/001_e1prime/AMENDMENT_10.md` before any block cache is read.
+
+The near-duplicate positive control is deferred until after P3, not cancelled.
+`test_novel` remains embargoed until Amendment 10's outcomes are recorded.

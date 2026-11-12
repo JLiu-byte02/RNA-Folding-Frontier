@@ -1,11 +1,12 @@
 # Next Actions
 
-Updated: 2026-11-12 19:15 (after Claude Round 4j correction)
+Updated: 2026-11-12 21:20 (after Claude Round 4k ruling)
 
 The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
-Amendments 1–8, and `state/amendments.lock.json`. Amendment 8 supersedes the
+Amendments 1–10, and `state/amendments.lock.json`. Amendment 8 supersedes the
 label clause of Amendment 7: Rfam seed primary **and** secondary labels are
-`labels_v3`; v1/v2 are provenance only.
+`labels_v3`; v1/v2 are provenance only. Amendment 10 pre-registers P2-block,
+P3, H3, and the D1-core rule.
 
 ## Completed this round
 
@@ -26,16 +27,22 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
       (20.75%); v3 primary excludes 341 (2.96%). `test_novel` excludes 8.57%.
 - [x] P2 probability dumps for conditions a/e, 3 seeds, both splits completed;
       each dump carries v1 and v3 truth.
+- [x] All three corrected condition-a heads retrained (`runs/p2fix_seed*`).
+- [x] Corrected P2-central a–e table completed; invariants pass.
+- [x] Amendment 10 written and hashed `5ec10662…` before any P2-block cache
+      was read.
 
 ## Running now
 
 - [x] `pair_prf` zero-TP bug fixed and regression-tested.
 - [x] Amendment 9 pinned, scorer audit table written, E0/T4/Turner control
       audited.
-- [x] condition-a head seed17 retrained under corrected selection.
-- [ ] condition-a head seed23 retraining (job 14792), then seed41.
-- [ ] corrected P2-central a–e with the new heads; wait for PI before H2.4 or
-      P2-block.
+- [ ] Build P2-block test caches for b/c/d/e on id_test/withheld, then score
+      a–e at fixed 0.5 and compute H3.
+- [ ] Build train caches for b-block and e-block, train P3 heads (3 seeds each),
+      and compute the D1-core verdict on withheld.
+- [ ] CPU in parallel: dump p2fix_seed17 train logits, fit/freeze `(s,b)`,
+      record D2C FP-helix expectation, then H2.4.
 
 ## Immediate local
 
@@ -43,18 +50,18 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
       withdrawn.
 - [x] Corrected D1/K1/template/crosscheck artifacts pushed; the workspace
       `.git` remains read-only, so commits use the temp-object workaround.
+- [x] Round 4k reply archived; P2-block and P3 authorized.
 - [ ] Keep probing with `scripts/remote.py doctor` plus an authenticated command;
       the public `:441` probe is not a liveness test.
 
-## Next after retraining
+## Next
 
-- [ ] Dump native-head probabilities for P2-central a–e on id_test/withheld.
-- [ ] Score v3 nested primary at fixed 0.5 and oracle thresholds; report
-      kept–kept, all-pairs and pooled micro F1 for every condition.
+- [ ] P2-block test-time table a–e on id_test/withheld, with H3 ratios and CIs.
+- [ ] P3 train-and-test table a/e-block/b-block, with the D1-core verdict.
+- [ ] Bootstrap CIs for the corrected P2-central retention ratios.
+- [ ] H3 dose-response by homolog identity bin.
 - [ ] Enforce macro/micro ±.15 and shuffle-floor ≤.05 reporting invariants.
-- [ ] After the PI sees corrected P2-central: P2-block + positive control, then
-      H2.4 as a standalone decoder question.
-- [ ] Restart `(s,b)` fit only with the new heads; freeze/hash before H2.4.
+- [ ] H2.4 only after the `(s,b)` freeze is committed.
 
 ## Standing
 

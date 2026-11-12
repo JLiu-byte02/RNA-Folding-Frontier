@@ -39,3 +39,21 @@ def test_eval_subset_is_repairable_under_v3():
     assert audit["n_v3_lt4_pairs"] == 0
     assert audit["n_excluded_by_lt4_rule"] == 0
     assert audit["lt4_gate_exceeded_10pct"] is False
+
+
+def test_per_split_counts_match_the_server_membership_files():
+    summary = json.loads(
+        (ROOT / "experiments/011_labels_v3/labels_v3_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    per = summary["per_split"]
+    novel = per["test_novel.jsonl"]
+    withheld = per["test_withheld.jsonl"]
+    assert novel["n_records"] == 42_873
+    assert novel["n_v1_empty_truth"] == 10_470
+    assert novel["n_v3_lt4_pairs"] == 3_675
+    assert novel["excluded_fraction"] < 0.10
+    assert withheld["n_records"] == 17_371
+    assert withheld["n_seed_rows"] == 11_527
+    assert withheld["n_v3_lt4_pairs"] == 341

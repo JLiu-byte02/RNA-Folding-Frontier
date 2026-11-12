@@ -28,6 +28,7 @@ venv/
 # Logs and transient outputs
 experiments/**/logs/
 experiments/**/runs/
+experiments/**/dump_seed*/
 /logs/
 /runs/
 /tools/

@@ -34,7 +34,7 @@ def load_arm(
     root: Path, seed: int, arm: str, split: str, nested: bool
 ) -> dict:
     if arm == "a":
-        path = root / f"dump_p2fix_seed{seed}" / f"a_{split}.jsonl"
+        path = root / f"dump_p3_a_seed{seed}" / f"{split}.jsonl"
     else:
         path = root / f"dump_p3_{arm}_seed{seed}" / f"{split}.jsonl"
     if not path.exists():
@@ -93,7 +93,7 @@ def main() -> int:
         "truth": "v3 all-pairs, >=4 true pairs, threshold 0.5",
         "seeds": args.seeds,
         "arms": {
-            "a": "native full context (p2fix)",
+            "a": "native full context (P3 common split)",
             "e": "e-block trained/tested (P3)",
             "b": "b-block trained/tested (P3)",
         },

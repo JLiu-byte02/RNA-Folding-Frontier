@@ -12,8 +12,9 @@ eventual tables; it contains no result yet.
   (c) retains at least 90% of the a−e difference on withheld, while an
   other-clan donor (d) retains at most 30%.
 - **P3 train-and-test.** Separate heads trained on the train split with
-  full context (a), an e-block cache (approximately a k=32 crop), and a
-  b-block cache. Each is evaluated on the same condition in withheld. D1-core
+  full context (a, retrained on the common split per Amendment 11), an e-block
+  cache (approximately a k=32 crop), and a b-block cache. Each is evaluated on
+  the same condition in withheld. D1-core
   is falsified unless at least one block-trained head beats the a-trained head
   by ≥0.02 family-macro all-pairs F1 with a 95% CI excluding 0.
 
@@ -37,6 +38,8 @@ Train and dump a P3 block arm:
 ```bash
 sbatch scripts/jobs/p3_train_block.sbatch e 17
 sbatch scripts/jobs/p3_dump_block.sbatch e 17
+sbatch scripts/jobs/p3_train_a.sbatch 17
+sbatch scripts/jobs/p3_dump_a.sbatch 17
 ```
 
 Score on CPU:

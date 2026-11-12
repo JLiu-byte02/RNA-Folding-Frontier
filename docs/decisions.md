@@ -58,3 +58,11 @@ the c dose-response bins, and the `(s,b)`/H2.4 order are frozen in
 
 The near-duplicate positive control is deferred until after P3, not cancelled.
 `test_novel` remains embargoed until Amendment 10's outcomes are recorded.
+
+## 2026-11-12 — Amendment 11: P3 condition a is retrained on the common split
+
+The p2fix a heads recorded a 16,774/486 fit/validation split; the P3 b/e heads
+recorded 16,716/544 on the same 17,260 cache ids. Reusing p2fix would make the a
+arm's early-stopping data differ from both block arms. Amendment 11 retrains a
+as `runs/p3_a_seed{17,23,41}` with the current code and cache; the D1-core rule,
+thresholds, and populations are unchanged.

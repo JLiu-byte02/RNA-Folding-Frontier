@@ -50,6 +50,11 @@
       "blob_sha256": "5ec10662d185c78c5b4dab1a0e89e9946a357e2e0a0ec901953b7f68bc44e1f1",
       "first_quoted_in": "pending-commit",
       "note": "Written 2026-11-12 (Round 4k P2-block/P3 rulings). Frozen on first commit; no further edits."
+    },
+    "experiments/001_e1prime/AMENDMENT_11.md": {
+      "blob_sha256": "7c769403196194843a1e5d5b5fe7b2e437b6308fe6c8d1679baa29210fd3c1fc",
+      "first_quoted_in": "pending-commit",
+      "note": "Written 2026-11-12 before D1-core scoring; retrains the P3 a arm on the common split. Frozen on first commit; no further edits."
     }
   }
 }

@@ -36,6 +36,13 @@ def test_pair_prf_zero_overlap_is_not_vacuous():
     assert pair_prf([(0, 5)], [(0, 5)])["f1"] == 1.0
 
 
+def test_old_zero_overlap_convention_is_rejected():
+    # The pre-fix implementation returned 1.0 here because precision+recall==0.
+    result = pair_prf([(0, 5)], [(1, 6)])
+    assert result["tp"] == 0
+    assert result["f1"] == 0.0
+
+
 def test_region_partition_covers_all_pairs():
     reg = Region(100, 165)
     assert reg.where(110, 150) == "both_kept"

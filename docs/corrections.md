@@ -78,3 +78,27 @@ is recorded here and, where it affects data, in a separate versioned artifact.
   rerun D1/K1/template controls and the v3 cross-check, and mark every earlier
   number based on `pair_prf` as invalid until rerun. Frozen amendments are not
   edited.
+
+## 2026-11-12 — Scorer-scope audit table
+
+This table is the Round 4j gate. A number not listed here as unaffected, or
+recomputed below, may not appear in a report.
+
+| artifact / number | scorer | old value | corrected / status |
+|---|---|---|---|
+| E0 ArchiveII vs bpRNA TR0 mean pair-F1 | `pair_prf` | .9191 | **.9195** on the server's 3,370-record ArchiveII mirror; the old value used a 3,966-record mirror. Telomerase .6606 unchanged. Re-run on the frozen E0 archive before a paper number. |
+| E0 ArchiveII vs RNAStrAlign mean pair-F1 | `pair_prf` | .9946 | **.9937** on the 3,370-record mirror; identity 91.2% → 90.1%. Input-version caveat as above. |
+| T4 baseline reproduction, ArchiveII RNAfold | `prf` (not `pair_prf`) | .5198 family-macro / .5407 micro | **unaffected** |
+| Turner-control / independent-scorer crosscheck | `prf` + independent `f1_from_counts` | .5198 / .5407 | **unaffected**; the independent scorer did not use `pair_prf` and did not share the bug. |
+| Pipeline smoke test | `prf` | reported smoke values | **unaffected** (pipeline-only, not a protocol number) |
+| Round 4 P2-central a–e | `pair_prf` | old table | **withdrawn**; corrected table pending new heads |
+| K1 history | `pair_prf` via D1 per-sequence | old e−a positive | **corrected:** e−a ≈ −.31 id_test, ≈ −.30 withheld; CIs entirely below zero |
+| all-N / dinucleotide-shuffle template controls | `pair_prf` | .89 / .90 shuffle | **corrected:** all-N .00055/.000066; shuffle .0162/.0173 |
+| v2/v3 cross-check against bpRNA-1m | `pair_prf` | v2 .8226 / v3 .9152 | **corrected:** v2 .8148 / v3 .9056 |
+| D2 H2.1/H2.2 | `prf` / count arithmetic | H2.2 ≈4×, H2.1 split-dependent | **unaffected** |
+| D2C FP-helix energetics | `prf` counts + ViennaRNA | 26.6%/26.7% in MFE | **unaffected** |
+| Region-stratified D1 | `prf` (not `pair_prf`) | one/neither ≈0 | **unaffected** |
+| labels_v3 parse/agreement counts | no pair scorer | parse 100%, 6,757 v2/v3 differences | **unaffected** |
+
+The P2-central table must be recomputed with the retrained heads (Amendment 9
+§A9.4–A9.5) before it can be quoted.

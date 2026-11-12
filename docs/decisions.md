@@ -24,3 +24,25 @@ anything about what was pre-registered.
 Fix 1): restore the original bytes, move §A4.6 into Amendment 6, keep the history.
 Done — `AMENDMENT_4.md` hashes to `08d6771a…` again and `AMENDMENT_6.md` carries
 the provenance procedure as §A6.1.
+
+## 2026-11-12 — Round 4 P2 verdict withdrawn
+
+The Round 4 P2-central table and the “P2 inverts the prediction” verdict are
+withdrawn. They were computed with `pair_prf`, which scored every zero-TP
+sequence as F1=1.0. The original family-shortcut test is unanswered; it is not
+reversed. Evidence: `docs/corrections.md` and the corrected D1/K1 rerun.
+
+## 2026-11-12 — H2 retired as a mechanism
+
+H2 ("distal context is a net-negative prior") was inferred from the voided P2
+table. After the scorer fix, masking the distal region (condition e) is about
+0.30 F1 worse than native a, not better. The premise is false; H2 is retired as
+a mechanism.
+
+## 2026-11-12 — H2.4 continues as a standalone decoder question
+
+H2.4 — does energy-consistent decoding cut long-range false positives versus
+greedy nested matching on fixed FM pair scores? — never depended on “e helps.”
+It remains a standalone question, motivated by H2.2 and the helix-energetics
+check. It is not launched until the corrected P2-central table has been seen by
+the PI.

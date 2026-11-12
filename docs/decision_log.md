@@ -525,3 +525,24 @@ that do not need the server were built and tested locally.
   `docs/corrections.md`; corrected artifacts overwrite the old D1/K1 JSONs.
   H2/P2-central is no longer supported. The PI must decide whether to stop H2
   and redirect; H2.4 is not run until that ruling.
+
+## 2026-11-12 19:05 — Round 4j: H2 retired, Amendment 9, corrected instrument
+
+- **PI ruling:** the Round 4 P2 verdict is withdrawn, not reversed; H2 is retired
+  as a mechanism because its premise is false; H2.4 continues as a standalone
+  decoder question. Rulings are archived in
+  `docs/claude/transcripts/2026-11-12_round04j_reply.md` and `docs/decisions.md`.
+- **Amendment 9 is pinned** at `a1dae27e…`: zero-TP convention, scorer-scope
+  audit gate, mandatory re-evaluation, retraining of condition-a heads, corrected
+  P2-central protocol, and the macro/micro + shuffle-floor reporting invariants.
+- **Scorer audit:** E0 label discordance was rerun (bpRNA .9195 on 3,370 records;
+  RNAStrAlign .9937; input-version caveat because the old run used 3,966). T4,
+  Turner control and independent-scorer crosscheck use `prf`, not `pair_prf`, and
+  are unaffected; the independent scorer did not share the bug. D2/D2C/region
+  counts are unaffected. The full table is in `docs/corrections.md`.
+- **Retraining:** condition-a native heads are being retrained as seeds 17/23/41
+  under the corrected selection; seed17 is running. Seeds 23/41 hit GPU OOM from
+  concurrent jobs and will be rerun sequentially.
+- **Fit:** the old `(s,b)` fit completed but used the old checkpoints and is
+  cancelled/forbidden for H2.4. H2.4 and P2-block wait for the corrected
+  P2-central table.

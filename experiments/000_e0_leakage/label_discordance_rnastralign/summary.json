@@ -1,24 +1,24 @@
 {
-  "n_archiveii": 3966,
-  "n_exact_duplicate_sequences": 2005,
-  "n_identical_annotations": 1828,
-  "identity_rate": 0.9117,
-  "mean_pair_f1": 0.9946,
+  "n_archiveii": 3370,
+  "n_exact_duplicate_sequences": 1651,
+  "n_identical_annotations": 1488,
+  "identity_rate": 0.9013,
+  "mean_pair_f1": 0.9937,
   "median_pair_f1": 1.0,
   "p10_pair_f1": 1.0,
   "n_f1_below_0.8": 5,
   "n_f1_below_0.5": 0,
   "per_family": {
     "5s": {
-      "n": 852,
-      "mean_pair_f1": 0.991,
+      "n": 743,
+      "mean_pair_f1": 0.9901,
       "median_pair_f1": 1.0,
-      "n_identical": 726
+      "n_identical": 626
     },
     "RNaseP": {
-      "n": 22,
-      "mean_pair_f1": 0.9588,
-      "median_pair_f1": 0.9555,
+      "n": 21,
+      "mean_pair_f1": 0.9596,
+      "median_pair_f1": 0.9565,
       "n_identical": 1
     },
     "grp1": {
@@ -28,22 +28,22 @@
       "n_identical": 0
     },
     "srp": {
-      "n": 601,
-      "mean_pair_f1": 0.999,
+      "n": 427,
+      "mean_pair_f1": 0.9987,
       "median_pair_f1": 1.0,
-      "n_identical": 597
+      "n_identical": 423
     },
     "tRNA": {
-      "n": 97,
-      "mean_pair_f1": 0.9847,
+      "n": 85,
+      "mean_pair_f1": 0.9835,
       "median_pair_f1": 1.0,
-      "n_identical": 77
+      "n_identical": 67
     },
     "tmRNA": {
-      "n": 432,
+      "n": 374,
       "mean_pair_f1": 0.9999,
       "median_pair_f1": 1.0,
-      "n_identical": 427
+      "n_identical": 371
     }
   }
 }

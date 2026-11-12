@@ -76,21 +76,35 @@ def read_split_dir(path: Path) -> dict[str, dict[str, dict]]:
     for split_path in sorted(path.iterdir()):
         if split_path.suffix not in {".jsonl", ".json", ".txt", ".tsv"}:
             continue
+        if split_path.name.startswith("manifest"):
+            continue
         records: dict[str, dict] = {}
         with open(split_path, encoding="utf-8") as fh:
-            for line in fh:
-                line = line.strip()
-                if not line:
-                    continue
-                if line.startswith("{"):
-                    rec = json.loads(line)
-                    value = rec.get("id") or rec.get("name")
-                    if not value:
-                        continue
-                    key = str(value)
+            if split_path.suffix == ".json":
+                payload = json.load(fh)
+                if isinstance(payload, list):
+                    items = [(None, rec) for rec in payload if isinstance(rec, dict)]
+                elif isinstance(payload, dict):
+                    items = list(payload.items())
                 else:
-                    key = line.split("\t")[0]
+                    raise ValueError(f"{split_path}: unsupported JSON topology")
+            else:
+                items = []
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    if line.startswith("{"):
+                        items.append((None, json.loads(line)))
+                    else:
+                        items.append((line.split("\t")[0], {}))
+            for fallback_key, rec in items:
+                if not isinstance(rec, dict):
                     rec = {}
+                value = rec.get("id") or rec.get("name") or fallback_key
+                if not value:
+                    continue
+                key = str(value)
                 if key.startswith("rfam:"):
                     key = key[len("rfam:"):]
                 records[key] = rec

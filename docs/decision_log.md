@@ -469,3 +469,38 @@ that do not need the server were built and tested locally.
   **1.62 on id_test** and **3.89 on withheld**: the trend survives on withheld
   but not on id_test at 2×. H2.1 is split-dependent, not a universal length
   effect.
+
+## 2026-11-12 17:20 — Round 4i: H2 continues, template-prior controls first
+
+- **Claude's ruling** (archived in
+  `docs/claude/transcripts/2026-11-12_round04i_reply.md`): continue H2, but run
+  two cheap controls before the P2-block cache.
+- **Control 1:** region-stratified D1 (a vs e) with F1 for both-kept, one-kept
+  and neither-kept pairs. A nonzero e/neither cell on id_test indicates
+  template fallback.
+- **Control 2:** all-N and whole-sequence dinucleotide-shuffle inputs of the true
+  length through the native head on id_test and withheld. High all-N F1
+  (≥0.3) plus a nonzero neither cell means P2-central e measures a position/
+  length template prior; near-zero all-N supports the spurious-partner reading.
+- **H2 status:** K1 is a near miss (withheld partner Δ=.0119, just above .01;
+  CI includes 0), H2.1 is a partial replication (withheld 3.89× per candidate
+  cell; id_test 1.62×, below 2×), H2.2 is supported (~4×).
+- **H2.4 expectation must be recorded before running:** if false-positive
+  helices are in the RNAfold MFE and have favourable stacking energies, a
+  Turner-consistent decoder may retain them and H2.4 can fail for a principled
+  reason. Add an exploratory RNAeval/MFE check.
+- **No v3 retraining.** Training is bpRNA-only, so v3 changes no training label.
+  Keep the existing head; evaluation already uses the nested subset.
+- **Order:** (1) GPU template controls (~1 h); (2) CPU native-head train-logit
+  dump, fit `(s,b)`, freeze/hash, then H2.4 on id_test/withheld; (3) GPU P2-block
+  cache/H2.3 (~20 h, add all-N condition f if template prior is strong); (4)
+  train-and-test heads and baselines.
+- **v3 cross-check:** match exact sequences between bpRNA-1m Rfam-derived
+  entries and Rfam 15.0 seeds; v3 should beat v2 against the independent bpRNA
+  labels. Inspect 10 v2/v3-disagreeing rows by hand.
+- **FP-helix pre-check completed (seed 17, condition a, v3 primary).**
+  Long-range FP helices have mean isolated stacking energy −2.44 (id_test) and
+  −1.78 (withheld), close to true helices (−2.32 / −1.23). 26.6% / 26.7% of FP
+  helices are fully present in the RNAfold MFE and 37.5% / 37.3% have at least
+  one pair there. A Turner-consistent decoder can therefore retain a meaningful
+  minority of these false positives; record this before H2.4 runs.

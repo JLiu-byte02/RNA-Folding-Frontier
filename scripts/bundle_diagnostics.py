@@ -9,7 +9,13 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PATTERNS = ("d1_seed*.json", "k1_*.json", "d2_seed17_*.json", "d1_summary.json")
+PATTERNS = (
+    "d1_seed*.json",
+    "k1_*.json",
+    "d2_seed17_*.json",
+    "d2c_seed17_*.json",
+    "d1_summary.json",
+)
 
 
 def main() -> int:

@@ -177,6 +177,8 @@ def main() -> int:
     ap.add_argument("--threshold-lo", type=float, default=0.05)
     ap.add_argument("--threshold-hi", type=float, default=0.99)
     ap.add_argument("--threshold-grid", type=int, default=24)
+    ap.add_argument("--label-version", choices=("v1", "v3"), default="v1")
+    ap.add_argument("--min-true-pairs", type=int, default=0)
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--confirmatory",
@@ -206,12 +208,22 @@ def main() -> int:
     rows = read_jsonl(Path(args.dump))
     records = []
     n_skipped = 0
+    n_below_min = 0
+    n_parse_failed = 0
+    truth_key = "truth" if args.label_version == "v1" else "truth_v3"
     for row in rows:
         seq = seqs.get(row["id"])
         if seq is None:
             n_skipped += 1
             continue
-        truth = {tuple(p) for p in row["truth"]}
+        raw_truth = row[truth_key]
+        if raw_truth is None:
+            n_parse_failed += 1
+            continue
+        if len(raw_truth) < args.min_true_pairs:
+            n_below_min += 1
+            continue
+        truth = {tuple(p) for p in raw_truth}
         scored = normalise_scored(row["scored"])
         model, S = make_model(seq, scored, args)
         if args.energy == "vienna":
@@ -389,6 +401,12 @@ def main() -> int:
         "name": args.name or Path(args.dump).stem,
         "n_sequences": len(records),
         "n_sequences_without_seq": n_skipped,
+        "label_policy": {
+            "version": args.label_version,
+            "min_true_pairs": args.min_true_pairs,
+            "n_excluded_below_min": n_below_min,
+            "n_excluded_label_parse_failure": n_parse_failed,
+        },
         "long_range_definition": f"|i-j| > {LONG_RANGE}",
         "dp_config": {
             "hairpin_penalty": args.hp,

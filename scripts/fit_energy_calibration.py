@@ -37,6 +37,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from rff.analysis.labels import max_nested_subset  # noqa: E402
 from rff.analysis.scoring import normalise_scored  # noqa: E402
 from rff.decoders.nn_dp import NEG, logit_score, mask_allowed  # noqa: E402
 
@@ -122,6 +123,9 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-seqs", type=int, default=0, help="0 = all records")
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
+    ap.add_argument("--label-version", choices=("v1", "v3"), default="v3")
+    ap.add_argument("--min-true-pairs", type=int, default=4)
+    ap.add_argument("--truth-mode", choices=("full", "nested"), default="nested")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -133,17 +137,28 @@ def main() -> int:
         rows = [rows[i] for i in sorted(keep)]
 
     items = []
+    n_below_min = 0
+    n_parse_failed = 0
+    truth_key = "truth" if args.label_version == "v1" else "truth_v3"
     for row in rows:
         seq = seqs.get(row["id"])
         if seq is None:
             continue
+        raw_truth = row[truth_key]
+        if raw_truth is None:
+            n_parse_failed += 1
+            continue
+        if len(raw_truth) < args.min_true_pairs:
+            n_below_min += 1
+            continue
+        truth = {tuple(p) for p in raw_truth}
         items.append(
             {
                 "id": row["id"],
                 "family": row["family"],
                 "seq": seq,
                 "scores": dense_scores(normalise_scored(row["scored"]), seq),
-                "truth": {tuple(p) for p in row["truth"]},
+                "truth": max_nested_subset(truth) if args.truth_mode == "nested" else truth,
             }
         )
     if not items:
@@ -179,6 +194,13 @@ def main() -> int:
     report = {
         "status": "fitted; freeze before scoring id_test or withheld (A4.2)",
         "n_sequences": len(items),
+        "label_policy": {
+            "version": args.label_version,
+            "min_true_pairs": args.min_true_pairs,
+            "truth_mode": args.truth_mode,
+            "n_excluded_below_min": n_below_min,
+            "n_excluded_label_parse_failure": n_parse_failed,
+        },
         "folds": args.folds,
         "seed": args.seed,
         "max_seqs": args.max_seqs or None,

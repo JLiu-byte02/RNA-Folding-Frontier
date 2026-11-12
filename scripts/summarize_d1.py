@@ -27,6 +27,7 @@ def main() -> int:
     args = ap.parse_args()
 
     rows: dict[tuple, list[dict]] = defaultdict(list)
+    region_rows: dict[tuple, list[dict]] = defaultdict(list)
     for path in sorted((ROOT / args.dir).glob("d1_seed*.json")):
         match = NAME.search(path.name)
         if not match:
@@ -55,6 +56,18 @@ def main() -> int:
                         "oracle_boundary": oracle.get("boundary"),
                     }
                 )
+            for region, values in summary.get("error_split_fixed_nested", {}).get(
+                "by_region", {}
+            ).items():
+                region_rows[(meta["policy"], meta["split"], cond, region)].append(
+                    {
+                        "seed": int(meta["seed"]),
+                        "f1": values.get("f1"),
+                        "tp": values.get("tp"),
+                        "fp": values.get("fp"),
+                        "fn": values.get("fn"),
+                    }
+                )
 
     table: dict[str, dict] = {}
     for key, values in sorted(rows.items()):
@@ -76,10 +89,20 @@ def main() -> int:
                 round(e - a, 6) if a is not None and e is not None else None
             )
 
+    region_table: dict[str, dict] = {}
+    for key, values in sorted(region_rows.items()):
+        policy, split, cond, region = key
+        f1s = [v["f1"] for v in values if v["f1"] is not None]
+        region_table[f"{policy}|{split}|{cond}|{region}"] = {
+            "seeds": {str(v["seed"]): v for v in values},
+            "mean_f1": round(sum(f1s) / len(f1s), 6) if f1s else None,
+        }
+
     out = {
         "description": "D1 family-macro F1 (80-299 nt); oracle cut per condition/decoder/band",
         "table": table,
         "mean_delta_e_minus_a": deltas,
+        "region_f1_fixed_nested": region_table,
     }
     path = ROOT / args.out
     path.parent.mkdir(parents=True, exist_ok=True)

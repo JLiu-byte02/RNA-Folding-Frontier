@@ -1,0 +1,27 @@
+{
+  "fp_helices": {
+    "mean": -1.7767,
+    "median": -1.31,
+    "n": 3807,
+    "p10": -7.81,
+    "p90": 3.8
+  },
+  "fp_helix_any_pair_in_mfe": 1421,
+  "fp_helix_any_pair_in_mfe_fraction": 0.3733,
+  "fp_helix_fully_in_mfe_fraction": 0.2671,
+  "fp_helix_fully_in_rnafold_mfe": 1017,
+  "helix_definition": "contiguous canonical stack of >=4 pairs",
+  "long_range_definition": "|i-j| > 128",
+  "n_fp_helices": 3807,
+  "n_rows_scored": 16163,
+  "n_sequences_missing": 0,
+  "name": "a_test_withheld",
+  "split": "splits/s1prime_filtered/test_withheld.jsonl",
+  "true_helices": {
+    "mean": -1.2296,
+    "median": -0.455,
+    "n": 3536,
+    "p10": -7.91,
+    "p90": 4.53
+  }
+}

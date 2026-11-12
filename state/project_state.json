@@ -1,8 +1,8 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T16:35:00+08:00",
-  "phase": "v3-diagnostics-complete",
+  "updated_at": "2026-11-12T17:25:00+08:00",
+  "phase": "h2-template-controls-running",
   "cycle": 5,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
@@ -20,16 +20,13 @@
     "rate_limit_reset_at": null
   },
   "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics on v3 labels",
-  "active_experiment": "D1/K1/D2 complete on v3 labels; H2.1 normalised sensitivity pending; Claude blocked by VPN region",
+  "active_experiment": "Round 4i template controls: all-N/shuffle dumps, train logits for (s,b), H2.4 after fit",
   "open_questions": [
     "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
     "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
-  "blockers": [
-    "ZoogVPN is stuck at 'connecting' and the local IP remains in China; Claude redirects to https://claude.com/app-unavailable-in-region. Do not change VPN settings without user approval.",
-    "The workspace .git is read-only under the current managed permission profile. git add/commit/push require escalation, and the automatic approval review is timing out. All uncommitted results are present in the workspace; no data loss."
-  ],
+  "blockers": [],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
@@ -47,6 +44,9 @@
       "experiments/011_labels_v3/labels_v3_pairs.json.gz",
       "experiments/011_labels_v3/labels_v3_summary.json",
       "experiments/006_lock_basis/lock_basis_check_round4h.json",
+      "docs/d1_k1_d2_2026-11-12.md",
+      "docs/claude/transcripts/2026-11-12_round04i_reply.md",
+      "experiments/011_labels_v3/v2_v3_bprna_crosscheck.json",
       "docs/claude/transcripts/2026-11-12_round04_decisions.md",
       "docs/claude/transcripts/2026-11-12_round04h_reply.md",
       "docs/network_diagnosis_2026-11-12.md"

@@ -189,6 +189,10 @@ def main() -> int:
             continue
         short: dict[str, list[float]] = defaultdict(list)  # 80-149
         long: dict[str, list[float]] = defaultdict(list)  # >=150
+        short_per_100: dict[str, list[float]] = defaultdict(list)
+        long_per_100: dict[str, list[float]] = defaultdict(list)
+        short_per_1k_cells: dict[str, list[float]] = defaultdict(list)
+        long_per_1k_cells: dict[str, list[float]] = defaultdict(list)
         h22: dict[str, dict[str, float]] = defaultdict(
             lambda: {"hits_obs": 0, "n_obs": 0, "hits_null": 0, "n_null": 0}
         )
@@ -222,8 +226,18 @@ def main() -> int:
             long_fps = [p for p in (pred - truth) if abs(p[0] - p[1]) > LONG_RANGE]
             if 80 <= len(seq) < 150:
                 short[fam].append(len(long_fps))
+                short_per_100[fam].append(100.0 * len(long_fps) / len(seq))
+                n_long_cells = max(0, (len(seq) - 128) * (len(seq) - 129) // 2)
+                short_per_1k_cells[fam].append(
+                    1000.0 * len(long_fps) / max(1, n_long_cells)
+                )
             elif len(seq) >= 150:
                 long[fam].append(len(long_fps))
+                long_per_100[fam].append(100.0 * len(long_fps) / len(seq))
+                n_long_cells = max(0, (len(seq) - 128) * (len(seq) - 129) // 2)
+                long_per_1k_cells[fam].append(
+                    1000.0 * len(long_fps) / max(1, n_long_cells)
+                )
 
             kept_lo, kept_hi = row["kept"]
             for i, j in pred - truth:
@@ -282,6 +296,10 @@ def main() -> int:
         h22_ratio = bootstrap_ratio(h22, args.n_boot, args.seed)
         n_obs = sum(v["n_obs"] for v in h22.values())
         n_null = sum(v["n_null"] for v in h22.values())
+        short_per_100_rate = mean_rate(short_per_100)
+        long_per_100_rate = mean_rate(long_per_100)
+        short_cell_rate = mean_rate(short_per_1k_cells)
+        long_cell_rate = mean_rate(long_per_1k_cells)
 
         report[f.stem] = {
             "n_sequences": len(rows) - n_excluded_below_min - n_excluded_parse - n_skipped,
@@ -308,6 +326,27 @@ def main() -> int:
                     args.seed,
                 ),
                 "passes_2x_rule": bool(h21_ratio is not None and h21_ratio >= 2.0),
+            },
+            "exploratory_H2_1_normalised": {
+                "note": (
+                    "not a pre-registered gate; the raw per-sequence count grows "
+                    "with the number of candidate pairs, so these normalisations "
+                    "test whether the length trend survives"
+                ),
+                "mean_fp_per_100nt_80_149": short_per_100_rate,
+                "mean_fp_per_100nt_ge150": long_per_100_rate,
+                "ratio_per_100nt": (
+                    round(long_per_100_rate / short_per_100_rate, 4)
+                    if short_per_100_rate and np.isfinite(short_per_100_rate)
+                    else None
+                ),
+                "mean_fp_per_1000_long_range_cells_80_149": short_cell_rate,
+                "mean_fp_per_1000_long_range_cells_ge150": long_cell_rate,
+                "ratio_per_1000_long_range_cells": (
+                    round(long_cell_rate / short_cell_rate, 4)
+                    if short_cell_rate and np.isfinite(short_cell_rate)
+                    else None
+                ),
             },
             "H2_2": {
                 "min_helix": args.min_helix,

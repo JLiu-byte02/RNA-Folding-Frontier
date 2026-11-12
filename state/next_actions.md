@@ -38,8 +38,8 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
       helices; 26.6%/26.7% fully in RNAfold MFE.
 - [x] v3 cross-check: 37,797 exact-sequence comparisons; v3 F1 .915 vs v2 .823.
 - [ ] all-N and dinucleotide-shuffle native-head controls: dumps complete for
-      all 3 seeds; D1-style scoring job 14668 is queued behind the full CPU
-      partition.
+      all 3 seeds; fast fixed-threshold scoring job 14710 is queued. The slower
+      25-point D1 scoring path was replaced by `score_template_controls.py`.
 - [ ] `(s,b)` coarse fit on the full train split (4.3 CPU-h estimate; job 14662).
 - [ ] H2.4 A-energy fixed on id_test/withheld (depends on fit).
 
@@ -58,6 +58,8 @@ label clause of Amendment 7: Rfam seed primary **and** secondary labels are
       withheld with the fitted values.
 - [ ] If all-N/shuffle F1 is high, add all-N as condition f in P2-block.
 - [ ] P2-block cache/H2.3 (~20 GPU-h) only after the template controls are read.
+      The per-split cache template is ready at
+      `scripts/jobs/p2_block_split.sbatch`; do not submit yet.
 
 ## Standing
 

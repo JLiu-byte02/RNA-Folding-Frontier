@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=rff_h24
-#SBATCH --partition=c-80-255
+#SBATCH --partition=g-3090-2
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --time=08:00:00
@@ -12,8 +12,8 @@ set -euo pipefail
 
 ROOT="/home/junxuanliu/projects/RNA-Folding-Frontier"
 PY="/home/junxuanliu/.conda/envs/rff/bin/python"
-FIT="experiments/002_e1prime_runs/energy_fit_coarse.json"
-DUMP="experiments/002_e1prime_runs/dump_seed17"
+FIT="experiments/002_e1prime_runs/energy_fit_coarse_p2fix.json"
+DUMP="experiments/002_e1prime_runs/dump_p2fix_seed17"
 
 cd "${ROOT}"
 S=$("${PY}" -c "import json; print(json.load(open('${FIT}'))['selected']['s'])")

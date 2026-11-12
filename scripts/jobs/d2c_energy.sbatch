@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=rff_d2c
-#SBATCH --partition=c-80-255
+#SBATCH --partition=g-3090-2
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16G
 #SBATCH --time=04:00:00
@@ -15,7 +15,7 @@ cd "${ROOT}"
 
 for SPLIT in id_test test_withheld; do
   "${PY}" scripts/d2c_helix_energy.py \
-    --dump-dir experiments/002_e1prime_runs/dump_seed17 \
+    --dump-dir experiments/002_e1prime_runs/dump_p2fix_seed17 \
     --split "splits/s1prime_filtered/${SPLIT}.jsonl" \
     --name "a_${SPLIT}" \
     --out "experiments/002_e1prime_runs/d2c_seed17_${SPLIT}_v3primary.json"

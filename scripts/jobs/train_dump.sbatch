@@ -15,6 +15,6 @@ PY="/home/junxuanliu/.conda/envs/rff/bin/python"
 cd "${ROOT}"
 
 "${PY}" scripts/e1prime_dump.py \
-  --checkpoint runs/p2_seed17/best.pt \
-  --out-dir experiments/002_e1prime_runs/dump_seed17 \
-  --eval "train=splits/s1prime_filtered/train.jsonl:data/cache/giga_full_train"
+  --checkpoint runs/p2fix_seed17/best.pt \
+  --out-dir experiments/002_e1prime_runs/dump_p2fix_seed17 \
+  --eval "train=splits/s1prime_filtered/train.jsonl:data/cache/giga_a_train"

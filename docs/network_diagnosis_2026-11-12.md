@@ -159,3 +159,27 @@ maintenance window rather than a configuration drift. There is no client-side
 action left: the next check should be after the school's service window, and the
 question for their administrator is whether the aTrust SDP gateway is down or
 its line endpoint changed.
+
+## Update 14:44 — restored, verified by authentication and command execution
+
+The connection recovered without further local changes. A non-sandboxed
+`python scripts/remote.py doctor` at 14:44 returned TCP connect in 12 ms and a
+21-byte banner, `SSH-2.0-OpenSSH_7.4`. A real login then succeeded:
+
+```
+hostname: master
+user:     junxuanliu
+date:     2026-11-12T14:44:26+0800
+root:     /home/junxuanliu/projects/RNA-Folding-Frontier
+squeue:   no jobs for this user
+```
+
+The public `:441` probe in `scripts/tunnel_watch.py` still reports both WAN
+addresses closed, so that probe is not a reliable liveness test for the aTrust
+redirect path. The authoritative check is `scripts/remote.py doctor` followed by
+a real login. Both passed. No route, VPN, or service configuration was changed.
+
+Remote inventory at recovery: 55 GB under `data/`, split files present, GPU
+partition `g-3090-2` has two idle and two mixed nodes, and the remote project
+directory is **not** a git repository (no `.git`). The latter is a provenance
+gap to close under A6.1, not a connectivity problem.

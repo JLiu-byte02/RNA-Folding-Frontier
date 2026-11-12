@@ -1,9 +1,9 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T01:40:00+08:00",
-  "phase": "diagnostics-first-after-P2-inversion",
-  "cycle": 4,
+  "updated_at": "2026-11-12T14:45:00+08:00",
+  "phase": "labels-v3-frozen-cluster-restored",
+  "cycle": 5,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
     "cluster": "Slurm",
@@ -16,19 +16,17 @@
     "model": "Claude Opus 5.5",
     "effort": "High",
     "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
-    "last_session_file": "docs/claude/transcripts/2026-11-12_round04_decisions.md",
+    "last_session_file": "docs/claude/transcripts/2026-11-12_round04h_reply.md",
     "rate_limit_reset_at": null
   },
-  "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics",
-  "active_experiment": "E1prime-Q1-dumps-then-D1-D2; P2-block cache; train-and-test heads",
+  "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics on v3 labels",
+  "active_experiment": "A6.1 remote provenance and v3 per-split counts; then D1/K1 on P2-central dumps",
   "open_questions": [
     "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
     "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
     "Does a sequence-level split reproduce the family shortcut (positive control)?"
   ],
-  "blockers": [
-    "SSH down after aTrust re-login (01:20): SDP node group now reports \"selectline:no current line\" (zero lines published) instead of one dead line 218.18.235.189:441. Port 441 closed internet-wide, 443 open. School-side SDP outage starting 23:59-00:00; no client action left. Positive-control split + D1/K1/D2 ready to run when it returns."
-  ],
+  "blockers": [],
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
@@ -42,7 +40,12 @@
       "experiments/000_e0_leakage/cmscan_and_split_report.md",
       "experiments/000_e0_leakage/headline_clans/summary.json",
       "experiments/001_e1prime/AMENDMENT_2.md",
+      "experiments/001_e1prime/AMENDMENT_8.md",
+      "experiments/011_labels_v3/labels_v3_pairs.json.gz",
+      "experiments/011_labels_v3/labels_v3_summary.json",
+      "experiments/006_lock_basis/lock_basis_check_round4h.json",
       "docs/claude/transcripts/2026-11-12_round04_decisions.md",
+      "docs/claude/transcripts/2026-11-12_round04h_reply.md",
       "docs/network_diagnosis_2026-11-12.md"
     ]
   }

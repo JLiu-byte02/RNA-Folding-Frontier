@@ -1,49 +1,50 @@
 # Next Actions
 
-Updated: 2026-11-11 (after PI Round 3)
+Updated: 2026-11-12 (after PI Round 4h and Amendment 8)
 
-The pre-registration is now `PREREGISTRATION.md` plus Amendment 1. The amendment,
-not the frozen text, governs: swaps are primary evidence, the k-sweep is
-descriptive, P2 is a test-time intervention while P3/P5 are train-and-test per
-condition.
+The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
+Amendments 1–8, and `state/amendments.lock.json`. Amendment 8 supersedes the
+label clause of Amendment 7: Rfam seed primary **and** secondary labels are
+`labels_v3`; v1/v2 are provenance only.
 
-## Running now
+## Completed this round
 
-- [ ] `cache_emb.sbatch` x3: RiNALMo-giga, full context, on train (17,746),
-      test_withheld (17,371) and id_test (1,402) -> `data/cache/giga_full_*`.
-- [ ] NOHIT relaxed-scan audit (E <= 10, no GA cutoff): report both counts and
-      escalate if training sequences with secondary hits to a test clan exceed
-      0.5%.
+- [x] `labels_v3` pair-level projection: 92,781/92,781 rows parse, sha256
+      `b8fe71ab…`, full map in `experiments/011_labels_v3/`.
+- [x] Eval-subset label audit: v1 463 empty-truth / v3 0 empty / v3 0 `<4`;
+      Amendment 8 exclusion drops 0/2,372 records.
+- [x] Amendment 8 written, hashed `5411a050…`, committed before any primary F1.
+- [x] Fresh-clone CI added; local fresh clone verified all locks against blob
+      bytes and passed 151 tests (1 skipped).
+- [x] All 87 old-greedy failures stored as a replayable regression fixture.
+- [x] Round 4h reply archived; Round 4 numbers relabelled secondary-style.
 
-## Immediate
+## Immediate local
 
-- [ ] Check RNA-FM `position_embedding_type`; if absolute, pass the original
-      `position_ids` or restrict RNA-FM to the swap conditions.
-- [ ] `scripts/build_conditions.py`: conditions b (dinucleotide-shuffled distal),
-      d (other-clan distal), e (pad/mask distal), local window fixed at +/-32 and
-      length preserved. Condition c needs `build_homolog_pool.py`.
-- [ ] Cache giga conditions b/c/d/e (full-length inputs, ~0.2 h each).
-- [ ] Cache giga k=32 crops for the k-arm (train ~4 h), then {8, 128, full}.
-- [ ] P2 head: train decoder B on condition a, 3 seeds; evaluate under a-e on
-      id_test and withheld; record per-position distortion (1 - cos) and clan
-      decodability; regress F1 on both.
-- [ ] Build the canonical test_novel catalogue under Amendment 1.6: 310
-      published-structure families, 2,720 sequences after the 10-per-family cap
-      (above the 150-clan gate); commit its hash before scoring it.
+- [ ] Send Round 4i to the PI, leading with the v3 parse rate and eval-subset
+      counts; attach commit `a9de0a2` and the CI/lock evidence.
+- [ ] Record the PI's Round 4i ruling in a new transcript + `docs/decision_log.md`.
+- [ ] Keep probing the tunnel with `scripts/tunnel_watch.py --once`; do not
+      change network configuration or stop aTrust.
 
-## CPU / development
+## When the cluster returns
 
-- [x] Decoder A core: nearest-neighbour DP with traceback, verified against
-      exhaustive enumeration for n <= 12 (`docs/decoder_a.md`).
-- [ ] Turner parity for decoder A: load `rna_turner2004.par` and match
-      `RNAfold -d0` on 100 sequences. Gate for calling it a physical model.
-- [ ] Withheld label calibration: F1 on the bpRNA vs seed subsets of the same
-      withheld clans.
-- [ ] Fold the bpRNA mirror provenance table into the Round 4 report.
+- [ ] A6.1 provenance: verify the remote worktree, membership-list hashes and
+      `git status`; push any missing frozen split metadata.
+- [ ] Run `scripts/build_labels_v3.py --split-dir splits/s1prime` (or the
+      actual split directory) and record per-split v1-empty / v3-`<4` counts.
+- [ ] D1/D2 on the existing P2-central dumps with v3 labels swapped at scoring
+      time, in both versions: empty-truth rows included and excluded.
+- [ ] K1 with oracle threshold + one-partner decoding on the same dumps, both
+      label versions; if K1 fires it goes on the first line of the report.
+- [ ] A6.1 split provenance must precede any quoted split number.
+- [ ] Recompute the `(s, b)` grid cost on the real train split; if below 24
+      CPU-h, run the A7.4 coarse grid, otherwise use the pre-registered 3,000
+      sequence seed-17 subsample. Freeze and hash `(s, b)` before scoring.
 
 ## Standing
 
-- [ ] Memorization-gap runs need UFold/MXfold2/BPfold checkpoints (the MXfold2
-      repo URL 404'd earlier; find the correct one).
-- [ ] structRFM pretraining manifest and overlap with every test set.
-- [ ] Repository license decision (RiNALMo-giga AGPL vs MIT rest).
+- [ ] Keep `test_novel` embargoed: labels/counts only until H2/P5 are
+      pre-registered and the PI authorises confirmatory scoring.
+- [ ] RiNALMo-giga is AGPL-3.0; repository licence remains undecided.
+- [ ] Baselines and relaxed-scan audit when there is slack.

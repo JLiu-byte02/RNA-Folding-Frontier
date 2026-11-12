@@ -91,8 +91,12 @@ def main() -> int:
     )
     if partner["delta"] is None:
         result["verdict"] = "insufficient families"
+    elif partner["delta"] < 0.0 and partner["hi"] is not None and partner["hi"] < 0.0:
+        result["verdict"] = "e is worse than a; the gain premise is not supported"
     elif fires:
         result["verdict"] = "K1 FIRES - calibration is a sufficient explanation"
+    elif partner["delta"] <= 0.0:
+        result["verdict"] = "no evidence that e helps"
     else:
         result["verdict"] = "K1 does not fire - the gain survives an oracle cut"
     print(json.dumps({k: result[k] for k in ("k1_fires", "verdict")}))

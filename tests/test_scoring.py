@@ -19,12 +19,21 @@ from rff.analysis.scoring import (  # noqa: E402
     prf,
     summarise,
 )
+from rff.analysis.labels import pair_prf  # noqa: E402
 
 
 def test_prf_edges():
     assert prf(0, 0, 0)["f1"] == 1.0
     assert prf(1, 0, 0)["f1"] == 1.0
     assert prf(0, 3, 3)["f1"] == 0.0
+
+
+def test_pair_prf_zero_overlap_is_not_vacuous():
+    assert pair_prf([], [])["f1"] == 1.0
+    assert pair_prf([(0, 5)], [])["f1"] == 0.0
+    assert pair_prf([], [(0, 5)])["f1"] == 0.0
+    assert pair_prf([(0, 5)], [(1, 6)])["f1"] == 0.0
+    assert pair_prf([(0, 5)], [(0, 5)])["f1"] == 1.0
 
 
 def test_region_partition_covers_all_pairs():

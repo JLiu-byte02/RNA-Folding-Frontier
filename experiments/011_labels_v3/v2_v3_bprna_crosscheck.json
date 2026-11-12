@@ -845,11 +845,11 @@
       ]
     }
   ],
-  "mean_v2_f1": 0.822572,
-  "mean_v3_f1": 0.915159,
+  "mean_v2_f1": 0.81482,
+  "mean_v3_f1": 0.905634,
   "n_comparisons": 37797,
   "n_unique_bprna_ids": 34345,
   "n_unique_seed_keys": 36442,
-  "v2_better_count": 2136,
-  "v3_better_count": 5293
+  "v2_better_count": 2156,
+  "v3_better_count": 5240
 }

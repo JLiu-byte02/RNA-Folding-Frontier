@@ -504,3 +504,24 @@ that do not need the server were built and tested locally.
   helices are fully present in the RNAfold MFE and 37.5% / 37.3% have at least
   one pair there. A Turner-consistent decoder can therefore retain a meaningful
   minority of these false positives; record this before H2.4 runs.
+
+## 2026-11-12 18:40 — `pair_prf` bug reverses the e condition story
+
+- **Bug:** `rff.analysis.labels.pair_prf` returned F1=1.0 whenever
+  `precision + recall == 0`, not only for the both-empty vacuous case. Any
+  sequence with zero true positives was therefore scored as perfect.
+- **Found by:** the dinucleotide-shuffle template control produced
+  family-macro F1≈0.89 while its pooled micro F1 was≈0.009. The contradiction
+  exposed zero-TP rows printed as F1=1.0.
+- **Corrected template controls:** all-N family-macro F1 .00055 (id_test) /
+  .000066 (withheld); shuffle .0162/.0173. The earlier .89/.90 was entirely the
+  bug; neither input carries a usable template prior.
+- **Corrected D1/K1 (v3 primary, three seeds):** id_test partner a .5882 → e
+  .2768 (**−.3114**); withheld a .6034 → e .3072 (**−.2962**). Nested-truth
+  withheld is −.2977. The bootstrap CIs are entirely below zero. **The e
+  condition is much worse, not better.** The old e>a result is invalid.
+- **Impact:** D1, K1, template controls, `train_head_s1.py` validation F1, and
+  label-discordance summaries are affected. The error is recorded in
+  `docs/corrections.md`; corrected artifacts overwrite the old D1/K1 JSONs.
+  H2/P2-central is no longer supported. The PI must decide whether to stop H2
+  and redirect; H2.4 is not run until that ruling.

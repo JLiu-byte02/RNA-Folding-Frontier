@@ -1,0 +1,145 @@
+{
+  "description": "fixed 0.5 nested decoder; v3 primary truth; all-N/shuffle controls",
+  "means": {
+    "all_n_id_test": {
+      "mean_family_macro_f1": 0.02062,
+      "n_seeds": 3
+    },
+    "all_n_test_withheld": {
+      "mean_family_macro_f1": 0.013632,
+      "n_seeds": 3
+    },
+    "shuffle_id_test": {
+      "mean_family_macro_f1": 0.892011,
+      "n_seeds": 3
+    },
+    "shuffle_test_withheld": {
+      "mean_family_macro_f1": 0.904266,
+      "n_seeds": 3
+    }
+  },
+  "min_true_pairs": 4,
+  "per_seed": {
+    "seed17|all_n_id_test": {
+      "family_macro_f1": 0.060334,
+      "fn": 42545,
+      "fp": 91,
+      "micro_f1": 0.000281,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 6
+    },
+    "seed17|all_n_test_withheld": {
+      "family_macro_f1": 0.038941,
+      "fn": 425635,
+      "fp": 232,
+      "micro_f1": 0.000136,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 29
+    },
+    "seed17|shuffle_id_test": {
+      "family_macro_f1": 0.894746,
+      "fn": 42187,
+      "fp": 35409,
+      "micro_f1": 0.009295,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 364
+    },
+    "seed17|shuffle_test_withheld": {
+      "family_macro_f1": 0.909876,
+      "fn": 421466,
+      "fp": 357669,
+      "micro_f1": 0.010661,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 4198
+    },
+    "seed23|all_n_id_test": {
+      "family_macro_f1": 0.001525,
+      "fn": 42551,
+      "fp": 6,
+      "micro_f1": 0.0,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 0
+    },
+    "seed23|all_n_test_withheld": {
+      "family_macro_f1": 0.001956,
+      "fn": 425664,
+      "fp": 52,
+      "micro_f1": 0.0,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 0
+    },
+    "seed23|shuffle_id_test": {
+      "family_macro_f1": 0.891457,
+      "fn": 42149,
+      "fp": 44736,
+      "micro_f1": 0.009169,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 402
+    },
+    "seed23|shuffle_test_withheld": {
+      "family_macro_f1": 0.896373,
+      "fn": 421130,
+      "fp": 460164,
+      "micro_f1": 0.010185,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 4534
+    },
+    "seed41|all_n_id_test": {
+      "family_macro_f1": 0.0,
+      "fn": 42551,
+      "fp": 0,
+      "micro_f1": 0.0,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 0
+    },
+    "seed41|all_n_test_withheld": {
+      "family_macro_f1": 0.0,
+      "fn": 425664,
+      "fp": 0,
+      "micro_f1": 0.0,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 0
+    },
+    "seed41|shuffle_id_test": {
+      "family_macro_f1": 0.889829,
+      "fn": 42176,
+      "fp": 44290,
+      "micro_f1": 0.008599,
+      "n_excluded": 105,
+      "n_families": 155,
+      "n_scored": 1287,
+      "tp": 375
+    },
+    "seed41|shuffle_test_withheld": {
+      "family_macro_f1": 0.906549,
+      "fn": 421416,
+      "fp": 451232,
+      "micro_f1": 0.009642,
+      "n_excluded": 630,
+      "n_families": 409,
+      "n_scored": 16163,
+      "tp": 4248
+    }
+  },
+  "threshold": 0.5
+}

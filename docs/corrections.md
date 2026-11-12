@@ -49,3 +49,32 @@ is recorded here and, where it affects data, in a separate versioned artifact.
 - **Found by:** Amendment 6 §A6.2 audit.
 - **Action:** `rff.data.wuss` implements the v2 parser;
   `scripts/build_labels_v2.py` writes the delta artifact. Membership untouched.
+
+## 2026-11-12 — `pair_prf` scored zero-overlap rows as F1=1.0
+
+- **Where:** `src/rff/analysis/labels.py:pair_prf`.
+- **What was wrong:** when `precision + recall == 0` the function returned
+  `f1 = 1.0`. That is correct only for the fully vacuous case where truth and
+  prediction are both empty (`tp + fp + fn == 0`). For non-empty truth and
+  prediction with zero overlap it must return `0.0`.
+- **Consequence:** every sequence with no true positives scored as perfect. The
+  error inflated family-macro F1 and affected, at minimum:
+  - D1 and therefore K1 (per-sequence F1);
+  - the all-N/shuffle template controls;
+  - `train_head_s1.py` / `train_pairhead.py` validation F1 used for model
+    selection;
+  - earlier label-discordance and v2/v3 cross-check F1 summaries.
+- **Found by:** the shuffle control produced family-macro F1 ≈0.89 while its
+  pooled micro F1 was ≈0.009, which is mathematically impossible if both are
+  computed from the same pair counts. A row-level print showed zero TP with F1
+  1.0.
+- **Immediate corrected evidence (template controls):** all-N family-macro F1
+  is ≈0.00055 (id_test) and ≈0.000066 (withheld); the dinucleotide shuffle is
+  ≈0.0162 and ≈0.0173. The earlier 0.89/0.90 was entirely the bug.
+- **Immediate corrected D1 evidence (seed 17, v3 primary):** id_test nested
+  a≈0.58, e≈0.28; withheld v1-all a≈0.55, e≈0.28. The earlier claim that e
+  improves F1 is reversed; masking the distal region hurts.
+- **Action:** fix the edge case, add `test_pair_prf_zero_overlap_is_not_vacuous`,
+  rerun D1/K1/template controls and the v3 cross-check, and mark every earlier
+  number based on `pair_prf` as invalid until rerun. Frozen amendments are not
+  edited.

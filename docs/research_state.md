@@ -1,12 +1,13 @@
 # Research State
 
-Updated: 2026-11-12 17:55
+Updated: 2026-11-12 18:40
 
 ## Phase
 
-`h2-template-controls` — v3 labels and D1/K1/D2 are complete; the native-head
-all-N/shuffle controls and the `(s,b)` fit are in flight. H2 continues, but
-H2.4 waits for a frozen calibration.
+`post-pair-prf-correction` — a scoring bug was found and fixed; D1/K1/template
+controls were rerun. The corrected e condition is much worse than a, so the H2
+premise is falsified as stated. PI redirection is required before any H2.4 or
+P2-block spend.
 
 ## Established facts
 
@@ -29,6 +30,8 @@ H2.4 waits for a frozen calibration.
   (91.2% identical), while ArchiveII vs bpRNA TR0 agree at **0.9191** (46.6%
   identical). Overlap plus label identity is the mechanism that turns leakage
   into F1.
+  **Correction:** those mean-F1 values used `pair_prf` before its zero-TP bug was
+  fixed and must be rerun; the exact-identity percentages are unaffected.
 - **E0c:** Rfam 15.0 has 4,178 families, 147 clans, 463 clan memberships. ArchiveII
   spans 8 clans; tRNA and tmRNA share CL00001, so leave-one-family-out leaks on
   that fold.
@@ -45,17 +48,22 @@ H2.4 waits for a frozen calibration.
   (2.96%) fall below four pairs. In `test_novel`, 10,470/42,873 v1 rows were
   empty and 3,675 (8.57%) fall below four under v3.
 - **v3 cross-check:** 37,797 exact-sequence comparisons against bpRNA-1m give
-  mean pair-F1 .915 for v3 vs .823 for v2; v3 wins 5,293 comparisons and loses
-  2,136. Details in `experiments/011_labels_v3/v2_v3_bprna_crosscheck.json`.
-- **D1 label policy:** primary nested-truth e−a is +.0819 on id_test and +.0198
-  on withheld; partner-arm totals are +.0740 and +.0119. K1 is a near miss on
-  withheld (Δ=.0119, CI contains 0), not support.
+  mean pair-F1 .906 for v3 vs .815 for v2; v3 wins 5,240 comparisons and loses
+  2,156. Details in `experiments/011_labels_v3/v2_v3_bprna_crosscheck.json`.
+- **D1 label policy (corrected after the `pair_prf` fix):** primary nested-truth
+  e−a is **−.3140** on id_test and **−.2977** on withheld; partner-arm totals
+  are −.3110 and −.2962. The confidence intervals are entirely below zero.
+  Masking (e) is substantially worse; the earlier positive e−a was a scoring
+  artifact.
 - **H2.2:** long-range FP helices are about 4× enriched over the null on both
   splits. H2.1 is split-dependent after candidate normalisation (1.62× id_test,
   3.89× withheld).
 - **Template control 1:** condition e's one-kept and neither-kept F1 are near
   zero (one: .018–.024, neither: .006–.009), so it does not invent pairs outside
   the kept window.
+- **Template control 2 (corrected):** all-N family-macro F1 is .00055/.000066;
+  dinucleotide shuffle is .0162/.0173. Neither supports a template prior. The
+  earlier .89/.90 shuffle result was the `pair_prf` bug.
 - **FP-helix energetics:** 26.6%/26.7% of FP helices are fully in the RNAfold
   MFE, 37.5%/37.3% have at least one pair there; their isolated energies are
   close to true helices. H2.4 may fail for a principled reason.
@@ -114,4 +122,7 @@ H2.4 waits for a frozen calibration.
   committed artifact in this repository.
 - That BPfold calls ArchiveII out-of-distribution: they call it a *sequence-wise*
   dataset and reserve "cross-family" for Rfam 12.3-14.10.
+- That masking the distal region improves prediction. The corrected D1/K1
+  results say the opposite by about .30 F1. The old positive result was a
+  `pair_prf` bug artifact.
 

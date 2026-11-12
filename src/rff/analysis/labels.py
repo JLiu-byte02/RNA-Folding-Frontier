@@ -22,11 +22,14 @@ def pair_prf(
     fn = len(t - p)
     precision = tp / (tp + fp) if tp + fp else 1.0
     recall = tp / (tp + fn) if tp + fn else 1.0
-    f1 = (
-        2 * precision * recall / (precision + recall)
-        if precision + recall
-        else 1.0
-    )
+    if tp + fp + fn == 0:
+        # Vacuous case: both truth and prediction are empty.
+        f1 = 1.0
+    elif precision + recall == 0:
+        # Non-empty truth and prediction with no overlap.
+        f1 = 0.0
+    else:
+        f1 = 2 * precision * recall / (precision + recall)
     return {
         "tp": tp,
         "fp": fp,

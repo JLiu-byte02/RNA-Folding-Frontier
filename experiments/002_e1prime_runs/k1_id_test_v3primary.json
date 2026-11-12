@@ -6,28 +6,28 @@
   ],
   "arms": {
     "bare": {
-      "delta": 0.064,
-      "lo": 0.0116,
-      "hi": 0.1176,
+      "delta": -0.3123,
+      "lo": -0.358,
+      "hi": -0.2675,
       "n_families": 113,
-      "frac_le_0": 0.0085
+      "frac_le_0": 1.0
     },
     "partner": {
-      "delta": 0.0734,
-      "lo": 0.0177,
-      "hi": 0.1291,
+      "delta": -0.3114,
+      "lo": -0.3577,
+      "hi": -0.2649,
       "n_families": 113,
-      "frac_le_0": 0.0051
+      "frac_le_0": 1.0
     },
     "nested": {
-      "delta": 0.0821,
-      "lo": 0.0266,
-      "hi": 0.1371,
+      "delta": -0.3132,
+      "lo": -0.3601,
+      "hi": -0.2664,
       "n_families": 113,
-      "frac_le_0": 0.0019
+      "frac_le_0": 1.0
     }
   },
   "k1_fires": false,
   "rule": "drop the 'distal context is a net-negative prior' reading iff partner-arm e-a < 0.01 and the 95% CI includes 0",
-  "verdict": "K1 does not fire - the gain survives an oracle cut"
+  "verdict": "e is worse than a; the gain premise is not supported"
 }

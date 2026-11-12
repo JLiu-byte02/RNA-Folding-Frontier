@@ -25,6 +25,15 @@
       },
       "passes_2x_rule": true
     },
+    "exploratory_H2_1_normalised": {
+      "note": "not a pre-registered gate; the raw per-sequence count grows with the number of candidate pairs, so these normalisations test whether the length trend survives",
+      "mean_fp_per_100nt_80_149": 0.0438,
+      "mean_fp_per_100nt_ge150": 2.0467,
+      "ratio_per_100nt": 46.7283,
+      "mean_fp_per_1000_long_range_cells_80_149": 0.5,
+      "mean_fp_per_1000_long_range_cells_ge150": 1.9927,
+      "ratio_per_1000_long_range_cells": 3.9854
+    },
     "H2_2": {
       "min_helix": 4,
       "n_long_range_fp": 19884,

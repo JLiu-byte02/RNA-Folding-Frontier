@@ -42801,7 +42801,7 @@
       "sha256": "480c785989f761dc69be18fea5aaf4f54959fab50fc75a7c91bef491147583ba"
     },
     "experiments/002_e1prime_runs/d2_seed17_id_test_v1all.json": {
-      "bytes": 1620,
+      "bytes": 2119,
       "content": {
         "a_id_test": {
           "H2_1": {
@@ -42836,6 +42836,15 @@
             "ratio": 4.2889
           },
           "decoder": "bare threshold 0.5",
+          "exploratory_H2_1_normalised": {
+            "mean_fp_per_1000_long_range_cells_80_149": 0.6278,
+            "mean_fp_per_1000_long_range_cells_ge150": 1.0949,
+            "mean_fp_per_100nt_80_149": 0.0391,
+            "mean_fp_per_100nt_ge150": 3.2504,
+            "note": "not a pre-registered gate; the raw per-sequence count grows with the number of candidate pairs, so these normalisations test whether the length trend survives",
+            "ratio_per_1000_long_range_cells": 1.744,
+            "ratio_per_100nt": 83.1304
+          },
           "exploratory_fp_by_distance": {
             "d32-128": 14446,
             "d<32": 21377,
@@ -42869,10 +42878,10 @@
           "n_sequences_without_seq": 0
         }
       },
-      "sha256": "3a7d93e1af7b1c4f475ea61de430e2e4614e6078411e7e8bdd64b1f0d18d678f"
+      "sha256": "1e447fbaa34ba577cd33a07dcff495addeecb931110ee942e1efdc762ec26056"
     },
     "experiments/002_e1prime_runs/d2_seed17_id_test_v3primary.json": {
-      "bytes": 1621,
+      "bytes": 2121,
       "content": {
         "a_id_test": {
           "H2_1": {
@@ -42907,6 +42916,15 @@
             "ratio": 4.2889
           },
           "decoder": "bare threshold 0.5",
+          "exploratory_H2_1_normalised": {
+            "mean_fp_per_1000_long_range_cells_80_149": 0.6766,
+            "mean_fp_per_1000_long_range_cells_ge150": 1.0949,
+            "mean_fp_per_100nt_80_149": 0.0422,
+            "mean_fp_per_100nt_ge150": 3.2504,
+            "note": "not a pre-registered gate; the raw per-sequence count grows with the number of candidate pairs, so these normalisations test whether the length trend survives",
+            "ratio_per_1000_long_range_cells": 1.6182,
+            "ratio_per_100nt": 77.0237
+          },
           "exploratory_fp_by_distance": {
             "d32-128": 14288,
             "d<32": 20785,
@@ -42940,10 +42958,10 @@
           "n_sequences_without_seq": 0
         }
       },
-      "sha256": "168fa1635e7a5189414f1766c24d3b49155b8f88f60d950868e25fe8c92475c8"
+      "sha256": "dd8f07e1dea0a744700b13905505be5c06b4e88d4ac36776c426c603ca82c7fa"
     },
     "experiments/002_e1prime_runs/d2_seed17_test_withheld_v1all.json": {
-      "bytes": 1643,
+      "bytes": 2140,
       "content": {
         "a_test_withheld": {
           "H2_1": {
@@ -42978,6 +42996,15 @@
             "ratio": 3.9688
           },
           "decoder": "bare threshold 0.5",
+          "exploratory_H2_1_normalised": {
+            "mean_fp_per_1000_long_range_cells_80_149": 0.5,
+            "mean_fp_per_1000_long_range_cells_ge150": 1.9927,
+            "mean_fp_per_100nt_80_149": 0.0438,
+            "mean_fp_per_100nt_ge150": 2.0467,
+            "note": "not a pre-registered gate; the raw per-sequence count grows with the number of candidate pairs, so these normalisations test whether the length trend survives",
+            "ratio_per_1000_long_range_cells": 3.9854,
+            "ratio_per_100nt": 46.7283
+          },
           "exploratory_fp_by_distance": {
             "d32-128": 127844,
             "d<32": 243786,
@@ -43011,10 +43038,10 @@
           "n_sequences_without_seq": 0
         }
       },
-      "sha256": "8090fb97b5644253d2600b3115e7edc18554acfdce8276cb4a55adcf11d2afa3"
+      "sha256": "dd7dd0e038a024e45baa59e7735f5d009883cb6386f6193ed01167dd11595cd2"
     },
     "experiments/002_e1prime_runs/d2_seed17_test_withheld_v3primary.json": {
-      "bytes": 1642,
+      "bytes": 2139,
       "content": {
         "a_test_withheld": {
           "H2_1": {
@@ -43049,6 +43076,15 @@
             "ratio": 3.7967
           },
           "decoder": "bare threshold 0.5",
+          "exploratory_H2_1_normalised": {
+            "mean_fp_per_1000_long_range_cells_80_149": 0.4491,
+            "mean_fp_per_1000_long_range_cells_ge150": 1.747,
+            "mean_fp_per_100nt_80_149": 0.0356,
+            "mean_fp_per_100nt_ge150": 1.8754,
+            "note": "not a pre-registered gate; the raw per-sequence count grows with the number of candidate pairs, so these normalisations test whether the length trend survives",
+            "ratio_per_1000_long_range_cells": 3.89,
+            "ratio_per_100nt": 52.6798
+          },
           "exploratory_fp_by_distance": {
             "d32-128": 112389,
             "d<32": 213137,
@@ -43082,7 +43118,7 @@
           "n_sequences_without_seq": 0
         }
       },
-      "sha256": "cc882922d9810e2ed9ca61f823915f231308f6a4e3b8691f05e6cfb639c7c738"
+      "sha256": "af2e42a915944e990bc3e0d337e3ecf8c5d0d31a38b78ae6fa4cbfa77b7c2c98"
     },
     "experiments/002_e1prime_runs/k1_id_test_v1all.json": {
       "bytes": 732,

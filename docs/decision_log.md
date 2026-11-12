@@ -465,6 +465,7 @@ that do not need the server were built and tested locally.
   4.29 [3.77, 5.11] and 3.80 [3.45, 4.18].
 - **D2 H2.1 is confounded:** the pre-registered raw long-range FP count per
   sequence gives enormous ratios (235.6 / 146.5), but longer sequences have far
-  more candidate pairs. A length/candidate-normalised exploratory sensitivity
-  was added; H2.1 must not be described as a length effect until that result is
-  reported.
+  more candidate pairs. Per 1,000 long-range candidate cells the ratio is
+  **1.62 on id_test** and **3.89 on withheld**: the trend survives on withheld
+  but not on id_test at 2×. H2.1 is split-dependent, not a universal length
+  effect.

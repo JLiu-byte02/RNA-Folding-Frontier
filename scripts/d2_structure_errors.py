@@ -163,6 +163,13 @@ def main() -> int:
     ap.add_argument("--n-boot", type=int, default=10000)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--null-reps", type=int, default=1)
+    ap.add_argument("--label-version", choices=("v1", "v3"), default="v1")
+    ap.add_argument(
+        "--min-true-pairs",
+        type=int,
+        default=0,
+        help="exclude rows with fewer true pairs; 4 is Amendment 8 primary",
+    )
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -190,12 +197,24 @@ def main() -> int:
             lambda: {"tp": 0, "fp": 0, "fn": 0}
         )
         n_skipped = 0
+        n_excluded_below_min = 0
+        n_excluded_parse = 0
+        truth_key = "truth" if args.label_version == "v1" else "truth_v3"
+        if truth_key not in rows[0]:
+            raise ValueError(f"{f.name}: missing {truth_key}; regenerate the dump")
         for row in rows:
             seq = seqs.get(row["id"])
             if seq is None:
                 n_skipped += 1
                 continue
-            truth = {tuple(p) for p in row["truth"]}
+            raw_truth = row[truth_key]
+            if raw_truth is None:
+                n_excluded_parse += 1
+                continue
+            if len(raw_truth) < args.min_true_pairs:
+                n_excluded_below_min += 1
+                continue
+            truth = {tuple(p) for p in raw_truth}
             scored = normalise_scored(row["scored"])
             require_finite(scored, where=f"{row['id']}")
             pred = {k for k, v in scored.items() if v >= args.threshold}
@@ -265,7 +284,14 @@ def main() -> int:
         n_null = sum(v["n_null"] for v in h22.values())
 
         report[f.stem] = {
-            "n_sequences": len(rows),
+            "n_sequences": len(rows) - n_excluded_below_min - n_excluded_parse - n_skipped,
+            "label_policy": {
+                "version": args.label_version,
+                "min_true_pairs": args.min_true_pairs,
+                "n_input": len(rows),
+                "n_excluded_below_min": n_excluded_below_min,
+                "n_excluded_label_parse_failure": n_excluded_parse,
+            },
             "n_sequences_without_seq": n_skipped,
             "decoder": f"bare threshold {args.threshold}",
             "H2_1": {

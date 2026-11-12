@@ -204,3 +204,59 @@ def test_k1_does_not_fire_when_e_is_genuinely_better(tmp_path, monkeypatch):
     verdict = json.loads(result.read_text())
     assert verdict["k1_fires"] is False
 
+
+def test_v3_label_policy_excludes_rows_and_counts_their_predictions(tmp_path, monkeypatch):
+    import d1_scoring
+
+    dumps = tmp_path / "dump"
+    dumps.mkdir()
+    rows = []
+    for idx, truth_v3 in enumerate(
+        (
+            [[0, 10], [1, 9], [2, 8], [3, 7]],
+            [[0, 12], [1, 11], [2, 10], [3, 9]],
+            [],
+            None,
+        )
+    ):
+        rows.append(
+            {
+                "id": f"seq{idx}",
+                "family": f"FAM{idx}",
+                "source": "synthetic",
+                "length": 100,
+                "kept": [0, 100],
+                "truth": [[0, 20], [1, 19], [2, 18]],
+                "truth_v3": truth_v3,
+                "scored": {"0,10": 0.9, "5,25": 0.8},
+            }
+        )
+    for name in ("a", "e"):
+        with open(dumps / f"{name}.jsonl", "w") as fh:
+            for row in rows:
+                fh.write(json.dumps(row) + "\n")
+
+    out = tmp_path / "d1_v3.json"
+    _run(
+        monkeypatch,
+        d1_scoring,
+        [
+            "d1",
+            "--dump-dir",
+            str(dumps),
+            "--label-version",
+            "v3",
+            "--min-true-pairs",
+            "4",
+            "--out",
+            str(out),
+        ],
+    )
+    summary = json.loads(out.read_text())["a"]
+    assert summary["n_sequences"] == 2
+    policy = summary["label_policy"]
+    assert policy["n_excluded_below_min"] == 1
+    assert policy["n_excluded_label_parse_failure"] == 1
+    assert policy["excluded_false_positive_diagnostic"]["n_rows"] == 2
+    assert policy["excluded_false_positive_diagnostic"]["predicted_pairs_total"] > 0
+

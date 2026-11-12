@@ -25,6 +25,7 @@ import numpy as np  # noqa: E402
 import torch  # noqa: E402
 
 from rff.models.pairhead import PairMapHead  # noqa: E402
+from rff.data.wuss import load_labels_v3  # noqa: E402
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -50,6 +51,11 @@ def main() -> int:
     ap.add_argument("--window", type=int, default=32)
     ap.add_argument("--pair-budget", type=int, default=400 * 400 * 4)
     ap.add_argument("--device", default="cuda")
+    ap.add_argument(
+        "--labels-v3",
+        default="experiments/011_labels_v3/labels_v3_pairs.json.gz",
+        help="full v3 replacement map; written alongside the v1 truth",
+    )
     args = ap.parse_args()
 
     device = args.device if torch.cuda.is_available() else "cpu"
@@ -62,6 +68,7 @@ def main() -> int:
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    labels_v3 = load_labels_v3(ROOT / args.labels_v3)
 
     for spec in args.eval:
         name, rest = spec.split("=", 1)
@@ -93,15 +100,31 @@ def main() -> int:
                     L = len(r["seq"])
                     p = prob[k][:L, :L]
                     ii, jj = np.where(np.triu(p, 1) >= args.floor)
+                    raw_id = str(r["id"])
+                    key = raw_id[len("rfam:"):] if raw_id.startswith("rfam:") else raw_id
+                    truth_v1 = [[int(i), int(j)] for i, j in r["pairs"]]
+                    if key in labels_v3:
+                        v3 = labels_v3[key]
+                        truth_v3 = (
+                            None
+                            if v3 is None
+                            else [[int(i), int(j)] for i, j in sorted(v3)]
+                        )
+                        v3_status = "seed_v3" if v3 is not None else "seed_v3_parse_failed"
+                    else:
+                        truth_v3 = truth_v1
+                        v3_status = "bprna_v1"
                     lo = max(0, L // 2 - args.window)
                     hi = min(L, L // 2 + args.window + 1)
                     row = {
-                        "id": r["id"],
+                        "id": raw_id,
                         "family": r["family"],
                         "source": r.get("source"),
                         "length": L,
                         "kept": [lo, hi],
-                        "truth": [[int(i), int(j)] for i, j in r["pairs"]],
+                        "truth": truth_v1,
+                        "truth_v3": truth_v3,
+                        "truth_v3_status": v3_status,
                         "scored": {
                             f"{int(i)},{int(j)}": round(float(p[i, j]), 5)
                             for i, j in zip(ii, jj)

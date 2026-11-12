@@ -155,10 +155,21 @@ def load_labels_v2_delta(path: str | Path) -> dict[str, set[tuple[int, int]]]:
     return {key: {(int(i), int(j)) for i, j in pairs} for key, pairs in raw.items()}
 
 
+def load_labels_v3(path: str | Path) -> dict[str, set[tuple[int, int]] | None]:
+    """Read the full v3 replacement map, preserving explicit parse failures."""
+    with gzip.open(Path(path), "rt", encoding="utf-8") as fh:
+        raw = json.load(fh)
+    return {
+        key: None if pairs is None else {(int(i), int(j)) for i, j in pairs}
+        for key, pairs in raw.items()
+    }
+
+
 __all__ = [
     "canonical_pairs",
     "GAP_CHARS",
     "load_labels_v2_delta",
+    "load_labels_v3",
     "pairs_from_wuss_columns",
     "pairs_from_wuss",
     "project_pairs",

@@ -86,6 +86,13 @@ def main() -> int:
     ap.add_argument("--dump-dir", required=True)
     ap.add_argument("--names", nargs="*", default=[])
     ap.add_argument("--threshold", type=float, default=0.5)
+    ap.add_argument("--label-version", choices=("v1", "v3"), default="v1")
+    ap.add_argument(
+        "--min-true-pairs",
+        type=int,
+        default=0,
+        help="exclude rows with fewer true pairs; 0 includes all, 1 drops empty truth, 4 is Amendment 8 primary",
+    )
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -103,21 +110,70 @@ def main() -> int:
 
     report: dict[str, dict] = {}
     for f in files:
-        rows = read_jsonl(f)
-        if not rows or "truth" not in rows[0] or "scored" not in rows[0]:
+        raw_rows = read_jsonl(f)
+        if not raw_rows or "truth" not in raw_rows[0] or "scored" not in raw_rows[0]:
             continue
-        for row in rows:
+        truth_key = "truth" if args.label_version == "v1" else "truth_v3"
+        if truth_key not in raw_rows[0]:
+            raise ValueError(f"{f.name}: missing {truth_key}; regenerate the dump")
+        rows: list[dict] = []
+        excluded: list[dict] = []
+        n_parse_failed = 0
+        n_below_min = 0
+        for row in raw_rows:
+            truth = row[truth_key]
+            if truth is None:
+                n_parse_failed += 1
+                excluded.append(row)
+                continue
+            if len(truth) < args.min_true_pairs:
+                n_below_min += 1
+                excluded.append(row)
+                continue
             row["_scored"] = row["scored"]
-            row["_truth"] = {tuple(p) for p in row["truth"]}
+            row["_truth"] = {tuple(p) for p in truth}
             require_finite(row["_scored"], where=f"{f.name}:{row['id']}")
+            rows.append(row)
+        if not rows:
+            raise ValueError(f"{f.name}: no rows survive the label policy")
         families = [r["family"] for r in rows]
 
         summary: dict = {
             "n_sequences": len(rows),
+            "label_policy": {
+                "version": args.label_version,
+                "min_true_pairs": args.min_true_pairs,
+                "n_input": len(raw_rows),
+                "n_excluded_below_min": n_below_min,
+                "n_excluded_label_parse_failure": n_parse_failed,
+            },
             "threshold_grid": list(GRID),
             "fixed_threshold": fixed,
             "arms": {},
         }
+        if excluded:
+            for row in excluded:
+                row["_scored"] = row["scored"]
+                require_finite(row["_scored"], where=f"{f.name}:{row['id']}:excluded")
+            excluded_pred = increment_sweep(
+                excluded, [fixed], partner=True, nesting=True
+            )
+            n_pred = [len(excluded_pred[k][0]) for k in range(len(excluded))]
+            summary["label_policy"]["excluded_false_positive_diagnostic"] = {
+                "n_rows": len(excluded),
+                "fixed_threshold": fixed,
+                "decoder": "nested",
+                "predicted_pairs_total": int(sum(n_pred)),
+                "predicted_pairs_mean": round(float(np.mean(n_pred)), 3),
+                "rows_with_any_prediction": int(sum(v > 0 for v in n_pred)),
+            }
+        else:
+            summary["label_policy"]["excluded_false_positive_diagnostic"] = {
+                "n_rows": 0,
+                "predicted_pairs_total": 0,
+                "predicted_pairs_mean": 0.0,
+                "rows_with_any_prediction": 0,
+            }
         f1_cache: dict[str, list[list[float]]] = {}
         oracle: dict[str, dict[str, float]] = {}
 

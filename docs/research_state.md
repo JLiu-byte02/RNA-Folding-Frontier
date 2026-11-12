@@ -67,6 +67,18 @@ P2-block spend.
 - **FP-helix energetics:** 26.6%/26.7% of FP helices are fully in the RNAfold
   MFE, 37.5%/37.3% have at least one pair there; their isolated energies are
   close to true helices. H2.4 may fail for a principled reason.
+- **Round 4j correction:** the `pair_prf` zero-TP defect voided the Round 4
+  P2-central evidence. H2 is retired as a mechanism; H2.4 continues as a
+  standalone decoder question. Amendment 9 is pinned at `a1dae27e…`.
+- **E0 after correction:** ArchiveII vs bpRNA TR0 mean pair-F1 .9195 (server
+  3,370-record mirror), telomerase .6606; vs RNAStrAlign .9937. The old run used
+  a 3,966-record mirror, so counts are not directly comparable; F1 movement is
+  small. T4/Turner-control/independent-scorer numbers used `prf`, not
+  `pair_prf`, and stand.
+- **Current next experiment:** retrain condition-a heads (seeds 17/23/41) under
+  corrected selection, then rerun P2-central a–e with v3 nested labels and the
+  kept–kept/all/micro readouts. No H2.4 or P2-block until that table is seen by
+  the PI.
 - Infrastructure: Infernal 1.1.5 built from source; Rfam 15.0 CMs pressed;
   cmscan running over 37,343 sequences (bpRNA-90 reps + ArchiveII + TS0 +
   bpRNA-new) on the login node because the CPU partition is fully allocated.

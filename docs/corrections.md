@@ -137,3 +137,18 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   then mean within family and across families; added
   `tests/test_energy_fit.py`. Refit from the existing p2fix train dump before
   freezing `(s,b)`.
+
+## 2026-11-12 — `(s,b)` fit worker table was copied once per grid point
+
+- **Where:** `scripts/fit_energy_calibration.py` `ProcessPoolExecutor`.
+- **What was wrong:** the full item table, including a dense `L x L` score
+  matrix per sequence, was passed through `initargs` for every one of the 25
+  grid points. Slurm reported `MaxRSS` above 200 GB; the job produced no output
+  and left orphaned joblib processes. The main process was gone while the
+  allocation still showed `RUNNING`.
+- **Action:** store the sparse scored map per item, inherit the read-only table
+  through Linux `fork`, and build the dense matrix inside each worker. The
+  Windows/local spawn fallback keeps the initializer path. The objective and
+  grid are unchanged.
+- **Evidence:** a synthetic 8-sequence fit completes end to end; no H2.4 result
+  was produced or quoted from the stuck job.

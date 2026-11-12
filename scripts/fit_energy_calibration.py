@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import multiprocessing
 import os
 import sys
 import zlib
@@ -85,7 +86,8 @@ def _decode_one(task: tuple[int, float, float]) -> tuple[int, float, set[tuple[i
 
     idx, scale, offset = task
     item = _ITEMS[idx]
-    pairs, _ = ViennaSoftDecoder(scale=scale, offset=offset).decode(item["seq"], item["scores"])
+    scores = dense_scores(item["scored"], item["seq"])
+    pairs, _ = ViennaSoftDecoder(scale=scale, offset=offset).decode(item["seq"], scores)
     return idx, item["family"], set(pairs)
 
 
@@ -163,7 +165,7 @@ def main() -> int:
                 "id": row["id"],
                 "family": row["family"],
                 "seq": seq,
-                "scores": dense_scores(normalise_scored(row["scored"]), seq),
+                "scored": normalise_scored(row["scored"]),
                 "truth": max_nested_subset(truth) if args.truth_mode == "nested" else truth,
             }
         )
@@ -175,9 +177,22 @@ def main() -> int:
 
     grid = [(float(s), float(b)) for s in args.grid_s.split(",") for b in args.grid_b.split(",")]
     results = []
+    global _ITEMS
+    _ITEMS = items
     for scale, offset in grid:
         preds: dict[int, set] = {}
-        with ProcessPoolExecutor(max_workers=args.workers, initializer=_init, initargs=(items,)) as ex:
+        # Linux fork lets workers inherit the read-only item table. Passing it
+        # through initializer arguments pickled the full table for every grid
+        # point and drove MaxRSS into the hundreds of GB; this avoids that.
+        try:
+            ctx = multiprocessing.get_context("fork")
+            executor = ProcessPoolExecutor(max_workers=args.workers, mp_context=ctx)
+        except ValueError:
+            # Windows/local fallback: spawn workers cannot inherit _ITEMS.
+            executor = ProcessPoolExecutor(
+                max_workers=args.workers, initializer=_init, initargs=(items,)
+            )
+        with executor as ex:
             for idx, _family, pairs in ex.map(
                 _decode_one, [(i, scale, offset) for i in range(len(items))], chunksize=16
             ):

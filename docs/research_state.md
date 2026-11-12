@@ -79,6 +79,12 @@ P2-block spend.
   corrected selection, then rerun P2-central a–e with v3 nested labels and the
   kept–kept/all/micro readouts. No H2.4 or P2-block until that table is seen by
   the PI.
+- **Corrected P2-central (3 seeds, new heads):** a remains best; c is close to a
+  on kept–kept (withheld .5927 fixed/.6117 oracle vs a .5910/.5906; id_test
+  .5616/.5755 vs .5759/.5753); b/d/e lose both all-pair and kept-window F1.
+  c−d kept-window contrast is +.058 (id_test) / +.070 (withheld). This is
+  consistent with a family/template shortcut but awaits the positive control.
+  Full table: `docs/p2central_fixed_2026-11-12.md`.
 - Infrastructure: Infernal 1.1.5 built from source; Rfam 15.0 CMs pressed;
   cmscan running over 37,343 sequences (bpRNA-90 reps + ArchiveII + TS0 +
   bpRNA-new) on the login node because the CPU partition is fully allocated.

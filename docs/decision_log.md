@@ -546,3 +546,22 @@ that do not need the server were built and tested locally.
 - **Fit:** the old `(s,b)` fit completed but used the old checkpoints and is
   cancelled/forbidden for H2.4. H2.4 and P2-block wait for the corrected
   P2-central table.
+
+## 2026-11-12 20:20 — corrected P2-central from retrained heads
+
+- New condition-a heads `runs/p2fix_seed{17,23,41}/best.pt` were trained under
+  the corrected selection metric. Seeds 23/41 initially OOMed because of
+  concurrent GPU allocation and were rerun serially.
+- Fresh a–e probability dumps were produced for all three seeds. P2-central was
+  scored at fixed 0.5 and an oracle cut selected on 80–299, with kept–kept,
+  all-pairs and pooled micro readouts.
+- **a remains best.** Kept–kept family-macro (fixed / oracle): id_test
+  .5759/.5753; withheld .5910/.5906. **c is close to a**, especially on
+  withheld (.5927/.6117); id_test c is .5616/.5755. b/d/e are substantially
+  lower.
+- The c−d kept-window contrast is +.058 (id_test) and +.070 (withheld). This is
+  consistent with family/template retention but is **not** yet a shortcut
+  finding; the positive control and P2-block are not run.
+- All macro/micro gaps are below .15 and the corrected shuffle floor is .0162/
+  .0173, below .05; the Amendment 9 reporting invariants pass.
+- Full table: `docs/p2central_fixed_2026-11-12.md`.

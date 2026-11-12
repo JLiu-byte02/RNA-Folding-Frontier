@@ -1,0 +1,1522 @@
+{
+  "id_test|a": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.583675,
+      "fixed_all_micro_f1": 0.593705,
+      "fixed_kept_kept_family_macro_f1": 0.575931,
+      "fixed_kept_kept_micro_f1": 0.688026,
+      "oracle_all_family_macro_f1": 0.596367,
+      "oracle_all_micro_f1": 0.616106,
+      "oracle_kept_kept_family_macro_f1": 0.575262,
+      "oracle_kept_kept_micro_f1": 0.709614
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.6,
+      0.8,
+      0.85
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.600091,
+            "fn": 14714,
+            "fp": 21307,
+            "micro_f1": 0.607165,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 27837
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.594351,
+            "fn": 2885,
+            "fp": 4449,
+            "micro_f1": 0.707155,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8855
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.603023,
+            "fn": 15310,
+            "fp": 19161,
+            "micro_f1": 0.612481,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 27241
+          },
+          "cut": 0.6,
+          "kept_kept": {
+            "family_macro_f1": 0.590557,
+            "fn": 3016,
+            "fp": 3998,
+            "micro_f1": 0.71327,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8724
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.57547,
+            "fn": 13866,
+            "fp": 26828,
+            "micro_f1": 0.585026,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 28685
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.566522,
+            "fn": 2816,
+            "fp": 5751,
+            "micro_f1": 0.675677,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8924
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.592825,
+            "fn": 15594,
+            "fp": 18856,
+            "micro_f1": 0.610135,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 26957
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.56775,
+            "fn": 3165,
+            "fp": 4149,
+            "micro_f1": 0.70103,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8575
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.575464,
+            "fn": 13765,
+            "fp": 26421,
+            "micro_f1": 0.588924,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 28786
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.56692,
+            "fn": 2753,
+            "fp": 5657,
+            "micro_f1": 0.681246,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8987
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.593252,
+            "fn": 15862,
+            "fp": 16069,
+            "micro_f1": 0.625702,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 26689
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.567479,
+            "fn": 3173,
+            "fp": 3672,
+            "micro_f1": 0.714542,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8567
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "id_test|b": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.333466,
+      "fixed_all_micro_f1": 0.2132,
+      "fixed_kept_kept_family_macro_f1": 0.520317,
+      "fixed_kept_kept_micro_f1": 0.638264,
+      "oracle_all_family_macro_f1": 0.342497,
+      "oracle_all_micro_f1": 0.239344,
+      "oracle_kept_kept_family_macro_f1": 0.518625,
+      "oracle_kept_kept_micro_f1": 0.667536
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.7,
+      0.8,
+      0.85
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.345376,
+            "fn": 33417,
+            "fp": 30367,
+            "micro_f1": 0.222639,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 9134
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.536988,
+            "fn": 3402,
+            "fp": 5208,
+            "micro_f1": 0.659495,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8338
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.348815,
+            "fn": 33856,
+            "fp": 21740,
+            "micro_f1": 0.238265,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8695
+          },
+          "cut": 0.7,
+          "kept_kept": {
+            "family_macro_f1": 0.534147,
+            "fn": 3690,
+            "fp": 4057,
+            "micro_f1": 0.675137,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8050
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.327555,
+            "fn": 33346,
+            "fp": 37291,
+            "micro_f1": 0.206745,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 9205
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.507995,
+            "fn": 3467,
+            "fp": 6737,
+            "micro_f1": 0.618542,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8273
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.341028,
+            "fn": 33851,
+            "fp": 22784,
+            "micro_f1": 0.235024,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8700
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.51065,
+            "fn": 3782,
+            "fp": 4623,
+            "micro_f1": 0.654414,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 7958
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.327468,
+            "fn": 33193,
+            "fp": 37123,
+            "micro_f1": 0.210217,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 9358
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.515967,
+            "fn": 3246,
+            "fp": 6445,
+            "micro_f1": 0.636756,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8494
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.337647,
+            "fn": 34008,
+            "fp": 18718,
+            "micro_f1": 0.244743,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8543
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.511079,
+            "fn": 3772,
+            "fp": 3969,
+            "micro_f1": 0.673058,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 7968
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "id_test|c": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.437978,
+      "fixed_all_micro_f1": 0.346697,
+      "fixed_kept_kept_family_macro_f1": 0.561648,
+      "fixed_kept_kept_micro_f1": 0.676963,
+      "oracle_all_family_macro_f1": 0.454109,
+      "oracle_all_micro_f1": 0.371806,
+      "oracle_kept_kept_family_macro_f1": 0.575512,
+      "oracle_kept_kept_micro_f1": 0.706203
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.449564,
+            "fn": 14670,
+            "fp": 14660,
+            "micro_f1": 0.352596,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 7987
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.587236,
+            "fn": 961,
+            "fp": 2261,
+            "micro_f1": 0.694886,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3669
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.455206,
+            "fn": 15382,
+            "fp": 9294,
+            "micro_f1": 0.370927,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 7275
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.586083,
+            "fn": 1157,
+            "fp": 1619,
+            "micro_f1": 0.714462,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3473
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.430175,
+            "fn": 14251,
+            "fp": 18147,
+            "micro_f1": 0.341638,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 8406
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.540258,
+            "fn": 939,
+            "fp": 2839,
+            "micro_f1": 0.66147,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3691
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.447585,
+            "fn": 15064,
+            "fp": 11252,
+            "micro_f1": 0.36591,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 7593
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.559927,
+            "fn": 1161,
+            "fp": 1937,
+            "micro_f1": 0.691311,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3469
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.434194,
+            "fn": 14229,
+            "fp": 17652,
+            "micro_f1": 0.345856,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 8428
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.557449,
+            "fn": 885,
+            "fp": 2729,
+            "micro_f1": 0.674532,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3745
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.459537,
+            "fn": 15382,
+            "fp": 8501,
+            "micro_f1": 0.378581,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 526,
+            "tp": 7275
+          },
+          "cut": 0.9,
+          "kept_kept": {
+            "family_macro_f1": 0.580525,
+            "fn": 1187,
+            "fp": 1587,
+            "micro_f1": 0.712836,
+            "n_excluded_empty_kept_truth": 77,
+            "n_sequences": 449,
+            "tp": 3443
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "id_test|d": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.32244,
+      "fixed_all_micro_f1": 0.211035,
+      "fixed_kept_kept_family_macro_f1": 0.503537,
+      "fixed_kept_kept_micro_f1": 0.616367,
+      "oracle_all_family_macro_f1": 0.331738,
+      "oracle_all_micro_f1": 0.236411,
+      "oracle_kept_kept_family_macro_f1": 0.511816,
+      "oracle_kept_kept_micro_f1": 0.651662
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.75,
+      0.85,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.327625,
+            "fn": 33835,
+            "fp": 29801,
+            "micro_f1": 0.215029,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8716
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.514411,
+            "fn": 3637,
+            "fp": 5767,
+            "micro_f1": 0.6328,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8103
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.333273,
+            "fn": 34368,
+            "fp": 19640,
+            "micro_f1": 0.232557,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8183
+          },
+          "cut": 0.75,
+          "kept_kept": {
+            "family_macro_f1": 0.516137,
+            "fn": 4010,
+            "fp": 4119,
+            "micro_f1": 0.65539,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 7730
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.318729,
+            "fn": 33628,
+            "fp": 35703,
+            "micro_f1": 0.20471,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8923
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.488475,
+            "fn": 3557,
+            "fp": 7349,
+            "micro_f1": 0.600103,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8183
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.329833,
+            "fn": 34415,
+            "fp": 18471,
+            "micro_f1": 0.235287,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8136
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.498507,
+            "fn": 4089,
+            "fp": 4198,
+            "micro_f1": 0.648692,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 7651
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.320966,
+            "fn": 33429,
+            "fp": 33833,
+            "micro_f1": 0.213365,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 9122
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.507726,
+            "fn": 3283,
+            "fp": 7252,
+            "micro_f1": 0.616197,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8457
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.332108,
+            "fn": 33856,
+            "fp": 20795,
+            "micro_f1": 0.24139,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8695
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.520803,
+            "fn": 3564,
+            "fp": 5206,
+            "micro_f1": 0.650904,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8176
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "id_test|e": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.348846,
+      "fixed_all_micro_f1": 0.267702,
+      "fixed_kept_kept_family_macro_f1": 0.514207,
+      "fixed_kept_kept_micro_f1": 0.596136,
+      "oracle_all_family_macro_f1": 0.351703,
+      "oracle_all_micro_f1": 0.271013,
+      "oracle_kept_kept_family_macro_f1": 0.521621,
+      "oracle_kept_kept_micro_f1": 0.609681
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.55,
+      0.45,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.361224,
+            "fn": 33879,
+            "fp": 11432,
+            "micro_f1": 0.276817,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8672
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.542377,
+            "fn": 3249,
+            "fp": 6763,
+            "micro_f1": 0.629103,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8491
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.360962,
+            "fn": 33933,
+            "fp": 10863,
+            "micro_f1": 0.277857,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8618
+          },
+          "cut": 0.55,
+          "kept_kept": {
+            "family_macro_f1": 0.542841,
+            "fn": 3291,
+            "fp": 6467,
+            "micro_f1": 0.633929,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8449
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.340308,
+            "fn": 34122,
+            "fp": 13055,
+            "micro_f1": 0.263262,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8429
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.495925,
+            "fn": 3578,
+            "fp": 8299,
+            "micro_f1": 0.578845,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8162
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.340282,
+            "fn": 34040,
+            "fp": 13753,
+            "micro_f1": 0.262624,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8511
+          },
+          "cut": 0.45,
+          "kept_kept": {
+            "family_macro_f1": 0.494774,
+            "fn": 3520,
+            "fp": 8599,
+            "micro_f1": 0.57565,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8220
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.345006,
+            "fn": 33757,
+            "fp": 15523,
+            "micro_f1": 0.263026,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8794
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.504318,
+            "fn": 3083,
+            "fp": 9431,
+            "micro_f1": 0.580461,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8657
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.353864,
+            "fn": 33994,
+            "fp": 11682,
+            "micro_f1": 0.272559,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 1287,
+            "tp": 8557
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.527247,
+            "fn": 3262,
+            "fp": 7154,
+            "micro_f1": 0.619465,
+            "n_excluded_empty_kept_truth": 314,
+            "n_sequences": 973,
+            "tp": 8478
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "test_withheld|a": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.591082,
+      "fixed_all_micro_f1": 0.594152,
+      "fixed_kept_kept_family_macro_f1": 0.590959,
+      "fixed_kept_kept_micro_f1": 0.686005,
+      "oracle_all_family_macro_f1": 0.601921,
+      "oracle_all_micro_f1": 0.608946,
+      "oracle_kept_kept_family_macro_f1": 0.590612,
+      "oracle_kept_kept_micro_f1": 0.699549
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.55,
+      0.8,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.606587,
+            "fn": 159659,
+            "fp": 191393,
+            "micro_f1": 0.602461,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 266005
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.599644,
+            "fn": 44074,
+            "fp": 55252,
+            "micro_f1": 0.698394,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 114999
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.607239,
+            "fn": 163146,
+            "fp": 180579,
+            "micro_f1": 0.60435,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 262518
+          },
+          "cut": 0.55,
+          "kept_kept": {
+            "family_macro_f1": 0.59923,
+            "fn": 45345,
+            "fp": 52057,
+            "micro_f1": 0.700171,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 113728
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.580052,
+            "fn": 148306,
+            "fp": 240116,
+            "micro_f1": 0.58816,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 277358
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.582466,
+            "fn": 41446,
+            "fp": 71867,
+            "micro_f1": 0.674918,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 117627
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.597533,
+            "fn": 170960,
+            "fp": 156370,
+            "micro_f1": 0.608802,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 254704
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.587068,
+            "fn": 49463,
+            "fp": 47634,
+            "micro_f1": 0.693039,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 109610
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.586607,
+            "fn": 144599,
+            "fp": 243078,
+            "micro_f1": 0.591836,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 281065
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.590766,
+            "fn": 38724,
+            "fp": 72114,
+            "micro_f1": 0.684704,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 120349
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.600992,
+            "fn": 164135,
+            "fp": 165129,
+            "micro_f1": 0.613686,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 261529
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.585537,
+            "fn": 45092,
+            "fp": 50096,
+            "micro_f1": 0.705437,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 113981
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "test_withheld|b": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.347847,
+      "fixed_all_micro_f1": 0.274337,
+      "fixed_kept_kept_family_macro_f1": 0.527486,
+      "fixed_kept_kept_micro_f1": 0.62735,
+      "oracle_all_family_macro_f1": 0.356537,
+      "oracle_all_micro_f1": 0.298216,
+      "oracle_kept_kept_family_macro_f1": 0.528602,
+      "oracle_kept_kept_micro_f1": 0.650769
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.65,
+      0.85,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.359205,
+            "fn": 307703,
+            "fp": 280468,
+            "micro_f1": 0.286281,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 117961
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.543429,
+            "fn": 50101,
+            "fp": 70621,
+            "micro_f1": 0.643537,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 108972
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.36194,
+            "fn": 312492,
+            "fp": 221960,
+            "micro_f1": 0.297509,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 113172
+          },
+          "cut": 0.65,
+          "kept_kept": {
+            "family_macro_f1": 0.540243,
+            "fn": 53740,
+            "fp": 57898,
+            "micro_f1": 0.653625,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 105333
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.342063,
+            "fn": 305398,
+            "fp": 349834,
+            "micro_f1": 0.268522,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 120266
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.519124,
+            "fn": 49179,
+            "fp": 89211,
+            "micro_f1": 0.613628,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 109894
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.354348,
+            "fn": 318953,
+            "fp": 176051,
+            "micro_f1": 0.301262,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 106711
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.520139,
+            "fn": 59645,
+            "fp": 49494,
+            "micro_f1": 0.645647,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 99428
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.342272,
+            "fn": 304311,
+            "fp": 357898,
+            "micro_f1": 0.268209,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 121353
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.519905,
+            "fn": 47315,
+            "fp": 86860,
+            "micro_f1": 0.624886,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 111758
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.353323,
+            "fn": 312321,
+            "fp": 227145,
+            "micro_f1": 0.295876,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 113343
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.525425,
+            "fn": 53309,
+            "fp": 59078,
+            "micro_f1": 0.653036,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 105764
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "test_withheld|c": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.492749,
+      "fixed_all_micro_f1": 0.404365,
+      "fixed_kept_kept_family_macro_f1": 0.592666,
+      "fixed_kept_kept_micro_f1": 0.652494,
+      "oracle_all_family_macro_f1": 0.514118,
+      "oracle_all_micro_f1": 0.422317,
+      "oracle_kept_kept_family_macro_f1": 0.611702,
+      "oracle_kept_kept_micro_f1": 0.669867
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.7,
+      0.85,
+      0.85
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.511777,
+            "fn": 138997,
+            "fp": 131806,
+            "micro_f1": 0.409329,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 93832
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.612395,
+            "fn": 23777,
+            "fp": 33358,
+            "micro_f1": 0.664147,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 56492
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.522246,
+            "fn": 145326,
+            "fp": 98998,
+            "micro_f1": 0.417347,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 87503
+          },
+          "cut": 0.7,
+          "kept_kept": {
+            "family_macro_f1": 0.6224,
+            "fn": 27043,
+            "fp": 25104,
+            "micro_f1": 0.671202,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 53226
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.48483,
+            "fn": 133097,
+            "fp": 164123,
+            "micro_f1": 0.401591,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 99732
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.58796,
+            "fn": 22893,
+            "fp": 41648,
+            "micro_f1": 0.640025,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 57376
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.512761,
+            "fn": 145762,
+            "fp": 92641,
+            "micro_f1": 0.422105,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 87067
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.605324,
+            "fn": 29401,
+            "fp": 23453,
+            "micro_f1": 0.658102,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 50868
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.481639,
+            "fn": 132560,
+            "fp": 165535,
+            "micro_f1": 0.402176,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 100269
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.577644,
+            "fn": 21573,
+            "fp": 40723,
+            "micro_f1": 0.65331,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 58696
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.507346,
+            "fn": 143299,
+            "fp": 96495,
+            "micro_f1": 0.4275,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 8476,
+            "tp": 89530
+          },
+          "cut": 0.85,
+          "kept_kept": {
+            "family_macro_f1": 0.607381,
+            "fn": 26448,
+            "fp": 24138,
+            "micro_f1": 0.680297,
+            "n_excluded_empty_kept_truth": 904,
+            "n_sequences": 7572,
+            "tp": 53821
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "test_withheld|d": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.346263,
+      "fixed_all_micro_f1": 0.267,
+      "fixed_kept_kept_family_macro_f1": 0.523126,
+      "fixed_kept_kept_micro_f1": 0.609438,
+      "oracle_all_family_macro_f1": 0.353522,
+      "oracle_all_micro_f1": 0.285565,
+      "oracle_kept_kept_family_macro_f1": 0.527115,
+      "oracle_kept_kept_micro_f1": 0.633636
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.6,
+      0.8,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.355601,
+            "fn": 311050,
+            "fp": 287659,
+            "micro_f1": 0.276866,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 114614
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.536565,
+            "fn": 51465,
+            "fp": 74901,
+            "micro_f1": 0.630057,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 107608
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.357203,
+            "fn": 314142,
+            "fp": 250852,
+            "micro_f1": 0.283037,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 111522
+          },
+          "cut": 0.6,
+          "kept_kept": {
+            "family_macro_f1": 0.536081,
+            "fn": 53906,
+            "fp": 65763,
+            "micro_f1": 0.63737,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 105167
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.341519,
+            "fn": 309002,
+            "fp": 348241,
+            "micro_f1": 0.261995,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 116662
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.51693,
+            "fn": 50501,
+            "fp": 96717,
+            "micro_f1": 0.595957,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 108572
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.350734,
+            "fn": 318773,
+            "fp": 215576,
+            "micro_f1": 0.285755,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 106891
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.51967,
+            "fn": 58226,
+            "fp": 60647,
+            "micro_f1": 0.629179,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 100847
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.341669,
+            "fn": 308220,
+            "fp": 352938,
+            "micro_f1": 0.262138,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 117444
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.515884,
+            "fn": 48828,
+            "fp": 96762,
+            "micro_f1": 0.6023,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 110245
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.352628,
+            "fn": 316240,
+            "fp": 225058,
+            "micro_f1": 0.287903,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 109424
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.525594,
+            "fn": 54942,
+            "fp": 65099,
+            "micro_f1": 0.634359,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 104131
+          }
+        },
+        "seed": 41
+      }
+    ]
+  },
+  "test_withheld|e": {
+    "metrics": {
+      "fixed_all_family_macro_f1": 0.36204,
+      "fixed_all_micro_f1": 0.325881,
+      "fixed_kept_kept_family_macro_f1": 0.517069,
+      "fixed_kept_kept_micro_f1": 0.576572,
+      "oracle_all_family_macro_f1": 0.364695,
+      "oracle_all_micro_f1": 0.329265,
+      "oracle_kept_kept_family_macro_f1": 0.523648,
+      "oracle_kept_kept_micro_f1": 0.586908
+    },
+    "n_seeds": 3,
+    "oracle_cuts": [
+      0.4,
+      0.55,
+      0.8
+    ],
+    "per_seed": [
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.373343,
+            "fn": 312029,
+            "fp": 127867,
+            "micro_f1": 0.34065,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 113635
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.542582,
+            "fn": 48155,
+            "fp": 92177,
+            "micro_f1": 0.612522,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 110918
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.372704,
+            "fn": 309946,
+            "fp": 141241,
+            "micro_f1": 0.339039,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 115718
+          },
+          "cut": 0.4,
+          "kept_kept": {
+            "family_macro_f1": 0.537792,
+            "fn": 46656,
+            "fp": 100818,
+            "micro_f1": 0.603892,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 112417
+          }
+        },
+        "seed": 17
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.355375,
+            "fn": 316789,
+            "fp": 154282,
+            "micro_f1": 0.31612,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 108875
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.505362,
+            "fn": 53666,
+            "fp": 114747,
+            "micro_f1": 0.555905,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 105407
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.356166,
+            "fn": 317833,
+            "fp": 145480,
+            "micro_f1": 0.317629,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 107831
+          },
+          "cut": 0.55,
+          "kept_kept": {
+            "family_macro_f1": 0.507876,
+            "fn": 54424,
+            "fp": 109154,
+            "micro_f1": 0.561307,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 104649
+          }
+        },
+        "seed": 23
+      },
+      {
+        "fixed": {
+          "all": {
+            "family_macro_f1": 0.357403,
+            "fn": 310475,
+            "fp": 177120,
+            "micro_f1": 0.320873,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 115189
+          },
+          "kept_kept": {
+            "family_macro_f1": 0.503264,
+            "fn": 45360,
+            "fp": 132400,
+            "micro_f1": 0.561288,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 113713
+          }
+        },
+        "oracle": {
+          "all": {
+            "family_macro_f1": 0.365215,
+            "fn": 315201,
+            "fp": 131065,
+            "micro_f1": 0.331128,
+            "n_excluded_empty_kept_truth": 0,
+            "n_sequences": 16163,
+            "tp": 110463
+          },
+          "cut": 0.8,
+          "kept_kept": {
+            "family_macro_f1": 0.525277,
+            "fn": 49559,
+            "fp": 99203,
+            "micro_f1": 0.595525,
+            "n_excluded_empty_kept_truth": 2329,
+            "n_sequences": 13834,
+            "tp": 109514
+          }
+        },
+        "seed": 41
+      }
+    ]
+  }
+}

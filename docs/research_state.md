@@ -1,19 +1,21 @@
 # Research State
 
-Updated: 2026-11-11 (late)
+Updated: 2026-11-12 15:10
 
 ## Phase
 
-`e1prime-context-intervention` — S1′ frozen, the distal-context swap factorial
-running. First decoder-B numbers exist (see below); they are mechanism evidence,
-not a benchmark claim.
+`v3-label-diagnostics` — SSH restored, the server is a git checkout, and the
+seed labels are corrected. D1/K1 are being re-run on P2-central probabilities
+with v1/v3 and empty/`<4` label policies.
 
 ## Established facts
 
 - GitHub repository created: https://github.com/JLiu-byte02/RNA-Folding-Frontier
 - Slurm partition `g-3090-2`: 4 nodes x 2 RTX 3090 GPUs (8 total, shared with
   other users). Project cap: 6 GPUs.
-- Remote project root: `/home/junxuanliu/projects/RNA-Folding-Frontier` (empty).
+- Remote project root: `/home/junxuanliu/projects/RNA-Folding-Frontier`, now a
+  git checkout of `origin/main`; 55 GB of data, caches, and runs remain
+  server-side and untracked.
 - Login-node Python is 3.6.8; Conda modules are available. A dedicated environment
   must be created before any experiment.
 - E0 first pass: ArchiveII overlaps bpRNA-1m TR0 by 20.47% exact sequence
@@ -35,6 +37,13 @@ not a benchmark claim.
   and is a strict superset of their bpseq labels (0 missing pairs in 13,419
   sequences). Filtering it to canonical+GU reproduces bpseq exactly for 91.2% of
   TR0. A 90% subset (CD-HIT 4.8.1) has 26,701 representatives.
+- **labels_v3:** pair-level projection parses 92,781/92,781 seed rows (100%),
+  produces 2,517,623 canonical pairs, and differs from v2 on 6,757 rows. The
+  frozen artifact hashes to `b8fe71ab…` and reproduces on Linux.
+- **Label defect, quantified:** among the 11,527 seed rows in `test_withheld`,
+  2,392 (20.75%) had empty truth under v1; under v3, 112 are empty and 341
+  (2.96%) fall below four pairs. In `test_novel`, 10,470/42,873 v1 rows were
+  empty and 3,675 (8.57%) fall below four under v3.
 - Infrastructure: Infernal 1.1.5 built from source; Rfam 15.0 CMs pressed;
   cmscan running over 37,343 sequences (bpRNA-90 reps + ArchiveII + TS0 +
   bpRNA-new) on the login node because the CPU partition is fully allocated.

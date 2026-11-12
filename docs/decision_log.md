@@ -409,3 +409,32 @@ that do not need the server were built and tested locally.
   v3-`<4`-pair counts (`--split-dir`). K1 and D1 run on existing P2-central
   dumps with labels swapped at scoring time, both with and without empty-truth
   rows. Everything downstream uses v3.
+
+## 2026-11-12 15:10 — SSH restored and A6.1 closed
+
+- **SSH is genuinely restored**, verified by authentication and command
+  execution, not only by a banner: `master`, `junxuanliu`, project root present,
+  `squeue` empty. The public `:441` probe remains closed and is not a useful
+  liveness test for the aTrust redirect.
+- **The server project was not a git repository.** It had 55 GB of data and all
+  split files, but no `.git`. A 395 MB backup of every non-data directory was
+  written to `_rff_provenance_backup/`, then the directory was converted to a
+  checkout of `origin/main` without touching `data/`, `runs/`, `checkpoints/`,
+  or `logs/`. Details and split hashes: `docs/remote_provenance_2026-11-12.md`.
+- **`.gitattributes` was corrupting gzip state.** The global `text=auto eol=lf`
+  rule applied to gzip streams; a `0d0a` byte pair caused a phantom modification
+  and would have corrupted the artifact on the next `git add`. Binary suffixes
+  are now explicit. Separately, `gzip.compress` chose a different OS header byte
+  on Linux (`0xff`) than on Windows (`0x0a`); `gzip_deterministic` pins it, and
+  the server now reproduces both frozen hashes exactly.
+- **Per-split v3 counts are now measured** (`experiments/011_labels_v3/`):
+  withheld has 11,527 seed rows, **2,392 v1 empty-truth seed rows (20.75%)**,
+  2,601 v1 rows below four pairs, and, under v3, 112 empty and 341 below four
+  (2.96%). `test_novel` has 42,873 seed rows, 10,470 v1 empty-truth rows, and
+  3,675 v3 `<4` rows (8.57%, below the 10% gate). The frozen 2,372-row eval
+  subset loses zero rows. This quantifies the Round 4 label defect directly.
+- **D1 infrastructure:** `e1prime_dump.py` now writes both v1 and v3 truth per
+  sequence; `d1_scoring.py` and `d2_structure_errors.py` select label version and
+  a minimum true-pair count at scoring time, and report predictions on excluded
+  rows as a separate false-positive diagnostic. Three GPU dump jobs (4 files
+  each) finished; three CPU D1 jobs are queued.

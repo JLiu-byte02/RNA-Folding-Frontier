@@ -1,0 +1,146 @@
+{
+  "min_true_pairs": 4,
+  "splits": {
+    "id_test": {
+      "all_pairs": {
+        "c": {
+          "R": {
+            "hi": 0.610789,
+            "lo": 0.376204,
+            "n_families": 30,
+            "ratio": 0.495038,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.564929,
+            "c": 0.437978,
+            "e": 0.313522
+          },
+          "n_families": 30,
+          "n_sequences": 526
+        },
+        "d": {
+          "R": {
+            "hi": -0.064151,
+            "lo": -0.174809,
+            "n_families": 155,
+            "ratio": -0.112447,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.583675,
+            "d": 0.32244,
+            "e": 0.348846
+          },
+          "n_families": 155,
+          "n_sequences": 1287
+        }
+      },
+      "kept_kept": {
+        "c": {
+          "R": {
+            "hi": 0.853018,
+            "lo": 0.412777,
+            "n_families": 25,
+            "ratio": 0.61218,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.597039,
+            "c": 0.561648,
+            "e": 0.505782
+          },
+          "n_families": 25,
+          "n_sequences": 449
+        },
+        "d": {
+          "R": {
+            "hi": 0.079817,
+            "lo": -0.617,
+            "n_families": 128,
+            "ratio": -0.172854,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.575931,
+            "d": 0.503537,
+            "e": 0.514207
+          },
+          "n_families": 128,
+          "n_sequences": 973
+        }
+      }
+    },
+    "test_withheld": {
+      "all_pairs": {
+        "c": {
+          "R": {
+            "hi": 0.605674,
+            "lo": 0.389967,
+            "n_families": 93,
+            "ratio": 0.503901,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.612458,
+            "c": 0.492749,
+            "e": 0.371157
+          },
+          "n_families": 93,
+          "n_sequences": 8476
+        },
+        "d": {
+          "R": {
+            "hi": -0.036,
+            "lo": -0.102817,
+            "n_families": 409,
+            "ratio": -0.068885,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.591082,
+            "d": 0.346263,
+            "e": 0.36204
+          },
+          "n_families": 409,
+          "n_sequences": 16163
+        }
+      },
+      "kept_kept": {
+        "c": {
+          "R": {
+            "hi": 0.96022,
+            "lo": 0.563766,
+            "n_families": 80,
+            "ratio": 0.747118,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.611573,
+            "c": 0.592666,
+            "e": 0.536807
+          },
+          "n_families": 80,
+          "n_sequences": 7572
+        },
+        "d": {
+          "R": {
+            "hi": 0.202978,
+            "lo": -0.039934,
+            "n_families": 358,
+            "ratio": 0.081976,
+            "undefined_fraction": 0.0
+          },
+          "condition_family_macro_f1": {
+            "a": 0.590959,
+            "d": 0.523126,
+            "e": 0.517069
+          },
+          "n_families": 358,
+          "n_sequences": 13834
+        }
+      }
+    }
+  },
+  "threshold": 0.5
+}

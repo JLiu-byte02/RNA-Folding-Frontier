@@ -102,3 +102,23 @@ recomputed below, may not appear in a report.
 
 The P2-central table must be recomputed with the retrained heads (Amendment 9
 §A9.4–A9.5) before it can be quoted.
+
+## 2026-11-12 — P2-central retention percentages used mismatched populations
+
+- **Where:** the first paragraph of “Immediate reading” in
+  `docs/p2central_fixed_2026-11-12.md`.
+- **What was wrong:** condition c exists only on records with a verified
+  homolog (449 id_test, 7,572 withheld after the ≥4-pair rule), while the a and
+  e point estimates in that table came from the full split. `(c−e)/(a−e)` then
+  compared a numerator from the c subset with a denominator from a different
+  population. The 77% / 102% kept-window figures are not a like-for-like
+  retention estimate.
+- **Corrected, common a/c/e population (family-bootstrap 95% CI):**
+  - id_test kept–kept: `R_c = .612 [.413, .853]`, `R_d = −.173 [−.617, .080]`;
+  - withheld kept–kept: `R_c = .747 [.564, .960]`, `R_d = .082 [−.040, .203]`;
+  - withheld all-pairs: `R_c = .504 [.390, .606]`, `R_d = −.069 [−.103, −.036]`.
+- **Consequence:** on P2-central, c retention is below the H3 90% bar on both
+  splits, with wide intervals. P2-central remains exploratory; H3 is decided on
+  P2-block, where every condition is measured on the same population.
+- **Artifact:** `experiments/002_e1prime_runs/p2central_ratios_ci.json` and
+  `docs/p2central_ratios_ci_2026-11-12.md`.

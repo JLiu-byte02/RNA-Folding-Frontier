@@ -55,6 +55,24 @@ counts are in `experiments/002_e1prime_runs/p2central_fixed_seed*.json`.
 - e is worse than a on every readout. This is the sanity check required after
   the scorer fix, not a new finding.
 
+### Population correction for the retention ratios
+
+The c–d contrast above is computed from each condition's own row set. Condition
+c has a verified homolog only on a subset (449 id_test / 7,572 withheld after
+the ≥4-pair rule), so a ratio that divides c's F1 by a and e computed on the
+full split mixes populations. On the common a/c/e population the corrected
+family-bootstrap estimates are:
+
+| split | readout | R_c | R_d |
+|---|---|---:|---:|
+| id_test | kept–kept | .612 [.413, .853] | −.173 [−.617, .080] |
+| withheld | kept–kept | .747 [.564, .960] | .082 [−.040, .203] |
+| withheld | all-pairs | .504 [.390, .606] | −.069 [−.103, −.036] |
+
+So P2-central does **not** meet the H3 90% retention bar. H3 is decided on
+P2-block, where all conditions are measured on the same records. Details:
+`docs/p2central_ratios_ci_2026-11-12.md`.
+
 ## Mandatory invariants
 
 For every condition, the family-macro and pooled-micro values differ by less

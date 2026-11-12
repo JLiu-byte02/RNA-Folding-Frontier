@@ -20,6 +20,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 
 
 def _make_sequence(n: int, pairs):
@@ -147,6 +148,15 @@ def test_d2_needs_only_dump_and_split(tmp_path):
     assert report
     text = json.dumps(report)
     assert "both_kept" in text
+
+
+def test_helix_length_walks_forward_toward_the_loop():
+    import d2_structure_errors
+
+    seq = "GGGAAACCC"
+    assert d2_structure_errors.helix_length(seq, 0, 8) == 3
+    assert d2_structure_errors.helix_length(seq, 1, 7) == 3
+    assert d2_structure_errors.helix_length(seq, 2, 6) == 3
 
 
 def _adversarial_rows():

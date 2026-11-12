@@ -65,7 +65,7 @@ def helix_length(seq: str, i: int, j: int, cap: int = 40) -> int:
     while (
         fwd < cap
         and i + fwd + 1 < j - fwd - 1
-        and seq[i + fwd + 1] + seq[j + fwd - 1] in CANONICAL
+        and seq[i + fwd + 1] + seq[j - fwd - 1] in CANONICAL
     ):
         fwd += 1
     return 1 + back + fwd

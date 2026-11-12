@@ -17,7 +17,6 @@ consensus row that could not be parsed unambiguously.
 from __future__ import annotations
 
 import argparse
-import gzip
 import hashlib
 import importlib.util
 import json
@@ -29,7 +28,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from rff.data.io import pairs_from_dbn  # noqa: E402
+from rff.data.io import gzip_deterministic, pairs_from_dbn  # noqa: E402
 from rff.data.wuss import (  # noqa: E402
     canonical_pairs,
     pairs_from_wuss,
@@ -246,7 +245,7 @@ def main() -> int:
                         eval_v3_parse_errors += 1
 
     payload = json.dumps(pairs_out, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    blob = gzip.compress(payload, mtime=0)
+    blob = gzip_deterministic(payload)
     pairs_path = out_dir / "labels_v3_pairs.json.gz"
     pairs_path.write_bytes(blob)
 

@@ -8,6 +8,7 @@ All loaders return :class:`Record` objects with:
 
 from __future__ import annotations
 
+import gzip
 import json
 import os
 import re
@@ -34,6 +35,23 @@ class Record:
 def normalize_seq(seq: str) -> str:
     seq = seq.strip().upper().replace("T", "U")
     return re.sub(r"[^ACGU N]", "N", seq).replace(" ", "")
+
+
+def gzip_deterministic(payload: bytes) -> bytes:
+    """Gzip bytes that hash identically on Windows and Linux.
+
+    ``gzip.compress(payload, mtime=0)`` still lets zlib choose the OS byte in
+    the gzip header: this machine writes ``0x0a`` (NTFS), the Linux server writes
+    ``0xff`` (unknown). The compressed stream is identical, but the artifact
+    sha256 is not. Pin the metadata byte so a frozen hash is reproducible across
+    platforms. The value 0x0a is retained because the committed v2/v3 artifacts
+    were produced with it; gzip readers treat the field as informational.
+    """
+    if len(payload) == 0:
+        raise ValueError("refusing to write an empty artifact")
+    blob = bytearray(gzip.compress(payload, mtime=0))
+    blob[9] = 0x0A
+    return bytes(blob)
 
 
 def pairs_from_dbn(dbn: str) -> list[tuple[int, int]]:

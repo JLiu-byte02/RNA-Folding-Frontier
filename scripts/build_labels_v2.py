@@ -20,7 +20,6 @@ reports the global numbers and says so.
 from __future__ import annotations
 
 import argparse
-import gzip
 import hashlib
 import importlib.util
 import json
@@ -32,7 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from rff.data.io import pairs_from_dbn  # noqa: E402
+from rff.data.io import gzip_deterministic, pairs_from_dbn  # noqa: E402
 from rff.data.wuss import canonical_pairs, pairs_from_wuss, project_wuss  # noqa: E402
 
 _spec = importlib.util.spec_from_file_location(
@@ -183,7 +182,7 @@ def main() -> int:
     # gzip with mtime=0 so the artifact's bytes — and therefore its hash — are
     # reproducible on any machine
     payload = json.dumps(delta, sort_keys=True).encode("utf-8")
-    blob = gzip.compress(payload, mtime=0)
+    blob = gzip_deterministic(payload)
     delta_path = out_dir / "labels_v2_delta.json.gz"
     delta_path.write_bytes(blob)
     summary["delta_file"] = str(delta_path.relative_to(ROOT))

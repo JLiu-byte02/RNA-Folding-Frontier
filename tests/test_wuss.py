@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import gzip
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from rff.data.io import gzip_deterministic  # noqa: E402
 from rff.data.wuss import (  # noqa: E402
     canonical_pairs,
     load_labels_v2_delta,
@@ -94,7 +96,6 @@ def test_v1_drops_letter_pairs_that_v2_keeps():
 
 
 def test_delta_gzip_round_trips_to_pair_sets(tmp_path):
-    import gzip
     import json
 
     path = tmp_path / "delta.json.gz"
@@ -102,3 +103,9 @@ def test_delta_gzip_round_trips_to_pair_sets(tmp_path):
     path.write_bytes(gzip.compress(payload, mtime=0))
     loaded = load_labels_v2_delta(path)
     assert loaded == {"RF00001|seq1": {(0, 6), (1, 5)}}
+
+
+def test_gzip_header_os_byte_is_platform_independent():
+    blob = gzip_deterministic(b'{"a":1}\n')
+    assert blob[:10] == bytes.fromhex("1f8b080000000000020a")
+    assert gzip.decompress(blob) == b'{"a":1}\n'

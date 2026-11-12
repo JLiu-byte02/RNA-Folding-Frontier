@@ -42,8 +42,9 @@ def load_arm(
     return score_dump(path, nested=nested)
 
 
-def arm_summary(per_seed: dict[int, dict[str, dict]], arm: str) -> dict:
-    ids = common_ids(*[per_seed[s][arm] for s in per_seed])
+def arm_summary(
+    per_seed: dict[int, dict[str, dict]], arm: str, ids: set[str]
+) -> dict:
     means = seed_average_family_means([per_seed[s][arm] for s in per_seed], ids)
     boot = bootstrap_mean(means)
     rows = []
@@ -97,19 +98,23 @@ def main() -> int:
             "b": "b-block trained/tested (P3)",
         },
     }
+    global_ids = set.intersection(
+        *[
+            common_ids(*[per_seed_allpairs[seed][arm] for arm in ARMS])
+            for seed in args.seeds
+        ]
+    )
+    result["n_common_sequences"] = len(global_ids)
     result["unpaired_allpairs"] = {
-        arm: arm_summary(per_seed_allpairs, arm) for arm in ARMS
+        arm: arm_summary(per_seed_allpairs, arm, global_ids) for arm in ARMS
     }
 
     # Paired family deltas: each seed's e/b F1 minus the same seed's a F1.
     per_seed_delta: dict[str, dict[int, dict[str, float]]] = {arm: {} for arm in ("e", "b")}
     for seed in args.seeds:
         for arm in ("e", "b"):
-            ids = common_ids(
-                per_seed_allpairs[seed][arm], per_seed_allpairs[seed]["a"]
-            )
-            f_block = family_means(per_seed_allpairs[seed][arm], ids)
-            f_a = family_means(per_seed_allpairs[seed]["a"], ids)
+            f_block = family_means(per_seed_allpairs[seed][arm], global_ids)
+            f_a = family_means(per_seed_allpairs[seed]["a"], global_ids)
             per_seed_delta[arm][seed] = {
                 family: f_block[family] - f_a[family]
                 for family in set(f_block) & set(f_a)
@@ -164,7 +169,17 @@ def main() -> int:
                 for arm in ARMS
             }
         result["nested_primary_secondary"] = {
-            arm: arm_summary(nested, arm) for arm in ARMS
+            arm: arm_summary(
+                nested,
+                arm,
+                set.intersection(
+                    *[
+                        common_ids(*[nested[seed][a] for a in ARMS])
+                        for seed in args.seeds
+                    ]
+                ),
+            )
+            for arm in ARMS
         }
 
     result["invariants"] = {}

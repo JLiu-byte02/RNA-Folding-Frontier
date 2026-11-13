@@ -70,6 +70,11 @@
       "blob_sha256": "b3a87a585ce729b32155efef97756f3c70c2b951d8066737818f220dfc1397b7",
       "first_quoted_in": "4dd5cca",
       "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
+    },
+    "experiments/002_e1prime_runs/ec2_fit.json": {
+      "blob_sha256": "7008310f93478c308f17c4b709b75abf27a065377bb83a06887a176b25202490",
+      "first_quoted_in": "pending-commit",
+      "note": "Frozen E-C2 coverage-gate parameters fitted on the training split only; withheld scoring must not run until this file is committed (Amendment 13 A13.2)."
     }
   }
 }

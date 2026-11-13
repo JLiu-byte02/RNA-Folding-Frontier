@@ -12,7 +12,7 @@ set -euo pipefail
 
 ROOT="/home/junxuanliu/projects/RNA-Folding-Frontier"
 PY="/home/junxuanliu/.conda/envs/rff/bin/python"
-FIT="experiments/002_e1prime_runs/energy_fit_coarse_p2fix.json"
+FIT="experiments/002_e1prime_runs/energy_fit_refined_p2fix.json"
 DUMP="experiments/002_e1prime_runs/dump_p2fix_seed17"
 
 cd "${ROOT}"

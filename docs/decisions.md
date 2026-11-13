@@ -66,3 +66,13 @@ recorded 16,716/544 on the same 17,260 cache ids. Reusing p2fix would make the a
 arm's early-stopping data differ from both block arms. Amendment 11 retrains a
 as `runs/p3_a_seed{17,23,41}` with the current code and cache; the D1-core rule,
 thresholds, and populations are unchanged.
+
+## 2026-11-13 — D1-core falsified; H3 not supported
+
+With the Amendment 11 a arm and the common 16,163-sequence / 409-family
+withheld population, neither block-trained head beats the native-trained head
+by the pre-registered .02: e-block Δ = +.0007 [−.0079, +.0093], b-block
+Δ = −.0099 [−.0159, −.0036]. D1-core is falsified as stated. P2-block H3 also
+fails its pre-registered rule: `R_c=.895 [.726,1.052]`, `R_d=.225 [.019,.342]`.
+The original “distal context is a family-identity shortcut that hurts OOD”
+mechanism is not supported at the head level; the paper must not be built on it.

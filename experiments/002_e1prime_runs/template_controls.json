@@ -2,26 +2,26 @@
   "description": "fixed 0.5 nested decoder; v3 primary truth; all-N/shuffle controls",
   "means": {
     "all_n_id_test": {
-      "mean_family_macro_f1": 0.02062,
+      "mean_family_macro_f1": 0.000549,
       "n_seeds": 3
     },
     "all_n_test_withheld": {
-      "mean_family_macro_f1": 0.013632,
+      "mean_family_macro_f1": 6.6e-05,
       "n_seeds": 3
     },
     "shuffle_id_test": {
-      "mean_family_macro_f1": 0.892011,
+      "mean_family_macro_f1": 0.016185,
       "n_seeds": 3
     },
     "shuffle_test_withheld": {
-      "mean_family_macro_f1": 0.904266,
+      "mean_family_macro_f1": 0.017319,
       "n_seeds": 3
     }
   },
   "min_true_pairs": 4,
   "per_seed": {
     "seed17|all_n_id_test": {
-      "family_macro_f1": 0.060334,
+      "family_macro_f1": 0.001646,
       "fn": 42545,
       "fp": 91,
       "micro_f1": 0.000281,
@@ -31,7 +31,7 @@
       "tp": 6
     },
     "seed17|all_n_test_withheld": {
-      "family_macro_f1": 0.038941,
+      "family_macro_f1": 0.000197,
       "fn": 425635,
       "fp": 232,
       "micro_f1": 0.000136,
@@ -41,7 +41,7 @@
       "tp": 29
     },
     "seed17|shuffle_id_test": {
-      "family_macro_f1": 0.894746,
+      "family_macro_f1": 0.018586,
       "fn": 42187,
       "fp": 35409,
       "micro_f1": 0.009295,
@@ -51,7 +51,7 @@
       "tp": 364
     },
     "seed17|shuffle_test_withheld": {
-      "family_macro_f1": 0.909876,
+      "family_macro_f1": 0.018447,
       "fn": 421466,
       "fp": 357669,
       "micro_f1": 0.010661,
@@ -61,7 +61,7 @@
       "tp": 4198
     },
     "seed23|all_n_id_test": {
-      "family_macro_f1": 0.001525,
+      "family_macro_f1": 0.0,
       "fn": 42551,
       "fp": 6,
       "micro_f1": 0.0,
@@ -71,7 +71,7 @@
       "tp": 0
     },
     "seed23|all_n_test_withheld": {
-      "family_macro_f1": 0.001956,
+      "family_macro_f1": 0.0,
       "fn": 425664,
       "fp": 52,
       "micro_f1": 0.0,
@@ -81,7 +81,7 @@
       "tp": 0
     },
     "seed23|shuffle_id_test": {
-      "family_macro_f1": 0.891457,
+      "family_macro_f1": 0.014534,
       "fn": 42149,
       "fp": 44736,
       "micro_f1": 0.009169,
@@ -91,7 +91,7 @@
       "tp": 402
     },
     "seed23|shuffle_test_withheld": {
-      "family_macro_f1": 0.896373,
+      "family_macro_f1": 0.017144,
       "fn": 421130,
       "fp": 460164,
       "micro_f1": 0.010185,
@@ -121,7 +121,7 @@
       "tp": 0
     },
     "seed41|shuffle_id_test": {
-      "family_macro_f1": 0.889829,
+      "family_macro_f1": 0.015435,
       "fn": 42176,
       "fp": 44290,
       "micro_f1": 0.008599,
@@ -131,7 +131,7 @@
       "tp": 375
     },
     "seed41|shuffle_test_withheld": {
-      "family_macro_f1": 0.906549,
+      "family_macro_f1": 0.016365,
       "fn": 421416,
       "fp": 451232,
       "micro_f1": 0.009642,

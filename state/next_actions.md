@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-13 00:10 (P2-block/P3 execution; SSH cooling down)
+Updated: 2026-11-13 10:30 (D1-core and H3 complete)
 
 The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
 Amendments 1–11, and `state/amendments.lock.json`. Amendment 8 supersedes the
@@ -45,13 +45,13 @@ fit/validation split before D1-core scoring.
 - [x] `pair_prf` zero-TP bug fixed and regression-tested.
 - [x] Amendment 9 pinned, scorer audit table written, E0/T4/Turner control
       audited.
-- [ ] Finish P2-block seed41 withheld dump, then score a–e at fixed 0.5 and
-      compute H3.
+- [x] P2-block a–e scored; H3 not supported (`R_c=.895 [.726,1.052]`).
 - [x] P3 b-block and e-block heads trained (3 seeds each).
-- [ ] Retrain P3 a arm (3 seeds, `runs/p3_a_seed*`), dump, and compute the
-      D1-core verdict on withheld.
-- [ ] `(s,b)` fit is running with the memory-safe worker table; freeze and
-      record D2C FP-helix expectation before H2.4.
+- [x] P3 a arm retrained on the common split; **D1-core falsified**
+      (`e Δ=+.0007 [−.0079,+.0093]`, `b Δ=−.0099 [−.0159,−.0036]`).
+- [ ] `(s,b)` coarse fit selected edge `s=.25, b=0`; refinement grid is
+      running. Freeze refined values before H2.4.
+- [x] D2C FP-helix baseline recorded (4,391 FPs; 25.6% fully in RNAfold MFE).
 
 ## Immediate local
 
@@ -66,11 +66,13 @@ fit/validation split before D1-core scoring.
 ## Next
 
 - [ ] P2-block test-time table a–e on id_test/withheld, with H3 ratios and CIs.
-- [ ] P3 train-and-test table a/e-block/b-block, with the D1-core verdict.
+- [x] P3 train-and-test table a/e-block/b-block, with the D1-core verdict.
 - [x] Bootstrap CIs for the corrected P2-central retention ratios.
 - [ ] H3 dose-response by homolog identity bin.
 - [ ] Enforce macro/micro ±.15 and shuffle-floor ≤.05 reporting invariants.
-- [ ] H2.4 only after the `(s,b)` freeze is committed.
+- [x] P2-central retained-ratio CIs recomputed on a common population.
+- [ ] H2.4 only after the refined `(s,b)` freeze is committed.
+- [ ] Send Round 4l to Claude with D1-core and H3 leading.
 
 ## Standing
 

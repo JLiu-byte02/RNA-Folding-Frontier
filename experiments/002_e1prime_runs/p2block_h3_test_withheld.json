@@ -1,0 +1,369 @@
+{
+  "amendment": "AMENDMENT_10.md",
+  "conditions": {
+    "a": "native",
+    "b": "dinucleotide shuffle",
+    "c": "same-family homolog",
+    "d": "other-clan",
+    "e": "N mask"
+  },
+  "dose_response": {
+    "0.40-0.50": {
+      "R_c": {
+        "hi": 3.424977,
+        "lo": 0.276342,
+        "n_families": 32,
+        "ratio": 0.875871,
+        "undefined_fraction": 0.0208
+      },
+      "n_families": 32,
+      "n_sequences": 545
+    },
+    "0.50-0.60": {
+      "R_c": {
+        "hi": 1.055475,
+        "lo": 0.728539,
+        "n_families": 93,
+        "ratio": 0.897138,
+        "undefined_fraction": 0.0
+      },
+      "n_families": 93,
+      "n_sequences": 7931
+    }
+  },
+  "full_split": {
+    "a": {
+      "family_macro_ci95": [
+        0.567831,
+        0.614018
+      ],
+      "mean_micro_f1": 0.594152,
+      "n_families": 409,
+      "n_sequences": 16163,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.606587,
+          "micro_f1": 0.602461,
+          "n": 16163,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.580052,
+          "micro_f1": 0.58816,
+          "n": 16163,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.586607,
+          "micro_f1": 0.591836,
+          "n": 16163,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.591082
+    },
+    "b": {
+      "family_macro_ci95": [
+        0.539758,
+        0.585252
+      ],
+      "mean_micro_f1": 0.56625,
+      "n_families": 409,
+      "n_sequences": 16163,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.576166,
+          "micro_f1": 0.574177,
+          "n": 16163,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.552854,
+          "micro_f1": 0.560617,
+          "n": 16163,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.559738,
+          "micro_f1": 0.563955,
+          "n": 16163,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.562919
+    },
+    "c": {
+      "family_macro_ci95": [
+        0.565596,
+        0.644827
+      ],
+      "mean_micro_f1": 0.598036,
+      "n_families": 93,
+      "n_sequences": 8476,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.622652,
+          "micro_f1": 0.598599,
+          "n": 8476,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.594884,
+          "micro_f1": 0.596296,
+          "n": 8476,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.602143,
+          "micro_f1": 0.599213,
+          "n": 8476,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.60656
+    },
+    "d": {
+      "family_macro_ci95": [
+        0.531205,
+        0.576803
+      ],
+      "mean_micro_f1": 0.554706,
+      "n_families": 409,
+      "n_sequences": 16163,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.56869,
+          "micro_f1": 0.56232,
+          "n": 16163,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.543179,
+          "micro_f1": 0.549225,
+          "n": 16163,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.551086,
+          "micro_f1": 0.552572,
+          "n": 16163,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.554318
+    },
+    "e": {
+      "family_macro_ci95": [
+        0.529245,
+        0.575412
+      ],
+      "mean_micro_f1": 0.556491,
+      "n_families": 409,
+      "n_sequences": 16163,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.568327,
+          "micro_f1": 0.566527,
+          "n": 16163,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.54183,
+          "micro_f1": 0.549506,
+          "n": 16163,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.54687,
+          "micro_f1": 0.553439,
+          "n": 16163,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.552342
+    }
+  },
+  "h3": {
+    "R_c": {
+      "hi": 1.051713,
+      "lo": 0.726307,
+      "n_families": 93,
+      "ratio": 0.894722,
+      "undefined_fraction": 0.0
+    },
+    "R_d": {
+      "hi": 0.342492,
+      "lo": 0.018766,
+      "n_families": 93,
+      "ratio": 0.225472,
+      "undefined_fraction": 0.0
+    },
+    "a_minus_e": 0.056026,
+    "criteria": {
+      "R_c_lo_ge_0.90": false,
+      "R_d_hi_le_0.30": false,
+      "defined_fraction_ge_0.99": true,
+      "denominator_positive": true
+    },
+    "estimand": "(condition - e) / (a - e), family-macro all-pairs F1 at 0.5",
+    "supported": false
+  },
+  "h3_common_c": {
+    "n_families": 93,
+    "n_sequences": 8476,
+    "per_condition": {
+      "a": {
+        "family_macro_ci95": [
+          0.571489,
+          0.65058
+        ],
+        "mean_micro_f1": 0.604127,
+        "n_families": 93,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.634141,
+            "micro_f1": 0.607898,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.599368,
+            "micro_f1": 0.599793,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.603866,
+            "micro_f1": 0.604691,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.612458
+      },
+      "b": {
+        "family_macro_ci95": [
+          0.540795,
+          0.618762
+        ],
+        "mean_micro_f1": 0.57177,
+        "n_families": 93,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.59846,
+            "micro_f1": 0.574669,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.571268,
+            "micro_f1": 0.569049,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.572249,
+            "micro_f1": 0.571592,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.580659
+      },
+      "c": {
+        "family_macro_ci95": [
+          0.565596,
+          0.644827
+        ],
+        "mean_micro_f1": 0.598036,
+        "n_families": 93,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.622652,
+            "micro_f1": 0.598599,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.594884,
+            "micro_f1": 0.596296,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.602143,
+            "micro_f1": 0.599213,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.60656
+      },
+      "d": {
+        "family_macro_ci95": [
+          0.529151,
+          0.607288
+        ],
+        "mean_micro_f1": 0.557026,
+        "n_families": 93,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.590767,
+            "micro_f1": 0.559992,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.555334,
+            "micro_f1": 0.554701,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.561091,
+            "micro_f1": 0.556384,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.569064
+      },
+      "e": {
+        "family_macro_ci95": [
+          0.513422,
+          0.597285
+        ],
+        "mean_micro_f1": 0.562731,
+        "n_families": 93,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.57764,
+            "micro_f1": 0.567638,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.540366,
+            "micro_f1": 0.557646,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.55129,
+            "micro_f1": 0.562908,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.556432
+      }
+    }
+  },
+  "invariants": {
+    "global_shuffle_floor": 0.017319,
+    "global_shuffle_gate_0.05": true,
+    "local_context_b_f1": 0.576166,
+    "local_context_b_note": "P2-block b preserves the native block+32nt flank; it is not a global sequence shuffle and is not a sequence-free control.",
+    "macro_micro_gate_0.15": true,
+    "max_macro_micro_gap": 0.024053,
+    "max_macro_micro_gap_row": {
+      "condition": "c",
+      "gap": 0.02405299999999999,
+      "seed": 17
+    },
+    "report_invariants_pass": true
+  },
+  "min_true_pairs": 4,
+  "seeds": [
+    17,
+    23,
+    41
+  ],
+  "split": "test_withheld",
+  "threshold": 0.5
+}

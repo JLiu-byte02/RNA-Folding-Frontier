@@ -14,7 +14,7 @@ PY="/home/junxuanliu/.conda/envs/rff/bin/python"
 cd "${ROOT}"
 
 "${PY}" scripts/freeze_energy_fit.py \
-  --fit experiments/002_e1prime_runs/energy_fit_coarse_p2fix.json \
+  --fit experiments/002_e1prime_runs/energy_fit_refined_p2fix.json \
   --lockfile state/amendments.lock.json \
   --write-lock
 

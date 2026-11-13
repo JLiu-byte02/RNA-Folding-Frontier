@@ -1,0 +1,352 @@
+{
+  "amendment": "AMENDMENT_10.md",
+  "conditions": {
+    "a": "native",
+    "b": "dinucleotide shuffle",
+    "c": "same-family homolog",
+    "d": "other-clan",
+    "e": "N mask"
+  },
+  "dose_response": {
+    "0.40-0.50": {
+      "n_families": 0,
+      "n_sequences": 0
+    },
+    "0.50-0.60": {
+      "n_families": 0,
+      "n_sequences": 0
+    }
+  },
+  "full_split": {
+    "a": {
+      "family_macro_ci95": [
+        0.544754,
+        0.622039
+      ],
+      "mean_micro_f1": 0.593705,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.600091,
+          "micro_f1": 0.607165,
+          "n": 1287,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.57547,
+          "micro_f1": 0.585026,
+          "n": 1287,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.575464,
+          "micro_f1": 0.588924,
+          "n": 1287,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.583675
+    },
+    "b": {
+      "family_macro_ci95": [
+        0.51477,
+        0.593513
+      ],
+      "mean_micro_f1": 0.514269,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.564501,
+          "micro_f1": 0.517837,
+          "n": 1287,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.548349,
+          "micro_f1": 0.504574,
+          "n": 1287,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.549282,
+          "micro_f1": 0.520395,
+          "n": 1287,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.554044
+    },
+    "c": {
+      "family_macro_ci95": [
+        0.46326,
+        0.620454
+      ],
+      "mean_micro_f1": 0.572978,
+      "n_families": 30,
+      "n_sequences": 526,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.560481,
+          "micro_f1": 0.576662,
+          "n": 526,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.527227,
+          "micro_f1": 0.562924,
+          "n": 526,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.54574,
+          "micro_f1": 0.579349,
+          "n": 526,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.544483
+    },
+    "d": {
+      "family_macro_ci95": [
+        0.512196,
+        0.589832
+      ],
+      "mean_micro_f1": 0.502443,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.565785,
+          "micro_f1": 0.511746,
+          "n": 1287,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.546457,
+          "micro_f1": 0.489286,
+          "n": 1287,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.541609,
+          "micro_f1": 0.506298,
+          "n": 1287,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.551284
+    },
+    "e": {
+      "family_macro_ci95": [
+        0.513563,
+        0.591912
+      ],
+      "mean_micro_f1": 0.497781,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.572667,
+          "micro_f1": 0.503126,
+          "n": 1287,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.536698,
+          "micro_f1": 0.485725,
+          "n": 1287,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.549213,
+          "micro_f1": 0.504492,
+          "n": 1287,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.55286
+    }
+  },
+  "h3": {
+    "R_c": {
+      "hi": 0.820045,
+      "lo": 0.296315,
+      "n_families": 30,
+      "ratio": 0.624761,
+      "undefined_fraction": 0.0
+    },
+    "R_d": {
+      "hi": 0.209713,
+      "lo": -0.411905,
+      "n_families": 30,
+      "ratio": -0.036286,
+      "undefined_fraction": 0.0
+    },
+    "a_minus_e": 0.054488,
+    "criteria": {
+      "R_c_lo_ge_0.90": false,
+      "R_d_hi_le_0.30": true,
+      "defined_fraction_ge_0.99": true,
+      "denominator_positive": true
+    },
+    "estimand": "(condition - e) / (a - e), family-macro all-pairs F1 at 0.5",
+    "supported": false
+  },
+  "h3_common_c": {
+    "n_families": 30,
+    "n_sequences": 526,
+    "per_condition": {
+      "a": {
+        "family_macro_ci95": [
+          0.481664,
+          0.6432
+        ],
+        "mean_micro_f1": 0.605043,
+        "n_families": 30,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.577783,
+            "micro_f1": 0.616792,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.557342,
+            "micro_f1": 0.595459,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.559661,
+            "micro_f1": 0.602879,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.564929
+      },
+      "b": {
+        "family_macro_ci95": [
+          0.444364,
+          0.60447
+        ],
+        "mean_micro_f1": 0.492806,
+        "n_families": 30,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.539942,
+            "micro_f1": 0.493128,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.511618,
+            "micro_f1": 0.478876,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.526612,
+            "micro_f1": 0.506415,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.526057
+      },
+      "c": {
+        "family_macro_ci95": [
+          0.46326,
+          0.620454
+        ],
+        "mean_micro_f1": 0.572978,
+        "n_families": 30,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.560481,
+            "micro_f1": 0.576662,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.527227,
+            "micro_f1": 0.562924,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.54574,
+            "micro_f1": 0.579349,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.544483
+      },
+      "d": {
+        "family_macro_ci95": [
+          0.428581,
+          0.587315
+        ],
+        "mean_micro_f1": 0.479914,
+        "n_families": 30,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.531576,
+            "micro_f1": 0.488473,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.496259,
+            "micro_f1": 0.463831,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.497555,
+            "micro_f1": 0.487438,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.508464
+      },
+      "e": {
+        "family_macro_ci95": [
+          0.427709,
+          0.592249
+        ],
+        "mean_micro_f1": 0.478611,
+        "n_families": 30,
+        "per_seed": [
+          {
+            "family_macro_f1": 0.527027,
+            "micro_f1": 0.479925,
+            "seed": 17
+          },
+          {
+            "family_macro_f1": 0.484107,
+            "micro_f1": 0.466568,
+            "seed": 23
+          },
+          {
+            "family_macro_f1": 0.520188,
+            "micro_f1": 0.489341,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_family_macro_f1": 0.510441
+      }
+    }
+  },
+  "invariants": {
+    "macro_micro_gate_0.15": true,
+    "max_macro_micro_gap": 0.069541,
+    "max_macro_micro_gap_row": {
+      "condition": "e",
+      "gap": 0.06954100000000007,
+      "seed": 17
+    },
+    "shuffle_floor_gate_0.05": false,
+    "shuffle_floor_max": 0.564501
+  },
+  "min_true_pairs": 4,
+  "seeds": [
+    17,
+    23,
+    41
+  ],
+  "split": "id_test",
+  "threshold": 0.5
+}

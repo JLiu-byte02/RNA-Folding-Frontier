@@ -1,13 +1,27 @@
 # Research State
 
-Updated: 2026-11-12 18:40
+Updated: 2026-11-13 10:30
 
 ## Phase
 
-`post-pair-prf-correction` — a scoring bug was found and fixed; D1/K1/template
-controls were rerun. The corrected e condition is much worse than a, so the H2
-premise is falsified as stated. PI redirection is required before any H2.4 or
-P2-block spend.
+`post-D1-core` — P2-block and P3 are complete. D1-core is falsified and H3 is
+not supported. The paper must not claim that distal context is a head-level
+family-identity shortcut. H2.4 remains a standalone decoder question; PI
+redirection is required before building the next method story.
+
+## Decisive 2026-11-13 result
+
+- P3 common population: 16,163 withheld sequences, 409 families, v3 all-pairs,
+  fixed 0.5.
+- a `.5959 [.5726,.6191]`; e-block `.5965 [.5733,.6196]`; b-block
+  `.5860 [.5630,.6088]`.
+- Paired Δ vs a: e `+.0007 [−.0079,+.0093]`; b `−.0099 [−.0159,−.0036]`.
+- **D1-core falsified** under Amendment 10's .02 rule.
+- P2-block H3 `R_c=.895 [.726,1.052]`, `R_d=.225 [.019,.342]`; **not
+  supported** under the pre-registered bounds.
+- P2-central common-population ratios are also below the old 77%/102% reading:
+  kept–kept withheld `R_c=.747 [.564,.960]`.
+- Full report: `docs/p2block_p3_2026-11-13.md`.
 
 ## Established facts
 

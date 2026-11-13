@@ -123,8 +123,9 @@ def main() -> int:
         "exported_len_mean": round(sum(m["length"] for m in mapping) / len(mapping), 2) if mapping else 0.0,
         "exported_len_p50": sorted(m["length"] for m in mapping)[len(mapping) // 2] if mapping else 0,
         "exported_len_max": max((m["length"] for m in mapping), default=0),
-        "label_policy": "vim3 pairs projected to maximum nested subset; "
-                        "no sequence-level filtering beyond length and min_pairs",
+        "label_policy": "frozen split pairs projected to the maximum nested "
+                        "subset; no sequence-level filtering beyond length and "
+                        "min_pairs",
     }
     dest = Path(args.manifest) if args.manifest else out_dir / "manifest.json"
     dest.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")

@@ -1,0 +1,20 @@
+{
+  "exported_len_max": 599,
+  "exported_len_mean": 124.58,
+  "exported_len_p50": 95,
+  "label_policy": "vim3 pairs projected to maximum nested subset; no sequence-level filtering beyond length and min_pairs",
+  "limit": 0,
+  "lst_sha256": "d2ba5c96d905589369a31ab24b1e98aae118cc9b0a149a15dcb87f36dbb5291c",
+  "max_len": 600,
+  "min_pairs": 1,
+  "n_exported": 17155,
+  "n_rows_in_split": 17746,
+  "n_rows_with_crossing_pairs": 1846,
+  "n_skipped_few_pairs": 14,
+  "n_skipped_too_long": 577,
+  "pairs_after_nested_projection": 439299,
+  "pairs_before_nested_projection": 454222,
+  "split": "splits/s1prime_filtered/train.jsonl",
+  "split_sha256": "b8af23357fc6c36aab0d4ebae1647bde452582ea8a0872590efd747fa1f94ecd",
+  "stride": 1
+}

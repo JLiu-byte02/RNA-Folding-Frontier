@@ -28,6 +28,18 @@ confirmatory family list.
       delta excludes zero. `docs/external_baselines_2026-11-13.md` section 5.
 - [x] Regression test `tests/test_external_baseline.py` (common-cohort contract).
 
+## Blocking now
+
+- [ ] **Cluster SSH is down** (2026-11-14 00:33 onward): TCP connects but the
+      SSH banner never arrives (`kex_exchange_identification`). The VPN client
+      reports online yet has no usable tunnel line. Detailed, non-public
+      diagnosis with host addresses and rollback commands is kept outside the
+      repository (`tmp_dbg/net_backup/`). Do not loop reconnects; retest once
+      after the network fix below is applied.
+- [ ] Required to unblock: an elevated split-tunnel route (or an equivalent
+      VPN-client exclusion) so the campus portal does not egress through the
+      commercial VPN. This needs administrator rights on the local machine.
+
 ## Running now (server)
 
 - [ ] `15631 rff_mx_train` - MXfold2 MixC retrain, 10 epochs. Still RUNNING at

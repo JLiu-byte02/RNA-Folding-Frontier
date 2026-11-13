@@ -21,6 +21,8 @@ redirection is required before building the next method story.
   supported** under the pre-registered bounds.
 - P2-central common-population ratios are also below the old 77%/102% reading:
   kept–kept withheld `R_c=.747 [.564,.960]`.
+- H2.4 with frozen `(s,b)=(.1875,0)`: DP has more TPs but also more long-range
+  FPs than greedy on both splits; **not confirmed**.
 - Full report: `docs/p2block_p3_2026-11-13.md`.
 
 ## Established facts

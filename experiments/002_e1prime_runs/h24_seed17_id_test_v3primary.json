@@ -1,0 +1,109 @@
+{
+  "name": "a_id_test",
+  "n_sequences": 1287,
+  "n_sequences_without_seq": 0,
+  "label_policy": {
+    "version": "v3",
+    "min_true_pairs": 4,
+    "n_excluded_below_min": 105,
+    "n_excluded_label_parse_failure": 0
+  },
+  "long_range_definition": "|i-j| > 128",
+  "dp_config": {
+    "hairpin_penalty": 0.0,
+    "interior_penalty": 0.0,
+    "ml_closing": 0.0,
+    "ml_branch": 0.0,
+    "ml_unpaired": 0.0,
+    "max_loop": 30,
+    "score": "log-odds of the dumped cells; absent cells disallowed",
+    "variant": "A-energy (ViennaRNA Turner + sc_add_bp)",
+    "energy_scale": 0.1875,
+    "energy_offset": 0.0,
+    "calibration_status": "explicit values supplied on the command line; record the fitting job"
+  },
+  "at_0_5": {
+    "threshold": 0.5,
+    "greedy_recall": 0.6542,
+    "dp_recall": 0.7012,
+    "family_macro_per_sequence": {
+      "bare": {
+        "tp": 20.3983,
+        "long_range_fp": 3.431
+      },
+      "greedy": {
+        "tp": 17.9459,
+        "long_range_fp": 0.944
+      },
+      "dp": {
+        "tp": 20.5165,
+        "long_range_fp": 2.218
+      }
+    },
+    "mean_d_tp": 2.5706,
+    "mean_d_long_range_fp": 1.274,
+    "pooled": {
+      "bare": {
+        "tp": 30444,
+        "long_range_fp": 5630,
+        "pairs": 73165
+      },
+      "greedy": {
+        "tp": 27837,
+        "long_range_fp": 2496,
+        "pairs": 49144
+      },
+      "dp": {
+        "tp": 29835,
+        "long_range_fp": 4205,
+        "pairs": 58649
+      }
+    },
+    "contrast_drop_lrfp_minus_drop_tp": {
+      "n_families": 155,
+      "contrast": 1.8645,
+      "ci": [
+        -4.349,
+        7.284
+      ]
+    },
+    "n_sequences_lrfp_reduced": 56,
+    "passes": false
+  },
+  "greedy_recall_ceiling": {
+    "recall": 0.6849,
+    "threshold": 0.05,
+    "note": "descriptive only (Amendment 4 A4.1 item 3): the best greedy recall reachable on this split, over the whole threshold grid"
+  },
+  "H2_4": {
+    "order": [
+      "recall_matched",
+      "pair_budget"
+    ],
+    "basis": "pair_budget",
+    "status": "not_confirmed",
+    "passes": false,
+    "verdicts": {
+      "pair_budget": {
+        "pooled_pairs_greedy": 58636,
+        "pooled_pairs_dp": 58649,
+        "pooled_tp_greedy": 28965,
+        "pooled_tp_dp": 29835,
+        "pooled_long_range_fp_greedy": 3284,
+        "pooled_long_range_fp_dp": 4205,
+        "more_true_positives": true,
+        "fewer_long_range_fp": false,
+        "passes": false
+      }
+    },
+    "recall_matched_threshold": null,
+    "recall_matched_gap": null,
+    "recall_tolerance": 0.002,
+    "pair_budget_threshold": 0.1317,
+    "pair_budget_gap_pairs": 13,
+    "pair_budget_tolerance_pairs": 586.49,
+    "pair_budget_feasible": true,
+    "threshold_grid_size": 25,
+    "note": "Amendment 4 A4.1: recall-matched primary; pair-budget fallback only when no threshold reaches decoder A's recall; greedy recall ceiling always reported, descriptively"
+  }
+}

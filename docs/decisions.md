@@ -76,3 +76,11 @@ by the pre-registered .02: e-block Δ = +.0007 [−.0079, +.0093], b-block
 fails its pre-registered rule: `R_c=.895 [.726,1.052]`, `R_d=.225 [.019,.342]`.
 The original “distal context is a family-identity shortcut that hurts OOD”
 mechanism is not supported at the head level; the paper must not be built on it.
+
+## 2026-11-13 — H2.4 not confirmed
+
+With the frozen `(s,b)=(.1875,0)` fit and the pair-budget fallback, A-energy DP
+has more true positives than greedy but also more long-range false positives
+on both id_test (4,205 vs 3,284) and withheld (20,218 vs 17,630). H2.4's
+pre-registered verdict is not confirmed. Energy consistency is not a free
+improvement on these scores.

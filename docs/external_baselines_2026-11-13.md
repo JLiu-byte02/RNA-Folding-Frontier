@@ -175,11 +175,20 @@ summed tp/fp/fn of the three runs. Treat it as a variance-reduction summary only
 
 ## 6. Freezing procedure (to run when 15631 finishes)
 
+First fold both splits with the retrained model (CPU, resumable, 600 nt cap):
+
+```
+sbatch scripts/jobs/mxfold2_fold.sbatch      # or run predict_mxfold2.py per split
+```
+
+Then build the cohort:
+
 ```
 python scripts/build_common_cohort.py \
   --split splits/s1prime_filtered/<split>.jsonl \
   --dump experiments/002_e1prime_runs/dump_p2fix_seed17/a_<split>.jsonl \
-  --preds experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure,mxfold2}_<split>.jsonl \
+  --preds experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure}_<split>.jsonl \
+          experiments/013_mxfold2/mxfold2_<split>.jsonl \
   --out experiments/002_e1prime_runs/cohort/<split>.jsonl \
   --report experiments/002_e1prime_runs/cohort/<split>.report.json \
   --excluded-out experiments/002_e1prime_runs/cohort/<split>.excluded.jsonl

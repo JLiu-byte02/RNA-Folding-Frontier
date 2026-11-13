@@ -252,6 +252,19 @@ thermodynamic tools. No paired family-block interval excludes zero:
 | seed17 - RNAfold | +.0050 [-.0171, +.0272] | .6580 | +.0053 [-.0273, +.0375] | .7518 |
 | seed17 - EternaFold | +.0004 [-.0214, +.0224] | .9726 | +.0092 [-.0229, +.0409] | .5708 |
 
+Where the loss falls is not uniform. On withheld the median head-minus-RNAfold
+delta is **-.022 [-.035, -.013]**, worse than the mean (-.011), and only 41% of
+families favour the head; the mean is pulled up by a small number of large
+family-level gains. The delta rises with log family size (rho .20 [.10, .30]
+against RNAfold, .12 [.02, .22] against EternaFold, .19 [.09, .28] against
+RNAstructure; id_test .36 [.24, .46], .29 [.15, .43], .38 [.27, .47]), and
+there is no comparable relation with mean family length (|rho| <= .15). Larger
+families are also better covered by the pretraining corpus (section 2.6), so
+this is consistent with the coverage account rather than an independent test of
+it. It does mean the head is not uniformly slightly worse: it is better than
+the tools on a minority of (mostly larger) families and worse on the typical
+small one.
+
 The single seed that nominally exceeds RNAfold and EternaFold does so by
 between .0004 and .0092 depending on the comparison, with every interval
 spanning zero and 43-51% of families better in the four raw comparisons. We therefore

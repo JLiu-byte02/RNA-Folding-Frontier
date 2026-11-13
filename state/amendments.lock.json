@@ -55,6 +55,11 @@
       "blob_sha256": "7c769403196194843a1e5d5b5fe7b2e437b6308fe6c8d1679baa29210fd3c1fc",
       "first_quoted_in": "pending-commit",
       "note": "Written 2026-11-12 before D1-core scoring; retrains the P3 a arm on the common split. Frozen on first commit; no further edits."
+    },
+    "experiments/002_e1prime_runs/energy_fit_refined_p2fix.json": {
+      "blob_sha256": "be54ddab6552102b645a42dff5ac60eaa92072680db062ae437c8c4889ad5ad5",
+      "first_quoted_in": "pending-commit",
+      "note": "Frozen (s,b) energy calibration from the training split; H2.4 must not run until this file is committed."
     }
   }
 }

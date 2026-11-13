@@ -14,6 +14,19 @@ documented path ``contrafold predict <seqfile> --params <params>``; we run it
 per sequence in a process pool, which keeps the semantics exactly as
 documented and still finishes a 16k split in tens of minutes on 8 cores.
 
+Cost control.  CONTRAfold is O(L^3); the withheld split has 574 sequences
+above 2,000 nt (max 4,381), which dominate walltime and can occupy a core for
+hours each.  ``--max-length`` applies an explicit, declared length cap and
+writes the excluded rows to ``<out>.excluded.jsonl``.  A cap is a cohort
+decision, so every baseline must be rescored on the same common cohort; the
+cap is never silent.
+
+Resumability.  ``--cache`` appends each finished prediction to
+``<out>.partial.jsonl`` and reloads it on restart, so a walltime kill costs at
+most the in-flight sequences.  Without ``--allow-partial`` any per-sequence
+failure still aborts before the final file is written; the partial cache keeps
+the successes for a retry.
+
 Failure policy: any sequence without a parsed structure aborts the run.  A
 silently dropped sequence would bias the family-macro average.  The script
 refuses paths containing ``test_novel`` (embargo, Amendment 14 pending).
@@ -81,6 +94,21 @@ def predict_one(payload: tuple[str, str, str, str, int]) -> tuple[str, str | Non
         return rid, dbn, ""
 
 
+def load_cache(path: Path) -> dict[str, str]:
+    found: dict[str, str] = {}
+    if not path.exists():
+        return found
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            rec = json.loads(line)
+            if rec.get("dbn"):
+                found[rec["id"]] = rec["dbn"]
+    return found
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", required=True)
@@ -94,6 +122,22 @@ def main() -> int:
     )
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--timeout", type=int, default=3600)
+    ap.add_argument(
+        "--max-length",
+        type=int,
+        default=0,
+        help="skip sequences longer than this (0 = no cap); excluded rows are logged",
+    )
+    ap.add_argument(
+        "--cache",
+        default="",
+        help="append-only partial-results jsonl; defaults to <out>.partial.jsonl",
+    )
+    ap.add_argument(
+        "--allow-partial",
+        action="store_true",
+        help="write the final file with the successes and dump failures to <out>.errors.jsonl",
+    )
     args = ap.parse_args()
 
     split = Path(args.split)
@@ -103,51 +147,91 @@ def main() -> int:
     out_path = Path(args.out)
     if not out_path.is_absolute():
         out_path = ROOT / out_path
+    cache_path = Path(args.cache) if args.cache else out_path.with_suffix(".partial.jsonl")
+    if not cache_path.is_absolute():
+        cache_path = ROOT / cache_path
 
     rows = read_jsonl(split)
     ids = [r["id"] for r in rows]
     if len(set(ids)) != len(ids):
         raise SystemExit("duplicate ids in split")
 
+    kept: list[dict] = []
+    excluded: list[dict] = []
+    for r in rows:
+        if args.max_length and len(r["seq"]) > args.max_length:
+            excluded.append({"id": r["id"], "seq_len": len(r["seq"])})
+        else:
+            kept.append(r)
+    if excluded:
+        ex_path = out_path.with_suffix(".excluded.jsonl")
+        ex_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ex_path, "w", encoding="utf-8", newline="\n") as fh:
+            for rec in excluded:
+                fh.write(json.dumps(rec, separators=(",", ":")) + "\n")
+        print(
+            f"[eternafold] length cap {args.max_length}: "
+            f"{len(excluded)} excluded -> {ex_path}",
+            flush=True,
+        )
+
+    found = load_cache(cache_path)
+    todo = [r for r in kept if r["id"] not in found]
+    print(
+        f"[eternafold] cache hit {len(kept) - len(todo)}; running {len(todo)}",
+        flush=True,
+    )
+
     payloads = [
-        (r["id"], r["seq"], args.contrafold, args.params, args.timeout) for r in rows
+        (r["id"], r["seq"], args.contrafold, args.params, args.timeout) for r in todo
     ]
-    found: dict[str, str] = {}
     errors: list[tuple[str, str]] = []
     n_done = 0
-    with cf.ProcessPoolExecutor(max_workers=max(1, args.workers)) as ex:
-        for rid, dbn, err in ex.map(predict_one, payloads, chunksize=8):
-            n_done += 1
-            if dbn is None:
-                errors.append((rid, err))
-            else:
-                found[rid] = dbn
-            if n_done % 200 == 0 or n_done == len(payloads):
-                print(f"[eternafold] {n_done}/{len(payloads)} errors={len(errors)}", flush=True)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    if payloads:
+        with open(cache_path, "a", encoding="utf-8", newline="\n") as cache_fh:
+            with cf.ProcessPoolExecutor(max_workers=max(1, args.workers)) as ex:
+                for rid, dbn, err in ex.map(predict_one, payloads, chunksize=4):
+                    n_done += 1
+                    if dbn is None:
+                        errors.append((rid, err))
+                    else:
+                        found[rid] = dbn
+                        cache_fh.write(
+                            json.dumps({"id": rid, "dbn": dbn}, separators=(",", ":"))
+                            + "\n"
+                        )
+                        cache_fh.flush()
+                    if n_done % 200 == 0 or n_done == len(payloads):
+                        print(
+                            f"[eternafold] {n_done}/{len(payloads)} "
+                            f"errors={len(errors)}",
+                            flush=True,
+                        )
 
     if errors:
         for rid, err in errors[:5]:
-            print(f"[error] {rid}: {err}", file=sys.stderr)
-        raise SystemExit(f"{len(errors)} sequences failed; refusing partial output")
+            print(f"[error] {rid}: {err}", file=sys.stderr, flush=True)
+        if not args.allow_partial:
+            raise SystemExit(f"{len(errors)} sequences failed; refusing partial output")
+        err_path = out_path.with_suffix(".errors.jsonl")
+        with open(err_path, "w", encoding="utf-8", newline="\n") as fh:
+            for rid, err in errors:
+                fh.write(json.dumps({"id": rid, "error": err}, separators=(",", ":")) + "\n")
+        print(f"[eternafold] wrote {len(errors)} failures -> {err_path}", flush=True)
+
+    missing = [rid for rid in (r["id"] for r in kept) if rid not in found]
+    if missing:
+        raise SystemExit(f"{len(missing)} kept sequences still lack a prediction")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as fh:
-        for rid in ids:
+    with open(out_path, "w", encoding="utf-8", newline="\n") as fh:
+        for r in kept:
             fh.write(
-                json.dumps({"id": rid, "dbn": found[rid]}, separators=(",", ":"))
+                json.dumps({"id": r["id"], "dbn": found[r["id"]]}, separators=(",", ":"))
                 + "\n"
             )
-    print(
-        json.dumps(
-            {
-                "tool": "eternafold",
-                "split": str(split),
-                "n": len(ids),
-                "out": str(out_path),
-                "workers": args.workers,
-            }
-        )
-    )
+    print(f"[eternafold] wrote {len(kept)} predictions -> {out_path}", flush=True)
     return 0
 
 

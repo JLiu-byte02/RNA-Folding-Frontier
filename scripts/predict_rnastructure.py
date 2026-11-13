@@ -187,7 +187,7 @@ def main() -> int:
             cfh.flush()
             n_done += 1
             if n_done % 200 == 0 or n_done == len(payloads):
-                n_err = sum(1 for k in run_ids if done[k][0] is None)
+                n_err = sum(1 for k in run_ids if k in done and done[k][0] is None)
                 print(f"[rnastructure] {n_done}/{len(payloads)} errors={n_err}", flush=True)
 
     errors = [(rid, dbn_or_err[1]) for rid, dbn_or_err in done.items() if dbn_or_err[0] is None]

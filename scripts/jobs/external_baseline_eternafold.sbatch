@@ -10,6 +10,12 @@
 # EternaFold (CONTRAfold-SE, EternaFoldParams.v1) on both evaluation splits,
 # then the shared scorer with the same --restrict-ids dump and
 # --min-true-pairs 4 / v3-label policy as every other baseline.
+#
+# Length cap 1200 nt (job 15619, no cap, stalled at 5,600/17,371 for 55 min on
+# the 574 sequences above 2,000 nt; CONTRAfold is O(L^3)).  The cap removes
+# 578/17,371 withheld rows and is declared in <out>.excluded.jsonl; every
+# baseline is rescored on the resulting common cohort, never on a per-method
+# subset.
 set -euo pipefail
 cd /home/junxuanliu/projects/RNA-Folding-Frontier
 export PATH=/home/junxuanliu/.conda/envs/rff/bin:$PATH
@@ -18,13 +24,13 @@ echo "[start] $(date -Iseconds)"
 python scripts/predict_eternafold.py \
   --split splits/s1prime_filtered/test_withheld.jsonl \
   --out experiments/002_e1prime_runs/eternafold_test_withheld.jsonl \
-  --workers 16
+  --workers 16 --max-length 1200 --timeout 1800
 echo "[predict withheld done] $(date -Iseconds)"
 
 python scripts/predict_eternafold.py \
   --split splits/s1prime_filtered/id_test.jsonl \
   --out experiments/002_e1prime_runs/eternafold_id_test.jsonl \
-  --workers 16
+  --workers 16 --max-length 1200 --timeout 1800
 echo "[predict id_test done] $(date -Iseconds)"
 
 for pair in "test_withheld:test_withheld" "id_test:id_test"; do

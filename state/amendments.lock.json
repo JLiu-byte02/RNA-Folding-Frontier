@@ -1,80 +1,80 @@
 {
-  "note": "Hashes of the pre-registration documents and the test_novel evaluation subset. The confirmatory scripts refuse to read a test_novel path unless --confirmatory is passed AND every hash here still matches. Amendment 6 A6.5 (Amendment 6 itself is not checked against its own hash).",
-  "hash_basis": "git-blob",
-  "hash_basis_note": "Each value is the sha256 of the git blob at HEAD:<path>, not of the working-tree file (PI Round 4g section 1). The guard also refuses when the working tree differs from that blob, which catches an uncommitted edit or an autocrlf line-ending rewrite. Verified 2026-11-12 in experiments/006_lock_basis/lock_basis_check.json: working tree, HEAD blob and every historical blob agree for all locked files, and none contains CRLF. Re-run scripts/verify_lock_basis.py from a fresh Linux clone when the cluster returns.",
-  "files": {
-    "experiments/001_e1prime/AMENDMENT_2.md": {
-      "blob_sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
-      "first_quoted_in": "a8e4d48242d6"
-    },
-    "experiments/001_e1prime/AMENDMENT_3.md": {
-      "blob_sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
-      "first_quoted_in": "207a8eb560cd"
-    },
-    "experiments/001_e1prime/AMENDMENT_4.md": {
-      "blob_sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
-      "first_quoted_in": "3a16258146fc",
-      "restored_in": "d6a2abb",
-      "note": "The blob was 08d6771a in 3a16258, moved to c6471002 when A4.6 was appended, and restored to 08d6771a in d6a2abb. Both pre-restore commits remain in history."
-    },
-    "experiments/001_e1prime/AMENDMENT_5.md": {
-      "blob_sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
-      "first_quoted_in": "0117538d80a7"
-    },
-    "experiments/001_e1prime/test_novel_eval.jsonl": {
-      "blob_sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
-      "first_quoted_in": "b40d22e551e3",
-      "n_records": 2372
-    },
-    "experiments/001_e1prime/AMENDMENT_6.md": {
-      "blob_sha256": "231172e4916c823d2e909a3206a69b3053bdabfc3cde2e20f07bf0946872f8fd",
-      "first_quoted_in": "d6a2abb",
-      "note": "Amendment 6 excluded itself from the lock because its own hash could not be written inside itself. It is pinned here now that its bytes are fixed."
-    },
-    "experiments/001_e1prime/AMENDMENT_7.md": {
-      "blob_sha256": "c183b92191e1474815cd014c6ce9f3d4b56cc73557dfab6a1de238b704fc8e01",
-      "first_quoted_in": "0f7dc0c",
-      "note": "Written 2026-11-12 (Round 4g rulings). Frozen on first commit; no further edits."
-    },
-    "experiments/001_e1prime/AMENDMENT_8.md": {
-      "blob_sha256": "5411a05021e4a0207fa60f55f3616bc4dca1e38889f3f944dfe52ea6b345fffa",
-      "first_quoted_in": "a9de0a2",
-      "note": "Written 2026-11-12 (Round 4h rulings). Frozen on first commit; no further edits."
-    },
-    "experiments/001_e1prime/AMENDMENT_9.md": {
-      "blob_sha256": "a1dae27eb500798db0c00d8bea66f1fea60cb2af65afd385eeffaa165480704c",
-      "first_quoted_in": "8a49ff1",
-      "note": "Written 2026-11-12 (Round 4j correction rulings). Frozen on first commit; no further edits."
-    },
-    "experiments/001_e1prime/AMENDMENT_10.md": {
-      "blob_sha256": "5ec10662d185c78c5b4dab1a0e89e9946a357e2e0a0ec901953b7f68bc44e1f1",
-      "first_quoted_in": "5a0172e",
-      "note": "Written 2026-11-12 (Round 4k P2-block/P3 rulings). Frozen on first commit; no further edits."
-    },
-    "experiments/001_e1prime/AMENDMENT_11.md": {
-      "blob_sha256": "7c769403196194843a1e5d5b5fe7b2e437b6308fe6c8d1679baa29210fd3c1fc",
-      "first_quoted_in": "c57c437",
-      "note": "Written 2026-11-12 before D1-core scoring; retrains the P3 a arm on the common split. Frozen on first commit; no further edits."
-    },
-    "experiments/002_e1prime_runs/energy_fit_refined_p2fix.json": {
-      "blob_sha256": "be54ddab6552102b645a42dff5ac60eaa92072680db062ae437c8c4889ad5ad5",
-      "first_quoted_in": "c58656f",
-      "note": "Frozen (s,b) energy calibration from the training split; H2.4 must not run until this file is committed."
-    },
-    "experiments/001_e1prime/AMENDMENT_12.md": {
-      "blob_sha256": "68e3ebe3f2065094d5b89e8712fafe8e4e853005bb6d4c5f9e99b9b012fa95e5",
-      "first_quoted_in": "b61bf6c",
-      "note": "Written 2026-11-13 before any coverage proxy or coverage-F1 outcome was computed (PI Round 4l hypothesis C). Frozen on first commit; no further edits."
-    },
-    "experiments/001_e1prime/AMENDMENT_13.md": {
-      "blob_sha256": "b3a87a585ce729b32155efef97756f3c70c2b951d8066737818f220dfc1397b7",
-      "first_quoted_in": "4dd5cca",
-      "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
-    },
-    "experiments/002_e1prime_runs/ec2_fit.json": {
-      "blob_sha256": "7008310f93478c308f17c4b709b75abf27a065377bb83a06887a176b25202490",
-      "first_quoted_in": "pending-commit",
-      "note": "Frozen E-C2 coverage-gate parameters fitted on the training split only; withheld scoring must not run until this file is committed (Amendment 13 A13.2)."
-    }
+ "note": "Hashes of the pre-registration documents and the test_novel evaluation subset. The confirmatory scripts refuse to read a test_novel path unless --confirmatory is passed AND every hash here still matches. Amendment 6 A6.5 (Amendment 6 itself is not checked against its own hash).",
+ "hash_basis": "git-blob",
+ "hash_basis_note": "Each value is the sha256 of the git blob at HEAD:<path>, not of the working-tree file (PI Round 4g section 1). The guard also refuses when the working tree differs from that blob, which catches an uncommitted edit or an autocrlf line-ending rewrite. Verified 2026-11-12 in experiments/006_lock_basis/lock_basis_check.json: working tree, HEAD blob and every historical blob agree for all locked files, and none contains CRLF. Re-run scripts/verify_lock_basis.py from a fresh Linux clone when the cluster returns.",
+ "files": {
+  "experiments/001_e1prime/AMENDMENT_2.md": {
+   "blob_sha256": "4a9d2f482cf12ad0ce28327bcc7b9d3b521ca24185953ddea35ef9987029de78",
+   "first_quoted_in": "a8e4d48242d6"
+  },
+  "experiments/001_e1prime/AMENDMENT_3.md": {
+   "blob_sha256": "7e035123b9bf43abbdf133a77e3bf8eed31064eabaa754185b15805a04a7962c",
+   "first_quoted_in": "207a8eb560cd"
+  },
+  "experiments/001_e1prime/AMENDMENT_4.md": {
+   "blob_sha256": "08d6771a77da7147575b2ba2ff218e8cce2d7aadcc1fcf570db6e1920bd17442",
+   "first_quoted_in": "3a16258146fc",
+   "restored_in": "d6a2abb",
+   "note": "The blob was 08d6771a in 3a16258, moved to c6471002 when A4.6 was appended, and restored to 08d6771a in d6a2abb. Both pre-restore commits remain in history."
+  },
+  "experiments/001_e1prime/AMENDMENT_5.md": {
+   "blob_sha256": "cba1760880e04a36766231b7a3361e5a67eb041c517fbb06d04143244687455a",
+   "first_quoted_in": "0117538d80a7"
+  },
+  "experiments/001_e1prime/test_novel_eval.jsonl": {
+   "blob_sha256": "9d1ab36ca8d07a47b67b5972bf69b2be6ebd34127b777eabbc552b0706ee209b",
+   "first_quoted_in": "b40d22e551e3",
+   "n_records": 2372
+  },
+  "experiments/001_e1prime/AMENDMENT_6.md": {
+   "blob_sha256": "231172e4916c823d2e909a3206a69b3053bdabfc3cde2e20f07bf0946872f8fd",
+   "first_quoted_in": "d6a2abb",
+   "note": "Amendment 6 excluded itself from the lock because its own hash could not be written inside itself. It is pinned here now that its bytes are fixed."
+  },
+  "experiments/001_e1prime/AMENDMENT_7.md": {
+   "blob_sha256": "c183b92191e1474815cd014c6ce9f3d4b56cc73557dfab6a1de238b704fc8e01",
+   "first_quoted_in": "0f7dc0c",
+   "note": "Written 2026-11-12 (Round 4g rulings). Frozen on first commit; no further edits."
+  },
+  "experiments/001_e1prime/AMENDMENT_8.md": {
+   "blob_sha256": "5411a05021e4a0207fa60f55f3616bc4dca1e38889f3f944dfe52ea6b345fffa",
+   "first_quoted_in": "a9de0a2",
+   "note": "Written 2026-11-12 (Round 4h rulings). Frozen on first commit; no further edits."
+  },
+  "experiments/001_e1prime/AMENDMENT_9.md": {
+   "blob_sha256": "a1dae27eb500798db0c00d8bea66f1fea60cb2af65afd385eeffaa165480704c",
+   "first_quoted_in": "8a49ff1",
+   "note": "Written 2026-11-12 (Round 4j correction rulings). Frozen on first commit; no further edits."
+  },
+  "experiments/001_e1prime/AMENDMENT_10.md": {
+   "blob_sha256": "5ec10662d185c78c5b4dab1a0e89e9946a357e2e0a0ec901953b7f68bc44e1f1",
+   "first_quoted_in": "5a0172e",
+   "note": "Written 2026-11-12 (Round 4k P2-block/P3 rulings). Frozen on first commit; no further edits."
+  },
+  "experiments/001_e1prime/AMENDMENT_11.md": {
+   "blob_sha256": "7c769403196194843a1e5d5b5fe7b2e437b6308fe6c8d1679baa29210fd3c1fc",
+   "first_quoted_in": "c57c437",
+   "note": "Written 2026-11-12 before D1-core scoring; retrains the P3 a arm on the common split. Frozen on first commit; no further edits."
+  },
+  "experiments/002_e1prime_runs/energy_fit_refined_p2fix.json": {
+   "blob_sha256": "be54ddab6552102b645a42dff5ac60eaa92072680db062ae437c8c4889ad5ad5",
+   "first_quoted_in": "c58656f",
+   "note": "Frozen (s,b) energy calibration from the training split; H2.4 must not run until this file is committed."
+  },
+  "experiments/001_e1prime/AMENDMENT_12.md": {
+   "blob_sha256": "68e3ebe3f2065094d5b89e8712fafe8e4e853005bb6d4c5f9e99b9b012fa95e5",
+   "first_quoted_in": "b61bf6c",
+   "note": "Written 2026-11-13 before any coverage proxy or coverage-F1 outcome was computed (PI Round 4l hypothesis C). Frozen on first commit; no further edits."
+  },
+  "experiments/001_e1prime/AMENDMENT_13.md": {
+   "blob_sha256": "b3a87a585ce729b32155efef97756f3c70c2b951d8066737818f220dfc1397b7",
+   "first_quoted_in": "4dd5cca",
+   "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
+  },
+  "experiments/002_e1prime_runs/ec2_fit.json": {
+   "blob_sha256": "7008310f93478c308f17c4b709b75abf27a065377bb83a06887a176b25202490",
+   "first_quoted_in": "492af80",
+   "note": "Frozen E-C2 coverage-gate parameters fitted on the training split only; withheld scoring must not run until this file is committed (Amendment 13 A13.2)."
   }
+ }
 }

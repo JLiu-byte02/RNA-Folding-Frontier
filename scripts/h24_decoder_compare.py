@@ -300,6 +300,20 @@ def main() -> int:
         contrast = bootstrap(per_family, args.n_boot, args.seed)
         ci = contrast["ci"]
         point = contrast["contrast"]
+        by_band = {
+            band: {
+                "n": per_band_n[band],
+                **{
+                    key: {
+                        "tp": per_band[band][f"tp_{key}"],
+                        "long_range_fp": per_band[band][f"lr_{key}"],
+                        "pairs": per_band[band][f"n_{key}_pairs"],
+                    }
+                    for key in ("bare", "greedy", "dp")
+                },
+            }
+            for band in sorted(per_band)
+        }
         return {
             "threshold": th,
             "greedy_recall": round(totals["tp_greedy"] / truth_total, 4) if truth_total else None,
@@ -323,18 +337,7 @@ def main() -> int:
                 }
                 for key in ("bare", "greedy", "dp")
             },
-            "by_band": {
-                band: {
-                    "n": per_band_n[band],
-                    key: {
-                        "tp": per_band[band][f"tp_{key}"],
-                        "long_range_fp": per_band[band][f"lr_{key}"],
-                        "pairs": per_band[band][f"n_{key}_pairs"],
-                    }
-                    for key in ("bare", "greedy", "dp")
-                }
-                for band in sorted(per_band)
-            },
+            "by_band": by_band,
             "contrast_drop_lrfp_minus_drop_tp": contrast,
             "n_sequences_lrfp_reduced": n_reduced,
             "passes": bool(point is not None and point > 0 and ci and ci[0] > 0),

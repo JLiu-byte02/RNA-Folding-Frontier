@@ -175,6 +175,11 @@ summed tp/fp/fn of the three runs. Treat it as a variance-reduction summary only
 
 ## 6. Freezing procedure (to run when 15631 finishes)
 
+`sbatch scripts/jobs/rebuild_cohort_4tools.sbatch` performs every step below for
+both splits, asserts that no cohort row lacks a prediction, and fails if the
+macro/micro gap exceeds .15. The individual commands are kept here so the
+procedure can be audited and re-run by hand.
+
 First fold both splits with the retrained model (CPU, resumable, 600 nt cap):
 
 ```

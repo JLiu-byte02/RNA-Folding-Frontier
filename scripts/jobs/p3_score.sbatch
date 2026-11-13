@@ -11,10 +11,11 @@ set -euo pipefail
 
 ROOT="/home/junxuanliu/projects/RNA-Folding-Frontier"
 PY="/home/junxuanliu/.conda/envs/rff/bin/python"
+SPLIT="${1:-test_withheld}"
 cd "${ROOT}"
 
 "${PY}" scripts/score_p3_d1core.py \
-  --split test_withheld \
+  --split "${SPLIT}" \
   --nested-report \
-  --out experiments/002_e1prime_runs/d1core_test_withheld.json \
-  --md-out docs/d1core_2026-11-12.md
+  --out "experiments/002_e1prime_runs/d1core_${SPLIT}.json" \
+  --md-out "docs/d1core_${SPLIT}_2026-11-13.md"

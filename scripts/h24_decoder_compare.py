@@ -68,7 +68,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from rff.analysis.scoring import decode_pairs, normalise_scored  # noqa: E402
+from rff.analysis.scoring import decode_pairs, length_band, normalise_scored  # noqa: E402
 from rff.analysis.operating_point import Scan, select_operating_point  # noqa: E402
 from rff.analysis.embargo import assert_allowed  # noqa: E402
 from rff.decoders.nn_dp import (  # noqa: E402
@@ -252,6 +252,8 @@ def main() -> int:
     def evaluate(th: float) -> dict:
         """All decoders at one greedy threshold; DP does not depend on ``th``."""
         per_family = defaultdict(lambda: {"d_tp": 0.0, "d_lrfp": 0.0, "n": 0.0})
+        per_band = defaultdict(lambda: defaultdict(float))
+        per_band_n = defaultdict(int)
         totals = {
             "tp_bare": 0, "lr_bare": 0,
             "tp_greedy": 0, "lr_greedy": 0,
@@ -273,6 +275,11 @@ def main() -> int:
                 totals[f"n_{key}_pairs"] += len(pred)
                 per_family_totals[fam][f"tp_{key}"] += tp
                 per_family_totals[fam][f"lr_{key}"] += lr
+                band = length_band(rec["length"])
+                per_band[band][f"tp_{key}"] += tp
+                per_band[band][f"lr_{key}"] += lr
+                per_band[band][f"n_{key}_pairs"] += len(pred)
+            per_band_n[length_band(rec["length"])] += 1
             tp_g, lr_g = counts(greedy, truth)
             tp_d, lr_d = counts(dp, truth)
             per_family[fam]["d_tp"] += tp_d - tp_g
@@ -315,6 +322,18 @@ def main() -> int:
                     "pairs": totals[f"n_{key}_pairs"],
                 }
                 for key in ("bare", "greedy", "dp")
+            },
+            "by_band": {
+                band: {
+                    "n": per_band_n[band],
+                    key: {
+                        "tp": per_band[band][f"tp_{key}"],
+                        "long_range_fp": per_band[band][f"lr_{key}"],
+                        "pairs": per_band[band][f"n_{key}_pairs"],
+                    }
+                    for key in ("bare", "greedy", "dp")
+                }
+                for band in sorted(per_band)
             },
             "contrast_drop_lrfp_minus_drop_tp": contrast,
             "n_sequences_lrfp_reduced": n_reduced,

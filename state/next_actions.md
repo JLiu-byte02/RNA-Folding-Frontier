@@ -37,8 +37,24 @@ confirmatory family list.
 
 ## Immediate local
 
+- [x] Script sync: `scripts/jobs/p2central_cohort_eval.sbatch` recovered from the
+      server (the only job script that existed only there). The three tracked
+      files the server shows as modified are its own stale checkout, not
+      unrecovered work: current `main` already carries the `--max-length 1024`,
+      `--tool rnastructure`, pairs-prediction and shortest-first changes.
+- [x] MXfold2 inference path built and smoke-tested against the epoch-8
+      checkpoint: `scripts/predict_mxfold2.py` (chunked, resumable, strict
+      parse, embargo refusal) plus `scripts/jobs/mxfold2_fold.sbatch`.
+      3/3 sequences folded; 16 sequences took 11.9 s on one CPU worker.
+      `tests/test_predict_mxfold2.py` pins the parser and the embargo rule
+      (178 passed, 1 skipped).
+- [x] Paper A: new subsection 2.7 + Table T7 with the frozen single-cohort
+      numbers, limitation 6 and claim 9 rewritten (no head advantage, not
+      "blocked"); an independent numeric audit caught two misquoted ranges
+      (seed17 delta lower bound, family win rate) and both are corrected.
 - [ ] On 15631 completion: verify `model.pth`, `model.conf`,
-      `train_manifest.json`; `scripts/export_mxfold2_bpseq.py` folds both splits.
+      `train_manifest.json`; then `scripts/jobs/mxfold2_fold.sbatch` folds both
+      splits (CPU, 16 workers).
 - [ ] Rebuild the common cohort with `mxfold2_<split>.jsonl` added; expect the
       600 nt cap to shrink it. Rerun every score and
       `scripts/cohort_paired_eval.py`; mark section 5 of

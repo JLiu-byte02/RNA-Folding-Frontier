@@ -1,6 +1,6 @@
 # Paper A — working draft (2026-11-13)
 
-**Status.** Sections 1–4 and Tables T1–T6 are drafted from committed
+**Status.** Sections 1–4 and Tables T1–T7 are drafted from committed
 artifacts. The title, abstract, discussion, and both conclusion wordings are
 deliberately **held** pending (i) the frozen four-tool common cohort, (ii) the
 MXfold2 retrain, and (iii) the Amendment 14 one-shot `test_novel` unblinding.
@@ -196,6 +196,47 @@ not as something specific to the pretrained representation. The mean advantage
 is also small (+.0051 family-macro across families, range −.742 to +.857), so
 this is a mechanism result and not a performance result.
 
+### 2.7 No head advantage on a frozen common-cohort comparison (F7, T7)
+
+Every method was scored on one frozen cohort of identical sequence ids under the
+primary v3 labels, nested truth, and `--min-true-pairs 4`: 16,059 sequences in
+409 families on withheld, 1,287 in 155 families on id_test. CIs are 10,000
+family-block bootstrap resamples (seed 20261113); paired deltas resample
+families, so the pairing respects family structure on both sides.
+
+**Table T7.** Family-macro and micro pair F1 on the frozen common cohort.
+
+| method | withheld macro F1 [95% CI] | withheld micro | id_test macro F1 [95% CI] | id_test micro |
+|---|---:|---:|---:|---:|
+| RNAfold | .6004 [.5744, .6263] | .5560 | .5955 [.5520, .6387] | .5295 |
+| EternaFold | .6050 [.5792, .6301] | .5908 | .5916 [.5479, .6338] | .5465 |
+| RNAstructure | .5901 [.5644, .6159] | .5482 | .5868 [.5430, .6302] | .5169 |
+| head, seed 17 | .6054 [.5808, .6290] | .6040 | .6009 [.5594, .6407] | .6057 |
+| head, seed 23 | .5785 [.5539, .6020] | .5897 | .5784 [.5359, .6194] | .5839 |
+| head, seed 41 | .5854 [.5616, .6088] | .5933 | .5772 [.5366, .6172] | .5872 |
+| head, 3-seed mean | .5898 [.5660, .6127] | .5955 | .5855 [.5453, .6243] | .5920 |
+
+The head has the highest micro F1 on both splits (it is more aggressive and
+recovers more base pairs overall), but its family-macro F1 is at or below the
+thermodynamic tools. No paired family-block interval excludes zero:
+
+| comparison | withheld delta [95% CI] | p | id_test delta [95% CI] | p |
+|---|---:|---:|---:|---:|
+| head_mean - RNAfold | -.0106 [-.0312, +.0095] | .3092 | -.0101 [-.0391, +.0180] | .4884 |
+| head_mean - EternaFold | -.0152 [-.0350, +.0046] | .1256 | -.0061 [-.0311, +.0185] | .6218 |
+| head_mean - RNAstructure | -.0003 [-.0204, +.0196] | .9840 | -.0013 [-.0296, +.0264] | .9332 |
+| seed17 - RNAfold | +.0050 [-.0171, +.0272] | .6580 | +.0053 [-.0273, +.0375] | .7518 |
+| seed17 - EternaFold | +.0004 [-.0214, +.0224] | .9726 | +.0092 [-.0229, +.0409] | .5708 |
+
+The single seed that nominally exceeds RNAfold and EternaFold does so by
+between .0004 and .0092 depending on the comparison, with every interval
+spanning zero and 43-51% of families better in the four raw comparisons. We therefore
+report **no advantage over the thermodynamic baselines**, not a tie and not a
+loss: the cohort is too small in family count to resolve a .005 difference. The
+cohort is also capped at 1,014 nt (withheld) and 990 nt (id_test), two families
+are absent entirely, and MXfold2 had not finished training when this table was
+frozen, so the four-method cohort will be rebuilt once it does.
+
 ## 3. Methods
 
 ### 3.1 Data and splits
@@ -325,9 +366,11 @@ provenance, download commands, and per-artifact hashes are in
 4. The energy decoder uses a single global scale. Family-specific or
    length-specific calibration was not tested.
 5. `beta >= 0` was imposed on the gate grid, so negative dependence is untested.
-6. Our head does not beat RNAfold or EternaFold on family-macro F1 on the
-   current per-tool populations. The frozen cohort has not yet been scored, so
-   no cross-tool statement is made.
+6. Our head does not beat RNAfold, EternaFold, or RNAstructure on family-macro
+   F1 on a single frozen common cohort (withheld 16,059 sequences / 409
+   families; id_test 1,287 / 155; sequences of at most 1,014 nt). No paired
+   family-block bootstrap interval excludes zero. This is one cohort under one
+   label policy and does not generalise to other benchmarks or to long RNAs.
 7. RiNALMo-giga is AGPL-3.0. The repository licence is undecided, which blocks
    any public release of weights.
 
@@ -363,4 +406,4 @@ and overlap audits alongside F1.
 | 6 | Energy-consistent decoding adds TPs but also long-range FPs (H2.4) | not confirmed | strong (pre-registered) |
 | 7 | Corpus coverage predicts FM advantage; specificity not shown (E-C1 / E-C1b) | supported / failed control | moderate |
 | 8 | Any SOTA or "first" claim | **not available** | — |
-| 9 | Any cross-tool comparison | **blocked** until the frozen cohort | — |
+| 9 | Cross-tool comparison on one frozen common cohort | available: no head advantage | moderate (single cohort, <=1,014 nt) |

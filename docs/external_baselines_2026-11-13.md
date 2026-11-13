@@ -155,8 +155,10 @@ Paired family-block deltas (same resamples, same families):
   as any head-baseline gap. Only **paired** family-block intervals support a
   comparative claim, and every one of them includes zero.
 - The 3-seed mean is below all three thermodynamic tools on both splits. Seed17
-  alone is nominally above EternaFold/RNAfold by +0.004 to +0.009, with CIs
-  spanning zero and roughly 44-51% of families better - indistinguishable from
+  alone is nominally above EternaFold/RNAfold by +0.0004 to +0.0092 depending on
+  the comparison, with every CI spanning zero and 43-51% of families better in
+  the four raw comparisons (44-51% only if the two splits are averaged first) -
+  indistinguishable from
   noise.
 - Micro F1 is higher for the heads than for the tools (0.5955 vs 0.5560/0.5908
   withheld). That is a length/family-weighting effect and cannot be quoted as a

@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-13T23:40:00+08:00",
+ "updated_at": "2026-11-14T00:10:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -20,7 +20,7 @@
   "rate_limit_reset_at": null
  },
  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
- "active_experiment": "MXfold2 retrain (job 15631); five-method cohort after it finishes",
+ "active_experiment": "MXfold2 retrain (job 15631, epoch 8/10); inference wrapper ready",
  "open_questions": [
   "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
   "When should the Amendment 14 one-shot test_novel be used, if at all?",

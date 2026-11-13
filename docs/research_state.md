@@ -23,6 +23,8 @@ redirection is required before building the next method story.
   kept–kept withheld `R_c=.747 [.564,.960]`.
 - H2.4 with frozen `(s,b)=(.1875,0)`: DP has more TPs but also more long-range
   FPs than greedy on both splits; **not confirmed**.
+- E-C1 supported under Amendment 12: Rfam coverage `rho=.338 [.244,.429]`,
+  RiNALMo pseudo-perplexity `rho=-.242 [-.332,-.147]`; hypothesis C is alive.
 - Full report: `docs/p2block_p3_2026-11-13.md`.
 
 ## Established facts

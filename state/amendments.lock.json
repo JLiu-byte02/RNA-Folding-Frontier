@@ -65,6 +65,11 @@
       "blob_sha256": "68e3ebe3f2065094d5b89e8712fafe8e4e853005bb6d4c5f9e99b9b012fa95e5",
       "first_quoted_in": "pending-commit",
       "note": "Written 2026-11-13 before any coverage proxy or coverage-F1 outcome was computed (PI Round 4l hypothesis C). Frozen on first commit; no further edits."
+    },
+    "experiments/001_e1prime/AMENDMENT_13.md": {
+      "blob_sha256": "b3a87a585ce729b32155efef97756f3c70c2b951d8066737818f220dfc1397b7",
+      "first_quoted_in": "pending-commit",
+      "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
     }
   }
 }

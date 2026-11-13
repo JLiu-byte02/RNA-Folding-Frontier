@@ -84,3 +84,14 @@ has more true positives than greedy but also more long-range false positives
 on both id_test (4,205 vs 3,284) and withheld (20,218 vs 17,630). H2.4's
 pre-registered verdict is not confirmed. Energy consistency is not a free
 improvement on these scores.
+
+## 2026-11-13 — E-C1 supported: pretraining coverage predicts FM advantage
+
+Amendment 12's pre-registered E-C1 test passes on the 409-family common
+withheld population. Rfam full-region membership has partial `rho=.338`
+[`.244,.429`] with family FM advantage over RNAfold; RiNALMo masked
+pseudo-perplexity has `rho=-.242` [`-.332,-.147`]. Both thresholds were frozen
+before either proxy or the outcome was computed. This supports the claim that
+the useful family signal lives in pretraining coverage, not in a head-level
+shortcut. It does not yet establish a method; E-C2 and the one-shot
+test_novel confirmation are gated on this result.

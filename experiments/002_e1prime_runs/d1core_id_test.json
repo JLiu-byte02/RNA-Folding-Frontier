@@ -1,0 +1,251 @@
+{
+  "amendment": "AMENDMENT_10.md",
+  "arms": {
+    "a": "native full context (P3 common split)",
+    "b": "b-block trained/tested (P3)",
+    "e": "e-block trained/tested (P3)"
+  },
+  "d1_core": {
+    "arms": {
+      "b": {
+        "delta_ci95": [
+          -0.035897,
+          -0.006829
+        ],
+        "n_families": 155,
+        "passes_rule": false,
+        "per_seed": [
+          {
+            "mean_delta": -0.036757,
+            "n_families": 155,
+            "positive_families": 45,
+            "seed": 17
+          },
+          {
+            "mean_delta": -0.01617,
+            "n_families": 155,
+            "positive_families": 65,
+            "seed": 23
+          },
+          {
+            "mean_delta": -0.009609,
+            "n_families": 155,
+            "positive_families": 67,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_delta": -0.020845
+      },
+      "e": {
+        "delta_ci95": [
+          -0.024917,
+          0.005771
+        ],
+        "n_families": 155,
+        "passes_rule": false,
+        "per_seed": [
+          {
+            "mean_delta": -0.013233,
+            "n_families": 155,
+            "positive_families": 65,
+            "seed": 17
+          },
+          {
+            "mean_delta": -0.005083,
+            "n_families": 155,
+            "positive_families": 81,
+            "seed": 23
+          },
+          {
+            "mean_delta": -0.010198,
+            "n_families": 155,
+            "positive_families": 76,
+            "seed": 41
+          }
+        ],
+        "seed_averaged_delta": -0.009505
+      }
+    },
+    "falsified": true,
+    "rule": "supported iff at least one block arm has seed-averaged Delta >= .02 and a 95% family-bootstrap CI lower bound > 0",
+    "supported": false
+  },
+  "invariants": {
+    "macro_micro_gate_0.15": true,
+    "max_macro_micro_gap": 0.033913
+  },
+  "n_common_sequences": 1287,
+  "nested_primary_secondary": {
+    "a": {
+      "family_macro_ci95": [
+        0.547126,
+        0.625315
+      ],
+      "mean_micro_f1": 0.594907,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.596421,
+          "micro_f1": 0.606746,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.586405,
+          "micro_f1": 0.588418,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.576754,
+          "micro_f1": 0.589558,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.586527
+    },
+    "b": {
+      "family_macro_ci95": [
+        0.524366,
+        0.604691
+      ],
+      "mean_micro_f1": 0.546227,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.559733,
+          "micro_f1": 0.541623,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.569995,
+          "micro_f1": 0.554353,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.564903,
+          "micro_f1": 0.542706,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.564877
+    },
+    "e": {
+      "family_macro_ci95": [
+        0.537122,
+        0.61688
+      ],
+      "mean_micro_f1": 0.54239,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.585643,
+          "micro_f1": 0.547625,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.578906,
+          "micro_f1": 0.545611,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.567035,
+          "micro_f1": 0.533933,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.577194
+    }
+  },
+  "seeds": [
+    17,
+    23,
+    41
+  ],
+  "split": "id_test",
+  "truth": "v3 all-pairs, >=4 true pairs, threshold 0.5",
+  "unpaired_allpairs": {
+    "a": {
+      "family_macro_ci95": [
+        0.545025,
+        0.622853
+      ],
+      "mean_micro_f1": 0.596273,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.595611,
+          "micro_f1": 0.608245,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.583362,
+          "micro_f1": 0.589433,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.574059,
+          "micro_f1": 0.591142,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.584344
+    },
+    "b": {
+      "family_macro_ci95": [
+        0.52323,
+        0.602807
+      ],
+      "mean_micro_f1": 0.546475,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.558855,
+          "micro_f1": 0.54219,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.567192,
+          "micro_f1": 0.554394,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.56445,
+          "micro_f1": 0.54284,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.563499
+    },
+    "e": {
+      "family_macro_ci95": [
+        0.534982,
+        0.614053
+      ],
+      "mean_micro_f1": 0.543192,
+      "n_families": 155,
+      "n_sequences": 1287,
+      "per_seed": [
+        {
+          "family_macro_f1": 0.582378,
+          "micro_f1": 0.548465,
+          "seed": 17
+        },
+        {
+          "family_macro_f1": 0.578279,
+          "micro_f1": 0.547109,
+          "seed": 23
+        },
+        {
+          "family_macro_f1": 0.563861,
+          "micro_f1": 0.534002,
+          "seed": 41
+        }
+      ],
+      "seed_averaged_family_macro_f1": 0.574839
+    }
+  }
+}

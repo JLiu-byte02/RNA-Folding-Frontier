@@ -59,6 +59,80 @@
         "pairs": 577510
       }
     },
+    "by_band": {
+      "150-299": {
+        "n": 3797,
+        "bare": {
+          "tp": 85915.0,
+          "long_range_fp": 13518.0,
+          "pairs": 256312.0
+        },
+        "greedy": {
+          "tp": 74486.0,
+          "long_range_fp": 7075.0,
+          "pairs": 160671.0
+        },
+        "dp": {
+          "tp": 89234.0,
+          "long_range_fp": 14380.0,
+          "pairs": 206275.0
+        }
+      },
+      "80-149": {
+        "n": 8106,
+        "bare": {
+          "tp": 146317.0,
+          "long_range_fp": 669.0,
+          "pairs": 270221.0
+        },
+        "greedy": {
+          "tp": 137681.0,
+          "long_range_fp": 271.0,
+          "pairs": 205377.0
+        },
+        "dp": {
+          "tp": 154525.0,
+          "long_range_fp": 415.0,
+          "pairs": 256286.0
+        }
+      },
+      "L<80": {
+        "n": 3966,
+        "bare": {
+          "tp": 48746.0,
+          "long_range_fp": 0.0,
+          "pairs": 84793.0
+        },
+        "greedy": {
+          "tp": 44611.0,
+          "long_range_fp": 0.0,
+          "pairs": 66672.0
+        },
+        "dp": {
+          "tp": 49346.0,
+          "long_range_fp": 0.0,
+          "pairs": 79740.0
+        }
+      },
+      "L>=300": {
+        "n": 294,
+        "bare": {
+          "tp": 11334.0,
+          "long_range_fp": 6300.0,
+          "pairs": 49879.0
+        },
+        "greedy": {
+          "tp": 9227.0,
+          "long_range_fp": 1594.0,
+          "pairs": 24678.0
+        },
+        "dp": {
+          "tp": 12941.0,
+          "long_range_fp": 5423.0,
+          "pairs": 35209.0
+        }
+      }
+    },
     "contrast_drop_lrfp_minus_drop_tp": {
       "n_families": 409,
       "contrast": 70.3252,
@@ -93,7 +167,81 @@
         "pooled_long_range_fp_dp": 20218,
         "more_true_positives": true,
         "fewer_long_range_fp": false,
-        "passes": false
+        "passes": false,
+        "by_band": {
+          "150-299": {
+            "n": 3797,
+            "bare": {
+              "tp": 113724.0,
+              "long_range_fp": 92225.0,
+              "pairs": 1060599.0
+            },
+            "greedy": {
+              "tp": 80384.0,
+              "long_range_fp": 14528.0,
+              "pairs": 210497.0
+            },
+            "dp": {
+              "tp": 89234.0,
+              "long_range_fp": 14380.0,
+              "pairs": 206275.0
+            }
+          },
+          "80-149": {
+            "n": 8106,
+            "bare": {
+              "tp": 173677.0,
+              "long_range_fp": 4489.0,
+              "pairs": 827427.0
+            },
+            "greedy": {
+              "tp": 147394.0,
+              "long_range_fp": 607.0,
+              "pairs": 253254.0
+            },
+            "dp": {
+              "tp": 154525.0,
+              "long_range_fp": 415.0,
+              "pairs": 256286.0
+            }
+          },
+          "L<80": {
+            "n": 3966,
+            "bare": {
+              "tp": 55479.0,
+              "long_range_fp": 0.0,
+              "pairs": 247187.0
+            },
+            "greedy": {
+              "tp": 46695.0,
+              "long_range_fp": 0.0,
+              "pairs": 82089.0
+            },
+            "dp": {
+              "tp": 49346.0,
+              "long_range_fp": 0.0,
+              "pairs": 79740.0
+            }
+          },
+          "L>=300": {
+            "n": 294,
+            "bare": {
+              "tp": 18548.0,
+              "long_range_fp": 65189.0,
+              "pairs": 288896.0
+            },
+            "greedy": {
+              "tp": 10433.0,
+              "long_range_fp": 2495.0,
+              "pairs": 34722.0
+            },
+            "dp": {
+              "tp": 12941.0,
+              "long_range_fp": 5423.0,
+              "pairs": 35209.0
+            }
+          }
+        }
       }
     },
     "recall_matched_threshold": null,

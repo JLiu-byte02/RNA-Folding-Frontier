@@ -43,6 +43,8 @@ def main() -> int:
     ap.add_argument("--max-len", type=int, default=600)
     ap.add_argument("--min-pairs", type=int, default=1)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--stride", type=int, default=1,
+                    help="keep every Nth row (before the length cap); spread a subset over the split")
     ap.add_argument("--manifest", default=None)
     args = ap.parse_args()
 
@@ -67,6 +69,8 @@ def main() -> int:
     for idx, row in enumerate(rows):
         if args.limit and len(exported) >= args.limit:
             break
+        if args.stride > 1 and idx % args.stride:
+            continue
         seq = row["seq"]
         if len(seq) > args.max_len:
             n_too_long += 1
@@ -111,10 +115,14 @@ def main() -> int:
         "max_len": args.max_len,
         "min_pairs": args.min_pairs,
         "limit": args.limit,
+        "stride": args.stride,
         "n_rows_with_crossing_pairs": n_crossing_rows,
         "pairs_before_nested_projection": pairs_before,
         "pairs_after_nested_projection": pairs_after,
         "lst_sha256": sha256_file(lst),
+        "exported_len_mean": round(sum(m["length"] for m in mapping) / len(mapping), 2) if mapping else 0.0,
+        "exported_len_p50": sorted(m["length"] for m in mapping)[len(mapping) // 2] if mapping else 0,
+        "exported_len_max": max((m["length"] for m in mapping), default=0),
         "label_policy": "vim3 pairs projected to maximum nested subset; "
                         "no sequence-level filtering beyond length and min_pairs",
     }

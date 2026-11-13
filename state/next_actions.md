@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-13 24:00 (external three-tool cohort frozen; MXfold2 still training)
+Updated: 2026-11-13 23:40 (external three-tool cohort frozen; MXfold2 still training)
 
 The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
 Amendments 1-14, and `state/amendments.lock.json`. Amendment 8 fixes
@@ -30,8 +30,10 @@ confirmatory family list.
 
 ## Running now (server)
 
-- [ ] `15631 rff_mx_train` - MXfold2 MixC retrain, 10 epochs; epoch-7 present at
-      23:40, ~48 min/epoch, ETA ~02:00. Output `experiments/013_mxfold2/run/`.
+- [ ] `15631 rff_mx_train` - MXfold2 MixC retrain, 10 epochs. Still RUNNING at
+      23:35 (6h31 elapsed, start 17:04). `ckpt/epoch-7` written 22:51, so
+      ~50 min/epoch and 3 epochs left: training ETA ~01:20, plus export.
+      Output `experiments/013_mxfold2/run/`, Slurm log `logs/mx_train_15631.out`.
 
 ## Immediate local
 

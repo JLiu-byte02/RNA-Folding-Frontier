@@ -194,6 +194,8 @@ def main() -> int:
         entry_out = {
             "family": family,
             "n": len(fm_f1),
+            "fm_f1": float(np.mean(fm_f1)),
+            "rnafold_f1": float(np.mean(rnafold_f1)),
             "delta_f1": float(np.mean(fm_f1) - np.mean(rnafold_f1)),
             "p1": math.log1p(full_member[family]),
             "p2": float(np.median(p2_values[family])) if family in p2_values else None,

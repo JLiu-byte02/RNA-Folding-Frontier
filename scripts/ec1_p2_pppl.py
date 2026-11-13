@@ -26,6 +26,11 @@ def main() -> int:
     ap.add_argument(
         "--families", default="experiments/002_e1prime_runs/ec1_families.json"
     )
+    ap.add_argument(
+        "--all-split",
+        action="store_true",
+        help="compute every record in --split instead of an E-C1 family map",
+    )
     ap.add_argument("--split", default="splits/s1prime_filtered/test_withheld.jsonl")
     ap.add_argument("--checkpoint", default="data/models/rinalmo-giga")
     ap.add_argument("--masks", type=int, default=4)
@@ -41,13 +46,23 @@ def main() -> int:
     from multimolecule.models.rinalmo import RiNALMoForPreTraining
     from multimolecule.tokenisers.rna import RnaTokenizer
 
-    families = json.loads((ROOT / args.families).read_text(encoding="utf-8"))
-    wanted = {
-        rid for entry in families["families"].values() for rid in entry["ids"]
-    }
+    split_rows = read_jsonl(ROOT / args.split)
+    if args.all_split:
+        wanted = {rec["id"] for rec in split_rows}
+        id_to_family = {rec["id"]: rec.get("family", "?") for rec in split_rows}
+    else:
+        families = json.loads((ROOT / args.families).read_text(encoding="utf-8"))
+        wanted = {
+            rid for entry in families["families"].values() for rid in entry["ids"]
+        }
+        id_to_family = {
+            rid: family
+            for family, entry in families["families"].items()
+            for rid in entry["ids"]
+        }
     seqs = {
         rec["id"]: rec["seq"]
-        for rec in read_jsonl(ROOT / args.split)
+        for rec in split_rows
         if rec["id"] in wanted
     }
     missing = wanted - set(seqs)
@@ -64,11 +79,6 @@ def main() -> int:
     for param in model.parameters():
         param.requires_grad_(False)
 
-    id_to_family = {
-        rid: family
-        for family, entry in families["families"].items()
-        for rid in entry["ids"]
-    }
     by_length: dict[int, list[str]] = {}
     for rid in sorted(wanted):
         by_length.setdefault(len(seqs[rid]), []).append(rid)

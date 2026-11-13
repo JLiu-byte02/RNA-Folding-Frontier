@@ -50,6 +50,12 @@ def main() -> int:
     ap.add_argument("--floor", type=float, default=0.02)
     ap.add_argument("--window", type=int, default=32)
     ap.add_argument("--pair-budget", type=int, default=400 * 400 * 4)
+    ap.add_argument(
+        "--max-seq-len",
+        type=int,
+        default=1024,
+        help="match the backbone cache population; longer rows are skipped upstream",
+    )
     ap.add_argument("--device", default="cuda")
     ap.add_argument(
         "--labels-v3",
@@ -74,7 +80,11 @@ def main() -> int:
         name, rest = spec.split("=", 1)
         data, cache = rest.split(":", 1)
         embs = load_cache(ROOT / cache)
-        recs = [r for r in read_jsonl(ROOT / data) if r["id"] in embs]
+        recs = [
+            r
+            for r in read_jsonl(ROOT / data)
+            if r["id"] in embs and len(r["seq"]) <= args.max_seq_len
+        ]
         recs.sort(key=lambda r: len(r["seq"]))
         path = out_dir / f"{name}.jsonl"
         n_kept = 0

@@ -180,6 +180,17 @@ def main() -> int:
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--init", default=None, help="checkpoint to start from")
     ap.add_argument("--eval-only", action="store_true")
+    ap.add_argument(
+        "--max-seq-len",
+        type=int,
+        default=1024,
+        help=(
+            "drop records longer than this. The backbone caches skip sequences "
+            "that exceed the model window, so a control cache built without that "
+            "cut would see a different population (and a dense L^2 pair map at "
+            "L>1024 exhausts a 24 GB card)."
+        ),
+    )
     args = ap.parse_args()
 
     torch.manual_seed(args.seed)
@@ -191,6 +202,18 @@ def main() -> int:
     train_all = read_jsonl(ROOT / args.train)
     embs = load_cache(ROOT / args.train_cache)
     train_all = [r for r in train_all if r["id"] in embs]
+    n_uncapped = len(train_all)
+    train_all = [r for r in train_all if len(r["seq"]) <= args.max_seq_len]
+    if len(train_all) != n_uncapped:
+        print(
+            json.dumps(
+                {
+                    "dropped_over_max_seq_len": n_uncapped - len(train_all),
+                    "max_seq_len": args.max_seq_len,
+                }
+            ),
+            flush=True,
+        )
     if not train_all:
         print("training cache does not cover the split")
         return 1
@@ -198,7 +221,11 @@ def main() -> int:
 
     if args.val:
         fit = train_all
-        val = [r for r in read_jsonl(ROOT / args.val) if r["id"] in embs]
+        val = [
+            r
+            for r in read_jsonl(ROOT / args.val)
+            if r["id"] in embs and len(r["seq"]) <= args.max_seq_len
+        ]
         if not val:
             print("validation file does not overlap the training cache")
             return 1
@@ -214,7 +241,11 @@ def main() -> int:
     eval_sets = []
     for name, data, cache in parse_eval_specs(args.eval):
         ce = load_cache(ROOT / cache)
-        recs = [r for r in read_jsonl(ROOT / data) if r["id"] in ce]
+        recs = [
+            r
+            for r in read_jsonl(ROOT / data)
+            if r["id"] in ce and len(r["seq"]) <= args.max_seq_len
+        ]
         missing = len(read_jsonl(ROOT / data)) - len(recs)
         print(json.dumps({"eval": name, "n": len(recs), "missing": missing}), flush=True)
         eval_sets.append((name, recs, ce))

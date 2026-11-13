@@ -191,6 +191,16 @@ control and reverses sign on id_test (Δ `−.0064 [−.0122, −.0002]`). We re
 that as a failed gate, not as a mechanism. The coarse grid restricted
 `beta >= 0`, so negative dependence remains untested rather than excluded.
 
+The one arm that does beat a thermodynamic tool is decoder A at that frozen
+constant scale. On withheld it reaches .6137 family-macro F1 against RNAfold
+.6003, a paired family delta of **+.0134 [+.0025, +.0241]** on the 15,533
+sequences with pseudo-perplexity available. It does not confirm: on id_test the
+same arm gives **+.0204 [-.0020, +.0392]** against RNAfold, and on withheld the
+margin over the best thermodynamic baseline (EternaFold, .6051 on that
+population) is .0117, below the pre-registered +.02 bar. We report this as a
+small decoder-level gain over RNAfold on one split that does not replicate with
+an interval excluding zero, not as a method advantage.
+
 ### 2.6 Pretraining coverage predicts the FM advantage (F6)
 
 One mechanism result survived. On the 409-family common withheld population the
@@ -245,8 +255,11 @@ thermodynamic tools. No paired family-block interval excludes zero:
 The single seed that nominally exceeds RNAfold and EternaFold does so by
 between .0004 and .0092 depending on the comparison, with every interval
 spanning zero and 43-51% of families better in the four raw comparisons. We therefore
-report **no advantage over the thermodynamic baselines**, not a tie and not a
-loss: the cohort is too small in family count to resolve a .005 difference. The
+report **no advantage for the default greedy decoder over the thermodynamic
+baselines**, not a tie and not a loss: the cohort is too small in family count
+to resolve a .005 difference. The only exception is the decoder-A
+constant-scale arm in section 2.5, which beats RNAfold on withheld but does not
+confirm on id_test and stays below the pre-registered bar. The
 cohort is also capped at 1,014 nt (withheld) and 990 nt (id_test), two families
 are absent entirely, and MXfold2 had not finished training when this table was
 frozen, so the four-method cohort will be rebuilt once it does.

@@ -325,5 +325,11 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
     150-299 nt bin adds 125 long-range FPs and the <80 nt bin loses 41 TPs.
   - Claim 3's "8.1% of the rest" was ambiguous; 8.1% is 6,757 / 83,459, i.e. of
     rows where both v2 and v3 parse.
-- **Action:** section 2 and claim 3 rewritten; no metric changes.
+  - 2.5 omitted the decoder-A constant-scale comparison, the only arm that beats
+    a thermodynamic tool: .6137 vs RNAfold .6003 on withheld, paired
+    +.0134 [+.0025, +.0241], but +.0204 [-.0020, +.0392] on id_test and .0117
+    below the best baseline bar. It is now reported, and 2.7's "no advantage"
+    is narrowed to the default greedy decoder.
+- **Action:** section 2 and claim 3 rewritten; no metric changes. The three
+  E-C2 score JSONs are now committed so the deltas above are reproducible.
 - **Found by:** a read-only results audit of each number against its artifact.

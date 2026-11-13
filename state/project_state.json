@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-14T00:10:00+08:00",
+ "updated_at": "2026-11-14T00:25:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -25,7 +25,8 @@
   "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
   "When should the Amendment 14 one-shot test_novel be used, if at all?",
   "Which Paper A framing (audit-led vs negative-led) is defensible without SOTA?",
-  "Is there any remaining mechanism result strong enough to anchor a method claim?"
+  "Is there any remaining mechanism result strong enough to anchor a method claim?",
+  "Should the energy calibration be refit with clan-grouped folds to complete Amendment 7 literally?"
  ],
  "blockers": [],
  "running_jobs": {

@@ -52,6 +52,19 @@ confirmatory family list.
       numbers, limitation 6 and claim 9 rewritten (no head advantage, not
       "blocked"); an independent numeric audit caught two misquoted ranges
       (seed17 delta lower bound, family win rate) and both are corrected.
+- [x] Methods-vs-code audit of Paper A: 12 discrepancies corrected, including
+      the head description (concatenation + residual conv stack, 32-d
+      projection), decoder A complexity (O(n^3)/O(n^2)), the ViennaRNA
+      pseudo-energy formula, the `<4`-pair diagnostic scope, and the amendment
+      count. All recorded in `docs/corrections.md` (2026-11-14).
+- [x] **Protocol deviation disclosed:** `fit_energy_calibration.py` assigned
+      folds by `crc32(id) % 5`, while Amendment 7 required clan-grouped folds.
+      The frozen `(s,b)=(.1875,0)` is at the grid boundary and E-C2 failed
+      independently, so no conclusion depends on it; a clan-grouped refit is
+      optional and would cost one 5-fold grid fit on train.
+- [x] Committed the frozen cohort id lists and per-row exclusion files, so the
+      section-5 table is reproducible without the prediction files. Verified
+      md5 against the server copies.
 - [ ] On 15631 completion: verify `model.pth`, `model.conf`,
       `train_manifest.json`; then `scripts/jobs/mxfold2_fold.sbatch` folds both
       splits (CPU, 16 workers).

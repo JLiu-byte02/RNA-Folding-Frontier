@@ -1,0 +1,234 @@
+{
+ "protocol": "E-C2 coverage gate, frozen selector fit, withheld read (A13.2)",
+ "split": "splits/s1prime_filtered/test_withheld.jsonl",
+ "split_sha256": "bca8ae19baee5f6c9141b973b88e3f6092a83603bdca912837cb522e8acb9b9b",
+ "dump": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_test_withheld.jsonl",
+ "dump_sha256": "6fda07da362207d6dd83e0bb599142fe7d4ce53dd44a1d188d6e7f86df5acd6e",
+ "pppl": "experiments/002_e1prime_runs/ec1_p2_pppl.json",
+ "pppl_sha256": "355059f17a039480e4c1773cc6d3ba802a506f2d5ca40849dd76221b46eb2cb1",
+ "fit": "experiments/002_e1prime_runs/ec2_fit.json",
+ "fit_sha256": "7008310f93478c308f17c4b709b75abf27a065377bb83a06887a176b25202490",
+ "labels": "experiments/011_labels_v3/labels_v3_pairs.json.gz",
+ "label_policy": {
+  "version": "v3",
+  "truth_mode": "nested",
+  "min_true_pairs": 4
+ },
+ "n_items": 16163,
+ "n_dropped": {
+  "no_split_row": 0,
+  "no_pppl": 630,
+  "parse_failed": 0,
+  "below_min_pairs": 0
+ },
+ "arms": {
+  "fixed": {
+   "scale": 0.1875,
+   "scale_sd": 0.0
+  },
+  "g1": {
+   "alpha": 0.0,
+   "beta": 0.0,
+   "folds": [
+    0.7202,
+    0.6156,
+    0.6165,
+    0.6164,
+    0.6377
+   ],
+   "gamma": 0.0,
+   "gate": "G1",
+   "mean_f1": 0.6413,
+   "pooled_f1": 0.6259,
+   "s_max": 0.1875,
+   "sd_f1": 0.0404
+  },
+  "g2": {
+   "alpha": -1.0,
+   "beta": 0.0,
+   "folds": [
+    0.7179,
+    0.6157,
+    0.6178,
+    0.6173,
+    0.6378
+   ],
+   "gamma": 0.25,
+   "gate": "G2",
+   "mean_f1": 0.6413,
+   "pooled_f1": 0.6264,
+   "s_max": 1.0,
+   "sd_f1": 0.0392
+  }
+ },
+ "scale_summary": {
+  "g1": {
+   "min": 0.09375,
+   "mean": 0.09375,
+   "max": 0.09375,
+   "sd": 0.0,
+   "n_unique_rounded": 1
+  },
+  "g2": {
+   "min": 0.061202,
+   "mean": 0.102358,
+   "max": 0.145199,
+   "sd": 0.009884,
+   "n_unique_rounded": 364
+  }
+ },
+ "pppl_uses": {
+  "g1_beta": 0.0,
+  "g2_beta": 0.0,
+  "note": "beta = 0 means the frozen gate does not read the confidence signal at all; g1 then collapses to a constant scale and g2 varies with length only. The grid only allowed beta >= 0, so a negative dependence is untested, not excluded."
+ },
+ "results": {
+  "fixed": {
+   "family_macro_f1": 0.6137,
+   "macro_ci95": [
+    0.5879,
+    0.6405
+   ],
+   "micro_f1": 0.6103,
+   "n_families": 409,
+   "n_sequences": 16163,
+   "tp": 304996,
+   "fp": 272514,
+   "fn": 116908,
+   "mean_pred_pairs": 35.73,
+   "n_empty_pred": 0
+  },
+  "g1": {
+   "family_macro_f1": 0.6168,
+   "macro_ci95": [
+    0.5908,
+    0.6432
+   ],
+   "micro_f1": 0.6038,
+   "n_families": 409,
+   "n_sequences": 16163,
+   "tp": 305153,
+   "fp": 283740,
+   "fn": 116751,
+   "mean_pred_pairs": 36.43,
+   "n_empty_pred": 0
+  },
+  "g2": {
+   "family_macro_f1": 0.6161,
+   "macro_ci95": [
+    0.5903,
+    0.6426
+   ],
+   "micro_f1": 0.6033,
+   "n_families": 409,
+   "n_sequences": 16163,
+   "tp": 304876,
+   "fp": 283901,
+   "fn": 117028,
+   "mean_pred_pairs": 36.43,
+   "n_empty_pred": 0
+  },
+  "reference": {
+   "family_macro_f1": 0.6003,
+   "macro_ci95": [
+    0.5739,
+    0.6275
+   ],
+   "micro_f1": 0.5548,
+   "n_families": 409,
+   "n_sequences": 16163,
+   "tp": 284021,
+   "fp": 317917,
+   "fn": 137883,
+   "mean_pred_pairs": 37.24,
+   "n_empty_pred": 0
+  }
+ },
+ "deltas": {
+  "g1_minus_fixed": {
+   "delta": 0.0031,
+   "ci95": [
+    -0.0038,
+    0.0088
+   ],
+   "paired_over_families": true
+  },
+  "g2_minus_fixed": {
+   "delta": 0.0024,
+   "ci95": [
+    -0.0028,
+    0.0073
+   ],
+   "paired_over_families": true
+  },
+  "fixed_minus_reference": {
+   "delta": 0.0134,
+   "ci95": [
+    0.0025,
+    0.0241
+   ],
+   "paired_over_families": true
+  },
+  "g1_minus_reference": {
+   "delta": 0.0164,
+   "ci95": [
+    0.0077,
+    0.0243
+   ],
+   "paired_over_families": true
+  },
+  "g2_minus_reference": {
+   "delta": 0.0157,
+   "ci95": [
+    0.0061,
+    0.0249
+   ],
+   "paired_over_families": true
+  }
+ },
+ "verdict": {
+  "g1": {
+   "macro_f1": 0.6168,
+   "gain_over_fixed": 0.0031,
+   "gain_over_fixed_ci": [
+    -0.0038,
+    0.0088
+   ],
+   "needs_gain": 0.02,
+   "beats_fixed_by_min_gain": false,
+   "fixed_gain_ci_excludes_zero": false,
+   "baseline_macro": 0.6003,
+   "gain_over_baseline": 0.0164,
+   "gain_over_baseline_ci": [
+    0.0077,
+    0.0243
+   ],
+   "beats_baseline_by_min_gain": false,
+   "baseline_gain_ci_excludes_zero": true,
+   "passes": false
+  },
+  "g2": {
+   "macro_f1": 0.6161,
+   "gain_over_fixed": 0.0024,
+   "gain_over_fixed_ci": [
+    -0.0028,
+    0.0073
+   ],
+   "needs_gain": 0.02,
+   "beats_fixed_by_min_gain": false,
+   "fixed_gain_ci_excludes_zero": false,
+   "baseline_macro": 0.6003,
+   "gain_over_baseline": 0.0157,
+   "gain_over_baseline_ci": [
+    0.0061,
+    0.0249
+   ],
+   "beats_baseline_by_min_gain": false,
+   "baseline_gain_ci_excludes_zero": true,
+   "passes": false
+  }
+ },
+ "baseline_macro_used": 0.6003,
+ "n_boot": 2000,
+ "seed": 17
+}

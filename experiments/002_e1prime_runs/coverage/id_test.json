@@ -1,0 +1,38 @@
+{
+  "dump_path": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_id_test.jsonl",
+  "families_fully_missing": {},
+  "families_partially_missing": {
+    "RF00029": {
+      "n_missing": 10,
+      "n_total": 65
+    }
+  },
+  "label": "id_test",
+  "length_gap_ok": true,
+  "missing_fraction": 0.007133,
+  "missing_length": {
+    "max": 2729,
+    "median": 2531.5,
+    "min": 1037,
+    "p25": 1192,
+    "p75": 2609
+  },
+  "n_dump": 1392,
+  "n_extra_in_dump": 0,
+  "n_missing_from_dump": 10,
+  "n_split": 1402,
+  "n_split_families": 168,
+  "present_length_max": 990,
+  "present_length_min": 25,
+  "split_path": "splits/s1prime_filtered/id_test.jsonl",
+  "v3_n_empty_truth": 5,
+  "v3_n_ge4_pairs": 1287,
+  "v3_n_lt4_pairs": 105,
+  "v3_pair_count_quantiles": {
+    "max": 182,
+    "median": 24.0,
+    "min": 0,
+    "p25": 16,
+    "p75": 32
+  }
+}

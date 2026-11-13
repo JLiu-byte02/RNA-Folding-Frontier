@@ -1,0 +1,51 @@
+{
+  "dump_path": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_test_withheld.jsonl",
+  "families_fully_missing": {
+    "RF02540": {
+      "n_missing": 169,
+      "n_total": 169
+    },
+    "RF02543": {
+      "n_missing": 174,
+      "n_total": 174
+    }
+  },
+  "families_partially_missing": {
+    "RF01999": {
+      "n_missing": 1,
+      "n_total": 234
+    },
+    "RF02541": {
+      "n_missing": 234,
+      "n_total": 358
+    }
+  },
+  "label": "test_withheld",
+  "length_gap_ok": true,
+  "missing_fraction": 0.033274,
+  "missing_length": {
+    "max": 4381,
+    "median": 2990.0,
+    "min": 1275,
+    "p25": 2920,
+    "p75": 3363
+  },
+  "n_dump": 16793,
+  "n_extra_in_dump": 0,
+  "n_missing_from_dump": 578,
+  "n_split": 17371,
+  "n_split_families": 444,
+  "present_length_max": 1014,
+  "present_length_min": 22,
+  "split_path": "splits/s1prime_filtered/test_withheld.jsonl",
+  "v3_n_empty_truth": 118,
+  "v3_n_ge4_pairs": 16163,
+  "v3_n_lt4_pairs": 630,
+  "v3_pair_count_quantiles": {
+    "max": 316,
+    "median": 24,
+    "min": 0,
+    "p25": 14,
+    "p75": 34
+  }
+}

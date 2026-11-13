@@ -78,10 +78,25 @@ def main() -> int:
     ap.add_argument("--seeds", nargs="+", type=int, default=[17, 23, 41])
     ap.add_argument("--threshold", type=float, default=0.5)
     ap.add_argument("--min-true-pairs", type=int, default=4)
+    ap.add_argument(
+        "--restrict-ids",
+        default=None,
+        help="JSONL of ids; keeps only those so every row of the external-baseline table "
+        "shares one cohort",
+    )
     ap.add_argument("--out", default="experiments/002_e1prime_runs/p2central_fixed.json")
     args = ap.parse_args()
 
     from rff.analysis.scoring import decode_pairs
+
+    restrict: set[str] | None = None
+    if args.restrict_ids:
+        rp = ROOT / args.restrict_ids
+        restrict = {
+            json.loads(line)["id"]
+            for line in rp.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
 
     result: dict[str, dict] = {}
     for split in SPLITS:
@@ -93,6 +108,8 @@ def main() -> int:
                     continue
                 rows = []
                 for row in read_jsonl(path):
+                    if restrict is not None and row["id"] not in restrict:
+                        continue
                     raw = row.get("truth_v3")
                     if raw is None or len(raw) < args.min_true_pairs:
                         continue

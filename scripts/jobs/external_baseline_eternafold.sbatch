@@ -38,6 +38,7 @@ for pair in "test_withheld:test_withheld" "id_test:id_test"; do
   python scripts/score_external_baseline.py score \
     --split "splits/s1prime_filtered/${split}.jsonl" \
     --preds "experiments/002_e1prime_runs/eternafold_${tag}.jsonl" \
+    --tool eternafold \
     --restrict-ids "experiments/002_e1prime_runs/dump_p2fix_seed17/a_${tag}.jsonl" \
     --out "experiments/002_e1prime_runs/eternafold_${tag}_score.json" \
     --per-family-out "experiments/002_e1prime_runs/eternafold_${tag}_by_family.json"

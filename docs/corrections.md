@@ -168,3 +168,31 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
 - **Action:** rerun `scripts/score_template_controls.py`; P2-block reports the
   b condition as `local_context_b_f1` and uses the corrected global shuffle
   mean for the ≤.05 invariant.
+
+## 2026-11-13 - server reset overwrote two tracked-modified files
+
+- **Where:** `junxuanliu@10.22.19.39:/home/junxuanliu/projects/RNA-Folding-Frontier`,
+  files `docs/ec1_2026-11-13.md` and
+  `experiments/002_e1prime_runs/ec1_p1_p2.json`.
+- **What happened:** the server checkout was behind `origin/main` by several
+  commits (it was at `4bc399e`). Before syncing, a backup loop was supposed to
+  copy the two tracked-but-modified files aside. That loop failed on a
+  PowerShell variable-interpolation error and did not report the failure, so
+  the following `git reset --hard origin/main` replaced both files with the
+  committed versions.
+- **Why no reported result was lost:** the server JSON after the reset has
+  sha256 `d3b8910f296b2751...9df12b`, 123,965 bytes, `n_families=409`,
+  `supported=true`, `falsified=false`, `p1.rho=.337652 [.243549,.42936]`,
+  `p2.rho=-.241971 [-.331827,-.146982]`; it is byte-identical to the local
+  committed copy and reproduces every number quoted in `docs/ec1_2026-11-13.md`.
+  Untracked server outputs were untouched by the reset.
+- **Residual uncertainty:** the pre-reset server bytes were never hashed, so an
+  edit that existed only on the server cannot be ruled out; the documented
+  numbers are reproducible from the surviving artifact, not from that edit.
+- **Action:** never run `reset --hard` on a checkout with local modifications.
+  Sync procedure is now: `git fetch`, print `git status --porcelain`, and if it
+  is non-empty, copy the listed paths to a timestamped directory and verify
+  their hashes *before* any reset; the copy step must fail loudly (set `-e`
+  or check the exit status) instead of continuing.
+- **Evidence:** `git status --porcelain` on the server after the reset lists no
+  tracked modifications; the hash above was re-checked with `sha256sum`.

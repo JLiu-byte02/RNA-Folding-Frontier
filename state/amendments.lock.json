@@ -43,32 +43,32 @@
     },
     "experiments/001_e1prime/AMENDMENT_9.md": {
       "blob_sha256": "a1dae27eb500798db0c00d8bea66f1fea60cb2af65afd385eeffaa165480704c",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "8a49ff1",
       "note": "Written 2026-11-12 (Round 4j correction rulings). Frozen on first commit; no further edits."
     },
     "experiments/001_e1prime/AMENDMENT_10.md": {
       "blob_sha256": "5ec10662d185c78c5b4dab1a0e89e9946a357e2e0a0ec901953b7f68bc44e1f1",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "5a0172e",
       "note": "Written 2026-11-12 (Round 4k P2-block/P3 rulings). Frozen on first commit; no further edits."
     },
     "experiments/001_e1prime/AMENDMENT_11.md": {
       "blob_sha256": "7c769403196194843a1e5d5b5fe7b2e437b6308fe6c8d1679baa29210fd3c1fc",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "c57c437",
       "note": "Written 2026-11-12 before D1-core scoring; retrains the P3 a arm on the common split. Frozen on first commit; no further edits."
     },
     "experiments/002_e1prime_runs/energy_fit_refined_p2fix.json": {
       "blob_sha256": "be54ddab6552102b645a42dff5ac60eaa92072680db062ae437c8c4889ad5ad5",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "c58656f",
       "note": "Frozen (s,b) energy calibration from the training split; H2.4 must not run until this file is committed."
     },
     "experiments/001_e1prime/AMENDMENT_12.md": {
       "blob_sha256": "68e3ebe3f2065094d5b89e8712fafe8e4e853005bb6d4c5f9e99b9b012fa95e5",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "b61bf6c",
       "note": "Written 2026-11-13 before any coverage proxy or coverage-F1 outcome was computed (PI Round 4l hypothesis C). Frozen on first commit; no further edits."
     },
     "experiments/001_e1prime/AMENDMENT_13.md": {
       "blob_sha256": "b3a87a585ce729b32155efef97756f3c70c2b951d8066737818f220dfc1397b7",
-      "first_quoted_in": "pending-commit",
+      "first_quoted_in": "4dd5cca",
       "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
     }
   }

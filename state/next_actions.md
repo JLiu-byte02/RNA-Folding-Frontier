@@ -1,13 +1,14 @@
 # Next Actions
 
-Updated: 2026-11-13 10:30 (D1-core and H3 complete)
+Updated: 2026-11-13 11:40 (PI Round 4l: Paper A + one E-C1 test)
 
 The governing documents are `experiments/001_e1prime/PREREGISTRATION.md`,
-Amendments 1–11, and `state/amendments.lock.json`. Amendment 8 supersedes the
+Amendments 1–12, and `state/amendments.lock.json`. Amendment 8 supersedes the
 label clause of Amendment 7: Rfam seed primary **and** secondary labels are
 `labels_v3`; v1/v2 are provenance only. Amendment 10 pre-registers P2-block,
 P3, H3, and the D1-core rule. Amendment 11 retrains the P3 a arm on the common
 fit/validation split before D1-core scoring.
+Amendment 12 freezes the pretraining-coverage test E-C1.
 
 ## Completed this round
 
@@ -49,9 +50,11 @@ fit/validation split before D1-core scoring.
 - [x] P3 b-block and e-block heads trained (3 seeds each).
 - [x] P3 a arm retrained on the common split; **D1-core falsified**
       (`e Δ=+.0007 [−.0079,+.0093]`, `b Δ=−.0099 [−.0159,−.0036]`).
-- [ ] `(s,b)` coarse fit selected edge `s=.25, b=0`; refinement grid is
-      running. Freeze refined values before H2.4.
+- [x] `(s,b)` refined and frozen at `s=.1875, b=0`;
+      hash `be54ddab…`.
 - [x] D2C FP-helix baseline recorded (4,391 FPs; 25.6% fully in RNAfold MFE).
+- [x] H2.4 completed and not confirmed: DP gains TPs but also long-range FPs
+      on both splits.
 
 ## Immediate local
 
@@ -71,8 +74,14 @@ fit/validation split before D1-core scoring.
 - [ ] H3 dose-response by homolog identity bin.
 - [ ] Enforce macro/micro ±.15 and shuffle-floor ≤.05 reporting invariants.
 - [x] P2-central retained-ratio CIs recomputed on a common population.
-- [ ] H2.4 only after the refined `(s,b)` freeze is committed.
-- [ ] Send Round 4l to Claude with D1-core and H3 leading.
+- [x] H2.4 only after the refined `(s,b)` freeze is committed.
+- [x] Round 4l sent; PI chose Paper A plus one E-C1 test; B shelved.
+- [ ] E-C1: pin Amendment 12 (done), build 409-family list, compute P1
+      (Rfam full-region count), P2 (RiNALMo pseudo-perplexity), ΔF1 vs
+      RNAfold, partial ρ and bootstrap CI.
+- [ ] P3 id_test table and H2.4 per-length-bin table.
+- [ ] Check MXfold2 retraining status on our train split.
+- [ ] Draft one-page Paper A outline with figure-to-claim mapping.
 
 ## Standing
 

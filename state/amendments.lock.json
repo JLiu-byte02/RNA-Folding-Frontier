@@ -60,6 +60,11 @@
       "blob_sha256": "be54ddab6552102b645a42dff5ac60eaa92072680db062ae437c8c4889ad5ad5",
       "first_quoted_in": "pending-commit",
       "note": "Frozen (s,b) energy calibration from the training split; H2.4 must not run until this file is committed."
+    },
+    "experiments/001_e1prime/AMENDMENT_12.md": {
+      "blob_sha256": "68e3ebe3f2065094d5b89e8712fafe8e4e853005bb6d4c5f9e99b9b012fa95e5",
+      "first_quoted_in": "pending-commit",
+      "note": "Written 2026-11-13 before any coverage proxy or coverage-F1 outcome was computed (PI Round 4l hypothesis C). Frozen on first commit; no further edits."
     }
   }
 }

@@ -396,6 +396,7 @@ def main() -> int:
             "fewer_long_range_fp": bool(d["long_range_fp"] < g["long_range_fp"]),
             "no_fewer_true_positives": bool(d["tp"] >= g["tp"]),
             "passes": bool(d["long_range_fp"] < g["long_range_fp"] and d["tp"] >= g["tp"]),
+            "by_band": m["by_band"],
         }
     if pair_feasible:
         p = evaluate(pb_th)
@@ -410,6 +411,7 @@ def main() -> int:
             "more_true_positives": bool(d["tp"] > g["tp"]),
             "fewer_long_range_fp": bool(d["long_range_fp"] < g["long_range_fp"]),
             "passes": bool(d["tp"] > g["tp"] and d["long_range_fp"] < g["long_range_fp"]),
+            "by_band": p["by_band"],
         }
 
     if primary is not None:

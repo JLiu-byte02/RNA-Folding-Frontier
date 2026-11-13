@@ -186,7 +186,12 @@ python scripts/build_common_cohort.py \
 ```
 
 Then rescore every baseline and every head with `--restrict-ids`, and rerun
-`scripts/cohort_paired_eval.py` on the new cohort. Adding MXfold2 shrinks the
+`scripts/cohort_paired_eval.py` on the new cohort. The binding length cap is
+MXfold2's 600 nt, and only the sequences above it drop out: the committed
+cohort lists give **16,040 sequences / 408 families** (withheld) and **1,272 /
+153 families** (id_test), i.e. 19 and 15 sequences lost. That is small enough
+that the five-method table should be comparable to the three-tool one, but it
+must still be rebuilt rather than patched. Adding MXfold2 shrinks the
 cohort (600 nt cap) and every number in section 5 will change; the current table
 must then be marked superseded, not silently reused. The run is accepted only if
 `n_missing_prediction == 0` for every tool and the exclusion accounting is
@@ -209,7 +214,10 @@ identical across rows.
 
 ## 8. Artifacts
 
-- `experiments/002_e1prime_runs/cohort/{id_test,test_withheld}.jsonl`
+- `experiments/002_e1prime_runs/cohort/{id_test,test_withheld}.jsonl` (id, family,
+  length; committed so the table is reproducible without the prediction files)
+- `experiments/002_e1prime_runs/cohort/{id_test,test_withheld}.excluded.jsonl`
+  (per-row exclusion reason)
 - `experiments/002_e1prime_runs/cohort/{id_test,test_withheld}.report.json`
 - `experiments/002_e1prime_runs/cohort/paired_{id_test,test_withheld}.json`
 - `experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure}_*_score.json`

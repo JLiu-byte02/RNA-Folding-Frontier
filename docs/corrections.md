@@ -296,3 +296,30 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
 - **Action:** section 3 of the draft is rewritten to each of these statements.
   No result number changes; this is a description-vs-code repair.
 - **Found by:** a read-only methods audit against the code and amendments.
+
+## 2026-11-14 - Paper A Results mislabelled six populations
+
+- **Where:** `docs/paper_A_draft_2026-11-13.md` section 2.
+- **What was wrong, and what the artifacts say:**
+  - 2.1 quoted ArchiveII as 3,370 records while the overlap and 313-duplicate
+    statistics were computed on the 3,966-record corpus ingested for the leakage
+    audit. Both populations are now named, and the exact/near counts are given
+    as 2,427/3,966 and 3,506/3,966.
+  - 2.2 called 92,781 "seed rows in our splits"; it is the full Rfam seed-label
+    corpus, of which 54,400 rows appear in the frozen split files.
+  - 2.2 said 9,322 of the 16,540 v1 failures still fail under v2. 8,870 is the
+    residual; the other 452 are rows v1 parses and v2 does not. The table now
+    shows 7,670 repaired / 8,870 residual / 452 new / 9,322 total.
+  - 2.3 described the D1-core table as nested truth. The table is the all-pairs
+    truth (`unpaired_allpairs`: .5959 / .5965 / .5860); the nested means are
+    .5951 / .5956 / .5847 and are now quoted in the text.
+  - 2.4 presented a five-condition ladder as one 16,163-sequence population.
+    Condition c is restricted to the 8,476 sequences that have a same-family
+    homolog block; the text now separates the four full-population conditions
+    from c.
+  - 2.5's "favourable below 300 nt" held only on withheld. On id_test the
+    150-299 nt bin adds 125 long-range FPs and the <80 nt bin loses 41 TPs.
+  - Claim 3's "8.1% of the rest" was ambiguous; 8.1% is 6,757 / 83,459, i.e. of
+    rows where both v2 and v3 parse.
+- **Action:** section 2 and claim 3 rewritten; no metric changes.
+- **Found by:** a read-only results audit of each number against its artifact.

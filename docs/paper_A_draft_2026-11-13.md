@@ -41,11 +41,14 @@ results, not a state-of-the-art claim.
 
 ### 2.1 Benchmark overlap is large and clade-structured (F1, T1)
 
-ArchiveII (3,370 sequences in our mirror) overlaps the union of two standard
-trainers, RNAStrAlign and bpRNA TR0, at **61.20% exact** sequence duplicates and
-**88.40% near-duplicates** (k = 15 containment >= 0.5). Against bpRNA-1m TR0
-alone the exact rate is 20.47% and the near-duplicate rate 38.25%. ArchiveII
-also contains 313 internal duplicate sequences. The apparent cleanliness of the
+The ArchiveII corpus ingested for the leakage audit (3,966 records; a
+3,370-record mirror is used for the label comparison below -- the two counts
+differ and every statistic here states its population) overlaps the union of two
+standard trainers, RNAStrAlign and bpRNA TR0, at **61.20% exact** duplicates
+(2,427/3,966) and **88.40% near-duplicates** (3,506/3,966; k = 15 containment
+>= 0.5). Against bpRNA-1m TR0 alone the exact rate is 20.47% (812) and the
+near-duplicate rate 38.25% (1,517). The same 3,966-record corpus contains 313
+internal duplicate sequences. The apparent cleanliness of the
 long families (16S, 23S, group II) is an artefact of the trainers capping length
 at 600 nt, not of genuine separation.
 
@@ -70,13 +73,16 @@ both directions: a gap that removes one helix endpoint lets the parser pair the
 surviving endpoint with a different closing column (**invented** pair), and a
 disturbed stack can lose a genuine pair.
 
-On the 92,781 seed rows in our splits:
+On the 92,781-row Rfam seed-label corpus -- the full seed set, of which 54,400
+rows appear in the frozen split files:
 
 | quantity | value |
 |---|---:|
 | rows whose string-level (v1) projection does not parse | 16,540 (17.8%) |
 | of those, repaired by v2 (per-character, gap-tolerant) | 7,670 |
-| of those, still failing under v2 | 9,322 |
+| of those, still failing under v2 | 8,870 |
+| rows that v1 parses but v2 does not (new failures) | 452 |
+| total v2 failures | 9,322 |
 | rows parsed by pair-level v3 | 92,781 (100.00%) |
 | pairs, v1 effective / v2 effective / v3 | 1,669,314 / 2,029,886 / 2,517,623 |
 | rows with <4 v3 pairs | 5,372 (5.79%) |
@@ -106,8 +112,10 @@ If the FM advantage were a family shortcut implemented in the head, then
 restricting the head's input to a local window during *training* should not hurt
 out-of-distribution accuracy. We tested this at matched everything: same
 sequences, same backbone, same fit/validation split (16,716/544), same decoder,
-same v3 nested truth, three seeds, on a common population of 16,163 withheld
-sequences in 409 families.
+same v3 truth, three seeds, on a common population of 16,163 withheld sequences
+in 409 families. The table below is the all-pairs truth (the primary scoring
+mode); under the nested projection the same three means are .5951 / .5956 /
+.5847, so the choice moves nothing by more than .0013.
 
 | arm | family-macro F1 | 95% CI | micro F1 |
 |---|---:|---|---:|
@@ -129,9 +137,12 @@ the shortcut hypothesis, not a positive claim about locality.
 
 ### 2.4 Homologous test-time context transfers only partially (F4, T4)
 
-Test-time substitution of the distal region gives a descriptive ladder on the
-same 16,163-sequence withheld population: native a .5911, dinucleotide-shuffled
-b .5629, same-family homolog c .6066, other-clan d .5543, N-mask e .5523.
+Test-time substitution of the distal region gives a descriptive ladder:
+native a .5911, dinucleotide-shuffled b .5629, other-clan d .5543 and N-mask e
+.5523 are on the 16,163-sequence withheld population; same-family homolog c
+.6066 is on the 8,476 sequences for which a same-family homolog block exists.
+The five values are therefore **not** one common population, and only the H3
+ratios below, computed on the a/c/e intersection, compare conditions.
 
 The pre-registered H3 ratio rule was `R_c = (c-e)/(a-e) >= .90` and
 `R_d <= .30` with CIs excluding the bar. Observed on the common a/c/e population
@@ -167,8 +178,11 @@ matched to greedy.
 DP gains true positives at the matched budget on both splits, but it gains
 long-range false positives at the same time. The pre-registered criterion
 required fewer long-range FPs and at least as many TPs; **H2.4 is not
-confirmed**. Per length band the trade is favourable below 300 nt and dominated
+confirmed**. Per length band, on withheld the trade is favourable below 300 nt and dominated
 by the >=300-nt bin, where a 2,508-TP gain costs 2,928 extra long-range FPs.
+On id_test it is not uniformly favourable: the 150-299 nt bin adds 125
+long-range FPs and the <80 nt bin loses 41 TPs, so the "favourable below 300 nt"
+statement is withheld-only.
 
 A stronger prior was also tested and failed: a coverage-gated context term
 collapsed to its grid boundary (`s_max = .1875`, `alpha = beta = gamma = 0`), so
@@ -429,7 +443,7 @@ and overlap audits alongside F1.
 |---|---|---|---|
 | 1 | ArchiveII is 61% exact / 88% near-duplicate against common trainers | established | strong |
 | 2 | ArchiveII spans 8 of 147 Rfam clans; leave-one-family-out is not clan-disjoint | established | strong |
-| 3 | String-level seed projection fails on 17.8% of rows and corrupts 8.1% of the rest | established | strong |
+| 3 | String-level seed projection fails on 17.8% of rows and disagrees with v3 on 8.1% of rows where both parse | established | strong |
 | 4 | Head-level distal-context manipulation does not improve OOD F1 (D1-core) | falsified hypothesis | strong (pre-registered) |
 | 5 | Homolog test-time context transfers more than other-clan context, below the pre-registered bar (H3) | descriptive | weak |
 | 6 | Energy-consistent decoding adds TPs but also long-range FPs (H2.4) | not confirmed | strong (pre-registered) |

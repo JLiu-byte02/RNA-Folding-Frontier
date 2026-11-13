@@ -196,3 +196,42 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   or check the exit status) instead of continuing.
 - **Evidence:** `git status --porcelain` on the server after the reset lists no
   tracked modifications; the hash above was re-checked with `sha256sum`.
+
+## 2026-11-13 - RNAstructure's missing withheld rows are IUPAC skips, not timeouts
+
+- **Where:** `docs/external_baselines_2026-11-13.md` sections 1, 4 and 4a, and a
+  working note that attributed the 104 missing withheld predictions to the
+  `<out>.errors.jsonl` timeout rows.
+- **What was wrong:** two separate claims. (i) "111 ambiguous rows are inside
+  our dump, so they will shrink the cohort by up to 111." (ii) The 104
+  predictions missing from the cohort came from the timeout rows.
+- **Verified** on the server by joining
+  `rnastructure_test_withheld.{skipped,errors}.jsonl` to
+  `dump_p2fix_seed17/a_test_withheld.jsonl`, the label-eligible set
+  (`truth_v3` not null and >= 4 pairs) and `cohort/test_withheld.jsonl`:
+  - `skipped.jsonl`: 111 rows, all `reason = non-ACGU`. 105 are in the dump;
+    104 are label-eligible; 1 is label-ineligible; 6 exceed 1,024 nt and are
+    not in the dump. The 104 label-eligible skips are exactly the cohort's
+    `missing_prediction = 104`.
+  - `errors.jsonl`: 41 rows, all `err = timeout`, lengths 3,337-4,381 nt
+    (median 3,720). None is in the dump: all lie outside the 1,024 nt context,
+    so none can belong to `missing_prediction`.
+  - label-eligible rows without a prediction = 104 = 104 skipped + 0 errors +
+    0 unexplained.
+- **Action:** sections 1, 4 and 4a of the baseline document now state 111
+  skipped / 104 inside the cohort / 41 timeouts outside the context. Any
+  statement that timeouts explain the missing rows is withdrawn.
+- **Evidence:** the counts above are reproducible from the two `.jsonl` files
+  and the dump; the id sets are small enough to inspect directly.
+
+## 2026-11-13 - `lt4 = 630` is `512 + 118`, not a single exclusion class
+
+- **Where:** the coverage tables in `docs/external_baselines_2026-11-13.md` and
+  working notes that quoted "630 rows below four pairs".
+- **What was wrong:** `scripts/build_common_cohort.py` records
+  `empty_truth` (118) and `lt_min_true_pairs` (512) as separate reasons;
+  `scripts/score_external_baseline.py` reports their union as `lt4 = 630`.
+  Calling 630 "rows with 1-3 pairs" overstates that class by the 118
+  empty-truth rows, which are a label-parse defect, not short labels.
+- **Action:** tables now print 118 + 512 = 630. No score changes; both
+  populations were already excluded from the cohort by the same rule.

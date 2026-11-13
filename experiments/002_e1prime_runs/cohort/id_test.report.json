@@ -1,0 +1,69 @@
+{
+  "common_length": {
+    "max": 990,
+    "min": 25,
+    "n": 1287,
+    "p50": 116.0,
+    "p90": 304.0
+  },
+  "dump": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_id_test.jsonl",
+  "excluded_by_reason": {
+    "empty_truth": 5,
+    "lt_min_true_pairs": 100
+  },
+  "min_true_pairs": 4,
+  "n_common": 1287,
+  "n_dump_rows": 1392,
+  "n_excluded_total": 105,
+  "n_families": 155,
+  "n_label_eligible": 1287,
+  "n_split_not_in_dump": 10,
+  "n_split_rows": 1402,
+  "per_tool": {
+    "eternafold": {
+      "missing_length": {
+        "n": 0
+      },
+      "n_extra_ids_not_in_dump": 3,
+      "n_ids": 1395,
+      "n_missing_from_label_eligible": 0
+    },
+    "rnafold": {
+      "missing_length": {
+        "n": 0
+      },
+      "n_extra_ids_not_in_dump": 10,
+      "n_ids": 1402,
+      "n_missing_from_label_eligible": 0
+    },
+    "rnastructure": {
+      "missing_length": {
+        "n": 0
+      },
+      "n_extra_ids_not_in_dump": 10,
+      "n_ids": 1402,
+      "n_missing_from_label_eligible": 0
+    }
+  },
+  "preds": {
+    "eternafold": "/home/junxuanliu/projects/RNA-Folding-Frontier/experiments/002_e1prime_runs/eternafold_id_test.jsonl",
+    "rnafold": "/home/junxuanliu/projects/RNA-Folding-Frontier/experiments/002_e1prime_runs/rnafold_id_test.jsonl",
+    "rnastructure": "/home/junxuanliu/projects/RNA-Folding-Frontier/experiments/002_e1prime_runs/rnastructure_id_test.jsonl"
+  },
+  "split": "splits/s1prime_filtered/id_test.jsonl",
+  "split_not_in_dump": {
+    "count": 10,
+    "length": {
+      "max": 2729,
+      "min": 1037,
+      "n": 10,
+      "p50": 2531.5,
+      "p90": 2631.8
+    }
+  },
+  "truth_v3_status": {
+    "bprna_v1": 1392,
+    "excluded_empty_truth": 5,
+    "excluded_lt_min_true_pairs": 100
+  }
+}

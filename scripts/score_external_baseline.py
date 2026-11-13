@@ -184,9 +184,14 @@ def cmd_score(args: argparse.Namespace) -> int:
 
     labels = load_labels_v3(_resolve(args.labels))
     rows = read_jsonl(split_path)
-    preds: dict[str, str] = {}
+    preds: dict[str, set[tuple[int, int]]] = {}
     for row in read_jsonl(preds_path):
-        preds[row["id"]] = row["dbn"]
+        if "dbn" in row:
+            preds[row["id"]] = set(pairs_from_dbn(row["dbn"]))
+        elif "pairs" in row:
+            preds[row["id"]] = {(int(a), int(b)) for a, b in row["pairs"]}
+        else:
+            raise SystemExit(f"prediction row for {row.get('id')!r} has neither dbn nor pairs")
 
     restrict: set[str] | None = None
     if args.restrict_ids:
@@ -217,7 +222,7 @@ def cmd_score(args: argparse.Namespace) -> int:
             truth_raw = {(int(a), int(b)) for a, b in row["pairs"]}
             label_source["bprna_v1"] += 1
 
-        pred = set(pairs_from_dbn(preds[rid])) if rid in preds else None
+        pred = preds.get(rid)
         if not truth_raw:
             n_empty_truth += 1
         if len(truth_raw) < args.min_true_pairs:

@@ -1,71 +1,74 @@
 {
-  "project": "RNA-Folding-Frontier",
-  "schema_version": 1,
-  "updated_at": "2026-11-13T23:10:00+08:00",
-  "phase": "post-ec2-negative-results",
-  "cycle": 6,
-  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
-  "compute": {
-    "cluster": "Slurm",
-    "partition": "g-3090-2",
-    "gpu_type": "RTX 3090",
-    "project_gpu_cap": 6,
-    "remote_root": "/home/junxuanliu/projects/RNA-Folding-Frontier"
-  },
-  "pi": {
-    "model": "Claude Opus 5.5",
-    "effort": "High",
-    "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
-    "last_session_file": "docs/claude/transcripts/2026-11-13_round04n_reply.md",
-    "rate_limit_reset_at": null
-  },
-  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
-  "active_experiment": "Materialise the frozen common cohort; MXfold2/RNAstructure baselines",
-  "open_questions": [
-    "Does E-C1 survive on the frozen common cohort?",
-    "Is the family-macro deficit vs RNAfold real on that cohort?",
-    "Would beta<0 (untested on the fitted grid) change anything?",
-    "What method story replaces H2/E-C2? None pre-registered."
-  ],
-  "blockers": [],
-  "running_jobs": {
-    "mxfold2_train": 15631,
-    "rnastructure_withheld": 15649,
-    "rnastructure_idtest": 15820
-  },
-  "remote_head": "6228dc6",
-  "artifacts": {
-    "datasets": [],
-    "checkpoints": [],
-    "results": [
-      "experiments/000_e0_leakage/report.md",
-      "experiments/000_e0_leakage/union_overlap/summary.json",
-      "experiments/000_e0_leakage/label_discordance_rnastralign/summary.json",
-      "experiments/000_e0_leakage/bprna_mirror/summary.json",
-      "experiments/001_e1prime/PREREGISTRATION.md",
-      "experiments/001_e1prime/novel_label_metadata.json",
-      "experiments/000_e0_leakage/cmscan_and_split_report.md",
-      "experiments/000_e0_leakage/headline_clans/summary.json",
-      "experiments/001_e1prime/AMENDMENT_2.md",
-      "experiments/001_e1prime/AMENDMENT_8.md",
-      "experiments/011_labels_v3/labels_v3_pairs.json.gz",
-      "experiments/011_labels_v3/labels_v3_summary.json",
-      "experiments/006_lock_basis/lock_basis_check_round4h.json",
-      "docs/d1_k1_d2_2026-11-12.md",
-      "docs/claude/transcripts/2026-11-12_round04i_reply.md",
-      "experiments/011_labels_v3/v2_v3_bprna_crosscheck.json",
-      "docs/claude/transcripts/2026-11-12_round04_decisions.md",
-      "docs/claude/transcripts/2026-11-12_round04h_reply.md",
-      "docs/network_diagnosis_2026-11-12.md"
-    ]
-  },
-  "amendments": {
-    "A8": "5411a050",
-    "A9": "a1dae27e",
-    "A10": "5ec10662",
-    "A11": "7c769403",
-    "A12": "68e3ebe3",
-    "A13": "b3a87a58",
-    "A14": "0c5af106"
-  }
+ "project": "RNA-Folding-Frontier",
+ "schema_version": 1,
+ "updated_at": "2026-11-13T24:00:00+08:00",
+ "phase": "external-baseline-cohort-and-paper-a",
+ "cycle": 6,
+ "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
+ "compute": {
+  "cluster": "Slurm",
+  "partition": "g-3090-2",
+  "gpu_type": "RTX 3090",
+  "project_gpu_cap": 6,
+  "remote_root": "/home/junxuanliu/projects/RNA-Folding-Frontier"
+ },
+ "pi": {
+  "model": "Claude Opus 5.5",
+  "effort": "High",
+  "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
+  "last_session_file": "docs/claude/transcripts/2026-11-13_round04n_reply.md",
+  "rate_limit_reset_at": null
+ },
+ "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
+ "active_experiment": "MXfold2 retrain (job 15631); five-method cohort after it finishes",
+ "open_questions": [
+  "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
+  "When should the Amendment 14 one-shot test_novel be used, if at all?",
+  "Which Paper A framing (audit-led vs negative-led) is defensible without SOTA?",
+  "Is there any remaining mechanism result strong enough to anchor a method claim?"
+ ],
+ "blockers": [],
+ "running_jobs": {
+  "mxfold2_train": 15631
+ },
+ "remote_head": "6228dc6",
+ "artifacts": {
+  "datasets": [],
+  "checkpoints": [],
+  "results": [
+   "experiments/000_e0_leakage/report.md",
+   "experiments/000_e0_leakage/union_overlap/summary.json",
+   "experiments/000_e0_leakage/label_discordance_rnastralign/summary.json",
+   "experiments/000_e0_leakage/bprna_mirror/summary.json",
+   "experiments/001_e1prime/PREREGISTRATION.md",
+   "experiments/001_e1prime/novel_label_metadata.json",
+   "experiments/000_e0_leakage/cmscan_and_split_report.md",
+   "experiments/000_e0_leakage/headline_clans/summary.json",
+   "experiments/001_e1prime/AMENDMENT_2.md",
+   "experiments/001_e1prime/AMENDMENT_8.md",
+   "experiments/011_labels_v3/labels_v3_pairs.json.gz",
+   "experiments/011_labels_v3/labels_v3_summary.json",
+   "experiments/006_lock_basis/lock_basis_check_round4h.json",
+   "docs/d1_k1_d2_2026-11-12.md",
+   "docs/claude/transcripts/2026-11-12_round04i_reply.md",
+   "experiments/011_labels_v3/v2_v3_bprna_crosscheck.json",
+   "docs/claude/transcripts/2026-11-12_round04_decisions.md",
+   "docs/claude/transcripts/2026-11-12_round04h_reply.md",
+   "docs/network_diagnosis_2026-11-12.md",
+   "experiments/002_e1prime_runs/cohort/paired_test_withheld.json",
+   "experiments/002_e1prime_runs/cohort/paired_id_test.json",
+   "docs/external_baselines_2026-11-13.md",
+   "tests/test_external_baseline.py",
+   "scripts/cohort_paired_eval.py"
+  ]
+ },
+ "amendments": {
+  "A8": "5411a050",
+  "A9": "a1dae27e",
+  "A10": "5ec10662",
+  "A11": "7c769403",
+  "A12": "68e3ebe3",
+  "A13": "b3a87a58",
+  "A14": "0c5af106"
+ }
 }

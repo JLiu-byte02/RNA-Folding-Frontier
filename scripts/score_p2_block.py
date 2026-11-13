@@ -111,6 +111,10 @@ def main() -> int:
         "--homolog-map", default="data/processed/homologs/test_withheld.json"
     )
     ap.add_argument(
+        "--template-controls",
+        default="experiments/002_e1prime_runs/template_controls.json",
+    )
+    ap.add_argument(
         "--out",
         default="experiments/002_e1prime_runs/p2block_h3_test_withheld.json",
     )
@@ -241,24 +245,38 @@ def main() -> int:
                     "gap": abs(row["family_macro_f1"] - row["micro_f1"]),
                 }
             )
+    local_b = max(
+        row["family_macro_f1"]
+        for row in result["full_split"]["b"]["per_seed"]
+    )
+    template_path = ROOT / args.template_controls
+    global_floor = None
+    if template_path.exists():
+        template = json.loads(template_path.read_text(encoding="utf-8"))
+        key = f"shuffle_{args.split}"
+        global_floor = template.get("means", {}).get(key, {}).get(
+            "mean_family_macro_f1"
+        )
     result["invariants"] = {
         "max_macro_micro_gap": rnd(max(g["gap"] for g in gaps)),
         "max_macro_micro_gap_row": max(gaps, key=lambda g: g["gap"]),
         "macro_micro_gate_0.15": bool(max(g["gap"] for g in gaps) <= 0.15),
-        "shuffle_floor_max": rnd(
-            max(
-                row["family_macro_f1"]
-                for row in result["full_split"]["b"]["per_seed"]
-            )
+        "local_context_b_f1": rnd(local_b),
+        "local_context_b_note": (
+            "P2-block b preserves the native block+32nt flank; it is not a "
+            "global sequence shuffle and is not a sequence-free control."
         ),
-        "shuffle_floor_gate_0.05": bool(
-            max(
-                row["family_macro_f1"]
-                for row in result["full_split"]["b"]["per_seed"]
-            )
-            <= 0.05
+        "global_shuffle_floor": (
+            rnd(global_floor) if isinstance(global_floor, (int, float)) else None
+        ),
+        "global_shuffle_gate_0.05": bool(
+            isinstance(global_floor, (int, float)) and global_floor <= 0.05
         ),
     }
+    result["invariants"]["report_invariants_pass"] = bool(
+        result["invariants"]["macro_micro_gate_0.15"]
+        and result["invariants"]["global_shuffle_gate_0.05"]
+    )
 
     out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -375,8 +393,11 @@ def render_markdown(result: dict) -> str:
         "",
         f"- Max macro/micro gap: {inv['max_macro_micro_gap']:.4f} "
         f"(gate ≤ .15: {inv['macro_micro_gate_0.15']})",
-        f"- Shuffle-floor max family-macro F1: {inv['shuffle_floor_max']:.4f} "
-        f"(gate ≤ .05: {inv['shuffle_floor_gate_0.05']})",
+        f"- P2-block b local-context F1: {inv['local_context_b_f1']:.4f} "
+        "(not a global shuffle control)",
+        f"- Global dinucleotide-shuffle floor: {inv['global_shuffle_floor']} "
+        f"(gate ≤ .05: {inv['global_shuffle_gate_0.05']})",
+        f"- Report invariants pass: {inv['report_invariants_pass']}",
         "",
         "Round 4 v1-label numbers are not used in this table.",
     ]

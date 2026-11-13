@@ -152,3 +152,19 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   grid are unchanged.
 - **Evidence:** a synthetic 8-sequence fit completes end to end; no H2.4 result
   was produced or quoted from the stuck job.
+
+## 2026-11-13 — Template-control artifact and P2-block b were not a global shuffle
+
+- **Where:** `experiments/002_e1prime_runs/template_controls.json` and the
+  provisional `score_p2_block.py` invariants.
+- **What was wrong:** the JSON still contained the pre-fix `pair_prf` values
+  (`shuffle_*` ≈ .89), even though the scorer had been corrected. Separately,
+  P2-block condition b preserves the native block plus its 32-nt flank; it is a
+  local-context swap, not a global sequence shuffle, so its F1 (≈ .56) cannot be
+  used as a sequence-free floor.
+- **Corrected template controls (3 seeds, fixed .5, v3 primary):** all-N
+  `.000549` id_test / `.000066` withheld; dinucleotide shuffle `.016185` /
+  `.017319`.
+- **Action:** rerun `scripts/score_template_controls.py`; P2-block reports the
+  b condition as `local_context_b_f1` and uses the corrected global shuffle
+  mean for the ≤.05 invariant.

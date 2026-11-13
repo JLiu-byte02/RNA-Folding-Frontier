@@ -245,13 +245,17 @@ frozen, so the four-method cohort will be rebuilt once it does.
   15.0 seed alignments and covariance models, and the HuggingFace
   `rouskinlab/bpRNA-1m` mirror (66,715 sequences) used as the label superset.
 - **Family assignment.** Rfam families by accession; bpRNA sequences by cmscan
-  against the pressed Rfam 15.0 CMs with `--cut_ga`.
-- **Splits (`s1prime`, frozen).** 3,861 clans: 1,983 novel / 376 withheld / 1,502
-  retained. `train` 17,746; `id_test` 1,402; `test_withheld` 17,371;
-  `test_novel` 42,873. `test_novel` is embargoed and has never been scored.
+  against the pressed Rfam 15.0 CMs with `--cut_ga --rfam --nohmmonly`.
+- **Splits (`s1prime_filtered`, frozen).** 3,861 clans: 1,983 novel / 376
+  withheld / 1,502 retained. After the reverse-homology and 15-mer screens:
+  `train` 17,746; `id_test` 1,402; `test_withheld` 17,371; `test_novel` 42,873.
+  The pre-screen `s1prime` counts are 17,748 and 1,409. `test_novel` is
+  embargoed and has never been scored.
 - **Common populations only.** Every comparative number is computed on the
-  intersection of the arms being compared, on identical ids, identical truth,
-  and identical decoding. Per-tool populations are never compared side by side.
+  intersection of the arms being compared, on identical ids and identical
+  truth. Decoding is held fixed within model-arm comparisons (greedy vs DP vs
+  energy arms share one probability map); each external tool uses its native
+  decoder. Per-tool populations are never compared side by side.
 
 ### 3.2 Label construction (v1 / v2 / v3)
 
@@ -264,10 +268,13 @@ secondary truth. v1 (string projection, parse-or-empty) and v2 (per-character
 gap-tolerant projection) are provenance only.
 
 Eligibility is decided at scoring time, not at split-construction time:
-sequences with fewer than four true pairs under v3 are excluded from primary F1
-and their predicted-pair counts are reported separately as a false-positive
-diagnostic. This replaces an earlier dataset-level ">= 4 pairs in `SS_cons`"
-condition that was applied when the split was built.
+sequences with fewer than four true pairs under v3 are excluded from primary F1.
+The D1 scorer and the external-baseline scorer also report their predicted-pair
+counts separately as a false-positive diagnostic. The P2/P3 block scorer
+(`src/rff/analysis/block_eval.py`) excludes the same rows without emitting that
+diagnostic, so P2/P3 tables cannot be used to argue about empty-truth rows.
+This replaces an earlier dataset-level ">= 4 pairs in `SS_cons`" condition that
+was applied when the split was built.
 
 ### 3.3 Scoring convention, including a disclosed bug
 
@@ -288,66 +295,88 @@ resampled families.
 
 ### 3.4 Models and training
 
-Backbone: RiNALMo-giga (frozen). Head: a shallow pair-prediction head over the
-outer-product of residue embeddings with a symmetric outer-sum, trained with
-BCE on v1 pairs for the Round 4 experiments and on v3 pairs thereafter. Decoder:
-threshold + one-partner + non-crossing greedy; a bare-threshold arm and a nested
-DP arm are reported where they isolate a constraint. No backbone is fine-tuned;
-no model is pretrained from scratch in this work.
+Backbone: RiNALMo-giga (frozen). Head: each residue embedding is projected to
+32 dimensions, and cell (i, j) is represented by the concatenation
+`[z_i, z_j, z_i * z_j]` plus a learned relative-distance embedding; eight
+dilated 3x3 residual blocks then produce one logit per cell, symmetrised as
+`0.5 * (L + L^T)`. Training is BCE on the frozen bpRNA-era `pairs` field of the
+split for every head; v3 changes evaluation labels only (Amendment 10).
+Decoder: threshold + one-partner + non-crossing greedy; a bare-threshold arm
+and a nested DP arm are reported where they isolate a constraint. No backbone
+is fine-tuned; no model is pretrained from scratch in this work.
 
 Training runs are recorded with config, log, checkpoint, and evaluation JSON
 under `experiments/` and `runs/`. Checkpoints produced under the buggy selection
-metric (`runs/p2_seed*`) are quarantined and not used.
+metric (`runs/p2_seed*`) are excluded from every headline number; they were
+retained only to regenerate diagnostic dumps that were then re-scored with the
+fixed metric.
 
 ### 3.5 Context interventions
 
 - **P2-block (test time).** Replace a 16-nt block plus 32-nt flanks in the distal
   region with: (a) native, (b) dinucleotide-shuffled block, (c) same-family
   homolog block, (d) other-clan block, (e) N-run.
-- **P3 (train *and* test).** Train the head with only the local window
-  (a vs e-block vs b-block) and evaluate on the full input. This separates "the
-  head uses distal context" from "the distal tokens change the input
-  distribution".
+- **P3 (train *and* test).** Three arms train under different distal
+  conditions -- native (a), N-run (e-block) and dinucleotide-shuffled
+  (b-block) -- and are evaluated on the matching condition cache as well as on
+  the native input. This separates "the head uses distal context" from "the
+  distal tokens change the input distribution".
 
 ### 3.6 Decoders and energy calibration
 
 Greedy: sort cells by probability, accept if both endpoints are free and the
-pair does not cross an accepted pair. DP: exact maximum-weight non-crossing
-matching, linear in memory and quadratic in time per sequence, cross-checked
-against exhaustive enumeration on all components with <= 16 arcs (33,714
-components, 0 mismatches; the old greedy reduction was suboptimal on 87
-components and is kept as a regression test).
+pair does not cross an accepted pair. Decoder A: exact maximum-weight
+non-crossing matching under the nearest-neighbour decomposition, O(n^3) time
+and O(n^2) memory per sequence. The 33,714-component exhaustive check belongs to
+a different routine -- the polynomial maximum-nested-subset solver used to
+project reference structures (`max_nested_subset_of_arcs`), which matched
+exhaustive enumeration on every component with <= 16 arcs (0 mismatches) and
+showed the old greedy reduction was suboptimal on 87 of them; that check is a
+regression test for the label solver, not for decoder A.
 
-Energy decoding adds `s * (stacking energy) + b` to each cell's log-odds, with
-`s, b` fitted on train by a pre-registered coarse-then-refined grid and frozen
-before any evaluation. `(s, b) = (.1875, 0)` was selected at the refined grid's
-interior and hashed before H2.4 was run.
+Energy decoding passes each pair's log-odds to ViennaRNA as a per-pair
+pseudo-energy `-(s * score_ij + b)`; Turner stacking remains inside ViennaRNA.
+`s, b` were fitted on train by a pre-registered coarse-then-refined grid and
+frozen before any evaluation. `(s, b) = (.1875, 0)` sits at the upper boundary
+of the refined grid (`s_max`) and was hashed before H2.4 was run. The fit used
+5-fold cross-validation with folds assigned by `crc32(record_id) mod 5`, not by
+clan as Amendment 7 specified; this deviation is recorded in
+`docs/corrections.md`. E-C2 failed independently of it (the fitted gate is a
+constant scale, bit-identical to its control), so no reported conclusion rests
+on the leakage record-level folds could introduce; a clan-grouped refit has not
+been run.
 
 ### 3.7 Statistics
 
 Family bootstrap for CIs and paired deltas; family-level partial correlation
-(controlling for length) for E-C1; pre-registered support rules with explicit
-bars. No test-set-driven model selection: every choice that could move a
+for E-C1, adjusting for median length, GC content, pair density, multiloop
+presence, and label source; pre-registered support rules with explicit bars. No test-set-driven model selection: every choice that could move a
 reported number was fixed by an amendment before the corresponding number was
 computed.
 
 ### 3.8 Pre-registration and amendment history
 
-Fourteen amendments (`experiments/001_e1prime/AMENDMENT_*.md`) record the
-protocol, the hypothesis, the success bar, and the analysis list *before* the
-corresponding evaluation. Amendments are append-only; corrections are recorded
-in `docs/corrections.md` with the affected numbers and their replacements.
-Frozen artifact hashes (labels, splits, eval subsets, `(s, b)`) are recorded in
-`state/amendments.lock.json` as hashes of git blob bytes, and a guard refuses to
-score a dirty worktree.
+Fourteen numbered amendments record the protocol, the hypothesis, the success
+bar, and the analysis list *before* the corresponding evaluation: Amendment 1
+is a section of `experiments/001_e1prime/PREREGISTRATION.md`, Amendments 2-14
+are standalone files. Amendments are append-only; corrections are recorded in
+`docs/corrections.md` with the affected numbers and their replacements.
+`state/amendments.lock.json` pins the amendment files, the `test_novel`
+evaluation list, the energy fit, and the E-C2 fit as hashes of git blob bytes;
+label and split hashes live in `experiments/011_labels_v3/README.md` and
+`docs/remote_provenance_2026-11-12.md`. The embargo guard refuses a
+confirmatory read when any locked file differs from `HEAD`; it does not reject
+unrelated worktree changes.
 
 `test_novel` has a one-shot unblinding list fixed by Amendment 14 and has not
 been invoked.
 
 ### 3.9 Reproducibility
 
-The repository is the record. A CI job clones it into a fresh directory,
-installs the package, runs the test suite, and verifies every hash in
+The repository is the record for code, protocols, and evaluation artifacts;
+weights, raw logs, and the corpora themselves stay on the server (`.gitignore`).
+A CI job clones the repository into a fresh directory, installs the test
+dependencies, runs the test suite, and verifies every hash in
 `state/amendments.lock.json` against the corresponding git blob. Data
 provenance, download commands, and per-artifact hashes are in
 `docs/data_sources.md` and `docs/remote_provenance_2026-11-12.md`.

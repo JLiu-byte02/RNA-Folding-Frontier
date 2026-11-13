@@ -235,3 +235,64 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   empty-truth rows, which are a label-parse defect, not short labels.
 - **Action:** tables now print 118 + 512 = 630. No score changes; both
   populations were already excluded from the cohort by the same rule.
+
+## 2026-11-14 - Energy calibration used record-level folds, not clan groups
+
+- **Where:** `scripts/fit_energy_calibration.py:59-60,175-176` assigns folds by
+  `zlib.crc32(record_id) % k`. `experiments/001_e1prime/AMENDMENT_7.md:111-112`
+  (A7.1) specified "5-fold cross-validation grouped by clan so no clan is split
+  across folds".
+- **True:** the frozen `(s, b)` fit used record-level folds. Clan-mates of a
+  held-out record can therefore sit in the training folds, so the fold F1 that
+  selected `(s, b)` is optimistic relative to the pre-registered design.
+- **Impact:** the selected point `(.1875, 0)` is at the refined grid's upper
+  boundary `s_max`, and E-C2 failed independently: the fitted gate is a
+  constant scale, bit-identical to its own control, and its sign reverses on
+  id_test. No reported conclusion is rescued or overturned by the deviation.
+  A clan-grouped refit has not been run; if the PI wants the protocol completed
+  literally it costs one 5-fold grid fit on the train split.
+- **Found by:** a methods-vs-code audit of the Paper A draft on 2026-11-14.
+
+## 2026-11-14 - Paper A Methods section did not match the code
+
+- **Where:** `docs/paper_A_draft_2026-11-13.md` section 3.
+- **What was wrong, and what is true:**
+  - "outer-product ... symmetric outer-sum" described the head wrongly. The head
+    concatenates `[z_i, z_j, z_i * z_j]`, adds a learned relative-distance
+    embedding, runs eight dilated 3x3 residual blocks, and symmetrises the
+    logits (`src/rff/models/pairhead.py:59-78`).
+  - "BCE on v1 pairs ... and on v3 pairs thereafter" was wrong: every head was
+    trained on the frozen bpRNA-era `pairs` field; v3 changes evaluation labels
+    only (`scripts/train_head_s1.py:81-90`, Amendment 10).
+  - "linear in memory and quadratic in time" for decoder A was wrong: it is
+    O(n^3) time and O(n^2) memory (`src/rff/decoders/nn_dp.py:88`). The 33,714
+    component / 87 suboptimal check belongs to the nested-truth solver
+    `max_nested_subset_of_arcs`, not to decoder A.
+  - "adds `s * (stacking energy) + b` to each cell's log-odds" was wrong:
+    ViennaRNA receives a per-pair pseudo-energy `-(s * score_ij + b)`; Turner
+    stacking stays inside ViennaRNA (`src/rff/decoders/vienna_soft.py:91`).
+  - "`(s, b)` selected at the refined grid's interior" was wrong: it sits at the
+    upper boundary `s_max = .1875`.
+  - `s1prime` was named as the evaluated split and the cmscan flags were
+    incomplete: the evaluated files are `s1prime_filtered` (train 17,746 /
+    id_test 1,402 after the reverse-homology and 15-mer screens) and the
+    assigner runs `--cut_ga --rfam --nohmmonly`.
+  - "identical decoding" held only within model-arm comparisons; external tools
+    use their native decoders.
+  - The `<4`-pair predicted-pair diagnostic is emitted by the D1 and
+    external-baseline scorers, not by `block_eval`, which drops those rows
+    silently.
+  - E-C1's adjustment set was understated: median length, GC, pair density,
+    multiloop presence, and label source.
+  - "Fourteen amendments (`AMENDMENT_*.md`)" counted files; there are 13 files
+    (Amendments 2-14) plus Amendment 1 inside `PREREGISTRATION.md`.
+  - `state/amendments.lock.json` does not pin label or split hashes; those live
+    in `experiments/011_labels_v3/README.md` and
+    `docs/remote_provenance_2026-11-12.md`. The embargo guard compares locked
+    files against `HEAD`; it does not reject unrelated worktree changes.
+  - The CI job installs test dependencies (the repository has no package
+    metadata), and the repository is the record for code, protocols and
+    evaluation artifacts, not for weights, raw logs, or corpora.
+- **Action:** section 3 of the draft is rewritten to each of these statements.
+  No result number changes; this is a description-vs-code repair.
+- **Found by:** a read-only methods audit against the code and amendments.

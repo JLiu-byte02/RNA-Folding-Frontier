@@ -21,7 +21,7 @@ export PYTHONPATH="/home/junxuanliu/projects/vendor/MXfold2"
 cd "${ROOT}"
 
 OUT="experiments/013_mxfold2/run"
-mkdir -p "${OUT}" logs
+mkdir -p "${OUT}" "${OUT}/ckpt" logs
 MAXLEN="${MAXLEN:-600}"
 
 nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv,noheader
@@ -33,8 +33,22 @@ if [ ! -f "${OUT}/data/train.lst" ]; then
     --manifest "${OUT}/export_manifest.json"
 fi
 
-git -C "${ROOT}" rev-parse HEAD > "${OUT}/repo_head.txt"
-git -C /home/junxuanliu/projects/vendor/MXfold2 rev-parse HEAD > "${OUT}/mxfold2_commit.txt"
+# Compute nodes in this cluster have no git binary, so resolve HEAD by reading
+# the ref files directly rather than shelling out.
+read_head() {
+  local g="$1/.git" h ref
+  h=$(cat "$g/HEAD" 2>/dev/null || true)
+  if [ -z "$h" ]; then echo "UNKNOWN"; return; fi
+  case "$h" in
+    ref:*) ref="${h#ref: }"
+           if [ -f "$g/$ref" ]; then cat "$g/$ref"
+           else awk -v r="$ref" '$2==r{print $1; exit}' "$g/packed-refs" 2>/dev/null || echo "UNKNOWN"
+           fi ;;
+    *)     echo "$h" ;;
+  esac
+}
+read_head "${ROOT}" > "${OUT}/repo_head.txt"
+read_head /home/junxuanliu/projects/vendor/MXfold2 > "${OUT}/mxfold2_commit.txt"
 
 start=$(date +%s)
 "${MXP}" -m mxfold2 train \

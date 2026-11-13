@@ -77,6 +77,19 @@ confirmatory family list.
 - [x] Committed the frozen cohort id lists and per-row exclusion files, so the
       section-5 table is reproducible without the prediction files. Verified
       md5 against the server copies.
+- [x] Passive SSH banner watchdog built, installed as a per-user 5-minute task,
+      and verified: first probes classify the current outage as `intercepted`
+      (connect 3-22 ms, zero banner bytes). Log:
+      `%LOCALAPPDATA%\rff\ssh_watchdog.log`.
+- [x] One-shot `scripts/jobs/rebuild_cohort_4tools.sbatch` added: builds the
+      four-method cohort for both splits, scores four tools and three heads,
+      runs the paired bootstrap, and fails if any cohort row lacks a prediction
+      or the macro/micro gap exceeds .15. Validate with `bash -n` on first use.
+- [x] New local evidence (committed artifacts only): the head's disadvantage is
+      concentrated in small families. Withheld median head-RNAfold delta
+      -.022 [-.035, -.013]; delta rises with log family size (rho .20
+      [.10, .30]) and is unrelated to mean family length. Described in Paper A
+      2.7; artifact `experiments/002_e1prime_runs/cohort/family_delta_structure.json`.
 - [ ] On 15631 completion: verify `model.pth`, `model.conf`,
       `train_manifest.json`; then `scripts/jobs/mxfold2_fold.sbatch` folds both
       splits (CPU, 16 workers).

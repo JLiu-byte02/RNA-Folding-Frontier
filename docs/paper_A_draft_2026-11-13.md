@@ -352,13 +352,13 @@ Energy decoding passes each pair's log-odds to ViennaRNA as a per-pair
 pseudo-energy `-(s * score_ij + b)`; Turner stacking remains inside ViennaRNA.
 `s, b` were fitted on train by a pre-registered coarse-then-refined grid and
 frozen before any evaluation. `(s, b) = (.1875, 0)` sits at the upper boundary
-of the refined grid (`s_max`) and was hashed before H2.4 was run. The fit used
+of the refined grid (`s_max`) and was hashed before H2.4 was run. That `(s, b)` fit used
 5-fold cross-validation with folds assigned by `crc32(record_id) mod 5`, not by
 clan as Amendment 7 specified; this deviation is recorded in
-`docs/corrections.md`. E-C2 failed independently of it (the fitted gate is a
-constant scale, bit-identical to its control), so no reported conclusion rests
-on the leakage record-level folds could introduce; a clan-grouped refit has not
-been run.
+`docs/corrections.md`. It does not carry over to E-C2, whose gate fit
+(`scripts/fit_ec2_gate.py`) does assign folds by clan; E-C2 failed under that
+correct design, collapsing to a constant scale that is bit-identical to its
+control. A clan-grouped refit of `(s, b)` has not been run.
 
 ### 3.7 Statistics
 

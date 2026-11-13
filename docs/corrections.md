@@ -245,12 +245,16 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
 - **True:** the frozen `(s, b)` fit used record-level folds. Clan-mates of a
   held-out record can therefore sit in the training folds, so the fold F1 that
   selected `(s, b)` is optimistic relative to the pre-registered design.
-- **Impact:** the selected point `(.1875, 0)` is at the refined grid's upper
-  boundary `s_max`, and E-C2 failed independently: the fitted gate is a
-  constant scale, bit-identical to its own control, and its sign reverses on
-  id_test. No reported conclusion is rescued or overturned by the deviation.
-  A clan-grouped refit has not been run; if the PI wants the protocol completed
-  literally it costs one 5-fold grid fit on the train split.
+- **Scope:** this affects the decoder `(s, b)` fit only. The later E-C2 gate
+  fit (`scripts/fit_ec2_gate.py`) implements the clan-grouped design and is not
+  affected; its failure therefore does not stem from this deviation.
+- **Impact on `(s, b)`:** the selected point `(.1875, 0)` sits at the refined
+  grid's upper boundary `s_max`, and the gate E-C2 built on top of it collapsed
+  to a constant scale, bit-identical to its own control, with a sign reversal on
+  id_test. No reported conclusion is rescued or overturned by the deviation,
+  but the fold F1 behind `(s, b)` is optimistic relative to the pre-registered
+  design. A clan-grouped refit has not been run; it would cost one 5-fold grid
+  fit on the train split.
 - **Found by:** a methods-vs-code audit of the Paper A draft on 2026-11-14.
 
 ## 2026-11-14 - Paper A Methods section did not match the code

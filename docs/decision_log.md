@@ -1,5 +1,21 @@
 # Decision Log
 
+## 2026-11-13 22:50 — E-C2 gate fit collapses; external baselines started
+
+- E-C2 grid fit hit the `s_max` boundary with `alpha=beta=gamma=0`; the
+  constant-scale control is bit-identical to the gated arm. Withheld
+  `+.0031 [−.0038,+.0088]`, id_test `−.0064 [−.0122,−.0002]`. **Failure.**
+- O(n²) incident: `score_ec2_gate.py` decoded per arm scale, spending 61 CPU-h
+  on job 15627 before cancellation; `_init` now enforces one scale per item with
+  a regression test.
+- External baselines: per-tool populations scored (withheld RNAfold .6003,
+  EternaFold .6051; id_test .5955/.5916 family-macro). One frozen common cohort
+  is defined and not yet materialised; RNAstructure withheld job 15649 hit its
+  8h wall at ~5,900/17,060 and needs a cache-resume submission.
+- MXfold2 retrain (job 15631) is at epoch 6/10, ~48 min/epoch.
+- Amendment 14 pins a one-shot `test_novel` confirmatory list; it has never
+  been invoked.
+
 Append-only. Each entry: date, decision, evidence, alternatives, consequences.
 
 ## 2026-11-11 — Project bootstrap

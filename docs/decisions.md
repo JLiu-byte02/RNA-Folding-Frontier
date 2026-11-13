@@ -95,3 +95,14 @@ before either proxy or the outcome was computed. This supports the claim that
 the useful family signal lives in pretraining coverage, not in a head-level
 shortcut. It does not yet establish a method; E-C2 and the one-shot
 test_novel confirmation are gated on this result.
+
+## 2026-11-13 — E-C2 context gate failed; gate is a constant scale
+
+The E-C2 grid fit collapsed to the boundary `s_max=.1875` with
+`alpha=beta=gamma=0`. A constant-scale arm with those weights is
+bit-identical to the gated arm, so the context term contributes exactly zero.
+Withheld family-macro: gated `.6168` vs fixed `.6137`, paired Δ `+.0031`
+[−.0038,+.0088]; id_test Δ `−.0064` [−.0122,−.0002] reverses sign. Against
+EternaFold withheld `.6051` the margin is `+.0117`. The fitted grid restricted
+`beta>=0`, so negative dependence is untested rather than excluded. E-C2 is
+closed as a failure; any further gate work needs a new pre-registration.

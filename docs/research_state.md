@@ -1,13 +1,16 @@
 # Research State
 
-Updated: 2026-11-13 10:30
+Updated: 2026-11-13 23:05
 
 ## Phase
 
-`post-D1-core` — P2-block and P3 are complete. D1-core is falsified and H3 is
-not supported. The paper must not claim that distal context is a head-level
-family-identity shortcut. H2.4 remains a standalone decoder question; PI
-redirection is required before building the next method story.
+`post-E-C2` — P2-block and P3 are complete, D1-core is falsified, H2/H2.4 are
+retired. The E-C2 context gate failed: its fit collapsed to the grid boundary
+(`s_max=.1875`, `alpha=beta=gamma=0`), the fitted gate is therefore a pure
+constant scale that contributes exactly zero, and id_test reverses sign. What
+survives is E-C1 (pretraining coverage predicts generalisation) and the
+negative mechanism results. The project needs a new method story from the PI;
+the paper can be written as a rigorous negative/audit paper until then.
 
 ## Decisive 2026-11-13 result
 
@@ -26,6 +29,33 @@ redirection is required before building the next method story.
 - E-C1 supported under Amendment 12: Rfam coverage `rho=.338 [.244,.429]`,
   RiNALMo pseudo-perplexity `rho=-.242 [-.332,-.147]`; hypothesis C is alive.
 - Full report: `docs/p2block_p3_2026-11-13.md`.
+
+## E-C2 gate failure (2026-11-13)
+
+- Fit on the freeze split collapsed to `s_max=.1875` with `alpha=beta=gamma=0`.
+- Withheld family-macro: gated `.6168` vs fixed `.6137` (paired Δ `+.0031
+  [−.0038,+.0088]`); the constant-scale control is **bit-identical** to the
+  gated arm, so the context term contributes exactly zero.
+- id_test reverses sign: Δ `−.0064 [−.0122,−.0002]`.
+- The coarse grid restricted `beta>=0`, so **negative** dependence is untested,
+  not excluded. Further gate work requires a new pre-registration.
+- Against EternaFold withheld `.6051`, the gated arm's margin is only `+.0117`.
+- Full report: `docs/ec2_2026-11-13.md`; Amendment 13 pinned.
+
+## External baselines (frozen cohort policy)
+
+- Numbers are per-tool populations and **must not** be compared across tools
+  until the frozen common cohort is built (`scripts/build_common_cohort.py`):
+  dump ∩ truth_v3 `>=4` pairs pre-nested ∩ prediction present in every tool.
+- Withheld, 16,163 seqs / 409 families: RNAfold `.6003` [.5733,.6265],
+  EternaFold `.6051` [.5792,.6302], micro `.5548`/`.5901`.
+- id_test, 1,287 seqs / 155 families: RNAfold `.5955` [.5530,.6375],
+  EternaFold `.5916` [.5479,.6329], micro `.5295`/`.5465`.
+- Head (P2-fix a, 3-seed mean) is **below** RNAfold in family-macro
+  (withheld −.0092, id_test −.0118) and **above** in micro
+  (+.0394, +.0642). No "beats thermodynamics" claim is available.
+- 1,024 nt context is binding: 578/17,371 withheld and 10/1,402 id_test dumps
+  are missing. Families RF02540 and RF02543 are lost on withheld.
 
 ## Established facts
 
@@ -136,18 +166,20 @@ redirection is required before building the next method story.
 
 ## Open questions
 
-- Does the native head recover structure from all-N/shuffle inputs (template
-  prior), and is condition e's id_test gain therefore partly geometric?
-- Does A-energy-fixed H2.4 fail because FP helices are energetically competitive
-  and present in the RNAfold MFE?
-- Does H2.3 show the expected block-boundary false positives once P2-block
-  caches exist?
+- Does E-C1 (coverage predicts generalisation) survive on the frozen common
+  cohort, where all four external tools and our head are scored on the same
+  sequences?
+- Is the family-macro deficit against RNAfold real on that cohort, or an
+  artefact of per-tool populations?
+- Would a *negative* context term (`beta<0`, never on the fitted grid) do
+  anything, or is the gate structurally unidentifiable on this data?
+- What method story replaces H2/E-C2? No candidate is pre-registered yet.
 
 ## Current blockers
 
-- CPU partition `c-80-255` is fully allocated by other users. The `(s,b)` fit
-  is running there; the all-N/shuffle scoring job is queued behind it. Do not
-  bypass Slurm on the login node for data-scale scoring.
+- No scientific blocker. CPU is unlimited by policy (still via Slurm).
+- Four-tool common cohort not yet materialised: RNAstructure withheld job hit
+  its wall-clock limit and must be resumed from its append-only cache.
 - The workspace `.git` is read-only under the managed profile; commits are being
   created through a temporary object/worktree repository and pushed with the
   repository deploy key.
@@ -161,4 +193,8 @@ redirection is required before building the next method story.
 - That masking the distal region improves prediction. The corrected D1/K1
   results say the opposite by about .30 F1. The old positive result was a
   `pair_prf` bug artifact.
+- That the E-C2 context gate helps. The fitted gate is a constant scale; it is
+  bit-identical to its own control and reverses sign on id_test.
+- That the head beats RNAfold or EternaFold on family-macro F1. It does not on
+  the current per-tool populations, and the frozen cohort is not scored yet.
 

@@ -1,9 +1,9 @@
 {
   "project": "RNA-Folding-Frontier",
   "schema_version": 1,
-  "updated_at": "2026-11-12T19:15:00+08:00",
-  "phase": "amendment9-corrected-instrument",
-  "cycle": 5,
+  "updated_at": "2026-11-13T23:10:00+08:00",
+  "phase": "post-ec2-negative-results",
+  "cycle": 6,
   "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
   "compute": {
     "cluster": "Slurm",
@@ -16,21 +16,24 @@
     "model": "Claude Opus 5.5",
     "effort": "High",
     "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
-    "last_session_file": "docs/claude/transcripts/2026-11-12_round04h_reply.md",
+    "last_session_file": "docs/claude/transcripts/2026-11-13_round04n_reply.md",
     "rate_limit_reset_at": null
   },
-  "active_direction": "H2-spurious-partners (pre-registered) with D1/D2 diagnostics on v3 labels",
-  "active_experiment": "Amendment 9: retrain condition-a heads and rerun P2-central; H2 retired",
+  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
+  "active_experiment": "Materialise the frozen common cohort; MXfold2/RNAstructure baselines",
   "open_questions": [
-    "Does the e-a gain survive an oracle threshold (K1 calibration artifact)?",
-    "Are long-range false positives helix-shaped and length-growing (H2.1/H2.2)?",
-    "Does a sequence-level split reproduce the family shortcut (positive control)?"
+    "Does E-C1 survive on the frozen common cohort?",
+    "Is the family-macro deficit vs RNAfold real on that cohort?",
+    "Would beta<0 (untested on the fitted grid) change anything?",
+    "What method story replaces H2/E-C2? None pre-registered."
   ],
   "blockers": [],
   "running_jobs": {
-    "head_seed23": 14792
+    "mxfold2_train": 15631,
+    "rnastructure_withheld": 15649,
+    "rnastructure_idtest": 15820
   },
-  "remote_head": "03f49f4",
+  "remote_head": "6228dc6",
   "artifacts": {
     "datasets": [],
     "checkpoints": [],
@@ -55,5 +58,14 @@
       "docs/claude/transcripts/2026-11-12_round04h_reply.md",
       "docs/network_diagnosis_2026-11-12.md"
     ]
+  },
+  "amendments": {
+    "A8": "5411a050",
+    "A9": "a1dae27e",
+    "A10": "5ec10662",
+    "A11": "7c769403",
+    "A12": "68e3ebe3",
+    "A13": "b3a87a58",
+    "A14": "0c5af106"
   }
 }

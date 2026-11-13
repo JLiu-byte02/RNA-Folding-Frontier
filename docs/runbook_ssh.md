@@ -75,3 +75,25 @@ Address the three failure classes differently:
 | when (local) | symptom | diagnosis | resolution |
 |---|---|---|---|
 | 2026-11-11 ~23:45 – 2026-11-12 00:30 | TCP connects, `recv` returns 0 bytes, `ssh -vvv` reports `kex_exchange_identification: read: Unknown error` | server-side pre-auth refusal, not auth and not "connection refused" | cooled down, switched to `doctor` + single checks |
+| 2026-11-14 00:33 onward | TCP accepts in a few ms, zero-byte SSH banner, `kex_exchange_identification` timeout; the VPN client still reports online | local tunnel interceptor completes the handshake and forwards nothing (no proxy line); `doctor` alternates between "local interception" and "remote silent" | pending network repair; per-user watchdog installed to timestamp every probe |
+
+## 7. Banner watchdog
+
+`scripts/ssh_watchdog.py` reads the SSH identification string, not just the
+socket, because the failure above looks "open" to a TCP check. Each run appends
+one JSON line to `%LOCALAPPDATA%\rff\ssh_watchdog.log` with the connect
+latency, banner size, and a verdict: `up`, `intercepted` (connect under 5 ms and
+no banner), `silent_peer` (a real peer that stayed silent), or `error`.
+
+It is passive by design: no VPN restart, no route change, no retry inside a run.
+Register a per-user task (no administrator rights) with:
+
+```
+powershell -File scripts/install_ssh_watchdog.ps1 -SshHost <host> -EveryMinutes 5
+powershell -File scripts/install_ssh_watchdog.ps1 -Uninstall
+```
+
+The host is supplied at install time and lives only in the local task
+definition. The script exits 0 even when the host is down -- the verdict is in
+the log -- so a scheduler does not record an expected outage as a task failure;
+add `--exit-on-down` when a caller wants the exit code instead.

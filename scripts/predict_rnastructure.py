@@ -115,6 +115,12 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--timeout", type=int, default=1800)
     ap.add_argument(
+        "--max-length",
+        type=int,
+        default=0,
+        help="drop rows longer than this many nt (0 = no cap) and log them",
+    )
+    ap.add_argument(
         "--skip-ambiguous",
         action="store_true",
         help="drop rows containing non-ACGU residues (Fold rejects them) and log them",
@@ -163,12 +169,37 @@ def main() -> int:
                 fh.write(json.dumps(rec, separators=(",", ":")) + "\n")
         print(f"[rnastructure] skipped {len(skipped)} ambiguous rows -> {skip_path}", flush=True)
 
+    too_long: list[dict] = []
+    if args.max_length:
+        kept: list[dict] = []
+        for r in to_fold:
+            if len(r["seq"]) > args.max_length:
+                too_long.append({"id": r["id"], "length": len(r["seq"])})
+            else:
+                kept.append(r)
+        to_fold = kept
+    if too_long:
+        len_path = out_path.with_suffix(".excluded_length.jsonl")
+        len_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(len_path, "w", encoding="utf-8") as fh:
+            for rec in too_long:
+                fh.write(json.dumps(rec, separators=(",", ":")) + "\n")
+        print(
+            f"[rnastructure] excluded {len(too_long)} rows longer than "
+            f"{args.max_length} nt -> {len_path}",
+            flush=True,
+        )
+
     done = _load_cache(cache_path)
     payloads = [
         (r["id"], r["seq"], args.fold, args.datapath, args.libdir, args.timeout)
         for r in to_fold
         if r["id"] not in done
     ]
+    # Shortest first: ProcessPoolExecutor.map returns results in submission
+    # order, so a single 4,000 nt fold at the head of the queue stalls every
+    # worker behind it (job 15649 froze at 5,872/17,060 this way).
+    payloads.sort(key=lambda p: len(p[1]))
     if done:
         print(f"[rnastructure] cache hit {len(done)}; running {len(payloads)}", flush=True)
 

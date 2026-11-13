@@ -25,14 +25,14 @@ echo "[start] $(date -Iseconds)"
 python scripts/predict_rnastructure.py \
   --split splits/s1prime_filtered/test_withheld.jsonl \
   --out experiments/002_e1prime_runs/rnastructure_test_withheld.jsonl \
-  --workers 16 --skip-ambiguous --allow-partial \
+  --workers 16 --skip-ambiguous --allow-partial --max-length 1024 \
   --cache experiments/002_e1prime_runs/rnastructure_test_withheld.partial.jsonl
 echo "[predict withheld done] $(date -Iseconds)"
 
 python scripts/predict_rnastructure.py \
   --split splits/s1prime_filtered/id_test.jsonl \
   --out experiments/002_e1prime_runs/rnastructure_id_test.jsonl \
-  --workers 16 --skip-ambiguous --allow-partial \
+  --workers 16 --skip-ambiguous --allow-partial --max-length 1024 \
   --cache experiments/002_e1prime_runs/rnastructure_id_test.partial.jsonl
 echo "[predict id_test done] $(date -Iseconds)"
 
@@ -43,7 +43,8 @@ for pair in "test_withheld:test_withheld" "id_test:id_test"; do
     --preds "experiments/002_e1prime_runs/rnastructure_${tag}.jsonl" \
     --restrict-ids "experiments/002_e1prime_runs/dump_p2fix_seed17/a_${tag}.jsonl" \
     --out "experiments/002_e1prime_runs/rnastructure_${tag}_score.json" \
-    --per-family-out "experiments/002_e1prime_runs/rnastructure_${tag}_by_family.json"
+    --per-family-out "experiments/002_e1prime_runs/rnastructure_${tag}_by_family.json" \
+    --tool rnastructure
   echo "[score ${tag} done] $(date -Iseconds)"
 done
 echo "[all done] $(date -Iseconds)"

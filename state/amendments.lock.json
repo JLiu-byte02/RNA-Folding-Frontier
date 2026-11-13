@@ -78,7 +78,7 @@
   },
   "experiments/001_e1prime/AMENDMENT_14.md": {
    "blob_sha256": "0c5af1067d8ddcb7204872a1c4fd6a7d126f3809328b2053ec94d46c2c42a6eb",
-   "first_quoted_in": "pending-commit",
+   "first_quoted_in": "93e3176",
    "note": "Written 2026-11-13 before any test_novel prediction or score (PI Round 4m). Frozen on first commit; no further edits."
   }
  }

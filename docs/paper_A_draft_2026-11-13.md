@@ -195,9 +195,9 @@ The one arm that does beat a thermodynamic tool is decoder A at that frozen
 constant scale. On withheld it reaches .6137 family-macro F1 against RNAfold
 .6003, a paired family delta of **+.0134 [+.0025, +.0241]** on the 15,533
 sequences with pseudo-perplexity available. It does not confirm: on id_test the
-same arm gives **+.0204 [-.0020, +.0392]** against RNAfold, and on withheld the
-margin over the best thermodynamic baseline (EternaFold, .6051 on that
-population) is .0117, below the pre-registered +.02 bar. We report this as a
+same arm gives **+.0204 [-.0020, +.0392]** against RNAfold, and the
+pre-registered requirement -- +.02 over the best clean baseline -- is not met
+(the frozen verdict records `beats_baseline_by_min_gain: false`). We report this as a
 small decoder-level gain over RNAfold on one split that does not replicate with
 an interval excluding zero, not as a method advantage.
 

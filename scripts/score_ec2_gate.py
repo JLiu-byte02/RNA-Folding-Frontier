@@ -108,10 +108,24 @@ _ITEMS: list[dict] = []
 _ARMS: list[float] = []
 
 
-def _init(items: list[dict], arms: list[float]) -> None:
+def _init(items: list[dict], scales: list[float]) -> dict[str, int]:
+    """Bind one decode scale per item and report the planned loop cost.
+
+    ``scales`` is per *sequence*, not per arm: item ``i`` is decoded exactly
+    once, with ``scales[i]``.  The returned plan lets the caller assert
+    linearity instead of silently decoding ``n_items`` times per item -- the
+    O(n^2) stall that burned 56 CPU-h on job 15627 (the smoke split, n=298,
+    passed because the squared cost was still small).
+    """
     global _ITEMS, _ARMS
+    if len(scales) != len(items):
+        raise SystemExit(
+            f"scale list has {len(scales)} entries for {len(items)} items; "
+            "the scoring loop requires exactly one scale per sequence"
+        )
     _ITEMS = items
-    _ARMS = arms
+    _ARMS = scales
+    return {"n_items": len(items), "decodes_per_item": 1, "total_decodes": len(items)}
 
 
 def _decode_item(idx: int) -> tuple[int, np.ndarray]:
@@ -120,16 +134,15 @@ def _decode_item(idx: int) -> tuple[int, np.ndarray]:
     item = _ITEMS[idx]
     seq, truth = item["seq"], item["truth"]
     scores = dense_scores(item["scored"], seq)
-    out = np.zeros((len(_ARMS), 4), dtype=np.int32)
-    for a, scale in enumerate(_ARMS):
-        pred = set(
-            ViennaSoftDecoder(scale=float(scale), offset=0.0).decode(seq, scores)[0]
-        )
-        tp = len(pred & truth)
-        out[a, 0] = tp
-        out[a, 1] = len(pred) - tp
-        out[a, 2] = len(truth) - tp
-        out[a, 3] = len(pred)
+    pred = set(
+        ViennaSoftDecoder(scale=float(_ARMS[idx]), offset=0.0).decode(seq, scores)[0]
+    )
+    tp = len(pred & truth)
+    out = np.zeros((1, 4), dtype=np.int32)
+    out[0, 0] = tp
+    out[0, 1] = len(pred) - tp
+    out[0, 2] = len(truth) - tp
+    out[0, 3] = len(pred)
     return idx, out
 
 
@@ -221,7 +234,12 @@ def main() -> int:
         # Set the globals in the parent and let fork() copy them into each
         # worker.  Passing them as Pool initargs would pickle the multi-GB item
         # list once per worker.
-        _init(items, scales[name])
+        plan = _init(items, scales[name])
+        print(
+            f"[ec2] arm {name}: {plan['total_decodes']} decodes "
+            f"({plan['n_items']} items x {plan['decodes_per_item']})",
+            flush=True,
+        )
         out = np.zeros((len(items), 4), dtype=np.int32)
         with multiprocessing.get_context("fork").Pool(args.workers) as ex:
             for idx, c in ex.imap_unordered(_decode_item, range(len(items)), chunksize=16):

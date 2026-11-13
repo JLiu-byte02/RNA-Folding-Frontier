@@ -36,6 +36,34 @@ assert n >= 250, n
 EOF
 rm -f "${R}/tmp_ec2_smoke_dump.jsonl" "${R}/tmp_ec2_smoke.json"
 
+echo "[ec2gate] medium-scale timing self-check on 2000 dumped rows (O(n^2) guard)"
+head -2000 "${R}/dump_p2fix_seed17/a_test_withheld.jsonl" > "${R}/tmp_ec2_med_dump.jsonl"
+t0=$(date +%s)
+"${PY}" scripts/score_ec2_gate.py \
+  --dump "${R}/tmp_ec2_med_dump.jsonl" \
+  --split splits/s1prime_filtered/test_withheld.jsonl \
+  --pppl "${R}/ec1_p2_pppl.json" \
+  --workers 8 --n-boot 200 --out "${R}/tmp_ec2_med.json" 2>&1 | tee "${R}/tmp_ec2_med.log"
+t1=$(date +%s)
+"${PY}" - <<'EOF'
+import json
+log = open("experiments/002_e1prime_runs/tmp_ec2_med.log").read()
+d = json.load(open("experiments/002_e1prime_runs/tmp_ec2_med.json"))
+n = d["n_items"]
+assert n >= 1500, n
+for arm in ("fixed", "g1", "g2"):
+    line = f"[ec2] arm {arm}: {n} decodes ({n} items x 1)"
+    assert line in log, f"missing/non-linear plan line for {arm}: {line!r}"
+print("[ec2gate] medium n_items =", n, "decodes lines verified linear")
+EOF
+elapsed=$((t1 - t0))
+echo "[ec2gate] medium-scale wall = ${elapsed}s"
+if [ "${elapsed}" -gt 900 ]; then
+  echo "[ec2gate] FATAL: 3 arms on the medium split took ${elapsed}s (>900s); refusing to run the full split"
+  exit 1
+fi
+rm -f "${R}/tmp_ec2_med_dump.jsonl" "${R}/tmp_ec2_med.json" "${R}/tmp_ec2_med.log"
+
 echo "[ec2gate] withheld confirmatory"
 "${PY}" scripts/score_ec2_gate.py \
   --dump "${R}/dump_p2fix_seed17/a_test_withheld.jsonl" \

@@ -92,3 +92,34 @@ def test_summarise_splits_by_region_and_distance():
     assert out["by_region"]["one_kept"]["fp"] == 1
     assert out["mean_predicted_pairs"] == 3.0
     assert out["auprc"] > 0.8
+
+
+def _load_ec2_module():
+    import importlib.util
+
+    path = ROOT / "scripts" / "score_ec2_gate.py"
+    spec = importlib.util.spec_from_file_location("score_ec2_gate_under_test", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_ec2_gate_decodes_each_sequence_once():
+    """The scoring loop must decode one scale per sequence, not one per arm.
+
+    Job 15627 burned 56 CPU-h because ``_decode_item`` looped over per-arm
+    scales, re-decoding every sequence ``len(scales)`` times.  ``_init`` now
+    binds a single per-sequence scale and reports the planned cost so the
+    caller (and the sbatch timing gate) can assert linearity.
+    """
+    import pytest
+
+    module = _load_ec2_module()
+    items = [{"seq": "ACGU", "truth": set(), "scored": [], "z": 0.0, "log_len": 1.0}] * 5
+    plan = module._init(items, [0.1] * 5)
+    assert plan == {"n_items": 5, "decodes_per_item": 1, "total_decodes": 5}
+    assert module._ARMS == [0.1] * 5
+
+    with pytest.raises(SystemExit) as excinfo:
+        module._init(items, [0.1] * 3)
+    assert "3 entries for 5 items" in str(excinfo.value)

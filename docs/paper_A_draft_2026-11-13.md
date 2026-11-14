@@ -1,10 +1,11 @@
 # Paper A — working draft (2026-11-13)
 
-**Status.** Sections 1–4 and Tables T1–T7 are drafted from committed
-artifacts. The title, abstract, discussion, and both conclusion wordings are
-deliberately **held** pending (i) the frozen four-tool common cohort, (ii) the
-MXfold2 retrain, and (iii) the Amendment 14 one-shot `test_novel` unblinding.
-Nothing in this file is a submitted claim.
+**Status.** Sections 1–4, Tables T1–T7, Figures 1/2/6/7, their captions, and a
+verified reference list are drafted from committed artifacts. The four-method
+cohort and the MXfold2 retrain are frozen. The title, abstract, discussion, and
+both conclusion wordings remain deliberately **held** pending the PI's framing
+decision and the Amendment 14 `test_novel` decision. Nothing in this file is a
+submitted claim.
 
 **Standing rule.** Every number below is traceable to a committed artifact and
 was produced after the `pair_prf` zero-TP correction (Amendment 9). Numbers that

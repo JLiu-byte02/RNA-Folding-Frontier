@@ -311,6 +311,17 @@ both cross zero). We therefore report the bands as description and do **not**
 claim a length mechanism. The head's margin over MXfold2 is positive in every
 band, again reflecting that baseline's weakness rather than the head's strength.
 
+Training-run variance is a second source of uncertainty. Per-seed deltas
+(withheld, head minus RNAfold) are +.006, -.021 and -.014 for seeds 17, 23 and
+41; their mean is -.010 with a seed-level SD of .014, and a t interval with two
+degrees of freedom is [-.045, +.025]. The other tools give the same SD and the
+same conclusion on id_test (SD .014). One seed is nominally above RNAfold and
+EternaFold on both splits, two are below. The family-bootstrap intervals in
+Table T7 condition on a fixed set of three seeds and therefore understate total
+uncertainty; with three seeds this study cannot resolve differences of about
+.01. We report no advantage, and we do not claim a tie either. Artifact:
+`cohort/seed_variation.json`.
+
 MXfold2 was retrained on our train split (17,155 sequences, MixC, 10 epochs,
 600 nt cap) because the published weights overlap our test families. It scores
 .5518 / .5491, well below the thermodynamic tools; a 10-epoch retrain with
@@ -516,6 +527,10 @@ used.
    generalise to other benchmarks or to long RNAs.
 7. RiNALMo-giga is AGPL-3.0. The repository licence is undecided, which blocks
    any public release of weights.
+8. Only three training seeds were run. The seed-level SD of the head-tool
+   delta is .014, larger than the ~.01 mean effect, so the study cannot resolve
+   differences of that size; the family-bootstrap intervals condition on a
+   fixed seed set and understate total uncertainty.
 
 ## C. Conclusion — HELD
 

@@ -168,6 +168,7 @@ def main() -> int:
     todo = [r for r in to_fold if r["id"] not in done]
     print(f"[mxfold2] {len(to_fold)} rows under cap; cache hit {len(done)}; running {len(todo)}", flush=True)
 
+    todo_ids = {r["id"] for r in todo}
     chunks = [todo[i : i + args.chunk_size] for i in range(0, len(todo), args.chunk_size)]
     payloads = [([(r["id"], r["seq"].upper().replace("T", "U")) for r in c], args.mx_python, args.mx_root, args.param, args.conf, args.model, args.gpu, args.timeout) for c in chunks]
     workers = 1 if args.gpu >= 0 else max(1, args.workers)
@@ -182,7 +183,9 @@ def main() -> int:
             cfh.flush()
             n_done += len(results)
             if n_done % (args.chunk_size * 10) < args.chunk_size or n_done == len(todo):
-                n_err = sum(1 for r in todo if (done.get(r["id"], (None, ""))[0] is None))
+                # Only rows that have actually been attempted can be errors; the
+                # rest are simply not done yet.
+                n_err = sum(1 for rid, v in done.items() if v[0] is None and rid in todo_ids)
                 print(f"[mxfold2] {n_done}/{len(todo)} errors={n_err}", flush=True)
 
     errors = [(rid, v[1]) for rid, v in done.items() if v[0] is None]

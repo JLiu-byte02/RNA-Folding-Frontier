@@ -43,8 +43,10 @@ def row(name: str, m: dict) -> str:
 
 def delta_row(p: dict) -> str:
     lo, hi = p["ci95"]
+    a = LABEL.get(ALIAS.get(p["a"].lower(), p["a"]), p["a"])
+    b = LABEL.get(ALIAS.get(p["b"].lower(), p["b"]), p["b"])
     return (
-        f"| {p['a']} - {p['b']} | {p['delta']:+.4f} [{lo:+.4f}, {hi:+.4f}] | "
+        f"| {a} - {b} | {p['delta']:+.4f} [{lo:+.4f}, {hi:+.4f}] | "
         f"{p['p_two_sided']:.4f} | {p['frac_families_a_better']:.3f} |"
     )
 

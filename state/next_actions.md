@@ -93,9 +93,17 @@ confirmatory family list.
       `experiments/013_mxfold2/README.md` (param sha `54b93dcb...`).
 - [x] Fold job 16459 submitted 14:32: 16,774 withheld rows under the 600 nt cap
       (597 excluded), then id_test; resumable cache.
-- [ ] When 16459 finishes: `sbatch scripts/jobs/rebuild_cohort_4tools.sbatch`,
-      then update section 5 of `docs/external_baselines_2026-11-13.md` and
-      Paper A section 2.7 with the four-method numbers.
+- [x] Fold job 16459 finished 15:31 (16,774 withheld + 1,377 id_test rows).
+- [x] Rebuild job 16489 finished 15:36. Four-method cohort frozen: withheld
+      16,040 / 408 families, id_test 1,272 / 153. Sections 5b of the baseline
+      document and 2.7 of Paper A now carry the generated tables; the old
+      three-tool table is marked superseded.
+- [x] Verdict holds: head_mean is below RNAfold/EternaFold, at parity with
+      RNAstructure, and no interval against a thermodynamic tool excludes zero.
+      Retrained MXfold2 is much weaker (.5518/.5491) and is reported as a
+      retraining control, not as the published system.
+- [ ] Send Round 4n to the PI with the four-method table, the MXfold2 caveat,
+      the decoder-A nuance, the fold-assignment deviation, and the two audits.
 - [ ] Rebuild the common cohort with `mxfold2_<split>.jsonl` added; expect the
       600 nt cap to shrink it. Rerun every score and
       `scripts/cohort_paired_eval.py`; mark section 5 of

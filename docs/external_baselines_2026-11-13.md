@@ -101,7 +101,11 @@ and not a timeout. The 41 timeouts are all longer than 3,337 nt and were never i
 the dump, so they are outside this cohort by construction. Do not describe the
 104-row gap as slowness.
 
-## 5. Common-cohort results
+## 5. Common-cohort results (three tools, superseded)
+
+**Superseded by section 5b on 2026-11-14**, when the retrained MXfold2 entered
+the cohort. The numbers below are kept because they are the audited three-tool
+baseline; do not mix them with 5b in one table.
 
 One cohort per split, identical id lists for every method: withheld 16,059
 sequences / 409 families, id_test 1,287 / 155. v3 labels, `--min-true-pairs 4`,
@@ -173,7 +177,81 @@ Paired family-block deltas (same resamples, same families):
 trained heads, not a single deployable model; its micro is computed from the
 summed tp/fp/fn of the three runs. Treat it as a variance-reduction summary only.
 
-## 6. Freezing procedure (to run when 15631 finishes)
+## 5b. Four-method cohort (2026-11-14) — current
+
+The retrained MXfold2 (A13.1) finished on 2026-11-14 and was folded with
+`scripts/jobs/mxfold2_fold.sbatch` (job 16459). `scripts/jobs/rebuild_cohort_4tools.sbatch`
+(job 16489) then rebuilt the cohort for both splits, rescored all seven rows,
+and ran the paired family bootstrap. Every row shares one id set; the build
+asserts `missing_prediction == 0` and the macro/micro gap stays below .15
+(largest 0.0588).
+
+The cohort is smaller than the three-tool one because MXfold2 stops at 600 nt:
+16,040 sequences / 408 families on withheld and 1,272 / 153 on id_test.
+Withheld loses 123 label-eligible rows -- 19 too long for MXfold2 and 104
+RNAstructure IUPAC skips -- and id_test loses 15, all MXfold2 length. Those
+rows leave every method's row, not just the tool that forced the exclusion.
+
+### splits/s1prime_filtered/test_withheld.jsonl — 16,040 sequences / 408 families
+
+| method | family-macro F1 [95% CI] | micro F1 |
+|---|---:|---:|
+| RNAfold | 0.6003 [0.5736, 0.6266] | 0.5570 |
+| EternaFold | 0.6049 [0.5792, 0.6301] | 0.5915 |
+| RNAstructure | 0.5900 [0.5634, 0.6165] | 0.5490 |
+| MXfold2 (retrained) | 0.5518 [0.5258, 0.5772] | 0.5161 |
+| head, seed 17 | 0.6061 [0.5818, 0.6303] | 0.6072 |
+| head, seed 23 | 0.5790 [0.5548, 0.6028] | 0.5921 |
+| head, seed 41 | 0.5863 [0.5624, 0.6100] | 0.5959 |
+| head, 3-seed mean | 0.5905 [0.5671, 0.6139] | 0.5982 |
+
+| comparison | delta [95% CI] | p | frac families better |
+|---|---:|---:|---:|
+| head, 3-seed mean - RNAfold | -0.0098 [-0.0301, +0.0107] | 0.3368 | 0.409 |
+| head, 3-seed mean - EternaFold | -0.0144 [-0.0341, +0.0052] | 0.1478 | 0.387 |
+| head, 3-seed mean - RNAstructure | +0.0005 [-0.0193, +0.0208] | 0.9680 | 0.431 |
+| head, 3-seed mean - MXfold2 (retrained) | +0.0387 [+0.0225, +0.0549] | 0.0000 | 0.591 |
+| head, seed 17 - RNAfold | +0.0058 [-0.0165, +0.0284] | 0.6120 | 0.444 |
+| head, seed 17 - EternaFold | +0.0013 [-0.0202, +0.0232] | 0.9088 | 0.434 |
+
+Bootstrap: 10,000 family resamples, seed 20261113; min true pairs 4; labels `experiments/011_labels_v3/labels_v3_pairs.json.gz`.
+
+### splits/s1prime_filtered/id_test.jsonl — 1,272 sequences / 153 families
+
+| method | family-macro F1 [95% CI] | micro F1 |
+|---|---:|---:|
+| RNAfold | 0.5997 [0.5559, 0.6427] | 0.5437 |
+| EternaFold | 0.5952 [0.5522, 0.6374] | 0.5582 |
+| RNAstructure | 0.5908 [0.5468, 0.6343] | 0.5321 |
+| MXfold2 (retrained) | 0.5491 [0.5048, 0.5928] | 0.4979 |
+| head, seed 17 | 0.6057 [0.5652, 0.6449] | 0.6198 |
+| head, seed 23 | 0.5828 [0.5411, 0.6235] | 0.5982 |
+| head, seed 41 | 0.5817 [0.5411, 0.6214] | 0.6007 |
+| head, 3-seed mean | 0.5901 [0.5512, 0.6275] | 0.6059 |
+
+| comparison | delta [95% CI] | p | frac families better |
+|---|---:|---:|---:|
+| head, 3-seed mean - RNAfold | -0.0097 [-0.0384, +0.0187] | 0.5152 | 0.444 |
+| head, 3-seed mean - EternaFold | -0.0052 [-0.0304, +0.0211] | 0.6708 | 0.438 |
+| head, 3-seed mean - RNAstructure | -0.0008 [-0.0289, +0.0272] | 0.9624 | 0.464 |
+| head, 3-seed mean - MXfold2 (retrained) | +0.0409 [+0.0160, +0.0663] | 0.0008 | 0.556 |
+| head, seed 17 - RNAfold | +0.0060 [-0.0271, +0.0387] | 0.7068 | 0.510 |
+| head, seed 17 - EternaFold | +0.0104 [-0.0221, +0.0438] | 0.5230 | 0.516 |
+
+Bootstrap: 10,000 family resamples, seed 20261113; min true pairs 4; labels `experiments/011_labels_v3/labels_v3_pairs.json.gz`.
+
+**Reading.** The three-tool verdict does not change: the head's 3-seed mean is
+below RNAfold and EternaFold on both splits, at parity with RNAstructure, and no
+paired interval against a thermodynamic tool excludes zero. MXfold2 retrained
+on our split is much weaker than the other methods (.5518 withheld / .5491
+id_test); it is a retraining control under a 600 nt cap and 10 epochs, not the
+published system, so the head's +.039 / +.041 margin over it is not a
+competitiveness claim.
+
+These tables are generated from the paired JSON by
+`scripts/render_cohort_tables.py`; edit that script, not the table.
+
+## 6. Freezing procedure (executed 2026-11-14)
 
 `sbatch scripts/jobs/rebuild_cohort_4tools.sbatch` performs every step below for
 both splits, asserts that no cohort row lacks a prediction, and fails if the
@@ -213,9 +291,10 @@ identical across rows.
 
 ## 7. Limits of this table
 
-- RNA is at most 1,014 nt (withheld) / 990 nt (id_test). Two withheld families
-  are absent entirely. Conclusions do not extend to long RNA, where RNAstructure
-  and MXfold2 are comparatively strongest.
+- RNA is at most 597 nt (withheld) / 572 nt (id_test) because the retrained
+  MXfold2 caps at 600 nt. One withheld family and two id_test families fall
+  below the cap. Conclusions do not extend to long RNA, where RNAstructure and
+  published MXfold2 are comparatively strongest.
 - Family-macro F1 weights 409 (withheld) / 155 (id_test) families equally, but
   only families with at least one eligible sequence are represented. Small
   families with 1-2 members carry the same weight as large ones, so a single
@@ -234,8 +313,12 @@ identical across rows.
   (per-row exclusion reason)
 - `experiments/002_e1prime_runs/cohort/{id_test,test_withheld}.report.json`
 - `experiments/002_e1prime_runs/cohort/paired_{id_test,test_withheld}.json`
-- `experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure}_*_score.json`
-- `experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure}_*_by_family.json`
+- `experiments/002_e1prime_runs/{rnafold,eternafold,rnastructure,mxfold2,head17,head23,head41}_*_score.json`
+- `experiments/013_mxfold2/mxfold2_{test_withheld,id_test}.jsonl`
+  (+ `.excluded_length.jsonl`)
+- `experiments/013_mxfold2/run/{train_manifest.json,model.conf}` and
+  `experiments/013_mxfold2/README.md`
+- `docs/cohort_tables_2026-11-14.md` (rendered, not hand-edited)
 - `experiments/002_e1prime_runs/coverage/{withheld,id_test}.json`
 - `scripts/build_common_cohort.py`, `scripts/score_external_baseline.py`,
   `scripts/cohort_paired_eval.py`, `scripts/export_head_preds.py`,

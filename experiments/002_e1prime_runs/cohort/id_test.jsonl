@@ -1,13 +1,3 @@
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54657", "length": 780}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54659", "length": 619}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54660", "length": 824}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54661", "length": 772}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54666", "length": 696}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54667", "length": 770}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54669", "length": 755}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54671", "length": 708}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54681", "length": 990}
-{"family": "RF00029", "id": "bprna:bpRNA_CRW_54683", "length": 990}
 {"family": "RF00029", "id": "bprna:bpRNA_PDB_109", "length": 70}
 {"family": "RF01073", "id": "bprna:bpRNA_PDB_345", "length": 63}
 {"family": "RF00212", "id": "bprna:bpRNA_RFAM_10255", "length": 71}
@@ -542,7 +532,6 @@
 {"family": "RF01270", "id": "bprna:bpRNA_RFAM_24836", "length": 568}
 {"family": "RF01270", "id": "bprna:bpRNA_RFAM_24837", "length": 572}
 {"family": "RF01270", "id": "bprna:bpRNA_RFAM_24839", "length": 550}
-{"family": "RF01271", "id": "bprna:bpRNA_RFAM_24843", "length": 615}
 {"family": "RF01287", "id": "bprna:bpRNA_RFAM_24955", "length": 91}
 {"family": "RF01287", "id": "bprna:bpRNA_RFAM_24956", "length": 94}
 {"family": "RF01287", "id": "bprna:bpRNA_RFAM_24957", "length": 90}
@@ -786,10 +775,6 @@
 {"family": "RF01802", "id": "bprna:bpRNA_RFAM_35155", "length": 115}
 {"family": "RF01802", "id": "bprna:bpRNA_RFAM_35156", "length": 115}
 {"family": "RF01822", "id": "bprna:bpRNA_RFAM_35395", "length": 287}
-{"family": "RF01825", "id": "bprna:bpRNA_RFAM_35409", "length": 684}
-{"family": "RF01825", "id": "bprna:bpRNA_RFAM_35410", "length": 690}
-{"family": "RF01825", "id": "bprna:bpRNA_RFAM_35411", "length": 689}
-{"family": "RF01825", "id": "bprna:bpRNA_RFAM_35413", "length": 702}
 {"family": "RF01829", "id": "bprna:bpRNA_RFAM_35436", "length": 53}
 {"family": "RF00020", "id": "bprna:bpRNA_RFAM_3604", "length": 123}
 {"family": "RF00020", "id": "bprna:bpRNA_RFAM_3605", "length": 116}

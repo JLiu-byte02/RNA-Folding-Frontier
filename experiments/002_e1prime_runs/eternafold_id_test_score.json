@@ -1,31 +1,31 @@
 {
   "bootstrap_seed": 20261113,
-  "excluded_predicted_pairs": 1823,
-  "family_macro_f1": 0.591631,
+  "excluded_predicted_pairs": 0,
+  "family_macro_f1": 0.595231,
   "family_macro_f1_ci95": [
-    0.547859,
-    0.632924
+    0.551546,
+    0.637604
   ],
-  "fn": 14390,
-  "fp": 31646,
+  "fn": 13367,
+  "fp": 29281,
   "label_set": "experiments/011_labels_v3/labels_v3_pairs.json.gz",
   "label_source": {
-    "bprna_v1": 1392
+    "bprna_v1": 1272
   },
-  "mean_pred_pairs": 46.139,
-  "micro_f1": 0.54647,
+  "mean_pred_pairs": 44.201,
+  "micro_f1": 0.558207,
   "min_true_pairs": 4,
   "n_boot": 10000,
-  "n_excluded_empty_truth": 5,
-  "n_excluded_lt_min_pairs": 105,
+  "n_excluded_empty_truth": 0,
+  "n_excluded_lt_min_pairs": 0,
   "n_excluded_parse_failure": 0,
-  "n_families": 155,
+  "n_families": 153,
   "n_missing_prediction": 0,
-  "n_outside_restrict_set": 10,
-  "n_sequences": 1287,
+  "n_outside_restrict_set": 130,
+  "n_sequences": 1272,
   "preds": "experiments/002_e1prime_runs/eternafold_id_test.jsonl",
-  "restrict_ids": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_id_test.jsonl",
+  "restrict_ids": "experiments/002_e1prime_runs/cohort/id_test.jsonl",
   "split": "splits/s1prime_filtered/id_test.jsonl",
   "tool": "eternafold",
-  "tp": 27735
+  "tp": 26943
 }

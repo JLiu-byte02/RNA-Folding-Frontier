@@ -1,0 +1,31 @@
+{
+  "bootstrap_seed": 20261113,
+  "excluded_predicted_pairs": 0,
+  "family_macro_f1": 0.581702,
+  "family_macro_f1_ci95": [
+    0.542388,
+    0.622054
+  ],
+  "fn": 12333,
+  "fp": 24866,
+  "label_set": "experiments/011_labels_v3/labels_v3_pairs.json.gz",
+  "label_source": {
+    "bprna_v1": 1272
+  },
+  "mean_pred_pairs": 41.543,
+  "micro_f1": 0.600668,
+  "min_true_pairs": 4,
+  "n_boot": 10000,
+  "n_excluded_empty_truth": 0,
+  "n_excluded_lt_min_pairs": 0,
+  "n_excluded_parse_failure": 0,
+  "n_families": 153,
+  "n_missing_prediction": 0,
+  "n_outside_restrict_set": 130,
+  "n_sequences": 1272,
+  "preds": "experiments/002_e1prime_runs/headpreds/seed41_id_test.jsonl",
+  "restrict_ids": "experiments/002_e1prime_runs/cohort/id_test.jsonl",
+  "split": "splits/s1prime_filtered/id_test.jsonl",
+  "tool": "head41",
+  "tp": 27977
+}

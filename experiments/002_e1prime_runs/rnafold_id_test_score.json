@@ -1,31 +1,31 @@
 {
   "bootstrap_seed": 20261113,
-  "excluded_predicted_pairs": 2039,
-  "family_macro_f1": 0.595546,
+  "excluded_predicted_pairs": 0,
+  "family_macro_f1": 0.599708,
   "family_macro_f1_ci95": [
-    0.552995,
-    0.63745
+    0.556357,
+    0.641851
   ],
-  "fn": 14972,
-  "fp": 33291,
+  "fn": 13884,
+  "fp": 30469,
   "label_set": "experiments/011_labels_v3/labels_v3_pairs.json.gz",
   "label_source": {
-    "bprna_v1": 1392
+    "bprna_v1": 1272
   },
-  "mean_pred_pairs": 46.965,
-  "micro_f1": 0.529458,
+  "mean_pred_pairs": 44.729,
+  "micro_f1": 0.543717,
   "min_true_pairs": 4,
   "n_boot": 10000,
-  "n_excluded_empty_truth": 5,
-  "n_excluded_lt_min_pairs": 105,
+  "n_excluded_empty_truth": 0,
+  "n_excluded_lt_min_pairs": 0,
   "n_excluded_parse_failure": 0,
-  "n_families": 155,
+  "n_families": 153,
   "n_missing_prediction": 0,
-  "n_outside_restrict_set": 10,
-  "n_sequences": 1287,
+  "n_outside_restrict_set": 130,
+  "n_sequences": 1272,
   "preds": "experiments/002_e1prime_runs/rnafold_id_test.jsonl",
-  "restrict_ids": "experiments/002_e1prime_runs/dump_p2fix_seed17/a_id_test.jsonl",
+  "restrict_ids": "experiments/002_e1prime_runs/cohort/id_test.jsonl",
   "split": "splits/s1prime_filtered/id_test.jsonl",
   "tool": "rnafold",
-  "tp": 27153
+  "tp": 26426
 }

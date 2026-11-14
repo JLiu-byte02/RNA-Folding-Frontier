@@ -451,7 +451,9 @@ The repository is the record for code, protocols, and evaluation artifacts;
 weights, raw logs, and the corpora themselves stay on the server (`.gitignore`).
 A CI job clones the repository into a fresh directory, installs the test
 dependencies, runs the test suite, and verifies every hash in
-`state/amendments.lock.json` against the corresponding git blob. Data
+`state/amendments.lock.json` against the corresponding git blob. The suite
+includes `tests/test_paper_numbers.py`, which re-parses every table in this
+draft and fails if a value does not match its committed JSON. Data
 provenance, download commands, and per-artifact hashes are in
 `docs/data_sources.md` and `docs/remote_provenance_2026-11-12.md`.
 

@@ -104,6 +104,11 @@ confirmatory family list.
       retraining control, not as the published system.
 - [ ] Send Round 4n to the PI with the four-method table, the MXfold2 caveat,
       the decoder-A nuance, the fold-assignment deviation, and the two audits.
+      **Drafted, not sent:** Computer Use stopped on 2026-11-14 because the
+      browser URL could not be determined with enough confidence. The full
+      English message is at
+      `docs/claude/transcripts/2026-11-14_round04n_prompt.md`; paste it into the
+      Claude chat when a permitted browser path is available.
 - [ ] Rebuild the common cohort with `mxfold2_<split>.jsonl` added; expect the
       600 nt cap to shrink it. Rerun every score and
       `scripts/cohort_paired_eval.py`; mark section 5 of

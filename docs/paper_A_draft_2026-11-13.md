@@ -278,6 +278,16 @@ it. It does mean the head is not uniformly slightly worse: it is better than
 the tools on a minority of (mostly larger) families and worse on the typical
 small one.
 
+The deficit itself is broad-based rather than a few pathological families: 239
+of 408 withheld families are negative against RNAfold (248 against EternaFold),
+the ten worst families carry only 19% of the total negative mass (20% against
+EternaFold), and the ten best carry 24% of the positive mass. A fix aimed at a
+handful of families would not change the verdict. id_test looks more
+concentrated (the ten worst are 46% of the loss, over 84 losing families), but
+it has 153 families in total. Dropping the ten worst withheld families would
+flip the sign of the mean; we mention that only to reject it as an analysis.
+Artifact: `cohort/family_delta_concentration.json`.
+
 Length bands show a descriptive crossover, but the cohort cannot attribute it
 to length. In pre-specified bands the head is at or slightly above the tools
 below 150 nt and below them above:

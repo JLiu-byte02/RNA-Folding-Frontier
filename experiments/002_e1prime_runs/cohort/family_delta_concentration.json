@@ -1,0 +1,60 @@
+{
+  "id_test": {
+    "n_families": 153,
+    "vs": {
+      "eternafold": {
+        "best10_mass": 3.847,
+        "best10_share_of_gain": 0.4928,
+        "mean_delta": -0.0052,
+        "median_delta": -0.0115,
+        "n_negative": 84,
+        "n_positive": 67,
+        "negative_mass": 8.597,
+        "positive_mass": 7.806,
+        "worst10_mass": 3.422,
+        "worst10_share_of_loss": 0.398
+      },
+      "rnafold": {
+        "best10_mass": 3.762,
+        "best10_share_of_gain": 0.4595,
+        "mean_delta": -0.0097,
+        "median_delta": -0.01,
+        "n_negative": 84,
+        "n_positive": 68,
+        "negative_mass": 9.664,
+        "positive_mass": 8.187,
+        "worst10_mass": 4.493,
+        "worst10_share_of_loss": 0.465
+      }
+    }
+  },
+  "test_withheld": {
+    "n_families": 408,
+    "vs": {
+      "eternafold": {
+        "best10_mass": 6.18,
+        "best10_share_of_gain": 0.2564,
+        "mean_delta": -0.0144,
+        "median_delta": -0.0219,
+        "n_negative": 248,
+        "n_positive": 158,
+        "negative_mass": 29.978,
+        "positive_mass": 24.1,
+        "worst10_mass": 5.966,
+        "worst10_share_of_loss": 0.199
+      },
+      "rnafold": {
+        "best10_mass": 6.499,
+        "best10_share_of_gain": 0.2437,
+        "mean_delta": -0.0098,
+        "median_delta": -0.0208,
+        "n_negative": 239,
+        "n_positive": 167,
+        "negative_mass": 30.684,
+        "positive_mass": 26.667,
+        "worst10_mass": 5.886,
+        "worst10_share_of_loss": 0.1918
+      }
+    }
+  }
+}

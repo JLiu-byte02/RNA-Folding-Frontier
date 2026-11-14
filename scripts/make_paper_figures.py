@@ -114,6 +114,83 @@ def fig2(out_dir: Path) -> None:
     save(fig, out_dir / "fig2_label_projection")
 
 
+
+def fig1(out_dir: Path) -> None:
+    e0 = ROOT / "experiments" / "000_e0_leakage"
+    ov = json.loads((e0 / "union_overlap/summary.json").read_text(encoding="utf-8"))
+    rs = json.loads((e0 / "label_discordance_rnastralign/summary.json").read_text(encoding="utf-8"))
+    bp = json.loads((e0 / "label_discordance_bpfold_archiveII/summary.json").read_text(encoding="utf-8"))
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.2))
+    labels = ["exact duplicate", "near-duplicate (k=15)", "internal duplicates"]
+    values = [
+        ov["exact_union_rate"],
+        ov["near_union_rate"],
+        ov["within_archiveii_duplicate_sequences"] / ov["n_archiveii"],
+    ]
+    colors = ["#4c72b0", "#55a868", "#c44e52"]
+    bars = axes[0].bar(labels, [v * 100 for v in values], color=colors)
+    axes[0].set_ylim(0, 100)
+    axes[0].set_ylabel("% of ArchiveII")
+    for b, v in zip(bars, values):
+        axes[0].text(b.get_x() + b.get_width() / 2, v * 100 + 2, f"{v*100:.1f}%", ha="center", fontsize=9)
+    axes[0].set_title(f"ArchiveII overlap with RNAStrAlign + TR0 (n={ov['n_archiveii']:,})", fontsize=10)
+    axes[0].tick_params(axis="x", labelsize=8)
+
+    names = ["vs RNAStrAlign", "vs bpRNA TR0"]
+    f1s = [rs["mean_pair_f1"], bp["mean_pair_f1"]]
+    # Dots, not bars: the axis starts at 0.85 and a truncated bar would
+    # exaggerate the gap between the two corpora.
+    for x, (value, colour) in enumerate(zip(f1s, ["#4c72b0", "#8172b3"])):
+        axes[1].plot(x, value, "o", ms=10, color=colour)
+        axes[1].text(x + 0.12, value, f"{value:.4f}", ha="left", va="center", fontsize=9)
+    axes[1].set_xticks(range(len(names)))
+    axes[1].set_xticklabels(names)
+    axes[1].set_xlim(-0.4, 1.6)
+    axes[1].set_ylim(0.85, 1.01)
+    axes[1].set_ylabel("mean pair F1")
+    axes[1].set_title(f"Label agreement of duplicates (n={rs['n_archiveii']:,}; y from 0.85)", fontsize=10)
+    for ax in axes:
+        for spine in ("top", "right"):
+            ax.spines[spine].set_visible(False)
+        ax.grid(axis="y", color="#eeeeee", lw=0.8)
+        ax.set_axisbelow(True)
+    fig.suptitle("Benchmark contamination: overlap plus label identity", fontsize=11)
+    fig.tight_layout(rect=(0, 0, 1, 0.90))
+    save(fig, out_dir / "fig1_overlap_and_labels")
+
+
+def fig6(out_dir: Path) -> None:
+    ec1 = json.loads((ROOT / "experiments/002_e1prime_runs/ec1_p1_p2.json").read_text(encoding="utf-8"))
+    spec = json.loads((ROOT / "experiments/002_e1prime_runs/ec1b_specificity.json").read_text(encoding="utf-8"))
+    fm = [(row["p1"], row["delta_f1"], row["n"]) for row in ec1["families"]]
+    oh = [(row["p1"], row["delta_onehot"], row.get("n_common", 0)) for row in spec["families"]]
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.4), sharex=True)
+    for ax, pts, colour, rho, title in (
+        (axes[0], fm, "#d62728", ec1["p1"]["rho"], "frozen FM head"),
+        (axes[1], oh, "#7f7f7f", spec["rho_onehot"], "no-pretraining one-hot control"),
+    ):
+        xs = [p[0] for p in pts]
+        ys = [p[1] for p in pts]
+        sizes = [max(6, min(40, (p[2] or 1) ** 0.5 / 3)) for p in pts]
+        ax.scatter(xs, ys, s=sizes, color=colour, alpha=0.55, linewidths=0)
+        ax.axhline(0, color="#999999", lw=0.8, ls=":")
+        ax.set_xscale("symlog", linthresh=1.0)
+        ax.set_xlabel("Rfam full-region coverage proxy (p1, symlog; 0 included)")
+        ax.set_title(f"{title} — rho = {rho:.3f}", fontsize=10)
+        for spine in ("top", "right"):
+            ax.spines[spine].set_visible(False)
+        ax.grid(color="#eeeeee", lw=0.8)
+        ax.set_axisbelow(True)
+    axes[0].set_ylabel("per-family delta F1 (head - RNAfold)")
+    fig.suptitle(
+        f"Coverage predicts accuracy for both heads: delta-rho = {spec['delta_rho']:.3f} < .15",
+        fontsize=11,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.92))
+    save(fig, out_dir / "fig6_coverage_and_control")
+
 def save(fig, stem: Path) -> None:
     stem.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(stem.with_suffix(".png"), dpi=300, bbox_inches="tight")
@@ -131,6 +208,8 @@ def main() -> int:
         out = ROOT / out
     fig7(out)
     fig2(out)
+    fig1(out)
+    fig6(out)
     return 0
 
 

@@ -56,7 +56,7 @@ Overlap alone would not inflate F1; overlap *plus label identity* does. Labels
 agree at mean pair F1 **0.9937** between ArchiveII and RNAStrAlign and **0.9195**
 between ArchiveII and bpRNA TR0 (3,370-record mirror; telomerase 0.6606 is the
 outlier family). A duplicated sequence therefore arrives with an almost
-identical target.
+identical target. Figure 1 shows the overlap and the label agreement together.
 
 Clan structure compounds this. Rfam 15.0 contains 4,178 families in 147 clans
 with 463 clan memberships; ArchiveII spans only **8 clans**. tRNA and tmRNA share
@@ -225,7 +225,8 @@ The pre-registered rule (P1 rho >= .30 with CI excluding 0; P2 rho <= −.20) is
 met. The **specificity control did not pass**: the same slope for a one-hot
 head is .253, so `d_rho = .085 [.009, .160]`, below the pre-registered .15. We
 therefore report coverage as a *shared* predictor of accuracy on this benchmark,
-not as something specific to the pretrained representation. The mean advantage
+not as something specific to the pretrained representation. Figure 6 plots the
+per-family relation for the frozen head and for the one-hot control. The mean advantage
 is also small (+.0051 family-macro across families, range −.742 to +.857), so
 this is a mechanism result and not a performance result.
 

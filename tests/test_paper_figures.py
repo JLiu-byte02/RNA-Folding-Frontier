@@ -26,10 +26,14 @@ def test_figures_render_from_artifacts(tmp_path):
         cwd=ROOT,
     )
     for name in (
-        "fig7_four_method_cohort.png",
-        "fig7_four_method_cohort.svg",
+        "fig1_overlap_and_labels.png",
+        "fig1_overlap_and_labels.svg",
         "fig2_label_projection.png",
         "fig2_label_projection.svg",
+        "fig6_coverage_and_control.png",
+        "fig6_coverage_and_control.svg",
+        "fig7_four_method_cohort.png",
+        "fig7_four_method_cohort.svg",
     ):
         path = out / name
         assert path.exists() and path.stat().st_size > 1000, name

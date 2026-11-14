@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-14T00:55:00+08:00",
+ "updated_at": "2026-11-14T14:35:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -20,7 +20,7 @@
   "rate_limit_reset_at": null
  },
  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
- "active_experiment": "MXfold2 retrain (job 15631, epoch 8/10); inference wrapper ready",
+ "active_experiment": "MXfold2 fold (16459) -> four-tool cohort rebuild",
  "open_questions": [
   "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
   "When should the Amendment 14 one-shot test_novel be used, if at all?",
@@ -28,11 +28,9 @@
   "Is there any remaining mechanism result strong enough to anchor a method claim?",
   "Should the energy calibration be refit with clan-grouped folds to complete Amendment 7 literally?"
  ],
- "blockers": [
-  "Cluster SSH down since 00:33 (0-byte banner / no tunnel line); split-tunnel fix needs administrator rights"
- ],
+ "blockers": [],
  "running_jobs": {
-  "mxfold2_train": 15631
+  "mxfold2_fold": 16459
  },
  "remote_head": "c6670b8",
  "artifacts": {

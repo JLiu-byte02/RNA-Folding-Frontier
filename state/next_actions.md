@@ -30,12 +30,10 @@ confirmatory family list.
 
 ## Blocking now
 
-- [ ] **Cluster SSH is down** (2026-11-14 00:33 onward): TCP connects but the
-      SSH banner never arrives (`kex_exchange_identification`). The VPN client
-      reports online yet has no usable tunnel line. Detailed, non-public
-      diagnosis with host addresses and rollback commands is kept outside the
-      repository (`tmp_dbg/net_backup/`). Do not loop reconnects; retest once
-      after the network fix below is applied.
+- [x] **Cluster SSH recovered** at 2026-11-14 ~14:23; the watchdog logged
+  `SSH-2.0-OpenSSH_` banners at 14:23 and 14:28 and a manual probe returned 0.
+  The outage lasted 00:33-14:23. The detailed local diagnosis stays outside the
+  repository.
 - [ ] Required to unblock: an elevated split-tunnel route (or an equivalent
       VPN-client exclusion) so the campus portal does not egress through the
       commercial VPN. This needs administrator rights on the local machine.
@@ -90,9 +88,14 @@ confirmatory family list.
       -.022 [-.035, -.013]; delta rises with log family size (rho .20
       [.10, .30]) and is unrelated to mean family length. Described in Paper A
       2.7; artifact `experiments/002_e1prime_runs/cohort/family_delta_structure.json`.
-- [ ] On 15631 completion: verify `model.pth`, `model.conf`,
-      `train_manifest.json`; then `scripts/jobs/mxfold2_fold.sbatch` folds both
-      splits (CPU, 16 workers).
+- [x] 15631 completed at 01:18 (8 h 13 m, exit 0); `model.pth`, `model.conf`
+      and `train_manifest.json` verified and documented in
+      `experiments/013_mxfold2/README.md` (param sha `54b93dcb...`).
+- [x] Fold job 16459 submitted 14:32: 16,774 withheld rows under the 600 nt cap
+      (597 excluded), then id_test; resumable cache.
+- [ ] When 16459 finishes: `sbatch scripts/jobs/rebuild_cohort_4tools.sbatch`,
+      then update section 5 of `docs/external_baselines_2026-11-13.md` and
+      Paper A section 2.7 with the four-method numbers.
 - [ ] Rebuild the common cohort with `mxfold2_<split>.jsonl` added; expect the
       600 nt cap to shrink it. Rerun every score and
       `scripts/cohort_paired_eval.py`; mark section 5 of

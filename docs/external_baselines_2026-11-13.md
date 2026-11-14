@@ -242,7 +242,13 @@ Bootstrap: 10,000 family resamples, seed 20261113; min true pairs 4; labels `exp
 
 **Reading.** The three-tool verdict does not change: the head's 3-seed mean is
 below RNAfold and EternaFold on both splits, at parity with RNAstructure, and no
-paired interval against a thermodynamic tool excludes zero. MXfold2 retrained
+paired interval against a thermodynamic tool excludes zero. Length matters more
+than the aggregate: below 150 nt the head is at parity or slightly ahead
+(withheld 80-150 nt: +.016 vs RNAfold, +.024 vs RNAstructure, the latter
+excluding zero), while at 150-300 and 300-597 nt it loses, most clearly to
+EternaFold (-.073 [-.102,-.044] and -.092 [-.133,-.054]). Because 75% of the
+cohort is below 150 nt, the aggregate family-macro number is dominated by the
+short regime. Band artifacts: `cohort/band_{split}.json`. MXfold2 retrained
 on our split is much weaker than the other methods (.5518 withheld / .5491
 id_test); it is a retraining control under a 600 nt cap and 10 epochs, not the
 published system, so the head's +.039 / +.041 margin over it is not a

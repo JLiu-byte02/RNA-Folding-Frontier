@@ -44,12 +44,33 @@ competitiveness claim, only evidence that the comparison is not vacuous. If you
 want MXfold2 to be a meaningful baseline, it needs a longer schedule or the
 published recipe, and that is a compute decision for you.
 
-**3. Where the head loses (new, artifact-backed).** On withheld the median
-head−RNAfold delta is `−.021 [−.035,−.011]`, worse than the mean (−.010), and
-only 41% of families favour the head. The delta rises with log family size
-(rho `.20 [.10,.29]` vs RNAfold; id_test `.36 [.24,.47]`) and has no relation to
-mean family length. This is consistent with the E-C1 coverage account, not an
-independent test of it.
+**3. Where the head loses (new, artifact-backed).** Two stratifications, both on
+the frozen cohort:
+
+*Length (pre-specified bands, withheld family-bootstrap within band).* The head
+is at parity or slightly ahead below 150 nt and loses above:
+
+| band | n seqs / fam | head−RNAfold | head−EternaFold | head−RNAstructure |
+|---|---:|---:|---:|---:|
+| 0–80 | 3,963 / 181 | +.010 [−.028,+.049] | +.018 [−.016,+.053] | +.018 [−.020,+.056] |
+| 80–150 | 8,051 / 260 | +.016 [−.008,+.039] | +.007 [−.016,+.030] | +.024 [+.001,+.047] |
+| 150–300 | 3,756 / 74 | −.036 [−.071,+.001] | −.073 [−.102,−.044] | −.029 [−.064,+.007] |
+| 300–597 | 270 / 19 | −.038 [−.084,+.000] | −.092 [−.133,−.054] | −.049 [−.091,−.016] |
+
+id_test reproduces the ordering with 28 and 11 families in the upper bands (all
+CIs cross zero). Since 75% of the cohort is below 150 nt, the aggregate is
+dominated by the short regime.
+
+*Family size.* On withheld the median head−RNAfold delta is `−.021 [−.035,−.011]`,
+worse than the mean (−.010); only 41% of families favour the head. The delta
+rises with log family size (rho `.20 [.10,.29]` vs RNAfold; id_test
+`.36 [.24,.47]`) and has no relation to mean family length. This is consistent
+with the E-C1 coverage account, not an independent test of it.
+
+The two are not independent — larger families are also longer — so I would not
+put both in the abstract. The length crossover is the one a reviewer will ask
+about, because it means "no advantage" is really "advantage below 150 nt,
+deficit above".
 
 **4. Two disclosures that belong in the record.** (a) `fit_energy_calibration.py`
 used record-level folds (`crc32(id) % 5`) instead of the clan-grouped folds

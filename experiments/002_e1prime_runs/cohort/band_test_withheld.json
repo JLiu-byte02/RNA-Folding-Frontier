@@ -1,0 +1,439 @@
+{
+  "bands": [
+    {
+      "band": [
+        0,
+        80
+      ],
+      "methods": {
+        "EternaFold": {
+          "ci95": [
+            0.6217,
+            0.703
+          ],
+          "family_macro_f1": 0.6616
+        },
+        "MXfold2": {
+          "ci95": [
+            0.6013,
+            0.6798
+          ],
+          "family_macro_f1": 0.641
+        },
+        "RNAfold": {
+          "ci95": [
+            0.6286,
+            0.7119
+          ],
+          "family_macro_f1": 0.6702
+        },
+        "RNAstructure": {
+          "ci95": [
+            0.6209,
+            0.7056
+          ],
+          "family_macro_f1": 0.6624
+        },
+        "head17": {
+          "ci95": [
+            0.6547,
+            0.7291
+          ],
+          "family_macro_f1": 0.6921
+        },
+        "head23": {
+          "ci95": [
+            0.6295,
+            0.7037
+          ],
+          "family_macro_f1": 0.6672
+        },
+        "head41": {
+          "ci95": [
+            0.6458,
+            0.7176
+          ],
+          "family_macro_f1": 0.6809
+        },
+        "head_mean": {
+          "ci95": [
+            0.6446,
+            0.7151
+          ],
+          "family_macro_f1": 0.6801
+        }
+      },
+      "n_families": 181,
+      "n_sequences": 3963,
+      "paired": [
+        {
+          "a": "head_mean",
+          "b": "RNAfold",
+          "ci95": [
+            -0.0277,
+            0.0488
+          ],
+          "delta": 0.0098,
+          "frac_families_a_better": 0.409
+        },
+        {
+          "a": "head_mean",
+          "b": "EternaFold",
+          "ci95": [
+            -0.016,
+            0.0527
+          ],
+          "delta": 0.0185,
+          "frac_families_a_better": 0.459
+        },
+        {
+          "a": "head_mean",
+          "b": "RNAstructure",
+          "ci95": [
+            -0.0204,
+            0.0562
+          ],
+          "delta": 0.0177,
+          "frac_families_a_better": 0.425
+        },
+        {
+          "a": "head_mean",
+          "b": "MXfold2",
+          "ci95": [
+            0.0074,
+            0.0703
+          ],
+          "delta": 0.039,
+          "frac_families_a_better": 0.58
+        }
+      ]
+    },
+    {
+      "band": [
+        80,
+        150
+      ],
+      "methods": {
+        "EternaFold": {
+          "ci95": [
+            0.5872,
+            0.6508
+          ],
+          "family_macro_f1": 0.6191
+        },
+        "MXfold2": {
+          "ci95": [
+            0.5404,
+            0.6019
+          ],
+          "family_macro_f1": 0.5707
+        },
+        "RNAfold": {
+          "ci95": [
+            0.5777,
+            0.6421
+          ],
+          "family_macro_f1": 0.6099
+        },
+        "RNAstructure": {
+          "ci95": [
+            0.5696,
+            0.6342
+          ],
+          "family_macro_f1": 0.6022
+        },
+        "head17": {
+          "ci95": [
+            0.6199,
+            0.6761
+          ],
+          "family_macro_f1": 0.6474
+        },
+        "head23": {
+          "ci95": [
+            0.5862,
+            0.6436
+          ],
+          "family_macro_f1": 0.6147
+        },
+        "head41": {
+          "ci95": [
+            0.5889,
+            0.6452
+          ],
+          "family_macro_f1": 0.6167
+        },
+        "head_mean": {
+          "ci95": [
+            0.5989,
+            0.6546
+          ],
+          "family_macro_f1": 0.6263
+        }
+      },
+      "n_families": 260,
+      "n_sequences": 8051,
+      "paired": [
+        {
+          "a": "head_mean",
+          "b": "RNAfold",
+          "ci95": [
+            -0.0079,
+            0.0393
+          ],
+          "delta": 0.0164,
+          "frac_families_a_better": 0.454
+        },
+        {
+          "a": "head_mean",
+          "b": "EternaFold",
+          "ci95": [
+            -0.0156,
+            0.03
+          ],
+          "delta": 0.0072,
+          "frac_families_a_better": 0.438
+        },
+        {
+          "a": "head_mean",
+          "b": "RNAstructure",
+          "ci95": [
+            0.0006,
+            0.0468
+          ],
+          "delta": 0.024,
+          "frac_families_a_better": 0.488
+        },
+        {
+          "a": "head_mean",
+          "b": "MXfold2",
+          "ci95": [
+            0.0369,
+            0.0747
+          ],
+          "delta": 0.0556,
+          "frac_families_a_better": 0.592
+        }
+      ]
+    },
+    {
+      "band": [
+        150,
+        300
+      ],
+      "methods": {
+        "EternaFold": {
+          "ci95": [
+            0.4605,
+            0.5588
+          ],
+          "family_macro_f1": 0.5095
+        },
+        "MXfold2": {
+          "ci95": [
+            0.3671,
+            0.4547
+          ],
+          "family_macro_f1": 0.4128
+        },
+        "RNAfold": {
+          "ci95": [
+            0.4233,
+            0.5245
+          ],
+          "family_macro_f1": 0.4728
+        },
+        "RNAstructure": {
+          "ci95": [
+            0.4146,
+            0.5184
+          ],
+          "family_macro_f1": 0.466
+        },
+        "head17": {
+          "ci95": [
+            0.3937,
+            0.4869
+          ],
+          "family_macro_f1": 0.4407
+        },
+        "head23": {
+          "ci95": [
+            0.3844,
+            0.476
+          ],
+          "family_macro_f1": 0.4299
+        },
+        "head41": {
+          "ci95": [
+            0.3951,
+            0.484
+          ],
+          "family_macro_f1": 0.4402
+        },
+        "head_mean": {
+          "ci95": [
+            0.3919,
+            0.4816
+          ],
+          "family_macro_f1": 0.4369
+        }
+      },
+      "n_families": 74,
+      "n_sequences": 3756,
+      "paired": [
+        {
+          "a": "head_mean",
+          "b": "RNAfold",
+          "ci95": [
+            -0.0713,
+            0.0011
+          ],
+          "delta": -0.0358,
+          "frac_families_a_better": 0.392
+        },
+        {
+          "a": "head_mean",
+          "b": "EternaFold",
+          "ci95": [
+            -0.1015,
+            -0.0439
+          ],
+          "delta": -0.0726,
+          "frac_families_a_better": 0.27
+        },
+        {
+          "a": "head_mean",
+          "b": "RNAstructure",
+          "ci95": [
+            -0.0641,
+            0.0073
+          ],
+          "delta": -0.0291,
+          "frac_families_a_better": 0.419
+        },
+        {
+          "a": "head_mean",
+          "b": "MXfold2",
+          "ci95": [
+            -0.0027,
+            0.0507
+          ],
+          "delta": 0.0241,
+          "frac_families_a_better": 0.568
+        }
+      ]
+    },
+    {
+      "band": [
+        300,
+        600
+      ],
+      "methods": {
+        "EternaFold": {
+          "ci95": [
+            0.3511,
+            0.5545
+          ],
+          "family_macro_f1": 0.4507
+        },
+        "MXfold2": {
+          "ci95": [
+            0.22,
+            0.4183
+          ],
+          "family_macro_f1": 0.3175
+        },
+        "RNAfold": {
+          "ci95": [
+            0.3007,
+            0.4994
+          ],
+          "family_macro_f1": 0.3966
+        },
+        "RNAstructure": {
+          "ci95": [
+            0.3127,
+            0.5091
+          ],
+          "family_macro_f1": 0.4084
+        },
+        "head17": {
+          "ci95": [
+            0.282,
+            0.4549
+          ],
+          "family_macro_f1": 0.3671
+        },
+        "head23": {
+          "ci95": [
+            0.2739,
+            0.4289
+          ],
+          "family_macro_f1": 0.3507
+        },
+        "head41": {
+          "ci95": [
+            0.2753,
+            0.4426
+          ],
+          "family_macro_f1": 0.3591
+        },
+        "head_mean": {
+          "ci95": [
+            0.2767,
+            0.4411
+          ],
+          "family_macro_f1": 0.359
+        }
+      },
+      "n_families": 19,
+      "n_sequences": 270,
+      "paired": [
+        {
+          "a": "head_mean",
+          "b": "RNAfold",
+          "ci95": [
+            -0.0844,
+            0.0001
+          ],
+          "delta": -0.0377,
+          "frac_families_a_better": 0.368
+        },
+        {
+          "a": "head_mean",
+          "b": "EternaFold",
+          "ci95": [
+            -0.1334,
+            -0.0537
+          ],
+          "delta": -0.0918,
+          "frac_families_a_better": 0.158
+        },
+        {
+          "a": "head_mean",
+          "b": "RNAstructure",
+          "ci95": [
+            -0.0914,
+            -0.016
+          ],
+          "delta": -0.0494,
+          "frac_families_a_better": 0.211
+        },
+        {
+          "a": "head_mean",
+          "b": "MXfold2",
+          "ci95": [
+            -0.0014,
+            0.0884
+          ],
+          "delta": 0.0415,
+          "frac_families_a_better": 0.684
+        }
+      ]
+    }
+  ],
+  "cohort": "experiments/002_e1prime_runs/cohort/test_withheld.jsonl",
+  "n_sequences": 16040,
+  "split": "splits/s1prime_filtered/test_withheld.jsonl"
+}

@@ -270,6 +270,23 @@ it. It does mean the head is not uniformly slightly worse: it is better than
 the tools on a minority of (mostly larger) families and worse on the typical
 small one.
 
+Length matters more than family size. In pre-specified length bands the head is
+at or slightly above the thermodynamic tools below 150 nt and below them above:
+
+| band (nt) | n seqs / families | head - RNAfold | head - EternaFold | head - RNAstructure |
+|---|---:|---:|---:|---:|
+| 0-80 | 3,963 / 181 | +.010 [-.028, +.049] | +.018 [-.016, +.053] | +.018 [-.020, +.056] |
+| 80-150 | 8,051 / 260 | +.016 [-.008, +.039] | +.007 [-.016, +.030] | +.024 [+.001, +.047] |
+| 150-300 | 3,756 / 74 | -.036 [-.071, +.001] | -.073 [-.102, -.044] | -.029 [-.064, +.007] |
+| 300-597 | 270 / 19 | -.038 [-.084, +.000] | -.092 [-.133, -.054] | -.049 [-.091, -.016] |
+
+Withheld deltas, family bootstrap within band; id_test shows the same ordering
+with 28 and 11 families in the upper bands and every interval crossing zero.
+75% of the cohort is below 150 nt, so the overall family-macro number is
+dominated by the regime where the head is at parity; the deficit appears where
+long-range pairs matter. The head's margin over MXfold2 is positive in every
+band, again reflecting that baseline's weakness rather than the head's strength.
+
 MXfold2 was retrained on our train split (17,155 sequences, MixC, 10 epochs,
 600 nt cap) because the published weights overlap our test families. It scores
 .5518 / .5491, well below the thermodynamic tools; a 10-epoch retrain with

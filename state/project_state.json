@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-14T15:55:00+08:00",
+ "updated_at": "2026-11-14T16:10:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -21,7 +21,7 @@
   "pending_message": "docs/claude/transcripts/2026-11-14_round04n_prompt.md"
  },
  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
- "active_experiment": "four-method cohort frozen; Round 4n pending",
+ "active_experiment": "four-method cohort frozen; length crossover documented; Round 4n unsent",
  "open_questions": [
   "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
   "When should the Amendment 14 one-shot test_novel be used, if at all?",

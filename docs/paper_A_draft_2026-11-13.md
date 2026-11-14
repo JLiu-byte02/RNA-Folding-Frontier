@@ -278,7 +278,7 @@ at or slightly above the thermodynamic tools below 150 nt and below them above:
 | 0-80 | 3,963 / 181 | +.010 [-.028, +.049] | +.018 [-.016, +.053] | +.018 [-.020, +.056] |
 | 80-150 | 8,051 / 260 | +.016 [-.008, +.039] | +.007 [-.016, +.030] | +.024 [+.001, +.047] |
 | 150-300 | 3,756 / 74 | -.036 [-.071, +.001] | -.073 [-.102, -.044] | -.029 [-.064, +.007] |
-| 300-597 | 270 / 19 | -.038 [-.084, +.000] | -.092 [-.133, -.054] | -.049 [-.091, -.016] |
+| 300-600 | 270 / 19 | -.038 [-.084, +.000] | -.092 [-.133, -.054] | -.049 [-.091, -.016] |
 
 Withheld deltas, family bootstrap within band; id_test shows the same ordering
 with 28 and 11 families in the upper bands and every interval crossing zero.

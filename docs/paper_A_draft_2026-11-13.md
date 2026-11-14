@@ -270,8 +270,9 @@ it. It does mean the head is not uniformly slightly worse: it is better than
 the tools on a minority of (mostly larger) families and worse on the typical
 small one.
 
-Length matters more than family size. In pre-specified length bands the head is
-at or slightly above the thermodynamic tools below 150 nt and below them above:
+Length bands show a descriptive crossover, but the cohort cannot attribute it
+to length. In pre-specified bands the head is at or slightly above the tools
+below 150 nt and below them above:
 
 | band (nt) | n seqs / families | head - RNAfold | head - EternaFold | head - RNAstructure |
 |---|---:|---:|---:|---:|
@@ -282,9 +283,12 @@ at or slightly above the thermodynamic tools below 150 nt and below them above:
 
 Withheld deltas, family bootstrap within band; id_test shows the same ordering
 with 28 and 11 families in the upper bands and every interval crossing zero.
-75% of the cohort is below 150 nt, so the overall family-macro number is
-dominated by the regime where the head is at parity; the deficit appears where
-long-range pairs matter. The head's margin over MXfold2 is positive in every
+The marginal pattern is confounded with family identity: only **24 withheld
+families (5 on id_test)** contribute sequences to both a short (80-150 nt) and a
+long (150-600 nt) band, so the within-family interaction is uninformative
+(head - RNAfold +.011 [-.046, +.067]; head - EternaFold +.040 [-.007, +.087];
+both cross zero). We therefore report the bands as description and do **not**
+claim a length mechanism. The head's margin over MXfold2 is positive in every
 band, again reflecting that baseline's weakness rather than the head's strength.
 
 MXfold2 was retrained on our train split (17,155 sequences, MixC, 10 epochs,

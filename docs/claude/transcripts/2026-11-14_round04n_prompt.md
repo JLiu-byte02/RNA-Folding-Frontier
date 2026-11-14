@@ -67,10 +67,15 @@ rises with log family size (rho `.20 [.10,.29]` vs RNAfold; id_test
 `.36 [.24,.47]`) and has no relation to mean family length. This is consistent
 with the E-C1 coverage account, not an independent test of it.
 
-The two are not independent — larger families are also longer — so I would not
-put both in the abstract. The length crossover is the one a reviewer will ask
-about, because it means "no advantage" is really "advantage below 150 nt,
-deficit above".
+The two stratifications share one serious limitation, which I want your ruling
+on. The marginal band pattern is confounded with family identity: only **24
+withheld families (5 on id_test)** have sequences in both a short (80–150 nt)
+and a long (150–600 nt) band, so the within-family interaction test is
+uninformative — head−RNAfold `+.011 [−.046,+.067]`, head−EternaFold
+`+.040 [−.007,+.087]`, both crossing zero. I therefore report the bands as
+description and do **not** claim a length mechanism. If you want a length claim,
+it needs a cohort with more within-family length variation, and that is a new
+data decision rather than another analysis of this one.
 
 **4. Two disclosures that belong in the record.** (a) `fit_energy_calibration.py`
 used record-level folds (`crc32(id) % 5`) instead of the clan-grouped folds

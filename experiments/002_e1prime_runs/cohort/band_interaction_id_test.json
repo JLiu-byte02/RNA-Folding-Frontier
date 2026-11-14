@@ -1,0 +1,72 @@
+{
+  "interactions": [
+    {
+      "a": "head_mean",
+      "b": "RNAfold",
+      "ci95": [
+        -0.0399,
+        0.2433
+      ],
+      "delta_long": -0.0288,
+      "delta_short": 0.033,
+      "frac_families_declining": 0.6,
+      "interaction": 0.0618,
+      "p_two_sided": 0.6614
+    },
+    {
+      "a": "head_mean",
+      "b": "EternaFold",
+      "ci95": [
+        -0.094,
+        0.1343
+      ],
+      "delta_long": 0.0016,
+      "delta_short": 0.0049,
+      "frac_families_declining": 0.6,
+      "interaction": 0.0034,
+      "p_two_sided": 0.9888
+    },
+    {
+      "a": "head_mean",
+      "b": "RNAstructure",
+      "ci95": [
+        -0.0437,
+        0.2698
+      ],
+      "delta_long": -0.0236,
+      "delta_short": 0.0489,
+      "frac_families_declining": 0.6,
+      "interaction": 0.0725,
+      "p_two_sided": 0.6288
+    },
+    {
+      "a": "head_mean",
+      "b": "MXfold2",
+      "ci95": [
+        -0.0577,
+        0.1279
+      ],
+      "delta_long": 0.0319,
+      "delta_short": 0.0716,
+      "frac_families_declining": 0.2,
+      "interaction": 0.0397,
+      "p_two_sided": 0.3922
+    }
+  ],
+  "long_band": [
+    150,
+    600
+  ],
+  "n_boot": 10000,
+  "n_families_common": 5,
+  "n_families_long": 34,
+  "n_families_short": 90,
+  "n_sequences_long": 320,
+  "n_sequences_short": 732,
+  "seed": 20261113,
+  "short_band": [
+    80,
+    150
+  ],
+  "split": "splits/s1prime_filtered/id_test.jsonl"
+}

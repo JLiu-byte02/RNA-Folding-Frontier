@@ -584,3 +584,46 @@ intervals (10,000 resamples, seed 20261113) on 16,040 sequences / 408 families
 the cohort stops at 597 / 572 nt. The dotted line marks EternaFold. No interval
 for the head against a thermodynamic tool excludes zero. Source:
 `experiments/002_e1prime_runs/cohort/paired_{test_withheld,id_test}.json`.
+
+## References
+
+Verified against publisher or PubMed records on 2026-11-15
+(`docs/references.md`); in-text keys will be inserted once the narrative is
+fixed by the PI.
+
+1. Penić, R.J., Vlašić, T., Huber, R.G., et al. (2025). RiNALMo:
+   general-purpose RNA language models can generalize well on structure
+   prediction tasks. *Nature Communications* 16, 5671.
+   doi:10.1038/s41467-025-60872-5
+2. Sato, K., Akiyama, M., Sakakibara, Y. (2021). RNA secondary structure
+   prediction using deep learning with thermodynamic integration. *Nature
+   Communications* 12, 941. doi:10.1038/s41467-021-21194-4
+3. Wayment-Steele, H.K., Kladwang, W., Strom, A.I., Lee, J., Treuille, A.,
+   Becka, A., Eterna Participants, Das, R. (2022). RNA secondary structure
+   packages evaluated and improved by high-throughput experiments. *Nature
+   Methods* 19, 1234–1242. doi:10.1038/s41592-022-01605-0
+4. Reuter, J.S., Mathews, D.H. (2010). RNAstructure: software for RNA secondary
+   structure prediction and analysis. *BMC Bioinformatics* 11, 129.
+   doi:10.1186/1471-2105-11-129
+5. Lorenz, R., Bernhart, S.H., Höner zu Siederdissen, C., Tafer, H., Flamm, C.,
+   Stadler, P.F., Hofacker, I.L. (2011). ViennaRNA Package 2.0. *Algorithms for
+   Molecular Biology* 6, 26. doi:10.1186/1748-7188-6-26
+6. Ontiveros-Palacios, N., Cooke, E., Nawrocki, E.P., Triebel, S., Marz, M.,
+   Rivas, E., Griffiths-Jones, S., Petrov, A.I., Bateman, A., Sweeney, B.
+   (2025). Rfam 15: RNA families database in 2025. *Nucleic Acids Research*
+   53(D1), D258–D267. doi:10.1093/nar/gkae1023
+7. Danaee, P., Rouches, M., Wiley, M., Deng, D., Huang, L., Hendrix, D. (2018).
+   bpRNA: large-scale automated annotation and analysis of RNA secondary
+   structure. *Nucleic Acids Research* 46(11), 5381–5394.
+   doi:10.1093/nar/gky285
+8. Sloma, M.F., Mathews, D.H. (2016). Exact calculation of loop formation
+   probability identifies folding motifs in RNA secondary structures. *RNA*
+   22(12), 1808–1818. doi:10.1261/rna.053694.115 (ArchiveII corpus)
+9. Tan, Z., Fu, Y., Sharma, G., Mathews, D.H. (2017). TurboFold II: RNA
+   structural alignment and secondary structure prediction informed by multiple
+   homologs. *Nucleic Acids Research* 45(20), 11570–11581.
+   doi:10.1093/nar/gkx815 (RNAStrAlign corpus)
+10. Mathews, D.H., Disney, M.D., Childs, J.L., Schroeder, S.J., Zuker, M.,
+    Turner, D.H. (2004). Incorporating chemical modification constraints into a
+    dynamic programming algorithm for prediction of RNA secondary structure.
+    *PNAS* 101(19), 7287–7292. doi:10.1073/pnas.0401799101

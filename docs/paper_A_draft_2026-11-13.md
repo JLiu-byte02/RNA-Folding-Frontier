@@ -87,7 +87,8 @@ rows appear in the frozen split files:
 | pairs, v1 effective / v2 effective / v3 | 1,669,314 / 2,029,886 / 2,517,623 |
 | rows with <4 v3 pairs | 5,372 (5.79%) |
 
-On the 83,459 rows where both v2 and v3 parse, the pair sets still differ on
+Figure 2 summarizes the parse-rate and pair-count consequences. On the 83,459
+rows where both v2 and v3 parse, the pair sets still differ on
 **6,757 rows**: 27,367 v2-only pairs and 58,637 v3-only pairs. "Both parse" is
 therefore not "both correct"; v3 — parse `SS_cons` in column coordinates, map
 both endpoints, drop the pair if either column is a gap, then apply the frozen
@@ -253,8 +254,8 @@ families, so the pairing respects family structure on both sides.
 
 The head has the highest micro F1 on both splits (it is more aggressive and
 recovers more base pairs overall), but its family-macro F1 is at or below the
-thermodynamic tools. No paired family-block interval against a thermodynamic
-tool excludes zero:
+thermodynamic tools. Figure 7 shows the same point estimates and intervals. No
+paired family-block interval against a thermodynamic tool excludes zero:
 
 | comparison | withheld delta [95% CI] | p | id_test delta [95% CI] | p |
 |---|---:|---:|---:|---:|

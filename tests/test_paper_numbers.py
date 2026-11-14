@@ -114,3 +114,24 @@ def test_band_table_matches_band_artifact():
             want = tuple(round(float(x), 3) for x in row[4 + 3 * idx : 7 + 3 * idx])
             got = (round(paired["delta"], 3), *(round(x, 3) for x in paired["ci95"]))
             assert want == got, (tool, (lo, hi), want, got)
+
+
+def test_readme_headline_table_matches_artifacts():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    rows = re.findall(
+        r"\| (RNAfold|EternaFold|RNAstructure|MXfold2 \(retrained on our split\)|head, 3-seed mean) "
+        r"\| ([.\d]+) \| ([.\d]+) \|",
+        readme,
+    )
+    assert len(rows) == 5, f"expected 5 README rows, parsed {len(rows)}"
+    key = {
+        "RNAfold": "rnafold",
+        "EternaFold": "eternafold",
+        "RNAstructure": "rnastructure",
+        "MXfold2 (retrained on our split)": "mxfold2",
+        "head, 3-seed mean": "head_mean",
+    }
+    for name, w, i in rows:
+        for split, value in (("test_withheld", w), ("id_test", i)):
+            ref = _method(_paired(split), key[name])
+            assert round(float(value), 4) == round(ref["family_macro_f1"], 4), (name, split, value)

@@ -102,12 +102,15 @@ confirmatory family list.
       RNAstructure, and no interval against a thermodynamic tool excludes zero.
       Retrained MXfold2 is much weaker (.5518/.5491) and is reported as a
       retraining control, not as the published system.
-- [x] Length-band analysis (withheld/id_test, pre-specified 0/80/150/300/600):
-      the head is at parity or slightly ahead below 150 nt and loses above,
-      most clearly to EternaFold (150-300: -.073 [-.102,-.044]; 300-600:
-      -.092 [-.133,-.054]); id_test reproduces the ordering. 75% of the cohort
-      is below 150 nt, so the aggregate hides a crossover. Artifacts:
-      `cohort/band_{split}.json`, script `scripts/cohort_band_eval.py`.
+- [x] Length-band analysis (pre-specified 0/80/150/300/600) is **descriptive
+      only**: the marginal pattern (parity below 150 nt, deficit above, e.g.
+      head-EternaFold -.073 [-.102,-.044] at 150-300) is confounded with family
+      identity. Only 24 withheld families (5 id_test) have sequences in both a
+      short and a long band, so the within-family interaction is uninformative
+      (+.011 [-.046,+.067] vs RNAfold; +.040 [-.007,+.087] vs EternaFold).
+      No length mechanism is claimed. Artifacts: `cohort/band_{split}.json`,
+      `cohort/band_interaction_{split}.json`,
+      `scripts/cohort_band_eval.py`, `scripts/cohort_band_interaction.py`.
 - [ ] Send Round 4n to the PI with the four-method table, the MXfold2 caveat,
       the decoder-A nuance, the fold-assignment deviation, and the two audits.
       **Drafted, not sent:** Computer Use stopped on 2026-11-14 because the

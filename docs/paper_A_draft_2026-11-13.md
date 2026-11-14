@@ -35,8 +35,16 @@ pre-registered bars. We report them as such, together with the one mechanism
 result that did survive: pretraining corpus coverage predicts the FM's
 per-family advantage over a thermodynamic baseline.
 
-The contribution is therefore an audit plus well-powered negative mechanism
-results, not a state-of-the-art claim.
+On a frozen four-method common cohort (RNAfold, EternaFold, RNAstructure, and
+MXfold2 retrained on our own train split) the frozen FM head shows no advantage
+over the thermodynamic baselines: its three-seed mean is below RNAfold and
+EternaFold on both splits, it is at parity with RNAstructure, and no paired
+family-bootstrap interval excludes zero. With three training seeds the study
+cannot resolve differences of about .01, so we report neither an advantage nor a
+tie.
+
+The contribution is therefore an audit plus well-powered negative results, not a
+state-of-the-art claim.
 
 ## 2. Results
 

@@ -477,6 +477,23 @@ draft and fails if a value does not match its committed JSON. Data
 provenance, download commands, and per-artifact hashes are in
 `docs/data_sources.md` and `docs/remote_provenance_2026-11-12.md`.
 
+### 3.10 Data and code availability
+
+Code, amendment texts, evaluation scripts, and every number quoted here are in
+the public repository `github.com/JLiu-byte02/RNA-Folding-Frontier`. The
+repository also carries the rendered figures (`figures/`) and the script that
+regenerates them (`scripts/make_paper_figures.py`); CI fails if a figure or a
+table stops matching its committed JSON. No licence has been chosen yet, so the
+code is public for review rather than for redistribution.
+
+The corpora are public (bpRNA-1m, ArchiveII, RNAStrAlign, Rfam 15.0); download
+commands and provenance are in `docs/data_sources.md` and
+`docs/remote_provenance_2026-11-12.md`. Model checkpoints, per-sequence dumps,
+and raw training logs are large and stay on the compute server; their SHA-256
+hashes are recorded in the per-experiment manifests (for example
+`experiments/013_mxfold2/run/train_manifest.json`). No human-subject data were
+used.
+
 ## 4. Limitations
 
 1. The audit covers ArchiveII, bpRNA, RNAStrAlign, and Rfam 15.0. We do not
@@ -533,3 +550,37 @@ and overlap audits alongside F1.
 | 7 | Corpus coverage predicts FM advantage; specificity not shown (E-C1 / E-C1b) | supported / failed control | moderate |
 | 8 | Any SOTA or "first" claim | **not available** | — |
 | 9 | Cross-tool comparison on one frozen common cohort (RNAfold, EternaFold, RNAstructure, retrained MXfold2) | available: no advantage over the thermodynamic tools; retrained MXfold2 is weaker | moderate (single cohort, <=597 nt) |
+
+## Figure captions
+
+**Figure 1 | Benchmark contamination.** (a) ArchiveII as ingested for the
+leakage audit (3,966 records) overlaps the union of RNAStrAlign and bpRNA TR0 at
+61.2% exact and 88.4% near-duplicate identity (k = 15, containment >= 0.5);
+7.9% are internal duplicates. (b) Mean pair F1 between the labels of duplicated
+ArchiveII sequences and the two corpora on the 3,370-record label mirror:
+.9937 against RNAStrAlign and .9195 against TR0. A duplicated sequence therefore
+arrives with an almost identical target. Source:
+`experiments/000_e0_leakage/union_overlap/summary.json` and
+`label_discordance_*/summary.json`.
+
+**Figure 2 | String-level label projection loses pairs.** 92,781 Rfam seed rows;
+fraction that parse under string projection (v1, .822), gap-tolerant character
+projection (v2, .900), and pair-level projection (v3, 1.000), with the recovered
+pair counts 1.67M / 2.03M / 2.52M. The left axis starts at 0.75 and is drawn as
+dots rather than bars for that reason. Source:
+`experiments/011_labels_v3/labels_v3_summary.json`.
+
+**Figure 6 | Coverage predicts per-family accuracy for both heads.** 409
+families; per-family ΔF1 (head − RNAfold) against the Rfam full-region coverage
+proxy p1 on a symlog axis (zero included). Left: frozen RiNALMo head
+(rho = .338). Right: matched one-hot, no-pretraining control (rho = .253). The
+difference, Δrho = .085, is below the pre-registered .15 specificity bar, so
+coverage is reported as a shared predictor rather than a pretraining mechanism.
+Source: `ec1_p1_p2.json`, `ec1b_specificity.json`.
+
+**Figure 7 | Frozen common cohort.** Family-macro pair F1 with 95% family-bootstrap
+intervals (10,000 resamples, seed 20261113) on 16,040 sequences / 408 families
+(withheld) and 1,272 / 153 (id_test); the retrained MXfold2 600 nt cap binds, so
+the cohort stops at 597 / 572 nt. The dotted line marks EternaFold. No interval
+for the head against a thermodynamic tool excludes zero. Source:
+`experiments/002_e1prime_runs/cohort/paired_{test_withheld,id_test}.json`.

@@ -37,6 +37,13 @@ Paired: head_mean−RNAfold `−.0098 [−.0301,+.0107]` / `−.0097 [−.0384,+
 −EternaFold `−.0144 [−.0341,+.0052]` / `−.0052 [−.0304,+.0211]`;
 −RNAstructure `+.0005 [−.0193,+.0208]` / `−.0008 [−.0289,+.0272]`;
 −MXfold2 `+.0387 [+.0225,+.0549]` / `+.0409 [+.0160,+.0663]`.
+Training-run variance matters here: per-seed head−RNAfold deltas on withheld are
+`+.006`, `−.021`, `−.014` (mean `−.010`, seed SD `.014`), so a t interval with two
+degrees of freedom is `[−.045,+.025]`. One seed is nominally above both
+thermodynamic tools on both splits, two are below. The family-bootstrap CIs
+condition on three seeds and understate total uncertainty; the study cannot
+resolve ~`.01` differences. Artifact: `cohort/seed_variation.json`.
+
 The three-tool verdict is unchanged. **Caveat:** the retrained MXfold2 is a
 10-epoch MixC trained on our split with nested labels under a 600 nt cap; .5518
 is well below the thermodynamic tools. The head's +.039 margin over it is not a

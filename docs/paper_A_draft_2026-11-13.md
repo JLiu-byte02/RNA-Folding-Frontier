@@ -346,9 +346,14 @@ cohort is capped at 597 nt (withheld) and 572 nt (id_test) by the MXfold2
 
 ### 3.1 Data and splits
 
-- **Corpora.** bpRNA-1m (TR0/VL0/TS0 as published), ArchiveII, RNAStrAlign, Rfam
-  15.0 seed alignments and covariance models, and the HuggingFace
-  `rouskinlab/bpRNA-1m` mirror (66,715 sequences) used as the label superset.
+- **Corpora.** bpRNA-1m (Danaee et al., 2018; TR0/VL0/TS0 as published),
+  ArchiveII (Sloma & Mathews, 2016), RNAStrAlign (Tan et al., 2017), Rfam 15.0
+  (Ontiveros-Palacios et al., 2025) seed alignments and covariance models, and
+  the HuggingFace `rouskinlab/bpRNA-1m` mirror (66,715 sequences) used as the
+  label superset.
+- **Baselines.** RNAfold from ViennaRNA 2.0 (Lorenz et al., 2011), EternaFold
+  (Wayment-Steele et al., 2022), RNAstructure (Reuter & Mathews, 2010), and
+  MXfold2 (Sato et al., 2021) retrained on our train split.
 - **Family assignment.** Rfam families by accession; bpRNA sequences by cmscan
   against the pressed Rfam 15.0 CMs with `--cut_ga --rfam --nohmmonly`.
 - **Splits (`s1prime_filtered`, frozen).** 3,861 clans: 1,983 novel / 376
@@ -400,7 +405,7 @@ resampled families.
 
 ### 3.4 Models and training
 
-Backbone: RiNALMo-giga (frozen). Head: each residue embedding is projected to
+Backbone: RiNALMo-giga (Penić et al., 2025; frozen). Head: each residue embedding is projected to
 32 dimensions, and cell (i, j) is represented by the concatenation
 `[z_i, z_j, z_i * z_j]` plus a learned relative-distance embedding; eight
 dilated 3x3 residual blocks then produce one logit per cell, symmetrised as
@@ -440,7 +445,8 @@ showed the old greedy reduction was suboptimal on 87 of them; that check is a
 regression test for the label solver, not for decoder A.
 
 Energy decoding passes each pair's log-odds to ViennaRNA as a per-pair
-pseudo-energy `-(s * score_ij + b)`; Turner stacking remains inside ViennaRNA.
+pseudo-energy `-(s * score_ij + b)`; Turner stacking (Mathews et al., 2004)
+remains inside ViennaRNA (Lorenz et al., 2011).
 `s, b` were fitted on train by a pre-registered coarse-then-refined grid and
 frozen before any evaluation. `(s, b) = (.1875, 0)` sits at the upper boundary
 of the refined grid (`s_max`) and was hashed before H2.4 was run. That `(s, b)` fit used

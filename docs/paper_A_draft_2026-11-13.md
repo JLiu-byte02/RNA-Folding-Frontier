@@ -151,6 +151,14 @@ The pre-registered H3 ratio rule was `R_c = (c-e)/(a-e) >= .90` and
 point estimates are directionally consistent with homologous context
 transferring better than unrelated context, and we report them as descriptive.
 
+An exploratory dose-response splits the homolog block by identity: `R_c = .876
+[.276, 3.425]` in the 0.40-0.50 bin (32 families, 545 sequences) and `.897
+[.729, 1.055]` in the 0.50-0.60 bin (93 families, 7,931 sequences). The
+direction matches the hypothesis (retention rises with identity), but the gain
+is +.021 with heavily overlapping intervals and the low bin is small and
+imbalanced, so this is not evidence for H3; it is reported to close the
+pre-registered exploratory item.
+
 An earlier P2-central reading of `R_c ~ 102%` was a population mismatch (the
 conditions were scored on different sequence sets); on the common population it
 is `.747 [.564, .960]` on kept–kept pairs. The corrected value, not the earlier

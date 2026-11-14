@@ -135,7 +135,7 @@ confirmatory family list.
       title/abstract/discussion direction.
 - [ ] Revise Paper A claim 9: a valid single-cohort comparison now exists but
       shows no head superiority; keep "no SOTA claim".
-- [ ] H3 dose-response by homolog identity bin (exploratory, still unfiled).
+- [x] H3 dose-response filed in Paper A 2.4: R_c .876 (0.40-0.50, 32 families) vs .897 (0.50-0.60, 93 families); direction matches but intervals overlap, not evidence.
 - [ ] Enforce macro/micro +-0.15 and shuffle-floor <=0.05 invariants in every table.
 
 ## Standing

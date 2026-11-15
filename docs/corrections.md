@@ -378,8 +378,8 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
 
 ## 2026-11-15 - Coverage was still described as pretraining-specific
 
-- **Where:** the Introduction, section 2.6 heading, and conclusion candidate C1
-  in `docs/paper_A_draft_2026-11-13.md`.
+- **Where:** the Introduction, section 2.6 heading and body, conclusion
+  candidate C1, and the reviewer FAQ.
 - **What was wrong:** the prose called corpus coverage "the one mechanism result
   that survived" and said the FM advantage "correlates with pretraining
   coverage", despite E-C1b showing the matched one-hot control has the same
@@ -388,7 +388,7 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
 - **True:** coverage predicts per-family advantage for both the frozen FM head
   and the no-pretraining one-hot control; the specificity criterion failed. The
   result must be called a shared predictor, not a pretraining mechanism.
-- **Action:** the Introduction, section heading and C1 wording now say "corpus
-  coverage" and explicitly mention the one-hot control. Section 2.6 and Figure 6
-  already stated the correct limitation; no number changed.
+- **Action:** the Introduction, section heading/body, C1 and FAQ now say "corpus
+  coverage" and explicitly mention the one-hot control. Figure 6 already stated
+  the correct limitation; no number changed.
 - **Found by:** a final prose-vs-evidence audit after the E-C1b result.

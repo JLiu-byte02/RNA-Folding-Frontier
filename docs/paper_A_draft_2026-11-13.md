@@ -31,7 +31,7 @@ We report an audit of both layers, followed by three pre-registered mechanism
 experiments that ask whether the residual FM advantage is explained by a
 head-level shortcut, by evolutionarily consistent distal context, or by
 energy-consistent decoding. All three are negative or unsupported under their
-pre-registered bars. We report them as such, together with the one mechanism
+pre-registered bars. We report them as such, together with the one predictive
 relation that did survive: corpus coverage predicts per-family advantage over a
 thermodynamic baseline. A matched no-pretraining control shows the same
 relation, so we report it as a shared predictor rather than a
@@ -223,9 +223,9 @@ an interval excluding zero, not as a method advantage.
 
 ### 2.6 Corpus coverage predicts per-family advantage (F6)
 
-One mechanism result survived. On the 409-family common withheld population the
-FM's per-family advantage over RNAfold correlates with two independent proxies
-for how much of the family sits in the pretraining corpus:
+One predictive association survived. On the 409-family common withheld
+population the FM's per-family advantage over RNAfold correlates with two
+independent proxies for how much of the family sits in the pretraining corpus:
 
 | proxy | partial rho | 95% CI |
 |---|---:|---|
@@ -237,9 +237,10 @@ met. The **specificity control did not pass**: the same slope for a one-hot
 head is .253, so `d_rho = .085 [.009, .160]`, below the pre-registered .15. We
 therefore report coverage as a *shared* predictor of accuracy on this benchmark,
 not as something specific to the pretrained representation. Figure 6 plots the
-per-family relation for the frozen head and for the one-hot control. The mean advantage
-is also small (+.0051 family-macro across families, range −.742 to +.857), so
-this is a mechanism result and not a performance result.
+per-family relation for the frozen head and for the one-hot control. The mean
+advantage is also small (+.0051 family-macro across families, range −.742 to
++.857), so this is a predictive association, not a performance result or a
+pretraining-specific mechanism.
 
 ### 2.7 No head advantage on a frozen common-cohort comparison (F7, T7)
 

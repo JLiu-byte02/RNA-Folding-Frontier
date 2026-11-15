@@ -8,8 +8,8 @@ claim.
 The contribution is the audit plus negative mechanism results, not a
 state-of-the-art claim. The four-method cohort is frozen, every row shares one id
 set, and the paired family bootstrap shows no advantage (Table T7). The one
-positive mechanism, coverage, is reported as a shared predictor because the
-one-hot control fails the specificity bar.
+positive association, corpus coverage, is reported as a shared predictor because
+the one-hot control fails the specificity bar.
 
 **2. "The cohort stops at 597 nt; long RNAs are missing."**
 The binding cap is the retrained MXfold2's 600 nt; 19 withheld and 15 id_test

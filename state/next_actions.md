@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-15 13:57 (FP anatomy corrected; Round 4n corrected, unsent)
+Updated: 2026-11-15 14:25 (Round 4n send attempted; PI reply pending network recovery)
 
 Governing documents: `experiments/001_e1prime/PREREGISTRATION.md`, Amendments
 1-14, and `state/amendments.lock.json`. Amendment 8 fixes `labels_v3` as primary
@@ -35,6 +35,8 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
 - [x] Full suite after the correction: 187 passed, 2 skipped.
 - [x] SSH doctor at 13:52 +0800: TCP reachable, 21-byte OpenSSH 7.4 banner;
       no retry storm.
+- [x] GitHub push succeeded through a direct-IP one-shot SSH route; fresh-clone
+      CI run 125 completed successfully at 06:02 UTC.
 
 - [x] SSH recovered again at 12:43 (watchdog banners). `family_diagnostics.py`
       reproduces the three committed diagnostics on the server with identical
@@ -43,8 +45,14 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
 
 ## Open
 
-- [ ] **Send Round 4n** to the PI when a permitted browser channel exists. Draft
-      is corrected at `docs/claude/transcripts/2026-11-14_round04n_prompt.md`.
+- [ ] **Recover the Round 4n exchange.** The message was sent into the existing
+      Claude chat at 14:13 +0800, but the generation stream died and the page
+      then failed DNS. Reopen the chat after ZoogVPN data-plane recovery, check
+      whether the message is in history, and do not duplicate it blindly. The
+      exact body is `docs/claude/transcripts/2026-11-14_round04n_prompt.md`.
+- [ ] **Human/VPN action:** reconnect or switch the ZoogVPN node from its UI with
+      administrator rights. System DNS and Claude access are down while SSH to
+      `10.22.19.39` remains up; see `docs/network_2026-11-15.md`.
 - [ ] PI decisions: (a) whether/when to spend the Amendment 14 `test_novel`
       unblinding; (b) Paper A framing (audit-led vs negative-led vs coverage +
       decoder); (c) clan-grouped refit of `(s,b)`; (d) whether any method
@@ -66,3 +74,5 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
   this in CI.
 - If SSH drops again, read the local routing note before changing anything; the
   watchdog log makes the failure mode visible.
+- Do not retry Claude or edit VPN/DNS configuration repeatedly while
+  `docs/network_2026-11-15.md` describes an unconfirmed data-plane recovery.

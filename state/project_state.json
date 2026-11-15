@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-15T13:57:00+08:00",
+ "updated_at": "2026-11-15T14:25:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -21,16 +21,19 @@
   "pending_message": "docs/claude/transcripts/2026-11-14_round04n_prompt.md"
  },
  "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
- "active_experiment": "FP anatomy corrected to the deployed decoder; Round 4n unsent",
+ "active_experiment": "Round 4n send attempted; PI reply pending ZoogVPN DNS recovery",
  "open_questions": [
   "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
   "When should the Amendment 14 one-shot test_novel be used, if at all?",
   "Which Paper A framing (audit-led vs negative-led) is defensible without SOTA?",
   "Is there any remaining mechanism result strong enough to anchor a method claim?",
   "Should the energy calibration be refit with clan-grouped folds to complete Amendment 7 literally?",
-  "Is the shift-corrected decoder worth testing, and what success bar/kill criterion must be pre-registered?"
+  "Is the shift-corrected decoder worth testing, and what success bar/kill criterion must be pre-registered?",
+  "Was Round 4n accepted into the Claude chat, and what did the PI reply?"
  ],
- "blockers": [],
+ "blockers": [
+  "Claude reply unavailable while the ZoogVPN WireGuard data plane fails and system DNS is down"
+ ],
  "running_jobs": {},
  "remote_head": "c6670b8",
  "artifacts": {
@@ -66,7 +69,8 @@
    "experiments/002_e1prime_runs/cohort/fp_anatomy_id_test.json",
    "experiments/002_e1prime_runs/cohort/shift_oracle_test_withheld.json",
    "experiments/002_e1prime_runs/cohort/shift_oracle_id_test.json",
-   "tests/test_fp_anatomy.py"
+   "tests/test_fp_anatomy.py",
+   "docs/network_2026-11-15.md"
   ]
  },
  "amendments": {

@@ -38,3 +38,26 @@ figures, regenerates the family diagnostics byte-for-byte, re-parses every paper
 table against its JSON, and refuses a repository that contains credentials. A
 green run therefore means the committed record is self-consistent, not that the
 experiments were re-run.
+
+## Cross-machine check (2026-11-15)
+
+`scripts/family_diagnostics.py` was also run on the Linux compute server against
+the same committed cohort artifacts. The three files it produced matched the
+committed ones by MD5:
+
+| file | MD5 |
+|---|---|
+| `family_delta_concentration.json` | `837a0cea4cead69fdbadad467aa1df96` |
+| `family_delta_structure.json` | `75250e6bf92e786b7c33756bf421ef6e` |
+| `seed_variation.json` | `dec460599cb83a5b4f3ecf6e8a40b5fe` |
+
+So the family diagnostics are byte-identical across the Windows workstation and
+the Linux server, not merely reproducible on one machine.
+
+## Server worktree note
+
+The server checkout's git HEAD and `origin/main` ref are stale (at `6228dc6`)
+even though its working tree contains the four-method outputs; a ref-only
+`git fetch origin main` updates `FETCH_HEAD`, not `origin/main`. Runtime scripts
+are uploaded individually rather than forcing `reset --hard`, because the
+worktree holds untracked dumps that are not in git.

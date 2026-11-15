@@ -30,6 +30,11 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
       fails on number drift, on credentials, and on lock-hash disagreement.
 - [x] Full suite: 184 passed, 1 skipped; fresh-clone CI green.
 
+- [x] SSH recovered again at 12:43 (watchdog banners). `family_diagnostics.py`
+      reproduces the three committed diagnostics on the server with identical
+      MD5s; runtime scripts uploaded individually. No `reset --hard` on the
+      server worktree (untracked dumps at risk).
+
 ## Open
 
 - [ ] **Send Round 4n** to the PI when a permitted browser channel exists. Draft:

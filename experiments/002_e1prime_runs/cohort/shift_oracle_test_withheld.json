@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "macro_f1": 0.6061,
+    "micro_f1": 0.6072
+  },
+  "delta_macro": 0.0251,
+  "head_pred_file": "experiments/002_e1prime_runs/headpreds/seed17_test_withheld.jsonl",
+  "n_families": 408,
+  "n_fp": 188158,
+  "n_shiftable": 13155,
+  "oracle_shift": {
+    "macro_f1": 0.6312,
+    "micro_f1": 0.628
+  },
+  "radius": 2,
+  "shiftable_frac_of_fp": 0.0699,
+  "split": "splits/s1prime_filtered/test_withheld.jsonl"
+}

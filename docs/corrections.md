@@ -350,3 +350,28 @@ The P2-central table must be recomputed with the retrained heads (Amendment 9
   to the maximum nested subset (454,222 -> 439,299 pairs). Train-split sha256 is
   `b8af2335...f94ecd`, list sha256 `d2ba5c96...b5291c`.
 - **Found by:** reading the export manifest while documenting the baseline.
+
+## 2026-11-15 - FP anatomy used thresholded maps, not the deployed head
+
+- **Where:** `docs/fp_anatomy_2026-11-15.md` and section 6 of the unsent Round
+  4n prompt.
+- **What was wrong:** the first exploratory pass treated probability-map cells
+  above 0.5 as the head's predictions. The deployed head emits a greedy
+  decoded structure, so the FP counts and distance bins described a different
+  decoder. The first-pass claim that the head emits more FPs was also wrong.
+- **Corrected facts:** using `headpreds/seed17_{test_withheld,id_test}.jsonl`,
+  the head has 188,158 FPs vs RNAfold's 311,768 on withheld (near-miss .2193
+  vs .1337; far .5164 vs .6431) and 19,935 vs 30,469 on id_test (near-miss
+  .3107 vs .2025; far .3494 vs .5133). The head therefore emits *fewer* FPs
+  but a larger share of them are displaced helices. The radius-2 shift-oracle
+  bound is +.0251 macro on withheld and +.0263 on id_test; it is explicitly
+  not a reachable-decoder estimate.
+- **Action:** `scripts/fp_anatomy.py` and `scripts/shift_oracle.py` now accept
+  deployed prediction JSONL (`--head-preds`), not a probability dump, and no
+  longer record a spurious threshold. The four cohort artifacts and both
+  prose locations were regenerated/rewritten. The old counts in git history
+  must not be reused.
+- **Evidence:** the corrected base macro-F1 (.6061 withheld, .6057 id_test)
+  matches the frozen head-17 entries in `paired_*.json`, confirming the same
+  cohort, labels and decoder as the main table.
+- **Found by:** checking the denominator against the frozen four-method table.

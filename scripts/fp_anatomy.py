@@ -7,9 +7,11 @@ pair coordinates to the nearest true pair:
 
 and bin d. A method whose FPs are mostly d<=2 locates the helix but offsets it;
 a method whose FPs are mostly d>5 invents structure elsewhere. The comparison is
-descriptive and uses the same cohort, labels, and threshold as the main table.
+descriptive and uses the same cohort and labels as the main table. The head side
+must be the deployed prediction file, not a thresholded probability map.
 
-    python scripts/fp_anatomy.py --split test_withheld --dump ... --preds ... --out ...
+    python scripts/fp_anatomy.py --split ... --cohort ... \
+        --head-preds ... --preds ... --out ...
 """
 
 from __future__ import annotations
@@ -34,18 +36,6 @@ LABELS = ["1-2", "3-5", "6-10", ">10"]
 def _resolve(path: str) -> Path:
     p = Path(path)
     return p if p.is_absolute() else ROOT / p
-
-
-def parse_dump(path: Path, threshold: float) -> dict[str, set[tuple[int, int]]]:
-    out = {}
-    for row in seb.read_jsonl(path):
-        pairs = set()
-        for key, prob in (row.get("scored") or {}).items():
-            if prob >= threshold:
-                i, j = key.split(",")
-                pairs.add((int(i), int(j)))
-        out[row["id"]] = pairs
-    return out
 
 
 def parse_preds(path: Path) -> dict[str, set[tuple[int, int]]]:
@@ -84,10 +74,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", required=True)
     ap.add_argument("--cohort", required=True)
-    ap.add_argument("--dump", required=True)
+    ap.add_argument("--head-preds", required=True, help="deployed head predictions (JSONL with dbn or pairs)")
     ap.add_argument("--preds", required=True, help="baseline prediction JSONL to compare")
     ap.add_argument("--labels", default=seb.LABELS_V3)
-    ap.add_argument("--threshold", type=float, default=0.5)
     ap.add_argument("--min-true-pairs", type=int, default=4)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
@@ -95,7 +84,7 @@ def main() -> int:
     split_rows = {r["id"]: r for r in seb.read_jsonl(_resolve(args.split))}
     cohort = seb.read_jsonl(_resolve(args.cohort))
     labels = seb.load_labels_v3(_resolve(args.labels))
-    head = parse_dump(_resolve(args.dump), args.threshold)
+    head = parse_preds(_resolve(args.head_preds))
     base = parse_preds(_resolve(args.preds))
 
     per_method = {"head": {"fp_dist": [], "n_fp": 0, "n_seq_with_fp": 0},
@@ -130,8 +119,13 @@ def main() -> int:
                     continue
                 per_method[name]["fp_dist"].append(d)
 
-    out = {"split": args.split, "n_sequences": n_seq, "threshold": args.threshold,
-           "methods": {}}
+    out = {
+        "split": args.split,
+        "n_sequences": n_seq,
+        "head_pred_file": args.head_preds,
+        "baseline_pred_file": args.preds,
+        "methods": {},
+    }
     for name, d in per_method.items():
         s = summarise(d["fp_dist"], d["n_fp"])
         s["n_sequences_with_fp"] = d["n_seq_with_fp"]

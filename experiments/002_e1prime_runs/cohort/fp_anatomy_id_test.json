@@ -1,4 +1,6 @@
 {
+  "baseline_pred_file": "experiments/002_e1prime_runs/rnafold_id_test.jsonl",
+  "head_pred_file": "experiments/002_e1prime_runs/headpreds/seed17_id_test.jsonl",
   "methods": {
     "baseline": {
       "frac": {
@@ -15,19 +17,18 @@
     },
     "head": {
       "frac": {
-        "1-2": 0.2948,
-        "3-5": 0.1643,
-        "6-10": 0.1167,
-        ">10": 0.4242
+        "1-2": 0.3107,
+        "3-5": 0.2038,
+        "6-10": 0.1361,
+        ">10": 0.3494
       },
-      "frac_sequences_with_fp": 0.9914,
-      "mean_distance": 22.994,
-      "n_fp": 38583,
-      "n_sequences_with_fp": 1261,
-      "near_miss_frac": 0.2948
+      "frac_sequences_with_fp": 0.9725,
+      "mean_distance": 18.727,
+      "n_fp": 19935,
+      "n_sequences_with_fp": 1237,
+      "near_miss_frac": 0.3107
     }
   },
   "n_sequences": 1272,
-  "split": "splits/s1prime_filtered/id_test.jsonl",
-  "threshold": 0.5
+  "split": "splits/s1prime_filtered/id_test.jsonl"
 }

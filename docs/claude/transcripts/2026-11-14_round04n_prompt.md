@@ -102,14 +102,21 @@ artifacts; title, abstract, discussion and both conclusions remain HELD. Claim
 advantage over the thermodynamic tools and a weaker retrained MXfold2.
 
 **6. New exploratory lead: the head's false positives are near-misses.**
-I measured, for every false-positive pair at threshold 0.5, the Manhattan
-distance in pair coordinates to the nearest true pair. On withheld the head's
-FPs are 19.9% near-miss (1-2 nt) versus RNAfold's 13.4%, and 57.0% far (>10 nt)
-versus 64.3%; on id_test 29.5% vs 20.3% and 42.4% vs 51.3%. The head emits more
-FPs overall, but they are more often *displaced helices* and less often
-*inventions elsewhere*. Full table and caveats:
-`docs/fp_anatomy_2026-11-15.md`; artifacts
-`cohort/fp_anatomy_{test_withheld,id_test}.json`.
+I measured, for every false-positive pair from the **deployed greedy head**,
+the Manhattan distance in pair coordinates to the nearest true pair. An earlier
+pass used thresholded probability maps and is withdrawn. On withheld the head
+has 188,158 FPs versus RNAfold's 311,768; 21.9% are near-miss (1-2 nt) versus
+13.4%, and 51.6% are far (>10 nt) versus 64.3%. On id_test it is 31.1% vs
+20.3% near-miss and 34.9% vs 51.3% far (19,935 vs 30,469 FPs). The head emits
+*fewer* FPs overall, but they are more often displaced helices and less often
+inventions elsewhere. Full table and caveats: `docs/fp_anatomy_2026-11-15.md`;
+artifacts `cohort/fp_anatomy_{test_withheld,id_test}.json`.
+
+A radius-2 shift oracle upper-bounds the possible gain: macro-F1 rises from
+.6061 to .6312 (+.0251) on withheld and .6057 to .6319 (+.0263) on id_test.
+The oracle ignores crossing constraints, competing FPs, shift-selection errors
+and model scores, so it is not a result. The baseline values match the frozen
+head-17 entries in the four-method table.
 
 This suggests a cheap test I have **not** run: a shift-corrected decoder that
 tries register shifts of +/-1 and +/-2 on each predicted helix and keeps a shift
@@ -129,5 +136,7 @@ macro deficit is a decoding artefact, not a representation limit.
    evidence, or should the next cycle test a genuinely new hypothesis? If the
    latter, name the hypothesis and its kill criterion.
 5. Should I run the shift-corrected decoder (cheap, CPU-only, evaluated on the
-   frozen cohort)? If yes, give the success bar and the kill criterion before I
-   start, so the result cannot be reinterpreted after the fact.
+   frozen cohort)? The radius-2 oracle bound is only +.0251/+.0263 and is not
+   evidence of a reachable gain. If yes, give the success bar and the kill
+   criterion before I start, so the result cannot be reinterpreted after the
+   fact.

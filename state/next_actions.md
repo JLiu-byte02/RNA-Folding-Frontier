@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-14 16:45 (four-method cohort frozen; Round 4n drafted, unsent)
+Updated: 2026-11-15 13:57 (FP anatomy corrected; Round 4n corrected, unsent)
 
 Governing documents: `experiments/001_e1prime/PREREGISTRATION.md`, Amendments
 1-14, and `state/amendments.lock.json`. Amendment 8 fixes `labels_v3` as primary
@@ -26,9 +26,15 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
       claimed.
 - [x] H3 homolog-identity dose-response filed as exploratory (R_c .876 vs .897;
       intervals overlap, not evidence).
+- [x] FP anatomy lead corrected: the first pass used thresholded probability
+      maps, not the deployed greedy head. Corrected artifacts now match the
+      frozen head-17 counts exactly; the radius-2 shift oracle bounds the
+      possible macro gain at +.0251/+.0263, not a reachable result.
 - [x] Paper A tables and README are generated/checked against artifacts; CI now
       fails on number drift, on credentials, and on lock-hash disagreement.
-- [x] Full suite: 184 passed, 1 skipped; fresh-clone CI green.
+- [x] Full suite after the correction: 187 passed, 2 skipped.
+- [x] SSH doctor at 13:52 +0800: TCP reachable, 21-byte OpenSSH 7.4 banner;
+      no retry storm.
 
 - [x] SSH recovered again at 12:43 (watchdog banners). `family_diagnostics.py`
       reproduces the three committed diagnostics on the server with identical
@@ -37,12 +43,14 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
 
 ## Open
 
-- [ ] **Send Round 4n** to the PI when a permitted browser channel exists. Draft:
-      `docs/claude/transcripts/2026-11-14_round04n_prompt.md`.
+- [ ] **Send Round 4n** to the PI when a permitted browser channel exists. Draft
+      is corrected at `docs/claude/transcripts/2026-11-14_round04n_prompt.md`.
 - [ ] PI decisions: (a) whether/when to spend the Amendment 14 `test_novel`
       unblinding; (b) Paper A framing (audit-led vs negative-led vs coverage +
       decoder); (c) clan-grouped refit of `(s,b)`; (d) whether any method
-      contribution is still defensible or the next cycle tests a new hypothesis.
+      contribution is still defensible or the next cycle tests a new hypothesis;
+      (e) whether to run the shift-corrected decoder, with its success bar and
+      kill criterion pre-registered before any result.
 - [ ] Optional compute decision: a longer MXfold2 schedule if it is to serve as
       a strong baseline rather than a control.
 

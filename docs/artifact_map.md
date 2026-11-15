@@ -19,6 +19,7 @@ per-sequence dumps.
 | H3 and dose-response (2.4) | `p2block_h3_{split}.json` | `scripts/jobs/p2_block_*.sbatch` | prose only |
 | H2.4 / energy (2.5) | `h24_seed17_{split}_v3primary.json`, `ec2_*_score.json` | `scripts/jobs/h24_energy.sbatch`, `scripts/jobs/ec2_*.sbatch` | prose only |
 | Coverage and one-hot control (2.6, Figure 6) | `ec1_p1_p2.json`, `ec1b_specificity.json` | `scripts/jobs/ec1_*.sbatch`, `ec1b_score.sbatch` | `tests/test_paper_figures.py` |
+| Exploratory FP anatomy / shift bound | `cohort/fp_anatomy_{split}.json`, `cohort/shift_oracle_{split}.json` | `scripts/fp_anatomy.py`, `scripts/shift_oracle.py` | `tests/test_fp_anatomy.py` |
 
 ## Inputs that stay on the server
 

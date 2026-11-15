@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "macro_f1": 0.6057,
+    "micro_f1": 0.6198
+  },
+  "delta_macro": 0.0263,
+  "head_pred_file": "experiments/002_e1prime_runs/headpreds/seed17_id_test.jsonl",
+  "n_families": 153,
+  "n_fp": 19935,
+  "n_shiftable": 2621,
+  "oracle_shift": {
+    "macro_f1": 0.6319,
+    "micro_f1": 0.66
+  },
+  "radius": 2,
+  "shiftable_frac_of_fp": 0.1315,
+  "split": "splits/s1prime_filtered/id_test.jsonl"
+}

@@ -59,3 +59,21 @@ criterion before this test; the oracle is not a result.
 **Artifacts.** `experiments/002_e1prime_runs/cohort/fp_anatomy_{test_withheld,id_test}.json`
 and `experiments/002_e1prime_runs/cohort/shift_oracle_{test_withheld,id_test}.json`,
 produced by `scripts/fp_anatomy.py` and `scripts/shift_oracle.py`.
+
+**Reproduction (server checkout).**
+
+```bash
+for split in test_withheld id_test; do
+  python scripts/fp_anatomy.py \
+    --split splits/s1prime_filtered/${split}.jsonl \
+    --cohort experiments/002_e1prime_runs/cohort/${split}.jsonl \
+    --head-preds experiments/002_e1prime_runs/headpreds/seed17_${split}.jsonl \
+    --preds experiments/002_e1prime_runs/rnafold_${split}.jsonl \
+    --out experiments/002_e1prime_runs/cohort/fp_anatomy_${split}.json
+  python scripts/shift_oracle.py \
+    --split splits/s1prime_filtered/${split}.jsonl \
+    --cohort experiments/002_e1prime_runs/cohort/${split}.jsonl \
+    --head-preds experiments/002_e1prime_runs/headpreds/seed17_${split}.jsonl \
+    --out experiments/002_e1prime_runs/cohort/shift_oracle_${split}.json
+done
+```

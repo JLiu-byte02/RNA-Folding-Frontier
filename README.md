@@ -6,11 +6,13 @@ contribution. The repository is the single source of truth for code, protocols,
 experiments, negative results, decision records, and the paper draft; datasets
 and checkpoints stay on the compute server.
 
-> **Status 2026-11-14 — negative result, frozen evidence.** A frozen
+> **Status 2026-11-15 — negative result, frozen evidence.** A frozen
 > four-method comparison shows that our frozen-RiNALMo pair head does **not**
 > beat the thermodynamic baselines. We are not claiming SOTA. The paper in
-> progress is an audit-plus-mechanism study, and the next direction is an open
-> PI decision.
+> progress is an audit-plus-mechanism study. The corrected FP-anatomy diagnostic
+> is committed; its radius-2 shift oracle is only an upper bound. The next
+> direction is an open PI decision, with the Round 4n reply pending network
+> recovery.
 
 ## What is established
 
@@ -89,6 +91,8 @@ python scripts/render_cohort_tables.py ...       # markdown from the paired JSON
    specified.
 4. Whether any method contribution is still defensible from this evidence, or
    the next cycle should test a new hypothesis with a pre-declared kill rule.
+5. If the near-miss lead is pursued, whether to run a shift-corrected decoder
+   and what success bar and kill criterion must be pre-registered first.
 
 ## Integrity policy
 

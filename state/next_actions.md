@@ -1,6 +1,6 @@
 # Next Actions
 
-Updated: 2026-11-15 14:25 (Round 4n send attempted; PI reply pending network recovery)
+Updated: 2026-11-15 14:52 (Round 4n reply pending; authoritative docs refreshed)
 
 Governing documents: `experiments/001_e1prime/PREREGISTRATION.md`, Amendments
 1-14, and `state/amendments.lock.json`. Amendment 8 fixes `labels_v3` as primary
@@ -37,6 +37,9 @@ and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
       no retry storm.
 - [x] GitHub push succeeded through a direct-IP one-shot SSH route; fresh-clone
       CI run 125 completed successfully at 06:02 UTC.
+- [x] Research state, Paper A outline and decision log refreshed to the
+      post-E-C1b/E-C2/four-method state; stale conditional and Amendment-12
+      wording removed.
 
 - [x] SSH recovered again at 12:43 (watchdog banners). `family_diagnostics.py`
       reproduces the three committed diagnostics on the server with identical

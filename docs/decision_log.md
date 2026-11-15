@@ -581,3 +581,34 @@ that do not need the server were built and tested locally.
 - All macro/micro gaps are below .15 and the corrected shuffle floor is .0162/
   .0173, below .05; the Amendment 9 reporting invariants pass.
 - Full table: `docs/p2central_fixed_2026-11-12.md`.
+
+## 2026-11-13 — E-C1b and E-C2 close the coverage branch
+
+- E-C1 passed on both pre-registered proxies (`rho=.338 [.244,.429]`;
+  RiNALMo pseudo-perplexity `rho=-.242 [-.332,-.147]`).
+- E-C1b failed the specificity bar: the one-hot control gives `rho=.253` and
+  `d_rho=.085 [.009,.160] < .15`. Coverage is retained as a shared predictor,
+  not a pretraining-specific mechanism.
+- E-C2 collapsed to its grid boundary with the context weights exactly zero;
+  the gated arm is bit-identical to a constant scale and reverses sign on
+  id_test. Further gate work requires new pre-registration.
+- H3 remains descriptive and the original distal-context mechanism is retired.
+
+## 2026-11-14 — Common cohort and Paper A audits
+
+- The four-method common cohort was frozen: 16,040 / 408 withheld and
+  1,272 / 153 id_test. The three-seed head mean remains below RNAfold and
+  EternaFold in family-macro F1; no paired interval excludes zero.
+- Retrained MXfold2 completed and serves only as a 600 nt-capped control.
+- Read-only audits of Paper A found prose/code/artifact mismatches; all are
+  recorded in `docs/corrections.md` with no metric change.
+
+## 2026-11-15 — FP anatomy correction and Round 4n
+
+- The original FP-anatomy lead used thresholded maps and was withdrawn. The
+  corrected deployed-head result is committed with a consistency test.
+- The radius-2 shift oracle bound is `+.0251/+.0263` family-macro F1; it is not
+  a decoder result and no shift test is authorised yet.
+- Round 4n was sent to the existing PI chat, but the reply was not captured when
+  ZoogVPN's WireGuard data plane failed. Delivery remains unconfirmed; no
+  duplicate message should be sent until the chat history is visible.

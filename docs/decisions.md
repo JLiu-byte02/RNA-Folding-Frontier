@@ -106,3 +106,32 @@ Withheld family-macro: gated `.6168` vs fixed `.6137`, paired Δ `+.0031`
 EternaFold withheld `.6051` the margin is `+.0117`. The fitted grid restricted
 `beta>=0`, so negative dependence is untested rather than excluded. E-C2 is
 closed as a failure; any further gate work needs a new pre-registration.
+
+## 2026-11-13 — E-C1b fails specificity; coverage is a shared predictor
+
+The matched one-hot control has partial `rho=.253` with the same family-advantage
+outcome. The pre-registered difference is `d_rho=.085 [.009,.160]`, below the
+`.15` specificity bar. The project may say that corpus coverage predicts
+per-family accuracy on this benchmark, but not that the relation is specific to
+pretraining. The E-C1 result remains a mechanism observation, not a performance
+claim.
+
+## 2026-11-14 — Common four-method cohort frozen; no head advantage
+
+All external tools and the three native heads are scored on one shared id set:
+16,040 sequences / 408 families on withheld and 1,272 / 153 on id_test, v3
+nested truth with at least four true pairs. The retrained MXfold2 cap binds at
+597 / 572 nt. Family-macro F1 is RNAfold `.6003/.5997`, EternaFold
+`.6049/.5952`, RNAstructure `.5900/.5908`, retrained MXfold2 `.5518/.5491`, and
+the head mean `.5905/.5901`. No paired family-bootstrap interval against a
+thermodynamic tool excludes zero. Per-tool subsets must no longer be compared.
+
+## 2026-11-15 — FP anatomy corrected; the shift oracle is not a decoder result
+
+The first FP-anatomy pass used thresholded probability-map cells rather than the
+deployed greedy head and was withdrawn. Corrected counts show that the head
+emits fewer FPs than RNAfold but a larger share lie within 1-2 nt of truth. A
+radius-2 oracle raises family-macro F1 by `.0251` on withheld and `.0263` on
+id_test; it ignores crossing constraints, competing FPs, selection cost and
+model score. No shift-corrected decoder has been authorised or run. The PI must
+pre-register a success bar and kill criterion before it can.

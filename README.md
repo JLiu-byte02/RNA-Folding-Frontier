@@ -43,7 +43,7 @@ and checkpoints stay on the compute server.
   manipulation (D1-core) is falsified; homologous test-time context (H3) misses
   its pre-registered bar; an energy-consistent decoder adds long-range false
   positives as fast as true positives; a coverage-gated scale collapses to a
-  constant. Pretraining coverage correlates with per-family advantage, but a
+  constant. Corpus coverage correlates with per-family advantage, but a
   no-pretraining control fails the specificity bar, so it is reported as a
   shared predictor, not a pretraining mechanism.
 - **A scorer bug was found and corrected.** `pair_prf` scored complete

@@ -32,8 +32,10 @@ experiments that ask whether the residual FM advantage is explained by a
 head-level shortcut, by evolutionarily consistent distal context, or by
 energy-consistent decoding. All three are negative or unsupported under their
 pre-registered bars. We report them as such, together with the one mechanism
-result that did survive: pretraining corpus coverage predicts the FM's
-per-family advantage over a thermodynamic baseline.
+relation that did survive: corpus coverage predicts per-family advantage over a
+thermodynamic baseline. A matched no-pretraining control shows the same
+relation, so we report it as a shared predictor rather than a
+pretraining-specific mechanism.
 
 On a frozen four-method common cohort (RNAfold, EternaFold, RNAstructure, and
 MXfold2 retrained on our own train split) the frozen FM head shows no advantage
@@ -219,7 +221,7 @@ pre-registered requirement -- +.02 over the best clean baseline -- is not met
 small decoder-level gain over RNAfold on one split that does not replicate with
 an interval excluding zero, not as a method advantage.
 
-### 2.6 Pretraining coverage predicts the FM advantage (F6)
+### 2.6 Corpus coverage predicts per-family advantage (F6)
 
 One mechanism result survived. On the 409-family common withheld population the
 FM's per-family advantage over RNAfold correlates with two independent proxies
@@ -555,9 +557,10 @@ Two candidate wordings are drafted; neither is final.
 apparent performance that are not folding: heavy sequence overlap with the
 training corpora, and labels produced by a projection that fails on one row in
 five. After correcting both, the advantage of a frozen RNA foundation model over
-a thermodynamic baseline is small, correlates with pretraining coverage, and is
-not attributable to a head-level family shortcut, to evolutionarily consistent
-distal context, or to energy-consistent decoding.
+a thermodynamic baseline is small and correlates with corpus coverage for both
+the FM and a matched no-pretraining control. It is not attributable to a
+head-level family shortcut, to evolutionarily consistent distal context, or to
+energy-consistent decoding.
 
 **C2 (negative-led).** Three plausible mechanisms for the residual advantage of
 RNA foundation models on secondary-structure prediction — head-level shortcuts,

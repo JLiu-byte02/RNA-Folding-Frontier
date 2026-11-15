@@ -13,6 +13,13 @@ a SOTA claim.
 
 Target venues: NAR, Bioinformatics, or Genome Biology. Not Nature Methods.
 
+**Current state (2026-11-15).** E-C1 passed (P1 rho .338, P2 rho -.242) but
+E-C1b failed specificity (d_rho .085 < .15), so coverage is a shared predictor,
+not evidence for a pretraining-specific mechanism. E-C2 failed at its boundary.
+The four-method common cohort and retrained MXfold2 are frozen. Sections 1-4,
+Tables T1-T7, and Figures 1/2/6/7 are drafted from committed artifacts; title,
+abstract, discussion and conclusion remain held for the PI decision.
+
 ## Figures and claims
 
 | figure | content | claim / table row |
@@ -22,7 +29,7 @@ Target venues: NAR, Bioinformatics, or Genome Biology. Not Nature Methods.
 | F3 | Head-level intervention: P3 a/e-block/b-block design and withheld ΔF1 with family-bootstrap CIs | Mechanism negative: e Δ=+.0007 [−.0079,+.0093]; b Δ=−.0099 [−.0159,−.0036]; D1-core falsified |
 | F4 | Test-time context substitution (P2-block a–e) and descriptive H3 ratios; common-population P2-central ratios | Secondary/descriptive: c retention ~.75–.90; d ~.08–.23; below the pre-registered H3 bar; the old 102% was a population mismatch |
 | F5 | Long-range FP helix energetics and H2.4: greedy vs A-energy DP at matched pair budget, by split and length bin | Decoder negative: 4,391 FP helices; 25.6% in RNAfold MFE; DP adds TPs but also long-range FPs on both splits |
-| F6 (conditional) | E-C1: Rfam full-region membership and RiNALMo pseudo-perplexity vs family FM advantage | Only if E-C1 passes; otherwise reported as a failed pre-registered hypothesis or omitted from the main figures |
+| F6 | E-C1: Rfam full-region membership and RiNALMo pseudo-perplexity vs family FM advantage; matched one-hot control | Coverage predicts both heads; the pretraining-specific control failed |
 
 ## Tables
 
@@ -45,6 +52,9 @@ Target venues: NAR, Bioinformatics, or Genome Biology. Not Nature Methods.
 - Removing or scrambling distal context during head training does not improve
   OOD F1; this rules out the head-level shortcut account, not pretraining
   contamination.
+- Corpus coverage predicts per-family FM advantage, but the matched one-hot
+  control shows a similar relation; call this a shared predictor, not a
+  pretraining-specific mechanism.
 - Homologous distal context retains more than unrelated context at test time,
   but the pre-registered H3 bar was not met; report descriptively.
 - Energy-consistent decoding does not reduce long-range FPs at matched budget;
@@ -56,12 +66,16 @@ Target venues: NAR, Bioinformatics, or Genome Biology. Not Nature Methods.
 - H2 as a mechanism, the 102% transfer figure, or a claim that masking distal
   context improves prediction.
 - A SOTA or “first” claim not backed by a matched external baseline.
-- Any test_novel number before the Amendment 12 one-shot unblinding.
+- Any test_novel number before the Amendment 14 one-shot unblinding.
 
 ## Remaining work before submission
 
-1. E-C1 result; include only if pre-registered success holds.
-2. P3 id_test table and H2.4 per-length bins (PI requested).
-3. MXfold2 retraining on the frozen train split and baseline overlap flags.
-4. One-shot test_novel unblinding after Amendment 12 fixes the analysis list.
-5. Human review of all citations and the final claim table.
+1. PI decision on title, abstract, discussion and conclusion framing.
+2. Amendment 14 final analysis list, then the single `test_novel` unblinding;
+   no test-set number may inform the framing before that pass.
+3. Human review of the final narrative and any citations added during framing;
+   the current ten references were checked on 2026-11-15.
+4. Optional, only if the PI pre-registers a success bar and kill criterion:
+   shift-corrected decoder test. Until then the radius-2 oracle is a bound, not
+   a result.
+5. Refresh the T6 claim table once the framing decision is recorded.

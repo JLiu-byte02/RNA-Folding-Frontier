@@ -1,7 +1,7 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-15T14:52:00+08:00",
+ "updated_at": "2026-11-15T15:00:00+08:00",
  "phase": "external-baseline-cohort-and-paper-a",
  "cycle": 6,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
@@ -70,7 +70,8 @@
    "experiments/002_e1prime_runs/cohort/shift_oracle_test_withheld.json",
    "experiments/002_e1prime_runs/cohort/shift_oracle_id_test.json",
    "tests/test_fp_anatomy.py",
-   "docs/network_2026-11-15.md"
+   "docs/network_2026-11-15.md",
+   "state/task_queue.json"
   ]
  },
  "amendments": {

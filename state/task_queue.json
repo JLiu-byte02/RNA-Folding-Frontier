@@ -1,180 +1,69 @@
 {
-  "updated": "2026-11-12T04:50:00+08:00",
-  "server_status": "SSH_UNAVAILABLE",
-  "blocked_on": "Both WAN SDP lines closed on :441 (218.18.235.188 via vpn.suat-sz.edu.cn, and 218.18.235.189) while the aTrust portal answers 200 on :443 from both addresses. Client is sticky in 'all line out' and runs no further detection; use scripts/tunnel_watch.py --once and force a tray disconnect/reconnect once the school restores the line. Ask the admin whether the line port is still 441 and whether .188 is current.",
-  "order": "PI Round 4e: provenance resolution > D1/D2 dumps + K1 > P2-block cache > A-energy-fixed ((s,b) fit, then H2.4) > train-and-test heads > positive control > baseline retraining (Amendment 5) > A-energy-learned",
+  "updated": "2026-11-15T15:00:00+08:00",
+  "server_status": "SSH_UP",
+  "gpu_jobs": 0,
+  "pi": {
+    "chat_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
+    "round": "4n",
+    "state": "send_attempted_reply_unconfirmed",
+    "draft": "docs/claude/transcripts/2026-11-14_round04n_prompt.md",
+    "network_note": "docs/network_2026-11-15.md"
+  },
+  "order": [
+    "recover_round4n",
+    "paper_A_framing",
+    "amendment14_unblinding_plan",
+    "optional_method_decision",
+    "final_manuscript_audit"
+  ],
   "tasks": [
     {
-      "id": "verify_paths",
-      "priority": 0,
-      "status": "ready",
-      "why": "Paths for the P2-block donors and the c homolog map must be confirmed before submitting; the repo code documents the convention, not the actual file names.",
-      "command": "pwd; ls data/processed; ls data/processed/conditions/id_test | head; ls data/cache | head -30; ls splits/s1prime_filtered",
-      "notes": "Read-only. Also reconcile squeue -u $USER with sacct for jobs 14284-86, 14269, 14302, 14306-08 before any new submission."
+      "id": "recover_round4n",
+      "status": "waiting_external",
+      "why": "The PI message was sent, but the generation stream died and a reload hit ERR_NAME_NOT_RESOLVED. Delivery and any reply are unconfirmed.",
+      "command": "After ZoogVPN recovery: Resolve-DnsName claude.ai; reopen the saved Claude tab; inspect message history before resending.",
+      "notes": "Do not duplicate the message blindly. Archive any reply to docs/claude/transcripts/ and update project_state.json."
     },
     {
-      "id": "q1_dump",
-      "priority": 1,
-      "status": "ready",
-      "why": "D1/D2 need per-sequence pair probabilities; the P2 runs only stored F1 per sequence.",
-      "command": "for s in 17 23 41; do python scripts/e1prime_dump.py --checkpoint runs/p2_seed$s/best.pt --out-dir experiments/002_e1prime_runs/dump_seed$s --eval a_id_test=splits/s1prime_filtered/id_test.jsonl:data/cache/giga_a_id_test --eval b_id_test=... --eval c_id_test=... --eval d_id_test=... --eval e_id_test=... --eval a_test_withheld=... --eval b_test_withheld=... --eval c_test_withheld=... --eval d_test_withheld=... --eval e_test_withheld=...; done",
-      "notes": "c arms use splits/s1prime_filtered/<split>.jsonl restricted to the c cache; a_csub rows come from data/processed/conditions/<split>/csubset_native.jsonl"
+      "id": "paper_A_framing",
+      "status": "waiting_pi",
+      "why": "Title, abstract, discussion and conclusion are deliberately held. Round 4n asks for an audit-led, negative-led, or coverage-plus-decoder framing.",
+      "command": "Read the Round 4n reply, record the decision in docs/decisions.md, then update README and the held sections.",
+      "notes": "Sections 1-4, T1-T7 and the available figures already exist. Do not change held framing without the PI ruling."
     },
     {
-      "id": "q1_score",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "q1_dump",
-      "why": "D1: does condition e change quality or just the operating point?",
-      "command": "python scripts/d1_scoring.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --out experiments/002_e1prime_runs/d1_seed17.json",
-      "notes": "Writes d1_seed*.json plus d1_seed*.json.per_sequence/ for K1. 3 decoders x 4 bands x oracle grid 0.20-0.90."
+      "id": "amendment14_unblinding_plan",
+      "status": "waiting_pi",
+      "why": "test_novel is a one-shot embargoed confirmation. Its final analysis list depends on the Paper A framing and method decision.",
+      "command": "After framing: freeze the exact analysis list in Amendment 14, hash it, then run the single unblinding pass.",
+      "notes": "No test_novel score exists. The existing split and label counts are permitted; predictions and scores are not."
     },
     {
-      "id": "q1_k1",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "q1_score",
-      "why": "Amendment 2 K1: is the e-a gain an operating-point artifact? Decides whether the 'net-negative prior' reading and H2 are worth pursuing.",
-      "command": "python scripts/k1_check.py --a experiments/002_e1prime_runs/d1_seed{17,23,41}.json.per_sequence/a_id_test.jsonl --e experiments/002_e1prime_runs/d1_seed{17,23,41}.json.per_sequence/e_id_test.jsonl --out experiments/002_e1prime_runs/k1_id_test.json",
-      "notes": "Run the same on test_withheld. Verdict rule is in AMENDMENT_2 A2.4, not in the script."
+      "id": "optional_method_decision",
+      "status": "waiting_pi",
+      "why": "Two possible follow-ups remain: the shift-corrected decoder and a clan-grouped refit of the frozen (s,b). Neither is authorised by an existing amendment.",
+      "command": "For the decoder, pre-register a success bar and kill criterion before implementation; for the S/B refit, follow Amendment 7's clan-grouped design.",
+      "notes": "The radius-2 shift oracle is +.0251/+.0263 upper-bound only. Do not present it as evidence of a reachable gain."
     },
     {
-      "id": "q1_structure",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "q1_dump",
-      "why": "D2/H2: are false positives enriched for stackable complementary runs, and do they grow with length?",
-      "command": "python scripts/d2_structure_errors.py --dump-dir experiments/002_e1prime_runs/dump_seed17 --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/d2_withheld_seed17.json"
-    },
-    {
-      "id": "q1_h23",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "block_cache_ac_idtest",
-      "why": "H2.3: do the extra false positives under (c) sit on the block boundary, or is the 60% rule only restating that they are long-range?",
-      "command": "python scripts/e1prime_dump.py --checkpoint runs/p2_seed17/best.pt --out-dir experiments/002_e1prime_runs/dump_block_seed17 --eval c_id_test=<csubset_native.jsonl>:data/cache/block_c_id_test; python scripts/e1prime_dump.py --checkpoint runs/p2_seed17/best.pt --out-dir experiments/002_e1prime_runs/dump_block_seed17 --eval a_id_test=<csubset_native.jsonl>:data/cache/giga_a_id_test; python scripts/d2b_block_boundary.py --a-dump experiments/002_e1prime_runs/dump_block_seed17/a_id_test.jsonl --c-dump experiments/002_e1prime_runs/dump_block_seed17/c_id_test.jsonl --split splits/s1prime_filtered/id_test.jsonl --out experiments/002_e1prime_runs/d2b_block_seed17.json",
-      "notes": "Condition (a) under block geometry rewrites nothing, so its composite equals the native sequence; giga_a_id_test is reused and the difference is only batch numerics. Read by_distance_band, not the 60% rule alone."
-    },
-    {
-      "id": "q1_h24",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "q1_dump",
-      "why": "H2.4 (Amendment 3 A3.1, restated): does decoder A reduce long-range FPs relative to greedy nested matching AT MATCHED RECALL, by more than it loses TPs?",
-      "command": "python scripts/h24_decoder_compare.py --dump experiments/002_e1prime_runs/dump_seed17/a_test_withheld.jsonl --split splits/s1prime_filtered/test_withheld.jsonl --out experiments/002_e1prime_runs/h24_a_withheld_seed17.json",
-      "notes": "Two readouts: at_0_5 (exploratory) and matched_recall (confirmatory). The A-struct variant (zero loop penalties) cannot confirm H2.4 per A3.1; the confirmatory run needs the ViennaRNA-energy variant. If status=inconclusive_no_recall_match, report it: greedy cannot reach DP recall at any threshold. Run 3 seeds, id_test and withheld."
-    },
-    {
-      "id": "block_donors",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "verify_paths",
-      "why": "P2-block needs a donor value at every position; the existing condition files only replace outside one central window.",
-      "command": "for split in id_test test_withheld; do python scripts/build_block_donors.py --split splits/s1prime_filtered/$split.jsonl --out-dir data/processed/block_donors/$split --conditions b,d,e --seed 17; python scripts/build_block_donors.py --split splits/s1prime_filtered/$split.jsonl --out-dir data/processed/block_donors/$split --conditions c --seed 17 --homolog-map <CONFIRM: homolog map used for condition c>; done",
-      "notes": "CPU, login node, nice 19. Length assertions are built in. e is all N; b keeps dinucleotide composition."
-    },
-    {
-      "id": "block_cache_ac_idtest",
-      "priority": 1,
-      "status": "ready",
-      "depends_on": "block_donors",
-      "why": "H2.3 needs (a) vs (c) at the block boundary; (a) is already the full giga_a cache, so only c is GPU work here.",
-      "command": "sbatch scripts/jobs/block_cache.sbatch c splits/s1prime_filtered/id_test.jsonl data/processed/block_donors/id_test/c.json data/cache/block_c_id_test",
-      "notes": "1,402 seqs, ~7 passes each. c only covers the csubset, so evaluate against csubset_native as with P2-central."
-    },
-    {
-      "id": "block_cache_bde",
-      "priority": 2,
-      "status": "queued",
-      "depends_on": "block_cache_ac_idtest",
-      "why": "b/d/e under the same geometry, then withheld. Scope the withheld run by what H2.3 needs instead of assuming 20 GPU-h.",
-      "command": "for cond in b d e; do sbatch scripts/jobs/block_cache.sbatch $cond splits/s1prime_filtered/id_test.jsonl data/processed/block_donors/id_test/$cond.json data/cache/block_${cond}_id_test; done",
-      "notes": "e under this geometry is approximately a k=32 crop; record the measured cost in the manifest and report it against the 20 GPU-h estimate."
-    },
-    {
-      "id": "p3_train_and_test",
-      "priority": 2,
-      "status": "queued",
-      "why": "The real P3 arms: a separate head per condition removes the calibration artifact by construction.",
-      "command": "sbatch scripts/jobs/train_head.sbatch <seed> runs/p3_<cond>_seed<seed> --train-cache data/cache/giga_<cond>_train --eval <cond>_test_withheld=...:<cache> --eval <cond>_id_test=...:<cache>",
-      "arms": [
-        "a",
-        "e",
-        "k32-crop"
-      ],
-      "n_seeds": 3,
-      "notes": "train on giga only; micro is paused per PI"
-    },
-    {
-      "id": "positive_control",
-      "priority": 3,
-      "status": "queued",
-      "why": "Show the instrument can detect a family shortcut when one exists: sequence-level split inside training clans, ~80% identity, near-duplicates allowed.",
-      "command": "build seq-level split -> conditions a-e -> cache -> train/eval 3 seeds on giga",
-      "notes": "prediction: (c) holds up relative to (d) there, the reverse of S1'"
-    },
-    {
-      "id": "baselines",
-      "priority": 4,
-      "status": "ready",
-      "why": "Needed whatever the hypothesis: BPfold, RNAstructure, EternaFold, MXfold2 on id_test and test_withheld.",
-      "command": "python scripts/run_baselines.py --split splits/s1prime_filtered/id_test.jsonl --tool <name> --out results/baselines/id_test/<name>.json --outdir work/<name> --cmd \"<verified command>\"",
-      "notes": "Runner and parsers are implemented and tested (docs/baselines.md); the tool command lines are NOT verified. Run on CPU in parallel with 1-3, verify --help first, and report n_missing with every number."
-    },
-    {
-      "id": "decoder_a",
-      "priority": 5,
-      "status": "in_progress",
-      "why": "Round 4c: decoder A is the central test and the candidate fix; it must use ViennaRNA energies + learned corrections (sc_add_bp), not a hand-written Turner model.",
-      "command": "python scripts/fit_energy_calibration.py --train-dump <train dump> --train-split splits/s1prime_filtered/train.jsonl --out experiments/003_decoder_a/energy_calibration.json; then python scripts/h24_decoder_compare.py --energy vienna --energy-scale <s> --energy-offset <b>",
-      "notes": "A-struct DP enumeration-verified; ViennaRNA sc_add_bp wrapper parity 60/60 (record 003_decoder_a/parity_vienna_2.8.0.json); A4.1 comparison order implemented in rff.analysis.operating_point with unit tests; A4.2 two-parameter calibration fitter implemented and smoke-tested on 12 synthetic sequences (NOT a fit: it needs the frozen train dump). Still open: licence terms for redistributing ViennaRNA [CHECK]."
-    },
-    {
-      "id": "relaxed_audit",
-      "priority": 6,
-      "status": "running",
-      "why": "Amendment 1.5 audit counts; does not gate anything else.",
-      "command": "python scripts/relaxed_scan_audit.py --out experiments/000_e0_leakage/relaxed_scan_audit.json",
-      "notes": "37/94 shards done when the cluster dropped; the scan keeps running on the login node"
-    },
-    {
-      "id": "test_novel_scoring",
-      "priority": 7,
-      "status": "embargoed",
-      "why": "Confirmation set. No model is scored until H2 or its replacement is pre-registered.",
-      "notes": "primary = family-macro F1 bootstrapped over clan blocks (singletons as their own clan); robustness = homology blocks from test-vs-test cmscan at E<=1"
-    },
-    {
-      "id": "energy_calibration_fit",
-      "priority": 5,
-      "status": "blocked",
-      "why": "Amendment 4 A4.2: (s, b) must be fitted on the frozen train split and frozen before id_test or withheld is scored, or H2.4 is not confirmatory.",
-      "command": "python scripts/fit_energy_calibration.py --train-dump runs/<head>/train_dump.jsonl --train-split splits/s1prime_filtered/train.jsonl --grid-s 0.25,0.5,1.0,2.0,4.0 --grid-b=-5,-3,-1.5,0,1.5 --folds 5 --workers <n> --out experiments/003_decoder_a/energy_calibration.json",
-      "notes": "About 12 CPU-h at 17.7k train sequences and a 5x5 grid (0.2 s/decode). The grid is centred on b=-3 because pos_weight 20 inflates the logits by about log 20. Needs the train-split dump, which does not exist yet: no cached embeddings on this side."
-    },
-    {
-      "id": "h24_a_energy_fixed",
-      "priority": 5,
-      "status": "blocked",
-      "why": "The confirmatory H2.4 comparison (Amendment 3 A3.1 + Amendment 4 A4.1/A4.2).",
-      "command": "python scripts/h24_decoder_compare.py --dump <dump> --split splits/s1prime_filtered/<split>.jsonl --energy vienna --energy-scale <s> --energy-offset <b> --out <out>",
-      "notes": "Report the basis (recall_matched vs pair_budget), the greedy recall ceiling, and whether the fitted (s, b) hash is recorded. Run on id_test and withheld; test_novel stays embargoed."
-    },
-    {
-      "id": "provenance_resolution",
-      "priority": 1,
-      "status": "blocked",
-      "why": "PI Round 4e: the frozen split hashes are not in the pushed repository, so the test_novel embargo currently rests on our word rather than an artifact. Amendment 4 A4.6 fixes the procedure.",
-      "command": "ssh: git status; git log origin/main..HEAD; git push; copy splits/s1prime/manifest.json and splits/s1prime_filtered/filter_report.json into the repo; sha256sum splits/s1prime_filtered/*.jsonl; stat the split files",
-      "notes": "Then determinism check: rebuild every split from committed code, seeds and pinned inputs into a fresh directory and compare hashes. Match = the freeze is credible after the fact. Mismatch = stop and report before further computation. Partial fact already verified: test_novel_eval.jsonl sha256 == 9d1ab36c... over 2,372 records, matching novel_eval_set.md."
-    },
-    {
-      "id": "baseline_retraining",
-      "priority": 7,
-      "status": "blocked",
-      "why": "Amendment 5: on withheld, released weights have seen the held-out clans and our model has not, so a released-weight comparison cannot carry the P5 claim.",
-      "command": "mxfold2 train --model MixC --param runs/mxfold2_frozen/model.pth --save-config runs/mxfold2_frozen/model.conf <frozen-train BPSEQ .lst>",
-      "notes": "MXfold2 supports training from BPSEQ, so a retrained entry is feasible; BPfold's training code to be assessed first. Released-weight scores are reported separately with clan-overlap labels. Fixed-parameter tools (RNAfold, RNAstructure, EternaFold) are reported as is."
+      "id": "final_manuscript_audit",
+      "status": "ready_after_framing",
+      "why": "The final narrative, held sections and references must be checked after the PI decision.",
+      "command": "python -m pytest -q; verify paper tables, figures, references, artifact map and fresh-clone CI.",
+      "notes": "Current baseline: 187 passed, 2 skipped; the latest fresh-clone CI is green."
     }
+  ],
+  "completed_this_cycle": [
+    "MXfold2 retraining and the frozen four-method common cohort",
+    "P3 id_test and H2.4 length-bin reporting",
+    "E-C1, E-C1b and E-C2 closure",
+    "Paper A drafted through section 4 with T1-T7 and verified references",
+    "FP anatomy corrected to the deployed head; regression test and fresh-clone CI added",
+    "Authoritative research state, Paper A outline and decision records refreshed"
+  ],
+  "notes": [
+    "Detailed routing diagnosis stays out of the public repository; see docs/network_2026-11-15.md for the current high-level state.",
+    "No GPU job is running; SSH to the compute server remains available by IP.",
+    "Do not reuse runs/p2_seed* checkpoints or pre-fix pair_prf numbers."
   ]
 }

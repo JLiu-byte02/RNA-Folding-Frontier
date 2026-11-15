@@ -20,6 +20,13 @@ The four-method common cohort and retrained MXfold2 are frozen. Sections 1-4,
 Tables T1-T7, and Figures 1/2/6/7 are drafted from committed artifacts; title,
 abstract, discussion and conclusion remain held for the PI decision.
 
+**PI framing (Round 4n, 2026-11-15).** Audit-led, with the clean clan-held-out
+benchmark result at the centre. The paper is not a method claim, not a claim
+that FMs fail, and not a coverage-specific mechanism. Position it against
+CHANRG's out-of-distribution collapse. NAR/Genome Biology are the realistic
+venues; Bioinformatics if compressed. Title and abstract stay held until H4
+and the single `test_novel` unblinding are complete.
+
 ## Figures and claims
 
 | figure | content | claim / table row |
@@ -52,9 +59,12 @@ abstract, discussion and conclusion remain held for the PI decision.
 - Removing or scrambling distal context during head training does not improve
   OOD F1; this rules out the head-level shortcut account, not pretraining
   contamination.
-- Corpus coverage predicts per-family FM advantage, but the matched one-hot
+- Corpus coverage predicts per-family advantage, but the matched one-hot
   control shows a similar relation; call this a shared predictor, not a
   pretraining-specific mechanism.
+- H4 is conditional: if the same PDB-clean chains score better against
+  comparative labels than against structural labels, annotation convention is
+  part of the learned-model advantage. Otherwise report the clean negative.
 - Homologous distal context retains more than unrelated context at test time,
   but the pre-registered H3 bar was not met; report descriptively.
 - Energy-consistent decoding does not reduce long-range FPs at matched budget;
@@ -70,12 +80,16 @@ abstract, discussion and conclusion remain held for the PI decision.
 
 ## Remaining work before submission
 
-1. PI decision on title, abstract, discussion and conclusion framing.
-2. Amendment 14 final analysis list, then the single `test_novel` unblinding;
-   no test-set number may inform the framing before that pass.
-3. Human review of the final narrative and any citations added during framing;
-   the current ten references were checked on 2026-11-15.
-4. Optional, only if the PI pre-registers a success bar and kill criterion:
-   shift-corrected decoder test. Until then the radius-2 oracle is a bound, not
-   a result.
-5. Refresh the T6 claim table once the framing decision is recorded.
+1. H4: acquire the PDB-derived, cmscan-assigned, train-clean chain cohort; build
+   fixed comparative and structural labels; run the three heads, RNAfold and
+   EternaFold; report the family count and D.
+2. Pre-register and run the gated shift refinement; report oracle recovery.
+3. Run the clan-grouped `(s,b)` refit and A-fixed on withheld under old and
+   refit parameters.
+4. Add two predeclared head seeds (five total) and the default-weight MXfold2
+   row; keep the short-schedule retrain clearly labelled.
+5. Amendment 15 final analysis list, then the single `test_novel` unblinding;
+   no test-set number may inform earlier choices.
+6. Human review of the final narrative and citations; the current ten
+   references were checked on 2026-11-15.
+7. Refresh the T6 claim table after H4 and the unblinding.

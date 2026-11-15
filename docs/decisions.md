@@ -135,3 +135,47 @@ radius-2 oracle raises family-macro F1 by `.0251` on withheld and `.0263` on
 id_test; it ignores crossing constraints, competing FPs, selection cost and
 model score. No shift-corrected decoder has been authorised or run. The PI must
 pre-register a success bar and kill criterion before it can.
+
+## 2026-11-15 — Round 4n: audit-led finish, H4, and the pre-unblinding queue
+
+The PI's Round 4n ruling is archived at
+`docs/claude/transcripts/2026-11-15_round04n_reply.md`. It is the governing
+plan for this phase:
+
+- **No method contribution is claimed.** Decoder A at constant scale is a
+  single-split footnote; D2 stays shelved. Title and abstract remain held until
+  H4 and `test_novel` are in.
+- **H4 is the one new hypothesis.** Comparative Rfam labels may encode
+  annotation convention that models learn. Score the same PDB-derived,
+  cmscan-assigned, train-clean chains against two truths: cmalign/SS_cons
+  projected pair-wise (v3) and fixed PDB structural pairs, under the same
+  canonical/GU, maximum-nested, >=4-pair policy. Predictors: p2fix head (3
+  seeds), one-hot head, RNAfold and EternaFold. D is the comparative-label
+  advantage minus the PDB-label advantage, family-macro with a family
+  bootstrap. Supported iff D >= .03 with CI excluding 0 and the one-hot head
+  has the same direction; killed iff D < .01 or the CI includes 0; fewer than
+  40 families with both labels is underpowered and ends the test.
+- **Shift-corrected decoder is secondary and pre-registered.** Refine only
+  maximal accepted helices by a single 3'-strand register shift in
+  {-2,-1,+1,+2}, respecting one-partner and non-crossing constraints, and keep
+  it only if the helix's summed logit strictly increases; deterministic
+  descending-sum ordering. Gate on the frozen cohort with all three seeds:
+  withheld macro gain >= .008 with CI excluding 0 and id_test point estimate
+  >= 0. Kill below .004 or if the CI includes 0.
+- **Clan-grouped `(s,b)` refit is required** because decoder A-fixed is the one
+  surviving positive endpoint. Boundary extension is one step outward, declared
+  before the fit; report withheld under old and refit values; only the refit
+  goes to `test_novel`.
+- **Two additional head seeds (five total)** and **MXfold2 default weights as
+  one row** run before the final list. The new seeds must be declared before
+  training. The retrained MXfold2 remains a control and no further MXfold2
+  training is authorized.
+- **`test_novel` is unblinded once** after all of the above are frozen. The
+  final list is Amendment 15 (explicitly superseding, not editing, Amendment
+  14): refit decoder A minus RNAfold; shift minus greedy only if gated;
+  H2.4 L<300 subgroup; the four-method/head descriptive table with
+  clan-bootstrap and homology robustness; E-C1/E-C1b descriptive; G1 collapsed
+  to A-fixed; length bands and FP anatomy descriptive. Hash the outputs.
+- **Paper framing:** audit-led with the clean clan-held-out benchmark result at
+  the centre; do not claim FM failure or lead with coverage specificity.
+  NAR/Genome Biology are the realistic venues, Bioinformatics if compressed.

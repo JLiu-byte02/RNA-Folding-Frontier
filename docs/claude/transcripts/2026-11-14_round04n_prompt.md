@@ -1,11 +1,10 @@
 # Round 4n — draft message to the PI (2026-11-14)
 
-Status: send attempted 2026-11-15 14:13 +0800 in the existing Opus 5.5 High
-chat (`cc2ad40a-406e-481e-8e7b-89a64b78f2f4`). The client displayed the message
-and then lost its generation stream (`Can't connect. Retrying...`). A reload
-failed with `ERR_NAME_NOT_RESOLVED`; delivery and any response are therefore
-unconfirmed. Do not resend until the chat is re-opened after ZoogVPN recovers
-and the message history is checked.
+Status: delivered on retry at 2026-11-15 14:47 +0800 in the existing Opus 5.5
+High chat (`cc2ad40a-406e-481e-8e7b-89a64b78f2f4`). The first send was shown as
+`Not delivered`; the history was checked, the message was retried, and Claude
+responded. Full reply:
+`docs/claude/transcripts/2026-11-15_round04n_reply.md`.
 
 ---
 

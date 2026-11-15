@@ -71,6 +71,11 @@
       "first_quoted_in": "4dd5cca",
       "note": "Written 2026-11-13 before E-C1b or E-C2 outcomes (PI Round 4m). Frozen on first commit; no further edits."
     },
+    "experiments/001_e1prime/AMENDMENT_15A.md": {
+      "blob_sha256": "e7c1733fb88b81c4177f0ef76ce174623fbc386410f7169d716eddb2f59e412a",
+      "first_quoted_in": "55a30f144d8f",
+      "note": "Written 2026-11-15 before H4, shift refinement, refit, new seeds or default-MXfold2 results. A15 remains reserved for the final test_novel list."
+    },
     "experiments/002_e1prime_runs/ec2_fit.json": {
       "blob_sha256": "7008310f93478c308f17c4b709b75abf27a065377bb83a06887a176b25202490",
       "first_quoted_in": "bd7c3ca",

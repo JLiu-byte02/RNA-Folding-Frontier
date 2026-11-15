@@ -1,6 +1,6 @@
 # Research State
 
-Updated: 2026-11-15 14:40 +0800
+Updated: 2026-11-15 14:58 +0800
 
 This is the current authoritative snapshot. Earlier versions accumulated
 superseded interim numbers; use `docs/decision_log.md`, `docs/corrections.md`,
@@ -10,10 +10,31 @@ and the experiment artifacts for history.
 
 Paper A is the committed deliverable: a benchmark/label audit plus
 well-controlled negative mechanism results. The frozen four-method comparison
-contains no head advantage over the thermodynamic tools. PI Round 4n was sent
-on 2026-11-15, but its reply has not been received because the ZoogVPN data
-plane and system DNS failed. Method work beyond the pre-registered analyses
-waits for the PI's next decision.
+contains no head advantage over the thermodynamic tools. Round 4n was delivered
+on retry and its reply is archived: the paper remains audit-led, no method claim
+is made, and D2 is shelved. The authorized pre-unblinding queue is: H4
+annotation-convention test, gated shift refinement, clan-grouped `(s,b)` refit,
+two additional head seeds, default-weight MXfold2, then Amendment 15 and one
+`test_novel` unblinding.
+
+## Round 4n decision
+
+- H4 starts the queue. It compares the same PDB-derived, train-clean chains
+  against cmalign/SS_cons comparative labels and fixed PDB structural labels.
+  Supported: D >= .03 with CI excluding 0 and same sign for the one-hot head.
+  Killed: D < .01 or CI includes 0. Fewer than 40 two-label families is
+  underpowered and ends the test without extension.
+- The shift refinement is a secondary analysis with a fixed gate: withheld
+  macro gain >= .008 with CI excluding 0 and id_test point estimate >= 0; kill
+  below .004 or if the CI includes 0.
+- The `(s,b)` refit must use Amendment 7's clan-grouped folds; a boundary fit
+  gets one declared outward step. Only the refit values enter `test_novel`.
+- Two additional seeds bring the head to five. The new seeds and the five-seed
+  reporting rule must be frozen before training.
+- MXfold2 default weights enter as one overlap-flagged row; no further
+  retraining compute is authorized.
+- Amendment 15 fixes the final `test_novel` list and supersedes, without
+  editing, Amendment 14. Hash the one-pass outputs and log any rerun.
 
 ## Confirmed scientific verdicts
 

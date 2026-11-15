@@ -1,83 +1,75 @@
 # Next Actions
 
-Updated: 2026-11-15 15:00 (Round 4n reply pending; recovery queue refreshed)
+Updated: 2026-11-15 15:04 (A15A pinned; H4 cohort construction active)
 
 Governing documents: `experiments/001_e1prime/PREREGISTRATION.md`, Amendments
-1-14, and `state/amendments.lock.json`. Amendment 8 fixes `labels_v3` as primary
-and secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1;
-13 freezes E-C2; 14 pins the one-shot `test_novel` list.
+1-14, the Round 4n ruling in
+`docs/claude/transcripts/2026-11-15_round04n_reply.md`, and
+`state/amendments.lock.json`. Amendment 8 fixes `labels_v3` as primary and
+secondary labels; 10/11 pre-register P2-block/P3/D1-core; 12 freezes E-C1; 13
+freezes E-C2; 14 pins the one-shot `test_novel` list.
+
+`AMENDMENT_15A.md` is the pre-unblinding protocol and must be pinned before the
+new seeds, H4, shift refinement, or refit are run. `AMENDMENT_15.md` remains
+reserved for the final `test_novel` list, as the PI specified; A15A must not edit
+or supersede A14.
+
+## Immediate queue
+
+1. **[done] Pin A15A before any new result.** It froze:
+   - new head seeds **43 and 47**, giving five seeds total;
+   - the five-seed reporting rule (family-bootstrap CI and across-seed t
+     interval; no post-hoc seed selection);
+   - H4's population, two label constructions, predictors, D statistic,
+     supported/killed/underpowered gates, and minimum family count;
+   - the exact shift-refinement rule, `.008` pass / `.004` kill thresholds,
+     oracle-recovery reporting, and three-seed evaluation;
+   - the clan-grouped `(s,b)` refit, one-step outward rule at the boundary,
+     and the requirement to report old and refit parameters;
+   - the default-weight MXfold2 row and its overlap annotation.
+2. **H4 cohort (CPU/data, current task).** Obtain bpRNA-1m PDB-sourced chains
+   outside train; exclude k=15 containment >= 0.5 against train; cmscan-assign
+   to an Rfam family; cmalign each chain to its family CM; build pair-level
+   comparative labels and fixed PDB structural labels; apply canonical/GU,
+   maximum-nested, >=4-pair policy to both; run p2fix 3-seed, one-hot,
+   RNAfold and EternaFold; report family count and bootstrap D.
+3. **Shift refinement (CPU; frozen cohort).** Implement the exact helix-level
+   register-shift rule from Round 4n, evaluate all three seeds on withheld and
+   id_test, and report the gate verdict, oracle recovery, and near/far FP
+   changes. No looser threshold may be substituted after seeing results.
+4. **Clan-grouped `(s,b)` refit (CPU; frozen train).** Reproduce Amendment 7's
+   clan-grouped folds, extend one step outward only if at the boundary, then
+   rescore A-fixed on withheld under old and refit parameters. Only the refit
+   enters `test_novel`.
+5. **Additional seeds 43 and 47 (GPU; frozen recipe).** Train and select under
+   the same corrected metric and split, then produce the five-seed head table.
+   No seed may be dropped after looking at its test result.
+6. **Default-weight MXfold2 (CPU; external row).** Run the released/default
+   weights on the common cohort, flag training-data overlap, and compare with
+   the short-schedule retrain. No more MXfold2 training.
+7. **Amendment 15 and one unblinding.** After 1-6 are frozen, write A15 with the
+   final list from Round 4n, pin its hash, then read `test_novel` exactly once.
+   Hash every output; log any bug repair in `docs/corrections.md`.
 
 ## Closed this cycle
 
-- [x] Cluster SSH outage 00:33-14:23 diagnosed and recovered; a per-user banner
-      watchdog (5 min) logs every probe. Detailed routing diagnosis is kept
-      outside the public repository; the elevated split-tunnel route is **not**
-      required while SSH works.
-- [x] MXfold2 retrain `15631` completed 01:18 (8 h 13 m, exit 0); checkpoint,
-      config and manifest hashes are recorded in `experiments/013_mxfold2/`.
-- [x] Fold job `16459` (16,774 + 1,377 sequences) and cohort rebuild `16489`
-      finished. Four-method cohort frozen: withheld 16,040 / 408 families,
-      id_test 1,272 / 153; the 600 nt MXfold2 cap binds (597 / 572 nt).
-- [x] Verdict unchanged: the head has no advantage over RNAfold, EternaFold or
-      RNAstructure; no paired interval excludes zero. The retrained MXfold2 is
-      weak (.5518 / .5491) and is reported as a retraining control only.
-- [x] Length bands are descriptive; the within-family interaction is
-      underpowered (24 withheld / 5 id_test families), so no length mechanism is
-      claimed.
-- [x] H3 homolog-identity dose-response filed as exploratory (R_c .876 vs .897;
-      intervals overlap, not evidence).
-- [x] FP anatomy lead corrected: the first pass used thresholded probability
-      maps, not the deployed greedy head. Corrected artifacts now match the
-      frozen head-17 counts exactly; the radius-2 shift oracle bounds the
-      possible macro gain at +.0251/+.0263, not a reachable result.
-- [x] Paper A tables and README are generated/checked against artifacts; CI now
-      fails on number drift, on credentials, and on lock-hash disagreement.
-- [x] Full suite after the correction: 187 passed, 2 skipped.
-- [x] SSH doctor at 13:52 +0800: TCP reachable, 21-byte OpenSSH 7.4 banner;
-      no retry storm.
-- [x] GitHub push succeeded through a direct-IP one-shot SSH route; fresh-clone
-      CI run 125 completed successfully at 06:02 UTC.
-- [x] Research state, Paper A outline and decision log refreshed to the
-      post-E-C1b/E-C2/four-method state; stale conditional and Amendment-12
-      wording removed.
-- [x] `state/task_queue.json` replaced: it no longer claims SSH downtime or
-      lists completed P2/P3/decoder work as queued/in progress.
-
-- [x] SSH recovered again at 12:43 (watchdog banners). `family_diagnostics.py`
-      reproduces the three committed diagnostics on the server with identical
-      MD5s; runtime scripts uploaded individually. No `reset --hard` on the
-      server worktree (untracked dumps at risk).
-
-## Open
-
-- [ ] **Recover the Round 4n exchange.** The message was sent into the existing
-      Claude chat at 14:13 +0800, but the generation stream died and the page
-      then failed DNS. Reopen the chat after ZoogVPN data-plane recovery, check
-      whether the message is in history, and do not duplicate it blindly. The
-      exact body is `docs/claude/transcripts/2026-11-14_round04n_prompt.md`.
-- [ ] **Human/VPN action:** reconnect or switch the ZoogVPN node from its UI with
-      administrator rights. System DNS and Claude access are down while SSH to
-      `10.22.19.39` remains up; see `docs/network_2026-11-15.md`.
-- [ ] PI decisions: (a) whether/when to spend the Amendment 14 `test_novel`
-      unblinding; (b) Paper A framing (audit-led vs negative-led vs coverage +
-      decoder); (c) clan-grouped refit of `(s,b)`; (d) whether any method
-      contribution is still defensible or the next cycle tests a new hypothesis;
-      (e) whether to run the shift-corrected decoder, with its success bar and
-      kill criterion pre-registered before any result.
-- [ ] Optional compute decision: a longer MXfold2 schedule if it is to serve as
-      a strong baseline rather than a control.
+- [x] Round 4n delivered on retry; full reply archived.
+- [x] SSH and Claude DNS recovered; the first send was confirmed absent from
+      history before retry.
+- [x] MXfold2 short-schedule retrain and the four-method common cohort frozen.
+- [x] FP anatomy corrected to the deployed head; regression test added.
+- [x] Paper A Introduction/C1 coverage specificity wording corrected.
+- [x] Research state, Paper A outline, decision records and task queue refreshed.
+- [x] Full suite currently 187 passed, 2 skipped; the latest fresh-clone CI is
+      green.
 
 ## Standing
 
-- `test_novel` stays embargoed: labels and counts only until the PI authorises
-  the one-shot unblinding.
-- One cohort only; never compare per-method subsets.
-- Invariants enforced by `scripts/jobs/rebuild_cohort_4tools.sbatch`: macro/micro
-  gap <= .15 and shuffle floor <= .05.
+- `test_novel` remains embargoed until Amendment 15 is pinned. Do not read or
+  score it, even for a “quick check”, before that one-pass unblinding.
+- No method claim: the paper is audit-led; report parity, not FM failure.
+- One common cohort only; never compare per-method subsets.
+- The default-weight MXfold2 row is descriptive and must not be used to rescue
+  the short-schedule retrain.
 - RiNALMo-giga is AGPL-3.0; the repository licence remains undecided.
-- No credentials in the repository; `tests/test_public_repo_hygiene.py` enforces
-  this in CI.
-- If SSH drops again, read the local routing note before changing anything; the
-  watchdog log makes the failure mode visible.
-- Do not retry Claude or edit VPN/DNS configuration repeatedly while
-  `docs/network_2026-11-15.md` describes an unconfirmed data-plane recovery.
+- No credentials enter the repository.

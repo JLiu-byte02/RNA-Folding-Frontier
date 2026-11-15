@@ -1,9 +1,9 @@
 {
  "project": "RNA-Folding-Frontier",
  "schema_version": 1,
- "updated_at": "2026-11-15T15:00:00+08:00",
- "phase": "external-baseline-cohort-and-paper-a",
- "cycle": 6,
+ "updated_at": "2026-11-15T15:04:00+08:00",
+ "phase": "round4n-h4",
+ "cycle": 7,
  "repository": "https://github.com/JLiu-byte02/RNA-Folding-Frontier",
  "compute": {
   "cluster": "Slurm",
@@ -16,24 +16,21 @@
   "model": "Claude Opus 5.5",
   "effort": "High",
   "last_session_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
-  "last_session_file": "docs/claude/transcripts/2026-11-13_round04m_reply.md",
+  "last_session_file": "docs/claude/transcripts/2026-11-15_round04n_reply.md",
   "rate_limit_reset_at": null,
-  "pending_message": "docs/claude/transcripts/2026-11-14_round04n_prompt.md"
+  "pending_message": null
  },
- "active_direction": "Negative/audit paper A; E-C1 supported; external four-tool cohort",
- "active_experiment": "Round 4n send attempted; PI reply pending ZoogVPN DNS recovery",
+ "active_direction": "Audit-led Paper A; no method claim; H4 annotation-convention test",
+ "active_experiment": "Build the H4 two-label PDB cohort under A15A",
  "open_questions": [
-  "Does adding MXfold2 (600 nt cap) change the no-advantage verdict?",
-  "When should the Amendment 14 one-shot test_novel be used, if at all?",
-  "Which Paper A framing (audit-led vs negative-led) is defensible without SOTA?",
-  "Is there any remaining mechanism result strong enough to anchor a method claim?",
-  "Should the energy calibration be refit with clan-grouped folds to complete Amendment 7 literally?",
-  "Is the shift-corrected decoder worth testing, and what success bar/kill criterion must be pre-registered?",
-  "Was Round 4n accepted into the Claude chat, and what did the PI reply?"
+  "Does H4 (annotation convention) pass its .03 supported / .01 kill gate with enough families?",
+  "Does shift refinement reach the .008 gate and retain the id_test point estimate?",
+  "Does the clan-grouped (s,b) refit preserve the A-fixed withheld advantage?",
+  "Do seeds 43/47 change the five-seed head conclusion?",
+  "Where does the default-weight MXfold2 row land relative to the short-schedule retrain?",
+  "Does Amendment 15's one-pass test_novel result confirm the final list?"
  ],
- "blockers": [
-  "Claude reply unavailable while the ZoogVPN WireGuard data plane fails and system DNS is down"
- ],
+ "blockers": [],
  "running_jobs": {},
  "remote_head": "c6670b8",
  "artifacts": {
@@ -71,7 +68,11 @@
    "experiments/002_e1prime_runs/cohort/shift_oracle_id_test.json",
    "tests/test_fp_anatomy.py",
    "docs/network_2026-11-15.md",
-   "state/task_queue.json"
+   "state/task_queue.json",
+   "docs/claude/transcripts/2026-11-15_round04n_reply.md",
+   "docs/decisions.md",
+   "docs/decision_log.md",
+   "docs/research_state.md"
   ]
  },
  "amendments": {
@@ -81,6 +82,7 @@
   "A11": "7c769403",
   "A12": "68e3ebe3",
   "A13": "b3a87a58",
-  "A14": "0c5af106"
+  "A14": "0c5af106",
+  "A15A": "e7c1733f"
  }
 }

@@ -1,69 +1,119 @@
 {
-  "updated": "2026-11-15T15:00:00+08:00",
+  "updated": "2026-11-15T15:04:00+08:00",
   "server_status": "SSH_UP",
   "gpu_jobs": 0,
   "pi": {
     "chat_url": "https://claude.ai/chat/cc2ad40a-406e-481e-8e7b-89a64b78f2f4",
     "round": "4n",
-    "state": "send_attempted_reply_unconfirmed",
-    "draft": "docs/claude/transcripts/2026-11-14_round04n_prompt.md",
-    "network_note": "docs/network_2026-11-15.md"
+    "state": "received",
+    "reply": "docs/claude/transcripts/2026-11-15_round04n_reply.md"
   },
+  "governing_decision": "audit-led paper; no method claim; D2 shelved",
   "order": [
-    "recover_round4n",
-    "paper_A_framing",
-    "amendment14_unblinding_plan",
-    "optional_method_decision",
-    "final_manuscript_audit"
+    "pin_a15a",
+    "h4_annotation_convention",
+    "shift_refinement_gate",
+    "sb_clan_grouped_refit",
+    "seeds_43_47",
+    "mxfold2_default_row",
+    "amendment15",
+    "test_novel_unblinding",
+    "paper_title_abstract"
   ],
   "tasks": [
     {
-      "id": "recover_round4n",
-      "status": "waiting_external",
-      "why": "The PI message was sent, but the generation stream died and a reload hit ERR_NAME_NOT_RESOLVED. Delivery and any reply are unconfirmed.",
-      "command": "After ZoogVPN recovery: Resolve-DnsName claude.ai; reopen the saved Claude tab; inspect message history before resending.",
-      "notes": "Do not duplicate the message blindly. Archive any reply to docs/claude/transcripts/ and update project_state.json."
+      "id": "pin_a15a",
+      "status": "completed",
+      "why": "Every new result must follow a pre-registered protocol. A15 is reserved for the final test_novel list.",
+      "artifact": "experiments/001_e1prime/AMENDMENT_15A.md",
+      "commit": "55a30f144d8f6fbd047edce5cc03eb1720ddee0f",
+      "sha256": "e7c1733fb88b81c4177f0ef76ce174623fbc386410f7169d716eddb2f59e412a",
+      "notes": "Pin seeds 43/47, H4, shift gate, refit boundary rule, five-seed reporting and default-MXfold2 row before running."
     },
     {
-      "id": "paper_A_framing",
-      "status": "waiting_pi",
-      "why": "Title, abstract, discussion and conclusion are deliberately held. Round 4n asks for an audit-led, negative-led, or coverage-plus-decoder framing.",
-      "command": "Read the Round 4n reply, record the decision in docs/decisions.md, then update README and the held sections.",
-      "notes": "Sections 1-4, T1-T7 and the available figures already exist. Do not change held framing without the PI ruling."
+      "id": "h4_annotation_convention",
+      "status": "in_progress",
+      "depends_on": "pin_a15a",
+      "why": "The one new hypothesis authorized by Round 4n: learned-model advantage may partly track comparative annotation convention.",
+      "inputs": [
+        "bpRNA-1m PDB-sourced chains outside train",
+        "cmscan Rfam assignment",
+        "cmalign + v3 SS_cons projection",
+        "fixed PDB structural pairs",
+        "p2fix 3-seed, one-hot, RNAfold, EternaFold"
+      ],
+      "gate": "Supported D>=.03 with CI excluding 0 and one-hot same direction; killed D<.01 or CI includes 0; <40 families = underpowered, no claim."
     },
     {
-      "id": "amendment14_unblinding_plan",
-      "status": "waiting_pi",
-      "why": "test_novel is a one-shot embargoed confirmation. Its final analysis list depends on the Paper A framing and method decision.",
-      "command": "After framing: freeze the exact analysis list in Amendment 14, hash it, then run the single unblinding pass.",
-      "notes": "No test_novel score exists. The existing split and label counts are permitted; predictions and scores are not."
+      "id": "shift_refinement_gate",
+      "status": "pending",
+      "depends_on": "pin_a15a",
+      "why": "Quantify how much of the FP deficit is helix register rather than representation; secondary analysis only.",
+      "gate": "Withheld macro gain >=.008 with CI excluding 0 and id_test point estimate >=0; kill below .004 or CI includes 0.",
+      "notes": "Report oracle recovery and near/far FP changes. No free parameters or post-hoc threshold relaxation."
     },
     {
-      "id": "optional_method_decision",
-      "status": "waiting_pi",
-      "why": "Two possible follow-ups remain: the shift-corrected decoder and a clan-grouped refit of the frozen (s,b). Neither is authorised by an existing amendment.",
-      "command": "For the decoder, pre-register a success bar and kill criterion before implementation; for the S/B refit, follow Amendment 7's clan-grouped design.",
-      "notes": "The radius-2 shift oracle is +.0251/+.0263 upper-bound only. Do not present it as evidence of a reachable gain."
+      "id": "sb_clan_grouped_refit",
+      "status": "pending",
+      "depends_on": "pin_a15a",
+      "why": "Decoder A-fixed is the one surviving positive endpoint and must match Amendment 7 exactly.",
+      "gate": "Clan-grouped 5-fold fit; one predeclared outward grid step only if at boundary; report withheld under old and refit parameters; only refit enters test_novel."
     },
     {
-      "id": "final_manuscript_audit",
-      "status": "ready_after_framing",
-      "why": "The final narrative, held sections and references must be checked after the PI decision.",
-      "command": "python -m pytest -q; verify paper tables, figures, references, artifact map and fresh-clone CI.",
-      "notes": "Current baseline: 187 passed, 2 skipped; the latest fresh-clone CI is green."
+      "id": "seeds_43_47",
+      "status": "pending",
+      "depends_on": "pin_a15a",
+      "why": "Three seeds leave an across-seed t interval too wide to resolve differences near .01.",
+      "gate": "Predeclared seeds 43 and 47; same split, recipe and corrected selection; no post-hoc seed dropping; report family-bootstrap CI and across-seed t interval."
+    },
+    {
+      "id": "mxfold2_default_row",
+      "status": "pending",
+      "depends_on": "pin_a15a",
+      "why": "The short-schedule retrain may understate the published system.",
+      "gate": "Run released/default weights on the common cohort, flag training overlap, and keep the retrain labeled short-schedule. No further MXfold2 training."
+    },
+    {
+      "id": "amendment15",
+      "status": "blocked",
+      "depends_on": [
+        "h4_annotation_convention",
+        "shift_refinement_gate",
+        "sb_clan_grouped_refit",
+        "seeds_43_47",
+        "mxfold2_default_row"
+      ],
+      "why": "The final test_novel analysis list must be fixed after all pre-unblinding results are known.",
+      "notes": "A15 supersedes A14's list without editing A14; hash before reading test_novel."
+    },
+    {
+      "id": "test_novel_unblinding",
+      "status": "blocked",
+      "depends_on": "amendment15",
+      "why": "One-shot confirmation of the final list; no method cycle is planned afterwards.",
+      "notes": "Run once, hash outputs, and record any rerun in docs/corrections.md."
+    },
+    {
+      "id": "paper_title_abstract",
+      "status": "blocked",
+      "depends_on": [
+        "h4_annotation_convention",
+        "test_novel_unblinding"
+      ],
+      "why": "PI holds title and abstract until H4 and the unblinding are in.",
+      "notes": "Audit-led framing; do not claim FM failure or coverage specificity."
     }
   ],
   "completed_this_cycle": [
-    "MXfold2 retraining and the frozen four-method common cohort",
-    "P3 id_test and H2.4 length-bin reporting",
-    "E-C1, E-C1b and E-C2 closure",
-    "Paper A drafted through section 4 with T1-T7 and verified references",
-    "FP anatomy corrected to the deployed head; regression test and fresh-clone CI added",
-    "Authoritative research state, Paper A outline and decision records refreshed"
+    "Round 4n delivered and reply archived",
+    "Network and Claude DNS recovered",
+    "FP anatomy corrected and regression-tested",
+    "Coverage-specificity prose corrected",
+    "Paper A outline, research state, decisions and queue synchronized"
   ],
   "notes": [
-    "Detailed routing diagnosis stays out of the public repository; see docs/network_2026-11-15.md for the current high-level state.",
-    "No GPU job is running; SSH to the compute server remains available by IP.",
-    "Do not reuse runs/p2_seed* checkpoints or pre-fix pair_prf numbers."
+    "No GPU job is running; SSH is available by IP.",
+    "test_novel stays embargoed until AMENDMENT_15.md is pinned.",
+    "The old runs/p2_seed* checkpoints remain invalid."
   ]
 }

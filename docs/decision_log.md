@@ -612,3 +612,17 @@ that do not need the server were built and tested locally.
 - Round 4n was sent to the existing PI chat, but the reply was not captured when
   ZoogVPN's WireGuard data plane failed. Delivery remains unconfirmed; no
   duplicate message should be sent until the chat history is visible.
+
+## 2026-11-15 — Round 4n reply received
+
+- The PI ruling is archived at
+  `docs/claude/transcripts/2026-11-15_round04n_reply.md`. The project is
+  audit-led and makes no method claim; D2 stays shelved.
+- H4 (annotation convention) is the one new hypothesis. Its two-label PDB test
+  has fixed supported/killed/underpowered rules and runs before `test_novel`.
+- The shift-corrected decoder is authorized under a fixed gate (.008 pass,
+  .004 kill) and remains a secondary analysis.
+- The clan-grouped `(s,b)` refit, two additional seeds (five total), and a
+  default-weight MXfold2 row precede the final unblinding.
+- Amendment 15 will fix the final `test_novel` list and supersede, without
+  editing, Amendment 14. Title and abstract wait for H4 and the unblinding.

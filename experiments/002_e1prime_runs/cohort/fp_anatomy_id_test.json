@@ -1,0 +1,33 @@
+{
+  "methods": {
+    "baseline": {
+      "frac": {
+        "1-2": 0.2025,
+        "3-5": 0.1534,
+        "6-10": 0.1309,
+        ">10": 0.5133
+      },
+      "frac_sequences_with_fp": 0.9803,
+      "mean_distance": 26.145,
+      "n_fp": 30469,
+      "n_sequences_with_fp": 1247,
+      "near_miss_frac": 0.2025
+    },
+    "head": {
+      "frac": {
+        "1-2": 0.2948,
+        "3-5": 0.1643,
+        "6-10": 0.1167,
+        ">10": 0.4242
+      },
+      "frac_sequences_with_fp": 0.9914,
+      "mean_distance": 22.994,
+      "n_fp": 38583,
+      "n_sequences_with_fp": 1261,
+      "near_miss_frac": 0.2948
+    }
+  },
+  "n_sequences": 1272,
+  "split": "splits/s1prime_filtered/id_test.jsonl",
+  "threshold": 0.5
+}

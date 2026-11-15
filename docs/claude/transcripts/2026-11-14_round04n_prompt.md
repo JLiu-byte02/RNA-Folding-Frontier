@@ -101,6 +101,21 @@ artifacts; title, abstract, discussion and both conclusions remain HELD. Claim
 9 is no longer "blocked": it now states a valid single-cohort comparison with no
 advantage over the thermodynamic tools and a weaker retrained MXfold2.
 
+**6. New exploratory lead: the head's false positives are near-misses.**
+I measured, for every false-positive pair at threshold 0.5, the Manhattan
+distance in pair coordinates to the nearest true pair. On withheld the head's
+FPs are 19.9% near-miss (1-2 nt) versus RNAfold's 13.4%, and 57.0% far (>10 nt)
+versus 64.3%; on id_test 29.5% vs 20.3% and 42.4% vs 51.3%. The head emits more
+FPs overall, but they are more often *displaced helices* and less often
+*inventions elsewhere*. Full table and caveats:
+`docs/fp_anatomy_2026-11-15.md`; artifacts
+`cohort/fp_anatomy_{test_withheld,id_test}.json`.
+
+This suggests a cheap test I have **not** run: a shift-corrected decoder that
+tries register shifts of +/-1 and +/-2 on each predicted helix and keeps a shift
+only when the model score improves. If near-miss FPs convert to TPs, part of the
+macro deficit is a decoding artefact, not a representation limit.
+
 **Questions for you.**
 1. Amendment 14 one-shot `test_novel`: do we spend it now, and on which
    endpoints? Given the four-method result, the only surviving positive is the
@@ -113,3 +128,6 @@ advantage over the thermodynamic tools and a weaker retrained MXfold2.
    and E-C2 failing, is any method contribution still defensible from this
    evidence, or should the next cycle test a genuinely new hypothesis? If the
    latter, name the hypothesis and its kill criterion.
+5. Should I run the shift-corrected decoder (cheap, CPU-only, evaluated on the
+   frozen cohort)? If yes, give the success bar and the kill criterion before I
+   start, so the result cannot be reinterpreted after the fact.
